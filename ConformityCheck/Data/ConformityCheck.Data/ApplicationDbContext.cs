@@ -26,6 +26,32 @@
 
         public DbSet<Setting> Settings { get; set; }
 
+        public DbSet<Article> Articles { get; set; }
+
+        public DbSet<Supplier> Suppliers { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<Conformity> Conformities { get; set; }
+
+        public DbSet<ConformityType> ConformityTypes { get; set; }
+
+        public DbSet<Substance> Substances { get; set; }
+
+        public DbSet<RegulationList> RegulationLists { get; set; }
+
+        public DbSet<ArticleSupplier> ArticleSuppliers { get; set; }
+
+        public DbSet<ArticleConformity> ArticleConformities { get; set; }
+
+        public DbSet<ArticleProduct> ArticleProducts { get; set; }
+
+        public DbSet<ArticleSubstance> ArticleSubstances { get; set; }
+
+        public DbSet<ProductConformity> ProductConformities { get; set; }
+
+        public DbSet<SubstanceRegulationList> SubstanceRegulationLists { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
