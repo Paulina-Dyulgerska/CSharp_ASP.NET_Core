@@ -6,7 +6,7 @@
 
     using ConformityCheck.Data.Common.Models;
 
-    public class Article : IAuditInfo, IDeletableEntity
+    public class Article : BaseDeletableModel<int>
     {
         public Article()
         {
@@ -15,9 +15,6 @@
             this.ArticleSubstances = new HashSet<ArticleSubstance>();
             this.ArticleSuppliers = new HashSet<ArticleSupplier>();
         }
-
-        [Key]
-        public int Id { get; set; }
 
         [Required]
         [MaxLength(20)]
@@ -30,16 +27,6 @@
         // [ForeignKey(nameof(Supplier))]
         // public int? MainSupplierID { get; set; }
         // public virtual Supplier MainSupplier { get; set; }
-
-        // Audit info
-        public DateTime CreatedOn { get; set; }
-
-        public DateTime? ModifiedOn { get; set; }
-
-        // Deletable entity
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
 
         public virtual ICollection<ArticleProduct> ArticleProducts { get; set; }
 

@@ -18,4 +18,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\ConformityCheck.Data.Common\ConformityCheck.Data.Common.csproj" />
+	  <ProjectReference Include="..\..\Data\ConformityCheck.Data.Models\ConformityCheck.Data.Models.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -40,8 +40,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ConformityCheck.Common\ConformityCheck.Common.csproj" />
+    <ProjectReference Include="..\..\Services\ConformityCheck.Services.Data\ConformityCheck.Services.Data.csproj" />
     <ProjectReference Include="..\ConformityCheck.Data.Common\ConformityCheck.Data.Common.csproj" />
     <ProjectReference Include="..\ConformityCheck.Data.Models\ConformityCheck.Data.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Seeding\DataFiles\ArticlesData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Seeding\DataFiles\ConformityTypesData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

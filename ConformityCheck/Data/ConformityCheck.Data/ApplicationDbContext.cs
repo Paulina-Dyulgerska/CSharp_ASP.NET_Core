@@ -24,6 +24,7 @@
         {
         }
 
+        // this is just an example for entity and services
         public DbSet<Setting> Settings { get; set; }
 
         public DbSet<Article> Articles { get; set; }

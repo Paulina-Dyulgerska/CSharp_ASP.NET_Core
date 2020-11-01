@@ -7,16 +7,13 @@
 
     using ConformityCheck.Data.Common.Models;
 
-    public class Conformity : IAuditInfo, IDeletableEntity
+    public class Conformity : BaseDeletableModel<int>
     {
         public Conformity()
         {
             this.ArticleConformities = new HashSet<ArticleConformity>();
             this.ProductConformities = new HashSet<ProductConformity>();
         }
-
-        [Key]
-        public int Id { get; set; }
 
         [ForeignKey(nameof(ConformityType))]
         public int ConformityTypeId { get; set; }
@@ -38,16 +35,6 @@
         public bool IsValid { get; set; }
 
         public string Comments { get; set; }
-
-        // Audit info
-        public DateTime CreatedOn { get; set; }
-
-        public DateTime? ModifiedOn { get; set; }
-
-        // Deletable entity
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
 
         public virtual ICollection<ArticleConformity> ArticleConformities { get; set; }
 
