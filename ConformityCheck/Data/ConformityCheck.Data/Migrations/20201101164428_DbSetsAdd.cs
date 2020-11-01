@@ -13,12 +13,12 @@ namespace ConformityCheck.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Number = table.Column<string>(maxLength: 20, nullable: false),
-                    Description = table.Column<string>(maxLength: 50, nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Number = table.Column<string>(maxLength: 20, nullable: false),
+                    Description = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,11 +31,11 @@ namespace ConformityCheck.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(maxLength: 50, nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Description = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,12 +48,12 @@ namespace ConformityCheck.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Number = table.Column<string>(maxLength: 20, nullable: false),
-                    Description = table.Column<string>(maxLength: 50, nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Number = table.Column<string>(maxLength: 20, nullable: false),
+                    Description = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,13 +66,13 @@ namespace ConformityCheck.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(maxLength: 50, nullable: false),
-                    Source = table.Column<string>(nullable: false),
-                    SourceURL = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Description = table.Column<string>(maxLength: 50, nullable: false),
+                    Source = table.Column<string>(nullable: false),
+                    SourceURL = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,12 +85,12 @@ namespace ConformityCheck.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CASNumber = table.Column<string>(maxLength: 20, nullable: false),
-                    Description = table.Column<string>(maxLength: 100, nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    CASNumber = table.Column<string>(maxLength: 20, nullable: false),
+                    Description = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -103,16 +103,16 @@ namespace ConformityCheck.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
                     Number = table.Column<string>(maxLength: 20, nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     Email = table.Column<string>(maxLength: 50, nullable: true),
                     PhoneNumber = table.Column<string>(maxLength: 20, nullable: true),
                     ContactPersonFirstName = table.Column<string>(maxLength: 20, nullable: true),
-                    ContactPersonLastName = table.Column<string>(maxLength: 20, nullable: true),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    ContactPersonLastName = table.Column<string>(maxLength: 20, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -173,11 +173,12 @@ namespace ConformityCheck.Data.Migrations
                 {
                     SubstanceId = table.Column<int>(nullable: false),
                     RegulationListId = table.Column<int>(nullable: false),
-                    Restriction = table.Column<string>(nullable: true),
+                    Id = table.Column<int>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Restriction = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -226,17 +227,17 @@ namespace ConformityCheck.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
                     ConformityTypeId = table.Column<int>(nullable: false),
                     SupplierId = table.Column<int>(nullable: false),
                     IssueDate = table.Column<DateTime>(nullable: false),
                     ConformationAcceptanceDate = table.Column<DateTime>(nullable: true),
                     IsAccepted = table.Column<bool>(nullable: false),
                     IsValid = table.Column<bool>(nullable: false),
-                    Comments = table.Column<string>(nullable: true),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    Comments = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

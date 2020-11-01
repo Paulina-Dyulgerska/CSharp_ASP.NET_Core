@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConformityCheck.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201101141100_DbSetsAdd")]
+    [Migration("20201101164428_DbSetsAdd")]
     partial class DbSetsAdd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -505,6 +505,9 @@ namespace ConformityCheck.Data.Migrations
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");

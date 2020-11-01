@@ -1,0 +1,32 @@
+[
+  {
+    "Description": "RoHS"
+  },
+  {
+    "Description": "REACh"
+  },
+  {
+    "Description": "FC_EU"
+  },
+  {
+    "Description": "FC_USA"
+  },
+  {
+    "Description": "FC_CHINA"
+  },
+  {
+    "Description": "SVHC"
+  },
+  {
+    "Description": "DS_Substance"
+  },
+  {
+    "Description": "DS_FC_EU"
+  },
+  {
+    "Description": "DS_FC_CHINA"
+  },
+  {
+    "Description": "DS_FC_USA"
+  }
+]
