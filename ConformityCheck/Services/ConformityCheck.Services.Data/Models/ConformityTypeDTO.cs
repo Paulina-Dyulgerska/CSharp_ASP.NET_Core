@@ -1,4 +1,4 @@
-﻿namespace ConformityCheck.Services.Models
+﻿namespace ConformityCheck.Services.Data.Models
 {
     public class ConformityTypeDTO
     {

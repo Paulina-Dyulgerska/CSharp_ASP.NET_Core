@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ConformityCheck.Services.Models
+﻿namespace ConformityCheck.Services.Data.Models
 {
     public class ArticleExportDTO
     {

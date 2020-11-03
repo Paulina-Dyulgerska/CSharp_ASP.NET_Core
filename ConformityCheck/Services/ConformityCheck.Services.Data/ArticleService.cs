@@ -1,4 +1,4 @@
-﻿namespace ConformityCheck.Services
+﻿namespace ConformityCheck.Services.Data
 {
     using System;
     using System.Collections.Generic;
@@ -8,8 +8,8 @@
 
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
+    using ConformityCheck.Services.Data.Models;
     using ConformityCheck.Services.Mapping;
-    using ConformityCheck.Services.Models;
 
     public class ArticleService : IArticleService
     {
@@ -245,7 +245,7 @@
 
             articleEntity.Number = articleImportDTO.Number.Trim().ToUpper();
 
-            articleEntity.Description = PascalCaseConverter(articleImportDTO.Description);
+            articleEntity.Description = this.PascalCaseConverter(articleImportDTO.Description);
 
             //TODO - all other article characteristics have to be able to be updated from this method!!! S buttons +add +add na vseki 
             //supplier, product, substance i t.n. A otstrani shte ima - za delete na vseki zapis!!!

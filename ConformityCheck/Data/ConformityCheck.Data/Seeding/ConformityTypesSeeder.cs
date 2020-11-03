@@ -1,31 +1,38 @@
 ﻿namespace ConformityCheck.Data.Seeding
 {
-    using ConformityCheck.Services;
-    using ConformityCheck.Services.Models;
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Text.Json;
     using System.Threading.Tasks;
+
+    using ConformityCheck.Data.Models;
 
     public class ConformityTypesSeeder : ISeeder
     {
 
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            // Add conformity types:
-            //IConformityTypeService conformityTypeService = new ConformityTypeService(dbContext);
-            var jsonConformityTypes = File.ReadAllText("/DataFiles/ConformityTypesData.json");
-            var conformityTypes = JsonSerializer.Deserialize<IEnumerable<ConformityTypeDTO>>(jsonConformityTypes);
 
-            foreach (var conformityType in conformityTypes)
+            if (!dbContext.ConformityTypes.Any())
             {
-                try
+                // Add conformity types:
+                //IConformityTypeService conformityTypeService = new ConformityTypeService(dbContext);
+                var jsonConformityTypes = File.ReadAllText
+                ("../../../ConformityCheck/Data/ConformityCheck.Data/Seeding/DataFiles/ConformityTypesData.json");
+                //var conformityTypes = JsonSerializer.Deserialize<IEnumerable<ConformityTypeDTO>>(jsonConformityTypes);
+                var conformityTypes = JsonSerializer.Deserialize<IEnumerable<ConformityType>>(jsonConformityTypes);
+
+                foreach (var conformityType in conformityTypes)
                 {
-                    //await conformityTypeService.Create(conformityType);
-                }
-                catch (Exception)
-                {
+                    try
+                    {
+                        await dbContext.ConformityTypes.AddAsync(conformityType);
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
             }
         }

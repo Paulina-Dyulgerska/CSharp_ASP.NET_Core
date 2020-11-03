@@ -1,9 +1,8 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Settings
 {
+    using AutoMapper;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
-
-    using AutoMapper;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {

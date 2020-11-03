@@ -1,8 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace ConformityCheck.Services.Models
+﻿namespace ConformityCheck.Services.Data.Models
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
     public class ConformityImportDTO
     {
         [Required]

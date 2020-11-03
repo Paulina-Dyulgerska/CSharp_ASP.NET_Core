@@ -1,4 +1,4 @@
-﻿namespace ConformityCheck.Services
+﻿namespace ConformityCheck.Services.Data
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,7 @@
 
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
-    using ConformityCheck.Services.Models;
+    using ConformityCheck.Services.Data.Models;
 
     public class ConformityTypeService : IConformityTypeService
     {

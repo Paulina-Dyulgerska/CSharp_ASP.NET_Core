@@ -1,10 +1,9 @@
-﻿using ConformityCheck.Services.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ConformityCheck.Services
+﻿namespace ConformityCheck.Services.Data
 {
+    using System.Collections.Generic;
+
+    using ConformityCheck.Services.Data.Models;
+
     public interface ISupplierService
     {
         void Create(string number, string name);

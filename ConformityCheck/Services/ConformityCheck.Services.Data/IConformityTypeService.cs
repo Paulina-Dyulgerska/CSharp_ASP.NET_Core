@@ -1,9 +1,10 @@
-﻿using ConformityCheck.Services.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace ConformityCheck.Services
+﻿namespace ConformityCheck.Services.Data
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using ConformityCheck.Services.Data.Models;
+
     public interface IConformityTypeService
     {
         void Create(ConformityTypeDTO conformityTypeImputDTO);
