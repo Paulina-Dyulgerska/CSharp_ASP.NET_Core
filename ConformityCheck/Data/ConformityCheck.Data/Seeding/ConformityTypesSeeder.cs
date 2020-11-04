@@ -7,28 +7,27 @@
     using System.Text.Json;
     using System.Threading.Tasks;
 
-    using ConformityCheck.Data.Models;
+    using ConformityCheck.Services.Data;
+    using ConformityCheck.Services.Data.Models;
+    using Microsoft.Extensions.DependencyInjection;
 
     public class ConformityTypesSeeder : ISeeder
     {
 
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-
             if (!dbContext.ConformityTypes.Any())
             {
-                // Add conformity types:
-                //IConformityTypeService conformityTypeService = new ConformityTypeService(dbContext);
                 var jsonConformityTypes = File.ReadAllText
                 ("../../../ConformityCheck/Data/ConformityCheck.Data/Seeding/DataFiles/ConformityTypesData.json");
-                //var conformityTypes = JsonSerializer.Deserialize<IEnumerable<ConformityTypeDTO>>(jsonConformityTypes);
-                var conformityTypes = JsonSerializer.Deserialize<IEnumerable<ConformityType>>(jsonConformityTypes);
+                var conformityTypes = JsonSerializer.Deserialize<IEnumerable<ConformityTypeDTO>>(jsonConformityTypes);
+                var conformityTypeService = serviceProvider.GetRequiredService<IConformityTypeService>();
 
                 foreach (var conformityType in conformityTypes)
                 {
                     try
                     {
-                        await dbContext.ConformityTypes.AddAsync(conformityType);
+                        await conformityTypeService.CreateAsync(conformityType);
                     }
                     catch (Exception)
                     {

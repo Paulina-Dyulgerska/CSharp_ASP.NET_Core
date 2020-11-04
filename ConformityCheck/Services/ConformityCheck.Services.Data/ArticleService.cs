@@ -44,7 +44,7 @@
             return this.articlesRepository.All().To<T>().ToList();
         }
 
-        public void Create(ArticleImportDTO articleImportDTO)
+        public async Task CreateAsync(ArticleImportDTO articleImportDTO)
         {
             var articleEntity = this.articlesRepository.AllAsNoTracking()
                 .FirstOrDefault(x => x.Number == articleImportDTO.Number.Trim().ToUpper());
@@ -60,22 +60,22 @@
                 Description = this.PascalCaseConverter(articleImportDTO.Description),
             };
 
-            this.articlesRepository.AddAsync(article);
+            await this.articlesRepository.AddAsync(article);
 
-            this.articlesRepository.SaveChangesAsync(); //TODO - async-await
+            await this.articlesRepository.SaveChangesAsync();
 
             if (articleImportDTO.SupplierName != null && articleImportDTO.SupplierNumber != null)
             {
-                this.AddSupplierToArticle(article, articleImportDTO);
+                await this.AddSupplierToArticleAsync(article, articleImportDTO);
             }
         }
 
-        public void AddSupplierToArticle(Article article, ArticleImportDTO articleImportDTO)
+        public async Task<int> AddSupplierToArticleAsync(Article article, ArticleImportDTO articleImportDTO)
         {
-            var supplierEntity = this.GetOrCreateSupplier(articleImportDTO);
+            var supplierEntity = await this.GetOrCreateSupplierAsync(articleImportDTO);
 
             var articleSuppliers = this.articlesRepository.All()
-                .Where(a => a.Id == article.Id).Select(a => a.ArticleSuppliers).FirstOrDefault(); //async-await
+                .Where(a => a.Id == article.Id).Select(a => a.ArticleSuppliers).FirstOrDefault();
 
             if (articleSuppliers.Any(x => x.SupplierId == supplierEntity.Id))
             {
@@ -84,10 +84,10 @@
 
             article.ArticleSuppliers.Add(new ArticleSupplier { Supplier = supplierEntity });
 
-            this.articlesRepository.SaveChangesAsync(); //TODO async-await
+            return await this.articlesRepository.SaveChangesAsync();
         }
 
-        public Supplier GetOrCreateSupplier(ArticleImportDTO articleImportDTO)
+        public async Task<Supplier> GetOrCreateSupplierAsync(ArticleImportDTO articleImportDTO)
         {
             var supplierEntity = this.suppliersRepository.All()
                 .FirstOrDefault(x => x.Number == articleImportDTO.SupplierNumber.Trim().ToUpper());
@@ -107,9 +107,9 @@
                             this.PascalCaseConverter(articleImportDTO.ContactPersonLastName),
                 };
 
-                this.suppliersRepository.AddAsync(supplierEntity);
+                await this.suppliersRepository.AddAsync(supplierEntity);
 
-                this.suppliersRepository.SaveChangesAsync(); //async-await
+                await this.suppliersRepository.SaveChangesAsync();
             }
 
             return supplierEntity;
@@ -146,7 +146,7 @@
             this.articleSuppliersRepository.SaveChangesAsync();
         }
 
-        public Task<int> DeleteArticle(int articleId)
+        public Task<int> DeleteArticleAsync(int articleId)
         {
             var articleEntity = this.GetArticle(articleId);
 

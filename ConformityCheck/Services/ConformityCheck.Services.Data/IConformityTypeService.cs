@@ -7,10 +7,10 @@
 
     public interface IConformityTypeService
     {
-        void Create(ConformityTypeDTO conformityTypeImputDTO);
+        Task CreateAsync(ConformityTypeDTO conformityTypeImputDTO);
+
+        Task<int> DeleteAsync(int conformityTypeId);
 
         IEnumerable<ConformityTypeDTO> ListAllConformityTypes();
-
-        Task<int> Delete(int conformityTypeId);
     }
 }

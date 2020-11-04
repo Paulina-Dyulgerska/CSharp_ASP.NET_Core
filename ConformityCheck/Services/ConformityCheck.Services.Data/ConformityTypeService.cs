@@ -22,15 +22,15 @@
             this.articleConformitiesRepository = articleConformitiesRepository;
         }
 
-        public void Create(ConformityTypeDTO conformityTypeImputDTO)
+        public async Task CreateAsync(ConformityTypeDTO conformityTypeImputDTO)
         {
-            //if no description is provided
+            // if no description is provided
             if (conformityTypeImputDTO.Description == null)
             {
                 throw new ArgumentNullException(nameof(conformityTypeImputDTO.Description));
             }
 
-            //if this conformity type is already in the DB
+            // if this conformity type is already in the DB
             if (this.conformityTypesRepository.All()
                 .FirstOrDefault(c => c.Description.ToUpper() == conformityTypeImputDTO.Description.ToUpper()) != null)
             {
@@ -42,20 +42,20 @@
                 Description = conformityTypeImputDTO.Description.Trim(),
             };
 
-            this.conformityTypesRepository.AddAsync(conformityType);
+            await this.conformityTypesRepository.AddAsync(conformityType);
 
-            this.conformityTypesRepository.SaveChangesAsync();
+            await this.conformityTypesRepository.SaveChangesAsync();
         }
 
-        public Task<int> Delete(int conformityTypeId)
+        public Task<int> DeleteAsync(int conformityTypeId)
         {
-            //if this conformity type is not in the DB
+            // if this conformity type is not in the DB
             if (this.conformityTypesRepository.All().FirstOrDefault(c => c.Id == conformityTypeId) == null)
             {
                 throw new ArgumentException($"No such conformity type");
             }
 
-            //if this conformity type has confirmations in the DB
+            // if this conformity type has confirmations in the DB
             if (this.articleConformitiesRepository.All().Any(ac => ac.ConformityId == conformityTypeId))
             {
                 throw new ArgumentException($"Cannot delete conformity with articles assigned to it.");

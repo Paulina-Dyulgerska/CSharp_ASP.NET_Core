@@ -16,13 +16,13 @@
 
         Supplier GetSupplier(int supplierId);
 
-        void Create(ArticleImportDTO articleImportDTO);
+        Task CreateAsync(ArticleImportDTO articleImportDTO);
 
-        void AddSupplierToArticle(Article article, ArticleImportDTO articleImportDTO);
+        Task<int> AddSupplierToArticleAsync(Article article, ArticleImportDTO articleImportDTO);
 
-        Supplier GetOrCreateSupplier(ArticleImportDTO articleImportDTO);
+        Task<Supplier> GetOrCreateSupplierAsync(ArticleImportDTO articleImportDTO);
 
-        Task<int> DeleteArticle(int articleId);
+        Task<int> DeleteArticleAsync(int articleId);
 
         void DeleteSupplierFromArticle(int articleId, int supplierId);
 
