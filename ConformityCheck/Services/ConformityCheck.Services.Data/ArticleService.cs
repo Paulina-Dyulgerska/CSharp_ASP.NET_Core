@@ -13,7 +13,6 @@
 
     public class ArticleService : IArticleService
     {
-
         private readonly IDeletableEntityRepository<Article> articlesRepository;
         private readonly IDeletableEntityRepository<Supplier> suppliersRepository;
         private readonly IRepository<ArticleSupplier> articleSuppliersRepository;
@@ -49,7 +48,8 @@
             var articleEntity = this.articlesRepository.AllAsNoTracking()
                 .FirstOrDefault(x => x.Number == articleImportDTO.Number.Trim().ToUpper());
 
-            if (articleEntity != null) //TODO - async-await
+            // TODO - async-await
+            if (articleEntity != null)
             {
                 throw new ArgumentException($"There is already an article with this number.");
             }
@@ -153,7 +153,7 @@
             if (articleEntity == null)
             {
                 throw new ArgumentException("No such article id");
-            };
+            }
 
             this.articlesRepository.Delete(articleEntity);
 
@@ -219,7 +219,6 @@
 
             this.conformitiesRepository.AddAsync(conformity);
 
-
             articleEntity.ArticleConformities.Add(new ArticleConformity
             {
                 Article = articleEntity,
@@ -238,7 +237,8 @@
         {
             var articleEntity = this.articlesRepository.All().FirstOrDefault(x => x.Number == articleImportDTO.Number.Trim().ToUpper());
 
-            if (articleEntity == null) //TODO - async-await
+            // TODO - async-await
+            if (articleEntity == null)
             {
                 throw new ArgumentException($"There is no article with this number.");
             }
@@ -247,12 +247,12 @@
 
             articleEntity.Description = this.PascalCaseConverter(articleImportDTO.Description);
 
-            //TODO - all other article characteristics have to be able to be updated from this method!!! S buttons +add +add na vseki 
-            //supplier, product, substance i t.n. A otstrani shte ima - za delete na vseki zapis!!!
-            //Suppliers - AddSupplierToArticle, DeleteSupplierFromArticle
-            //Conformities -AddConformity, DeleteConformity
-            //Products - ListArticleProducts only, no delete
-            //Sustances - Add/DeleteSubstance!!!! To have it in the interface
+            // TODO - all other article characteristics have to be able to be updated from this method!!! S buttons +add +add na vseki 
+            // supplier, product, substance i t.n. A otstrani shte ima - za delete na vseki zapis!!!
+            // Suppliers - AddSupplierToArticle, DeleteSupplierFromArticle
+            // Conformities -AddConformity, DeleteConformity
+            // Products - ListArticleProducts only, no delete
+            // Sustances - Add/DeleteSubstance!!!! To have it in the interface
 
             this.articlesRepository.SaveChangesAsync(); //TODO - async-await
         }
