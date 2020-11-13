@@ -7,12 +7,13 @@
 
     using ConformityCheck.Data.Common.Models;
 
-    public class Conformity : BaseDeletableModel<int>
+    public class Conformity : BaseDeletableModel<string>
     {
         public Conformity()
         {
             this.ArticleConformities = new HashSet<ArticleConformity>();
             this.ProductConformities = new HashSet<ProductConformity>();
+            this.Id = Guid.NewGuid().ToString();
         }
 
         [ForeignKey(nameof(ConformityType))]

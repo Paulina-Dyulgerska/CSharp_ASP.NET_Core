@@ -1,15 +1,17 @@
 ﻿namespace ConformityCheck.Data.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using ConformityCheck.Data.Common.Models;
 
-    public class Supplier : BaseDeletableModel<int>
+    public class Supplier : BaseDeletableModel<string>
     {
         public Supplier()
         {
             this.ArticleSuppliers = new HashSet<ArticleSupplier>();
+            this.Id = Guid.NewGuid().ToString();
         }
 
         [Required]

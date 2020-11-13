@@ -12,7 +12,8 @@
 
         public string Description { get; set; }
 
-        public bool IsConfirmed { get; set; } //confirmed - not confirmed
+        // confirmed - not confirmed
+        public bool IsConfirmed { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

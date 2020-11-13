@@ -92,7 +92,7 @@
             var supplierEntity = this.suppliersRepository.All()
                 .FirstOrDefault(x => x.Number == articleImportDTO.SupplierNumber.Trim().ToUpper());
 
-            //new supplier is created if not exist in the dbContext:
+            // new supplier is created if not exist in the dbContext:
             if (supplierEntity == null)
             {
                 supplierEntity = new Supplier
@@ -157,18 +157,21 @@
 
             this.articlesRepository.Delete(articleEntity);
 
-            //TODO - da razbera kak da naprawq triene, no da mi istanat zapisite. Sigurno trqbwa da
-            //vkaram kolona IsDeleted vyv vsqka tablica ot dolnite 4...
-            //article.IsDeleted = true;
-            //foreach (var item in article.Suppliers)
-            //{
-            //}
-            //article.Suppliers.Clear();
-            //article.Substances.Clear();
-            //article.Products.Clear();
-            //article.Conformities.Clear();
+            // TODO - da razbera kak da naprawq triene, no da mi istanat zapisite. Sigurno trqbwa da
+            // vkaram kolona IsDeleted vyv vsqka tablica ot dolnite 4...
+            // article.IsDeleted = true;
+            // foreach (var item in article.Suppliers)
+            // {
+            // }
+            // article.Suppliers.Clear();
+            // article.Substances.Clear();
+            // article.Products.Clear();
+            // article.Conformities.Clear();
+            {
+            }
 
-            return this.articlesRepository.SaveChangesAsync(); //async-await
+            // async-await
+            return this.articlesRepository.SaveChangesAsync();
         }
 
         public void AddConformityToArticle(int articleId, int supplierId, ArticleConformityImportDTO articleConformityImportDTO)
@@ -193,8 +196,10 @@
                 throw new ArgumentException("The article does not have such supplier.");
             }
 
-            //to create table in the dbContext ArticleConformitys as a dbContextSet, to make all dbContextSets ending s or without s!!! But similar!!
-            //to chech dali veche nqmam takowa conformity na tozi article s tozi dostawchik!!!!
+            // to create table in the dbContext ArticleConformitys as a dbContextSet, to make all dbContextSets ending s or without s!!! But similar!!
+            // to chech dali veche nqmam takowa conformity na tozi article s tozi dostawchik!!!!
+            {
+            }
 
             var conformityType = this.conformityTypesRepository.All()
                 .FirstOrDefault(ct => ct.Description == articleConformityImportDTO.ConformityType.Trim().ToUpper());
@@ -204,7 +209,9 @@
                 throw new ArgumentException("No such conformity type.");
             }
 
-            //if such conformity type already exist, what we are doing?
+            // if such conformity type already exist, what we are doing?
+            {
+            }
 
             var conformity = new Conformity
             {
@@ -225,10 +232,12 @@
                 Conformity = conformity,
             });
 
-            this.conformitiesRepository.SaveChangesAsync(); //TODO async-await
+            // TODO async-await
+            this.conformitiesRepository.SaveChangesAsync();
         }
 
-        public void DeleteConformity(int articleId) //update conformity with new one????
+        // update conformity with new one????
+        public void DeleteConformity(int articleId)
         {
             throw new NotImplementedException();
         }
@@ -247,14 +256,17 @@
 
             articleEntity.Description = this.PascalCaseConverter(articleImportDTO.Description);
 
-            // TODO - all other article characteristics have to be able to be updated from this method!!! S buttons +add +add na vseki 
+            // TODO - all other article characteristics have to be able to be updated from this method!!! S buttons +add +add na vseki
             // supplier, product, substance i t.n. A otstrani shte ima - za delete na vseki zapis!!!
             // Suppliers - AddSupplierToArticle, DeleteSupplierFromArticle
             // Conformities -AddConformity, DeleteConformity
             // Products - ListArticleProducts only, no delete
             // Sustances - Add/DeleteSubstance!!!! To have it in the interface
+            {
+            }
 
-            this.articlesRepository.SaveChangesAsync(); //TODO - async-await
+            // TODO - async-await
+            this.articlesRepository.SaveChangesAsync();
         }
 
         public IEnumerable<ConformityImportDTO> ListArticleConformities(int articleId)
@@ -332,9 +344,9 @@
             return st.ToString().Trim();
         }
 
-        //private string FormatInputString(string stringToFormat) //it is 25% slower than the PascalCaseConverter
-        //{
-        //    return $"{stringToFormat.ToUpper()[0]}{stringToFormat.Substring(1).ToLower()}".Trim(); 
-        //}
+        // private string FormatInputString(string stringToFormat) //it is 25% slower than the PascalCaseConverter
+        // {
+        //    return $"{stringToFormat.ToUpper()[0]}{stringToFormat.Substring(1).ToLower()}".Trim();
+        // }
     }
 }

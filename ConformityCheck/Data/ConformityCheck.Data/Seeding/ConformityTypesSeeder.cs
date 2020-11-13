@@ -18,8 +18,8 @@
         {
             if (!dbContext.ConformityTypes.Any())
             {
-                var jsonConformityTypes = File.ReadAllText
-                ("../../../ConformityCheck/Data/ConformityCheck.Data/Seeding/DataFiles/ConformityTypesData.json");
+                var jsonConformityTypes = File
+                    .ReadAllText("../../../ConformityCheck/Data/ConformityCheck.Data/Seeding/DataFiles/ConformityTypesData.json");
                 var conformityTypes = JsonSerializer.Deserialize<IEnumerable<ConformityTypeDTO>>(jsonConformityTypes);
                 var conformityTypeService = serviceProvider.GetRequiredService<IConformityTypeService>();
 

@@ -1,16 +1,18 @@
 ﻿namespace ConformityCheck.Data.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using ConformityCheck.Data.Common.Models;
 
-    public class Product : BaseDeletableModel<int>
+    public class Product : BaseDeletableModel<string>
     {
         public Product()
         {
             this.ArticleProducts = new HashSet<ArticleProduct>();
             this.ProductConformities = new HashSet<ProductConformity>();
+            this.Id = Guid.NewGuid().ToString();
         }
 
         [Required]

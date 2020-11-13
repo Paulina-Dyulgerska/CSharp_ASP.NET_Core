@@ -30,11 +30,11 @@
                     }
                     catch (Exception)
                     {
-                        //throw; //az ne znam kakvo shte pravq s tazi error i prodyljavam natatyk, kato prosto nqma
-                        //da zapisha nishto v dbContext-a. No moqt Service throwna error i toj se hvana tuk - ot klienta na 
-                        //moq Service, no kojto shte polzwa tozi cod, shte reshi kakwo da pravi s error-a. Az samo mu davam 
-                        //info za towa kakwo ne e nared, towa mu prashta Service na tozi, kojto go polzwa. Towa da pravi Service
-                        //error na polzwashtiqt go, e pravilnoto povedenie na Service-to!!!
+                        // throw; //az ne znam kakvo shte pravq s tazi error i prodyljavam natatyk, kato prosto nqma
+                        // da zapisha nishto v dbContext-a. No moqt Service throwna error i toj se hvana tuk - ot klienta na
+                        // moq Service, no kojto shte polzwa tozi cod, shte reshi kakwo da pravi s error-a. Az samo mu davam
+                        // info za towa kakwo ne e nared, towa mu prashta Service na tozi, kojto go polzwa. Towa da pravi Service
+                        // error na polzwashtiqt go, e pravilnoto povedenie na Service-to!!!
                     }
                 }
             }

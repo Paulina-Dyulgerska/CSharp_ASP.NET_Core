@@ -31,19 +31,21 @@
 
         public async Task<IActionResult> InsertArticle()
         {
-            //TOODO - input !!! with ViewModel!
-            //check for error in model:
+            // TOODO - input !!! with ViewModel!
+            // check for error in model:
             if (!this.ModelState.IsValid)
             {
                 foreach (var error in this.ModelState.Values.SelectMany(v => v.Errors))
                 {
-                    //DoSomething(error);
+                    // DoSomething(error);
                 }
 
                 // TODO: Return Error Page
             }
 
-            //return Ok("Success!");
+            // return Ok("Success!");
+            {
+            }
 
             var random = new Random();
 
