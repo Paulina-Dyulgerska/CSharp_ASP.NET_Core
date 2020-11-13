@@ -115,7 +115,7 @@
             return supplierEntity;
         }
 
-        public void DeleteSupplierFromArticle(int articleId, int supplierId)
+        public void DeleteSupplierFromArticle(string articleId, string supplierId)
         {
             var articleEntity = this.GetArticle(articleId);
             var supplierEntity = this.GetSupplier(supplierId);
@@ -146,7 +146,7 @@
             this.articleSuppliersRepository.SaveChangesAsync();
         }
 
-        public Task<int> DeleteArticleAsync(int articleId)
+        public Task<int> DeleteArticleAsync(string articleId)
         {
             var articleEntity = this.GetArticle(articleId);
 
@@ -174,7 +174,7 @@
             return this.articlesRepository.SaveChangesAsync();
         }
 
-        public void AddConformityToArticle(int articleId, int supplierId, ArticleConformityImportDTO articleConformityImportDTO)
+        public void AddConformityToArticle(string articleId, string supplierId, ArticleConformityImportDTO articleConformityImportDTO)
         {
             var supplierEntity = this.GetSupplier(supplierId);
             var articleEntity = this.GetArticle(articleId);
@@ -237,7 +237,7 @@
         }
 
         // update conformity with new one????
-        public void DeleteConformity(int articleId)
+        public void DeleteConformity(string articleId)
         {
             throw new NotImplementedException();
         }
@@ -269,22 +269,22 @@
             this.articlesRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<ConformityImportDTO> ListArticleConformities(int articleId)
+        public IEnumerable<ConformityImportDTO> ListArticleConformities(string articleId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<SupplierExportDTO> ListArticleSuppliers(int articleId)
+        public IEnumerable<SupplierExportDTO> ListArticleSuppliers(string articleId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ProductDTO> ListArticleProducts(int articleId)
+        public IEnumerable<ProductDTO> ListArticleProducts(string articleId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ArticleExportDTO> SearchByArticleNumber(int artileId)
+        public IEnumerable<ArticleExportDTO> SearchByArticleNumber(string artileId)
         {
             throw new NotImplementedException();
         }
@@ -304,29 +304,29 @@
             throw new NotImplementedException();
         }
 
-        public Article GetArticle(int articleId)
+        public Article GetArticle(string articleId)
         {
             return this.articlesRepository.All().FirstOrDefault(x => x.Id == articleId);
         }
 
-        public Supplier GetSupplier(int supplierId)
+        public Supplier GetSupplier(string supplierId)
         {
             return this.suppliersRepository.All().FirstOrDefault(x => x.Id == supplierId);
         }
 
-        public IEnumerable<string> GetSuppliersNumbersList(int articleId)
+        public IEnumerable<string> GetSuppliersNumbersList(string articleId)
         {
             return this.articlesRepository.All()
                 .Where(x => x.Id == articleId).Select(x => x.ArticleSuppliers.Select(s => s.Supplier.Number)).FirstOrDefault();
         }
 
-        public IEnumerable<int> GetSuppliersIdsList(int articleId)
+        public IEnumerable<string> GetSuppliersIdsList(string articleId)
         {
             return this.articlesRepository.All()
                 .Where(x => x.Id == articleId).Select(x => x.ArticleSuppliers.Select(s => s.Supplier.Id)).FirstOrDefault();
         }
 
-        public int GetSuppliersCount(int articleId)
+        public int GetSuppliersCount(string articleId)
         {
             return this.articlesRepository.All()
                 .Where(x => x.Id == articleId).Select(x => x.ArticleSuppliers).FirstOrDefault().Count;

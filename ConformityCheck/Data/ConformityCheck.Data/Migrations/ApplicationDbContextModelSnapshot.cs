@@ -141,10 +141,8 @@ namespace ConformityCheck.Data.Migrations
 
             modelBuilder.Entity("ConformityCheck.Data.Models.Article", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -180,11 +178,11 @@ namespace ConformityCheck.Data.Migrations
 
             modelBuilder.Entity("ConformityCheck.Data.Models.ArticleConformity", b =>
                 {
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
+                    b.Property<string>("ArticleId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ConformityId")
-                        .HasColumnType("int");
+                    b.Property<string>("ConformityId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ArticleId", "ConformityId");
 
@@ -195,11 +193,11 @@ namespace ConformityCheck.Data.Migrations
 
             modelBuilder.Entity("ConformityCheck.Data.Models.ArticleProduct", b =>
                 {
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
+                    b.Property<string>("ArticleId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ArticleId", "ProductId");
 
@@ -210,8 +208,8 @@ namespace ConformityCheck.Data.Migrations
 
             modelBuilder.Entity("ConformityCheck.Data.Models.ArticleSubstance", b =>
                 {
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
+                    b.Property<string>("ArticleId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("SubstanceId")
                         .HasColumnType("int");
@@ -225,11 +223,11 @@ namespace ConformityCheck.Data.Migrations
 
             modelBuilder.Entity("ConformityCheck.Data.Models.ArticleSupplier", b =>
                 {
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
+                    b.Property<string>("ArticleId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("int");
+                    b.Property<string>("SupplierId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ArticleId", "SupplierId");
 
@@ -240,10 +238,8 @@ namespace ConformityCheck.Data.Migrations
 
             modelBuilder.Entity("ConformityCheck.Data.Models.Conformity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
@@ -275,8 +271,9 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("int");
+                    b.Property<string>("SupplierId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -325,10 +322,8 @@ namespace ConformityCheck.Data.Migrations
 
             modelBuilder.Entity("ConformityCheck.Data.Models.Product", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -364,11 +359,11 @@ namespace ConformityCheck.Data.Migrations
 
             modelBuilder.Entity("ConformityCheck.Data.Models.ProductConformity", b =>
                 {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ConformityId")
-                        .HasColumnType("int");
+                    b.Property<string>("ConformityId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ProductId", "ConformityId");
 
@@ -527,10 +522,8 @@ namespace ConformityCheck.Data.Migrations
 
             modelBuilder.Entity("ConformityCheck.Data.Models.Supplier", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ContactPersonFirstName")
                         .HasColumnType("nvarchar(20)")

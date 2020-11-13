@@ -12,9 +12,9 @@
 
         IEnumerable<T> GetAll<T>();
 
-        Article GetArticle(int articleId);
+        Article GetArticle(string articleId);
 
-        Supplier GetSupplier(int supplierId);
+        Supplier GetSupplier(string supplierId);
 
         Task CreateAsync(ArticleImportDTO articleImportDTO);
 
@@ -22,27 +22,27 @@
 
         Task<Supplier> GetOrCreateSupplierAsync(ArticleImportDTO articleImportDTO);
 
-        Task<int> DeleteArticleAsync(int articleId);
+        Task<int> DeleteArticleAsync(string articleId);
 
-        void DeleteSupplierFromArticle(int articleId, int supplierId);
+        void DeleteSupplierFromArticle(string articleId, string supplierId);
 
-        IEnumerable<string> GetSuppliersNumbersList(int articleId);
+        IEnumerable<string> GetSuppliersNumbersList(string articleId);
 
-        int GetSuppliersCount(int articleId);
+        int GetSuppliersCount(string articleId);
 
-        IEnumerable<SupplierExportDTO> ListArticleSuppliers(int articleId);
+        IEnumerable<SupplierExportDTO> ListArticleSuppliers(string articleId);
 
-        IEnumerable<ConformityImportDTO> ListArticleConformities(int articleId);
+        IEnumerable<ConformityImportDTO> ListArticleConformities(string articleId);
 
-        IEnumerable<ProductDTO> ListArticleProducts(int articleId);
+        IEnumerable<ProductDTO> ListArticleProducts(string articleId);
 
         void UpdateArticle(ArticleImportDTO articleImportDTO);
 
-        void AddConformityToArticle(int articleId, int supplierId, ArticleConformityImportDTO articleConformityImportDTO);
+        void AddConformityToArticle(string articleId, string supplierId, ArticleConformityImportDTO articleConformityImportDTO);
 
-        void DeleteConformity(int articleId);
+        void DeleteConformity(string articleId);
 
-        IEnumerable<ArticleExportDTO> SearchByArticleNumber(int artileId); //part of the number
+        IEnumerable<ArticleExportDTO> SearchByArticleNumber(string artileId); //part of the number
 
         IEnumerable<ArticleExportDTO> SearchBySupplierNumber(string supplierNumber);
 

@@ -56,7 +56,7 @@
             }
 
             // if this conformity type has confirmations in the DB
-            if (this.articleConformitiesRepository.All().Any(ac => ac.ConformityId == conformityTypeId))
+            if (this.articleConformitiesRepository.All().Any(ac => ac.Conformity.ConformityTypeId == conformityTypeId))
             {
                 throw new ArgumentException($"Cannot delete conformity with articles assigned to it.");
             }

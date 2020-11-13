@@ -5,7 +5,7 @@
     public class ArticleSubstance
     {
         [ForeignKey(nameof(Article))]
-        public int ArticleId { get; set; }
+        public string ArticleId { get; set; }
 
         public virtual Article Article { get; set; }
 
