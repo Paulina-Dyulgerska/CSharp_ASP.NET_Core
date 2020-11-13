@@ -54,10 +54,16 @@
             {
                 Number = $"Number_{random.Next()}",
                 Description = $"Random_Generated_Article{random.Next()}",
+                //UserId = 
             };
 
             await this.repository.AddAsync(article);
             await this.repository.SaveChangesAsync();
+            // TODO trqbwa da e taka sled kato opravq AutoMappera:
+            //await this.articlesService.CreateAsync(new Services.Data.Models.ArticleImportDTO 
+            //{
+            
+            //});
 
             return this.RedirectToAction(nameof(this.Index));
         }

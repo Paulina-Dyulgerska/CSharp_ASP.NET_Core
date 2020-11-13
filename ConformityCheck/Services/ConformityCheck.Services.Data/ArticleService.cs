@@ -18,19 +18,22 @@
         private readonly IRepository<ArticleSupplier> articleSuppliersRepository;
         private readonly IDeletableEntityRepository<ConformityType> conformityTypesRepository;
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
+        private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
 
         public ArticleService(
             IDeletableEntityRepository<Article> articlesRepository,
             IDeletableEntityRepository<Supplier> suppliersRepository,
             IRepository<ArticleSupplier> articleSuppliersRepository,
             IDeletableEntityRepository<ConformityType> conformityTypesRepository,
-            IDeletableEntityRepository<Conformity> conformitiesRepository)
+            IDeletableEntityRepository<Conformity> conformitiesRepository,
+            IDeletableEntityRepository<ApplicationUser> usersRepository)
         {
             this.articlesRepository = articlesRepository;
             this.suppliersRepository = suppliersRepository;
             this.articleSuppliersRepository = articleSuppliersRepository;
             this.conformityTypesRepository = conformityTypesRepository;
             this.conformitiesRepository = conformitiesRepository;
+            this.usersRepository = usersRepository;
         }
 
         public int GetCount()
@@ -47,6 +50,9 @@
         {
             var articleEntity = this.articlesRepository.AllAsNoTracking()
                 .FirstOrDefault(x => x.Number == articleImportDTO.Number.Trim().ToUpper());
+            //var userEntity = this.usersRepository.AllAsNoTracking()
+            //    .FirstOrDefault(x => x.UserName == articleImportDTO.UserId);
+            //take the user and record its id in the article, product, conformity, etc.
 
             // TODO - async-await
             if (articleEntity != null)
@@ -58,6 +64,7 @@
             {
                 Number = articleImportDTO.Number.Trim().ToUpper(),
                 Description = this.PascalCaseConverter(articleImportDTO.Description),
+                //UserId = userEntity.Id,
             };
 
             await this.articlesRepository.AddAsync(article);

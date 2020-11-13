@@ -166,12 +166,17 @@ namespace ConformityCheck.Data.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("Number")
                         .IsUnique();
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Articles");
                 });
@@ -292,6 +297,12 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Extension")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsAccepted")
                         .HasColumnType("bit");
 
@@ -311,6 +322,9 @@ namespace ConformityCheck.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ConformityTypeId");
@@ -318,6 +332,8 @@ namespace ConformityCheck.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("SupplierId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Conformities");
                 });
@@ -346,12 +362,17 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Description")
                         .IsUnique();
 
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ConformityTypes");
                 });
@@ -383,12 +404,17 @@ namespace ConformityCheck.Data.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("Number")
                         .IsUnique();
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Products");
                 });
@@ -608,9 +634,14 @@ namespace ConformityCheck.Data.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Suppliers");
                 });
@@ -719,6 +750,13 @@ namespace ConformityCheck.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ConformityCheck.Data.Models.Article", b =>
+                {
+                    b.HasOne("ConformityCheck.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("ConformityCheck.Data.Models.ArticleConformity", b =>
                 {
                     b.HasOne("ConformityCheck.Data.Models.Article", "Article")
@@ -792,6 +830,24 @@ namespace ConformityCheck.Data.Migrations
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("ConformityCheck.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("ConformityCheck.Data.Models.ConformityType", b =>
+                {
+                    b.HasOne("ConformityCheck.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("ConformityCheck.Data.Models.Product", b =>
+                {
+                    b.HasOne("ConformityCheck.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ConformityCheck.Data.Models.ProductConformity", b =>
@@ -822,6 +878,13 @@ namespace ConformityCheck.Data.Migrations
                         .HasForeignKey("SubstanceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ConformityCheck.Data.Models.Supplier", b =>
+                {
+                    b.HasOne("ConformityCheck.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

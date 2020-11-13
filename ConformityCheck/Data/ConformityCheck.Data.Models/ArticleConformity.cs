@@ -7,7 +7,7 @@
     public class ArticleConformity : BaseModel<int>
     {
         // moga da gi iztriq vsichki takiwa attributes, nenujni sa
-        [ForeignKey(nameof(Article))] 
+        [ForeignKey(nameof(Article))]
         public string ArticleId { get; set; }
 
         public virtual Article Article { get; set; }

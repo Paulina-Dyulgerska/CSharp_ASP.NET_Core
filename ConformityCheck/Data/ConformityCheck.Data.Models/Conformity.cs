@@ -37,6 +37,14 @@
 
         public string Comments { get; set; }
 
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+
+        public string FileUrl { get; set; }
+
+        public string Extension { get; set; }
+
         public virtual ICollection<ArticleConformity> ArticleConformities { get; set; }
 
         public virtual ICollection<ProductConformity> ProductConformities { get; set; }

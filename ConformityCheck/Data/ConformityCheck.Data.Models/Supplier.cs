@@ -34,6 +34,10 @@
         [MaxLength(20)]
         public string ContactPersonLastName { get; set; }
 
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+
         public virtual ICollection<Conformity> Conformities { get; set; }
 
         public virtual ICollection<ArticleSupplier> ArticleSuppliers { get; set; }

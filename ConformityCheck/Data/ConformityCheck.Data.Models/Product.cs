@@ -23,6 +23,10 @@
         [MaxLength(50)]
         public string Description { get; set; }
 
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+
         public virtual ICollection<ArticleProduct> ArticleProducts { get; set; }
 
         public virtual ICollection<ProductConformity> ProductConformities { get; set; }

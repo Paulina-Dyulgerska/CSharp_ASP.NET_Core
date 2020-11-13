@@ -30,5 +30,6 @@
         [RegularExpression("[A-Za-z]")]
         public string ContactPersonLastName { get; set; }
 
+        public string UserId { get; set; }
     }
 }
