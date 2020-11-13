@@ -2,7 +2,9 @@
 {
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class ArticleSubstance
+    using ConformityCheck.Data.Common.Models;
+
+    public class ArticleSubstance : BaseModel<int>
     {
         [ForeignKey(nameof(Article))]
         public string ArticleId { get; set; }

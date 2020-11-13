@@ -2,7 +2,9 @@
 {
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class ProductConformity
+    using ConformityCheck.Data.Common.Models;
+
+    public class ProductConformity : BaseModel<int>
     {
         [ForeignKey(nameof(Product))]
         public string ProductId { get; set; }

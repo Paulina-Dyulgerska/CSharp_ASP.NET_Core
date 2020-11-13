@@ -2,9 +2,12 @@
 {
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class ArticleConformity
+    using ConformityCheck.Data.Common.Models;
+
+    public class ArticleConformity : BaseModel<int>
     {
-        [ForeignKey(nameof(Article))] //moga da gi iztriq vsichki takiwa
+        // moga da gi iztriq vsichki takiwa attributes, nenujni sa
+        [ForeignKey(nameof(Article))] 
         public string ArticleId { get; set; }
 
         public virtual Article Article { get; set; }
