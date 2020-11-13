@@ -1,0 +1,27 @@
+﻿@model ArticleExportListViewModel
+
+@{
+    this.ViewData["Title"] = "Articles";
+}
+
+<h1>@this.ViewData["Title"]</h1>
+
+<table class="table table-striped table-bordered table-sm">
+    <thead>
+        <tr>
+            <th scope="col">Article number</th>
+            <th scope="col">Article description</th>
+            <th scope="col">Is confirmed</th>
+        </tr>
+    </thead>
+    @foreach (var article in this.Model.Articles)
+    {
+        <tr class="table-light">
+            <td>@article.Number</td>
+            <td>@article.Description</td>
+            <td>@article.IsConfirmed</td>
+        </tr>
+    }
+</table>
+
+<a asp-action="InsertArticle" class="btn btn-primary">Insert new</a>
