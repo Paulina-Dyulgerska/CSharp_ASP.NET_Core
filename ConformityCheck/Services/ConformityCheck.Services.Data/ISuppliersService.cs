@@ -1,12 +1,13 @@
 ﻿namespace ConformityCheck.Services.Data
 {
     using System.Collections.Generic;
-
+    using System.Threading.Tasks;
     using ConformityCheck.Services.Data.Models;
+    using ConformityCheck.Web.ViewModels.Suppliers;
 
     public interface ISuppliersService : IService
     {
-        //void Create(string number, string name);
+        Task CreateAsync(CreateSupplierInputModel supplierInputModel);
 
         //void AddArticle(int supplierId, int articleId);
 

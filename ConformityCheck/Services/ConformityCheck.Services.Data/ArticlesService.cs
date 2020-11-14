@@ -53,13 +53,13 @@
             return this.articlesRepository.AllAsNoTracking().To<T>().ToList();
         }
 
-        public async Task CreateAsync(CreateArticleInputModel articleViewModel)
+        public async Task CreateAsync(CreateArticleInputModel articleInputModel)
         {
             var articleEntity = this.articlesRepository.AllAsNoTracking()
-                .FirstOrDefault(x => x.Number == articleViewModel.Number.Trim().ToUpper());
+                .FirstOrDefault(x => x.Number == articleInputModel.Number.Trim().ToUpper());
 
             //var userEntity = this.usersRepository.AllAsNoTracking()
-            //    .FirstOrDefault(x => x.UserName == articleViewModel.UserId);
+            //    .FirstOrDefault(x => x.UserName == articleInputModel.UserId);
             //take the user and record its id in the article, product, conformity, etc.
 
             if (articleEntity != null)
@@ -69,8 +69,8 @@
 
             var article = new Article
             {
-                Number = articleViewModel.Number.Trim().ToUpper(),
-                Description = this.PascalCaseConverter(articleViewModel.Description),
+                Number = articleInputModel.Number.Trim().ToUpper(),
+                Description = this.PascalCaseConverter(articleInputModel.Description),
                 //UserId = userEntity.Id,
             };
 
@@ -78,14 +78,14 @@
 
             await this.articlesRepository.SaveChangesAsync();
 
-            if (articleViewModel.Supplier.Id != null)
+            if (articleInputModel.Supplier.Id != null)
             {
-                await this.AddSupplierToArticleAsync(article, articleViewModel);
+                await this.AddSupplierToArticleAsync(article, articleInputModel.Supplier.Id);
             }
 
-            if (articleViewModel.ConformityTypes.Any())
+            if (articleInputModel.ConformityTypes.Any())
             {
-                await this.AddConformityTypesToArticleAsync(article, articleViewModel.ConformityTypes);
+                await this.AddConformityTypesToArticleAsync(article, articleInputModel.ConformityTypes);
             }
 
             // TODO: products, substances to be added too.
@@ -105,17 +105,16 @@
             await this.articlesRepository.SaveChangesAsync();
         }
 
-        private async Task AddSupplierToArticleAsync(Article article, CreateArticleInputModel articleViewModel)
+        private async Task AddSupplierToArticleAsync(Article article, string supplierId)
         {
             // var articleSuppliers = this.articlesRepository.All()
             // .Where(a => a.Id == article.Id).Select(a => a.ArticleSuppliers).FirstOrDefault();
-            if (article.ArticleSuppliers.Any(x => x.SupplierId == articleViewModel.Supplier.Id))
+            if (article.ArticleSuppliers.Any(x => x.SupplierId == supplierId))
             {
                 throw new ArgumentException("The supplier is already asigned to this article");
             }
 
-            var supplierEntity = this.suppliersRepository.All()
-                .FirstOrDefault(x => x.Id == articleViewModel.Supplier.Id);
+            var supplierEntity = this.GetSupplier(supplierId);
 
             if (supplierEntity == null)
             {
@@ -254,9 +253,9 @@
             throw new NotImplementedException();
         }
 
-        public void UpdateArticle(CreateArticleInputModel articleViewModel)
+        public void UpdateArticle(CreateArticleInputModel articleInputModel)
         {
-            var articleEntity = this.articlesRepository.All().FirstOrDefault(x => x.Number == articleViewModel.Number.Trim().ToUpper());
+            var articleEntity = this.articlesRepository.All().FirstOrDefault(x => x.Number == articleInputModel.Number.Trim().ToUpper());
 
             // TODO - async-await
             if (articleEntity == null)
@@ -264,9 +263,9 @@
                 throw new ArgumentException($"There is no article with this number.");
             }
 
-            articleEntity.Number = articleViewModel.Number.Trim().ToUpper();
+            articleEntity.Number = articleInputModel.Number.Trim().ToUpper();
 
-            articleEntity.Description = this.PascalCaseConverter(articleViewModel.Description);
+            articleEntity.Description = this.PascalCaseConverter(articleInputModel.Description);
 
             // TODO - all other article characteristics have to be able to be updated from this method!!! S buttons +add +add na vseki
             // supplier, product, substance i t.n. A otstrani shte ima - za delete na vseki zapis!!!
@@ -342,6 +341,11 @@
         {
             return this.articlesRepository.All()
                 .Where(x => x.Id == articleId).Select(x => x.ArticleSuppliers).FirstOrDefault().Count;
+        }
+
+        public Task<bool> IsArticleFullyConfirmed(string articleId)
+        {
+            return this.
         }
 
         private string PascalCaseConverter(string stringToFix)

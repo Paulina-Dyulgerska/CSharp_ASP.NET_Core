@@ -37,10 +37,10 @@
             this.substanceService = substanceService;
         }
 
-        public IActionResult Index()
+        public IActionResult ListAll()
         {
             var articles = this.articlesService.GetAll<ArticleExportModel>();
-            var model = new ArticleListExportModel { Articles = articles };
+            var model = new ArticleExportModelList { Articles = articles };
             return this.View(model);
         }
 
@@ -72,7 +72,7 @@
 
             await this.articlesService.CreateAsync(input);
 
-            return this.RedirectToAction(nameof(this.Index));
+            return this.RedirectToAction(nameof(this.ListAll));
 
             //return this.Json(input);
         }

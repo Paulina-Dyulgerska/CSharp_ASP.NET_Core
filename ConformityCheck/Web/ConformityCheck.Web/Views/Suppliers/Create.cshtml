@@ -1,0 +1,54 @@
+﻿@using ConformityCheck.Web.ViewModels.Suppliers
+@model CreateSupplierInputModel
+@{
+    this.ViewData["Title"] = "Create new supplier";
+}
+
+<form method="post" class="col-md-6 mx-auto" enctype="multipart/form-data">
+    <h1>@this.ViewData["Title"]</h1>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    @* ako formata e za edit, trqbwa da imam takowa pole, v koeto da dyrja id-to na entity-to: *@
+    @*<input type="hidden" asp-for="Id"/>*@
+
+    <div class="form-group">
+        <label asp-for="Number"></label>
+        <input asp-for="Number" class="form-control" placeholder="Supplier number" />
+        <span asp-validation-for="Number" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <textarea asp-for="Name" class="form-control" placeholder="Supplier name"></textarea>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <textarea asp-for="Email" class="form-control" placeholder="Supplier e-mail"></textarea>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PhoneNumber"></label>
+        <textarea asp-for="PhoneNumber" class="form-control" placeholder="Supplier phoneNumber"></textarea>
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ContactPersonFirstName"></label>
+        <textarea asp-for="ContactPersonFirstName" class="form-control" placeholder="Contact person first name"></textarea>
+        <span asp-validation-for="ContactPersonFirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ContactPersonLastName"></label>
+        <textarea asp-for="ContactPersonLastName" class="form-control" placeholder="Contact person last name"></textarea>
+        <span asp-validation-for="ContactPersonLastName" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" name="Add supplier"/>
+    </div>
+</form>

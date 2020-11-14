@@ -1,4 +1,4 @@
-﻿@model ArticleListExportModel
+﻿@model ArticleExportModelList
 
 @{
     this.ViewData["Title"] = "Articles";
@@ -11,7 +11,13 @@
         <tr>
             <th scope="col">Article number</th>
             <th scope="col">Article description</th>
+            <th scope="col">Article main supplier</th>
+            <th scope="col">Article description</th>
+            <th scope="col">Article description</th>
+            <th scope="col">Article description</th>
+            <th scope="col">Article description</th>
             <th scope="col">Is confirmed</th>
+            <th scope="col">Edit</th>
         </tr>
     </thead>
     @foreach (var article in this.Model.Articles)

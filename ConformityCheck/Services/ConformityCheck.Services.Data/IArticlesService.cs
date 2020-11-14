@@ -13,7 +13,7 @@
 
         Supplier GetSupplier(string supplierId);
 
-        Task CreateAsync(CreateArticleInputModel articleViewModel);
+        Task CreateAsync(CreateArticleInputModel articleInputModel);
 
         Task<int> DeleteArticleAsync(string articleId);
 
@@ -29,7 +29,7 @@
 
         IEnumerable<ProductDTO> ListArticleProducts(string articleId);
 
-        void UpdateArticle(CreateArticleInputModel articleViewModel);
+        void UpdateArticle(CreateArticleInputModel articleInputModel);
 
         void AddConformityToArticle(string articleId, string supplierId, ArticleConformityImportDTO articleConformityImportDTO);
 

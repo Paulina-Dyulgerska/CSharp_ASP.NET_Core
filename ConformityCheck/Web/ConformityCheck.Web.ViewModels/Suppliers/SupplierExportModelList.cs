@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class SupplierListExportModel
+    public class SupplierExportModelList
     {
         public IEnumerable<SupplierExportModel> Suppliers { get; set; }
     }

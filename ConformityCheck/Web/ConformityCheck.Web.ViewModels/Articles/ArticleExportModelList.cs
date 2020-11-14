@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class ArticleListExportModel
+    public class ArticleExportModelList
     {
         public IEnumerable<ArticleExportModel> Articles { get; set; }
     }
