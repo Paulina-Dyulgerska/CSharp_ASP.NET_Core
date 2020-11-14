@@ -11,7 +11,7 @@
     using ConformityCheck.Services.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class ArticleService : IArticleService
+    public class ArticlesService : IArticlesService
     {
         private readonly IDeletableEntityRepository<Article> articlesRepository;
         private readonly IDeletableEntityRepository<Supplier> suppliersRepository;
@@ -20,7 +20,7 @@
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
 
-        public ArticleService(
+        public ArticlesService(
             IDeletableEntityRepository<Article> articlesRepository,
             IDeletableEntityRepository<Supplier> suppliersRepository,
             IRepository<ArticleSupplier> articleSuppliersRepository,

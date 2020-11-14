@@ -6,12 +6,8 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data.Models;
 
-    public interface IArticleService
+    public interface IArticlesService : IService
     {
-        int GetCount();
-
-        IEnumerable<T> GetAll<T>();
-
         Article GetArticle(string articleId);
 
         Supplier GetSupplier(string supplierId);

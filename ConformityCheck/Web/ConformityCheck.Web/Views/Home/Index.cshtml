@@ -1,9 +1,22 @@
 ﻿@using ConformityCheck.Common
+@model ConformityCheck.Web.ViewModels.Home.IndexViewModel  
+
 @{
     this.ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="col-md-4 offset-md-4">
+        <p>We have:</p>
+        <ul class="list-group">
+            <li class="list-group-item bg-info">Articles: @Model.Articles</li>
+            <li class="list-group-item bg-light">Products: @Model.Products</li>
+            <li class="list-group-item bg-info">Suppliers: @Model.Suppliers</li>
+            <li class="list-group-item bg-light">ConformityTypes: @Model.ConformityTypes</li>
+            <li class="list-group-item bg-info">Conformities: @Model.Conformities</li>
+            <li class="list-group-item bg-light">Substances: @Model.Substances</li>
+            <li class="list-group-item bg-info">RegulationLists: @Model.RegulationLists</li>
+        </ul>
+    </div>
 </div>

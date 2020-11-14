@@ -5,7 +5,7 @@
 
     using ConformityCheck.Services.Data.Models;
 
-    public interface IConformityTypeService
+    public interface IConformityTypesService : IService
     {
         Task CreateAsync(ConformityTypeDTO conformityTypeImputDTO);
 

@@ -1,0 +1,114 @@
+﻿@using ConformityCheck.Web.ViewModels.Articles
+@model CreateArticleInputModel
+
+<hq>Create new article</hq>
+
+<form method="post" class="col-md-4 mx-auto" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    @* ako formata e za edit, trqbwa da imam takowa pole, v koeto da dyrja id-to na entity-to: *@
+    @*<input type="hidden" asp-for="Id"/>*@
+
+    @* TODO: SupplierNumbers or Names in a dropdown menu:
+            <div class="form-group">
+            <label asp-for="SupplierNumber"></label>
+            <select asp-for="SupplierNumber" class="form-control">
+                @foreach (var ingredient in @Model.Ingredients)
+                {
+                    <option class="form-control" value="@ingredient">@ingredient</option>
+                }
+            </select>
+        <select asp-for="Ingredients" class="form-control" asp-items="@Model.Ingredients"></select>
+        <span asp-validation-for="Ingredients" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+                <label asp-for="SupplierEmail"></label>
+                <select asp-for="SupplierEmail" class="form-control" asp-items="@Html.GetEnumSelectList<RecipeType>()"></select>
+                <span asp-validation-for="SupplierEmail" class="text-danger"></span>
+            </div>*@
+
+    <div class="form-group">
+        <label asp-for="Number"></label>
+        <input asp-for="Number" class="form-control" placeholder="Article number" />
+        <span asp-validation-for="Number" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea rows="3" asp-for="Description" class="form-control" placeholder="Article description"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Suppliers"></label>
+        <select asp-for="Suppliers" class="form-control">
+            @foreach (var item in @Model.Suppliers)
+            {
+                <option class="form-control" value="@item">@item.Number</option>
+            }
+        </select>
+        @*<select asp-for="Suppliers" class="form-control" asp-items="@Model.Suppliers"></select>*@
+        <span asp-validation-for="Suppliers" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Products"></label>
+        <select asp-for="Products" class="form-control">
+            @foreach (var item in @Model.Products)
+            {
+                <option class="form-control" value="@item">@item.Number</option>
+            }
+        </select>
+        <span asp-validation-for="Products" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Substances"></label>
+        <select asp-for="Substances" class="form-control">
+            @foreach (var item in @Model.Substances)
+            {
+                <option class="form-control" value="@item">@item.CASNumber</option>
+            }
+        </select>
+        <span asp-validation-for="Substances" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="ConformityTypes"></label>
+        <select asp-for="ConformityTypes" class="form-control">
+            @foreach (var item in @Model.ConformityTypes)
+            {
+                <option class="form-control" value="@item">@item.Description</option>
+            }
+        </select>
+        <span asp-validation-for="ConformityTypes" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Conformity.IssueDate"></label>
+        <input asp-for="Conformity.IssueDate" class="form-control" />
+        <span asp-validation-for="Conformity.IssueDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Conformity.IsAssepted"></label>
+        <input asp-for="Conformity.IsAssepted" class="form-control" />
+        <span asp-validation-for="Conformity.IsAssepted" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Conformity.ConformationAcceptanceDate"></label>
+        <input asp-for="Conformity.ConformationAcceptanceDate" class="form-control" />
+        <span asp-validation-for="Conformity.ConformationAcceptanceDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" />
+    </div>
+</form>
+
+@* To add scripts in scritps section of the _Layout: *@
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

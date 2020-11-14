@@ -8,13 +8,14 @@
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data.Models;
+    using ConformityCheck.Services.Mapping;
 
-    public class ConformityTypeService : IConformityTypeService
+    public class ConformityTypesService : IConformityTypesService
     {
         private readonly IDeletableEntityRepository<ConformityType> conformityTypesRepository;
         private readonly IRepository<ArticleConformity> articleConformitiesRepository;
 
-        public ConformityTypeService(
+        public ConformityTypesService(
             IDeletableEntityRepository<ConformityType> conformityTypesRepository,
             IRepository<ArticleConformity> articleConformitiesRepository)
         {
@@ -67,6 +68,17 @@
             return this.conformityTypesRepository.SaveChangesAsync();
         }
 
+        public int GetCount()
+        {
+            return this.conformityTypesRepository.AllAsNoTracking().Count();
+        }
+
+        public IEnumerable<T> GetAll<T>()
+        {
+            return this.conformityTypesRepository.All().To<T>().ToList();
+        }
+
+        // TODO: delete this:
         public IEnumerable<ConformityTypeDTO> ListAllConformityTypes()
         {
             return this.conformityTypesRepository.All().Select(ct => new ConformityTypeDTO

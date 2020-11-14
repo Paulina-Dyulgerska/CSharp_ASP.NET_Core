@@ -13,25 +13,26 @@
 
     public class ConformityTypesSeeder : ISeeder
     {
-
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            if (!dbContext.ConformityTypes.Any())
+            if (dbContext.ConformityTypes.Any())
             {
-                var jsonConformityTypes = File
-                    .ReadAllText("../../../ConformityCheck/Data/ConformityCheck.Data/Seeding/DataFiles/ConformityTypesData.json");
-                var conformityTypes = JsonSerializer.Deserialize<IEnumerable<ConformityTypeDTO>>(jsonConformityTypes);
-                var conformityTypeService = serviceProvider.GetRequiredService<IConformityTypeService>();
+                return;
+            }
 
-                foreach (var conformityType in conformityTypes)
+            var jsonConformityTypes = File
+                .ReadAllText("../../../ConformityCheck/Data/ConformityCheck.Data/Seeding/DataFiles/ConformityTypesData.json");
+            var conformityTypes = JsonSerializer.Deserialize<IEnumerable<ConformityTypeDTO>>(jsonConformityTypes);
+            var conformityTypeService = serviceProvider.GetRequiredService<IConformityTypesService>();
+
+            foreach (var conformityType in conformityTypes)
+            {
+                try
                 {
-                    try
-                    {
-                        await conformityTypeService.CreateAsync(conformityType);
-                    }
-                    catch (Exception)
-                    {
-                    }
+                    await conformityTypeService.CreateAsync(conformityType);
+                }
+                catch (Exception)
+                {
                 }
             }
         }
