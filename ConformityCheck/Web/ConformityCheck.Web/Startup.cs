@@ -62,6 +62,8 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
+            services.AddTransient<IArticlesSeedService, ArticlesSeedService>();
+            services.AddTransient<IConformityTypesSeedService, ConformityTypesSeedService>();
             services.AddTransient<IArticlesService, ArticlesService>();
             services.AddTransient<IConformityTypesService, ConformityTypesService>();
             services.AddTransient<IGetCountsService, GetCountsService>();

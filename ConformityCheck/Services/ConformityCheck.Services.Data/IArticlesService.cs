@@ -5,6 +5,7 @@
 
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data.Models;
+    using ConformityCheck.Web.ViewModels.Articles;
 
     public interface IArticlesService : IService
     {
@@ -12,11 +13,7 @@
 
         Supplier GetSupplier(string supplierId);
 
-        Task CreateAsync(ArticleImportDTO articleImportDTO);
-
-        Task<int> AddSupplierToArticleAsync(Article article, ArticleImportDTO articleImportDTO);
-
-        Task<Supplier> GetOrCreateSupplierAsync(ArticleImportDTO articleImportDTO);
+        Task CreateAsync(CreateArticleInputModel articleViewModel);
 
         Task<int> DeleteArticleAsync(string articleId);
 
@@ -32,7 +29,7 @@
 
         IEnumerable<ProductDTO> ListArticleProducts(string articleId);
 
-        void UpdateArticle(ArticleImportDTO articleImportDTO);
+        void UpdateArticle(CreateArticleInputModel articleViewModel);
 
         void AddConformityToArticle(string articleId, string supplierId, ArticleConformityImportDTO articleConformityImportDTO);
 

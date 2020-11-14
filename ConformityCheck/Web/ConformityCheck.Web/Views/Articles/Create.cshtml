@@ -1,9 +1,17 @@
 ﻿@using ConformityCheck.Web.ViewModels.Articles
 @model CreateArticleInputModel
+@{
+    this.ViewData["Title"] = "Create new article";
+    //var suppliers = Model.SuppliersAvailable.Select(x => new SelectListItem(x.NumberAndName, x.Id));
+    //var conformityTypes = Model.ConformityTypesAvailable.Select(x => new SelectListItem(x.Description, x.Id.ToString()));
+    //var products = Model.ProductsAvailable.Select(x => new SelectListItem(x.Number, x.Id));
+    //var substances = Model.SubstancesAvailable.Select(x => new SelectListItem($"{x.CASNumber} - {x.Description}", x.Id.ToString()));
+}
 
-<hq>Create new article</hq>
 
 <form method="post" class="col-md-4 mx-auto" enctype="multipart/form-data">
+    <h1>@this.ViewData["Title"]</h1>
+
     <div asp-validation-summary="All" class="text-danger"></div>
 
     @* ako formata e za edit, trqbwa da imam takowa pole, v koeto da dyrja id-to na entity-to: *@
@@ -41,66 +49,54 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="Suppliers"></label>
-        <select asp-for="Suppliers" class="form-control">
-            @foreach (var item in @Model.Suppliers)
+        <label asp-for="Supplier.Id"></label>
+        @*<select asp-for="SupplierId" class="form-control" asp-items="suppliers"></select>*@
+        <select asp-for="Supplier.Id" class="form-control">
+            <option class="form-control" value=""></option>
+            @foreach (var item in @Model.SuppliersAvailable)
+            {
+                <option class="form-control" value="@item.Id">@item.NumberAndName</option>
+            }
+        </select>
+        <span asp-validation-for="Supplier.Id" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ProductsAvailable"></label>
+        <select asp-for="ProductsAvailable" class="form-control">
+            @foreach (var item in @Model.ProductsAvailable)
             {
                 <option class="form-control" value="@item">@item.Number</option>
             }
         </select>
-        @*<select asp-for="Suppliers" class="form-control" asp-items="@Model.Suppliers"></select>*@
-        <span asp-validation-for="Suppliers" class="text-danger"></span>
+        <span asp-validation-for="ProductsAvailable" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Products"></label>
-        <select asp-for="Products" class="form-control">
-            @foreach (var item in @Model.Products)
-            {
-                <option class="form-control" value="@item">@item.Number</option>
-            }
-        </select>
-        <span asp-validation-for="Products" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Substances"></label>
-        <select asp-for="Substances" class="form-control">
-            @foreach (var item in @Model.Substances)
+        <label asp-for="SubstancesAvailable"></label>
+        <select asp-for="SubstancesAvailable" class="form-control">
+            @foreach (var item in @Model.SubstancesAvailable)
             {
                 <option class="form-control" value="@item">@item.CASNumber</option>
             }
         </select>
-        <span asp-validation-for="Substances" class="text-danger"></span>
+        <span asp-validation-for="SubstancesAvailable" class="text-danger"></span>
     </div>
-    
+
     <div class="form-group">
         <label asp-for="ConformityTypes"></label>
-        <select asp-for="ConformityTypes" class="form-control">
-            @foreach (var item in @Model.ConformityTypes)
+        <select size="10" asp-for="ConformityTypes" class="form-control">
+            @foreach (var item in @Model.ConformityTypesAvailable)
             {
-                <option class="form-control" value="@item">@item.Description</option>
+                <option class="form-control" value="@item.Id">@item.Description</option>
             }
         </select>
         <span asp-validation-for="ConformityTypes" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Conformity.IssueDate"></label>
-        <input asp-for="Conformity.IssueDate" class="form-control" />
-        <span asp-validation-for="Conformity.IssueDate" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Conformity.IsAssepted"></label>
-        <input asp-for="Conformity.IsAssepted" class="form-control" />
-        <span asp-validation-for="Conformity.IsAssepted" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Conformity.ConformationAcceptanceDate"></label>
-        <input asp-for="Conformity.ConformationAcceptanceDate" class="form-control" />
-        <span asp-validation-for="Conformity.ConformationAcceptanceDate" class="text-danger"></span>
+    <div id="conformitiesContainer">
+        <label asp-for="ConformityTypesAvailable"></label>
+        <a class="btn btn-success" onclick="AddMoreConformities()">+</a>
     </div>
 
     <div class="form-group">
@@ -108,7 +104,3 @@
     </div>
 </form>
 
-@* To add scripts in scritps section of the _Layout: *@
-@section Scripts{
-    <partial name="_ValidationScriptsPartial" />
-}

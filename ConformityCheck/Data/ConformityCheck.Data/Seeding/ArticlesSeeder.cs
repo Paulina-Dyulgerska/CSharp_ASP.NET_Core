@@ -23,7 +23,7 @@
             var jsonArticles = File
                 .ReadAllText("../../../ConformityCheck/Data/ConformityCheck.Data/Seeding/DataFiles/ArticlesData.json");
             var articleImportDTOs = JsonSerializer.Deserialize<IEnumerable<ArticleImportDTO>>(jsonArticles);
-            var articleService = serviceProvider.GetRequiredService<IArticlesService>();
+            var articleService = serviceProvider.GetRequiredService<IArticlesSeedService>();
 
             foreach (var articleImportDTO in articleImportDTOs)
             {

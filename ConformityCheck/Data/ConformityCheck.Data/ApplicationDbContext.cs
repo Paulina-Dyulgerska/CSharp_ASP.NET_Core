@@ -45,6 +45,8 @@
 
         public DbSet<ArticleConformity> ArticleConformities { get; set; }
 
+        public DbSet<ArticleConformityType> ArticleConformityTypes { get; set; }
+
         public DbSet<ArticleProduct> ArticleProducts { get; set; }
 
         public DbSet<ArticleSubstance> ArticleSubstances { get; set; }

@@ -7,5 +7,7 @@
         int GetCount();
 
         IEnumerable<T> GetAll<T>();
+
+        IEnumerable<T> GetAllAsNoTracking<T>();
     }
 }

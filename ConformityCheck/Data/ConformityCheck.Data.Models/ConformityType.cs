@@ -10,6 +10,7 @@
         public ConformityType()
         {
             this.Conformities = new HashSet<Conformity>();
+            this.ArticleConformityTypes = new HashSet<ArticleConformityType>();
         }
 
         [Required]
@@ -21,5 +22,7 @@
         public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<Conformity> Conformities { get; set; }
+
+        public virtual ICollection<ArticleConformityType> ArticleConformityTypes { get; set; }
     }
 }

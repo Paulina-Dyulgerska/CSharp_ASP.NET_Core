@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\ConformityCheck.Data.Common\ConformityCheck.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\ConformityCheck.Data.Models\ConformityCheck.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\ConformityCheck.Web.ViewModels\ConformityCheck.Web.ViewModels.csproj" />
     <ProjectReference Include="..\ConformityCheck.Services.Mapping\ConformityCheck.Services.Mapping.csproj" />
   </ItemGroup>
 

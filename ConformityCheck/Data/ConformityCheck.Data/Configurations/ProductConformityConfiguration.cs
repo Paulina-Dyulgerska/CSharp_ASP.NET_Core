@@ -8,7 +8,7 @@
     {
         public void Configure(EntityTypeBuilder<ProductConformity> productConformity)
         {
-            productConformity.HasKey(x => new { x.ProductId, x.ConformityId });
+            //productConformity.HasKey(x => new { x.ProductId, x.ConformityId });
 
             productConformity.HasOne(pc => pc.Product)
             .WithMany(p => p.ProductConformities)

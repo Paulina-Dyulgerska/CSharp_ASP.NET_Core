@@ -2,7 +2,6 @@
 {
     using System.Diagnostics;
 
-    using AutoMapper;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels;
     using ConformityCheck.Web.ViewModels.Home;

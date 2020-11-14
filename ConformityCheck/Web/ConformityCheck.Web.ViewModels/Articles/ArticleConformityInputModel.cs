@@ -5,7 +5,7 @@
 
     public class ArticleConformityInputModel
     {
-        public string ConformityType { get; set; }
+        public string Id { get; set; }
 
         // vsichki dates da sa v UTC, i tuk i na servera i na DB-a!!!
         public DateTime IssueDate { get; set; }

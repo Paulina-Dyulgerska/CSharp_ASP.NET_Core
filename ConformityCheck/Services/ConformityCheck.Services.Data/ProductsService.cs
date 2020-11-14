@@ -25,5 +25,10 @@
         {
             return this.productsRepository.All().To<T>().ToList();
         }
+
+        public IEnumerable<T> GetAllAsNoTracking<T>()
+        {
+            return this.productsRepository.AllAsNoTracking().To<T>().ToList();
+        }
     }
 }

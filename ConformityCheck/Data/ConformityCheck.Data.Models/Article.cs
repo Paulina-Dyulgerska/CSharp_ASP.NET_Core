@@ -15,6 +15,7 @@
             this.ArticleConformities = new HashSet<ArticleConformity>();
             this.ArticleSubstances = new HashSet<ArticleSubstance>();
             this.ArticleSuppliers = new HashSet<ArticleSupplier>();
+            this.ArticleConformityTypes = new HashSet<ArticleConformityType>();
         }
 
         [Required]
@@ -35,6 +36,8 @@
         public virtual ICollection<ArticleProduct> ArticleProducts { get; set; }
 
         public virtual ICollection<ArticleConformity> ArticleConformities { get; set; }
+
+        public virtual ICollection<ArticleConformityType> ArticleConformityTypes { get; set; }
 
         public virtual ICollection<ArticleSubstance> ArticleSubstances { get; set; }
 

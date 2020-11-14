@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using ConformityCheck.Data.Models;
-using ConformityCheck.Services.Mapping;
-
-namespace ConformityCheck.Web.ViewModels.Products
+﻿namespace ConformityCheck.Web.ViewModels.Products
 {
+    using AutoMapper;
+    using ConformityCheck.Data.Models;
+    using ConformityCheck.Services.Mapping;
+
     public class ProductNumberExportModel : IMapFrom<Product>, IHaveCustomMappings
     {
         public string Id { get; set; }

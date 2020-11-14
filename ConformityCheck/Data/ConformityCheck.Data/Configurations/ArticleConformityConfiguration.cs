@@ -8,8 +8,8 @@
     {
         public void Configure(EntityTypeBuilder<ArticleConformity> articleConformity)
         {
-            articleConformity
-                 .HasKey(x => new { x.ArticleId, x.ConformityId });
+            //articleConformity
+            //     .HasKey(x => new { x.ArticleId, x.ConformityId });
 
             articleConformity
                 .HasOne(ac => ac.Article)

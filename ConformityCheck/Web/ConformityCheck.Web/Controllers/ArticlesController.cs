@@ -7,6 +7,7 @@
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
+    using ConformityCheck.Services.Data.Models;
     using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
     using ConformityCheck.Web.ViewModels.Products;
@@ -47,10 +48,10 @@
         {
             var model = new CreateArticleInputModel
             {
-                Suppliers = this.supplierService.GetAll<SupplierNumberExportModel>(),
-                ConformityTypes = this.conformityTypeService.GetAll<ConformityTypeNumberExportModel>(),
-                Products = this.productService.GetAll<ProductNumberExportModel>(),
-                Substances = this.substanceService.GetAll<SubstanceNumberExportModel>(),
+                SuppliersAvailable = this.supplierService.GetAllAsNoTracking<SupplierExportModel>(),
+                ConformityTypesAvailable = this.conformityTypeService.GetAllAsNoTracking<ConformityTypeNumberModel>(),
+                ProductsAvailable = this.productService.GetAllAsNoTracking<ProductNumberExportModel>(),
+                SubstancesAvailable = this.substanceService.GetAllAsNoTracking<SubstanceNumberExportModel>(),
             };
 
             return this.View(model);
@@ -59,7 +60,6 @@
         [HttpPost]
         public async Task<IActionResult> Create(CreateArticleInputModel input)
         {
-            // check for error in model:
             if (!this.ModelState.IsValid)
             {
                 foreach (var error in this.ModelState.Values.SelectMany(v => v.Errors))
@@ -67,34 +67,14 @@
                     // DoSomething(error);
                 }
 
-                return this.View();
+                return this.View(input);
             }
 
-            //var random = new Random();
-
-            //// TODO - form for articles add
-            //var article = new Article
-            //{
-            //    Number = $"Number_{random.Next()}",
-            //    Description = $"Random_Generated_Article{random.Next()}",
-            //    //UserId = 
-            //};
-
-            //await this.repository.AddAsync(article);
-            //await this.repository.SaveChangesAsync();
-            //// TODO trqbwa da e taka sled kato opravq AutoMappera:
-            ////await this.articlesService.CreateAsync(new Services.Data.Models.ArticleImportDTO 
-            ////{
-
-            ////});
-            ////i da iztriq repository!!!!
-
-            //return this.RedirectToAction(nameof(this.Index));
-
-            // TODO: redirect to artice's own page by successful creation.
-            await this.articlesService.CreateAsync();
+            await this.articlesService.CreateAsync(input);
 
             return this.RedirectToAction(nameof(this.Index));
+
+            //return this.Json(input);
         }
     }
 }

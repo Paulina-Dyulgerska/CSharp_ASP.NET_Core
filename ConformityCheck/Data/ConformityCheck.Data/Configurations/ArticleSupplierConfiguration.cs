@@ -8,7 +8,7 @@
     {
         public void Configure(EntityTypeBuilder<ArticleSupplier> articleSupplier)
         {
-            articleSupplier.HasKey(x => new { x.ArticleId, x.SupplierId });
+            //articleSupplier.HasKey(x => new { x.ArticleId, x.SupplierId });
 
             articleSupplier.HasOne(asup => asup.Article)
             .WithMany(a => a.ArticleSuppliers)

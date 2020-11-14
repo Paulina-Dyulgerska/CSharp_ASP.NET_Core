@@ -78,6 +78,11 @@
             return this.conformityTypesRepository.All().To<T>().ToList();
         }
 
+        public IEnumerable<T> GetAllAsNoTracking<T>()
+        {
+            return this.conformityTypesRepository.AllAsNoTracking().To<T>().ToList();
+        }
+
         // TODO: delete this:
         public IEnumerable<ConformityTypeDTO> ListAllConformityTypes()
         {

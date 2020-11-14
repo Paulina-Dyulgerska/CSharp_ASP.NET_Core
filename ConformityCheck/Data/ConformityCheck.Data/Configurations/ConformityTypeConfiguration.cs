@@ -10,12 +10,14 @@
         {
             // ne moje da se iztrie ConformityType, predi
             // da se iztriqt vsichki Conformities, koito sa ot tozi type!
-            conformityType.HasMany(ct => ct.Conformities)
-            .WithOne(c => c.ConformityType)
-            .OnDelete(DeleteBehavior.Restrict);
+            conformityType
+                .HasMany(ct => ct.Conformities)
+                .WithOne(c => c.ConformityType)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            conformityType.HasIndex(ct => ct.Description)
-            .IsUnique();
+            conformityType
+                .HasIndex(ct => ct.Description)
+                .IsUnique();
         }
     }
 }
