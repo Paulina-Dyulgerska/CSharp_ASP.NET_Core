@@ -15,6 +15,10 @@
 
         Task CreateAsync(CreateArticleInputModel articleInputModel);
 
+        //bool IsArticleFullyConfirmed(string articleId);
+
+        IEnumerable<ArticleExportModel> GetAllAsNoTrackingFullInfo();
+
         Task<int> DeleteArticleAsync(string articleId);
 
         void DeleteSupplierFromArticle(string articleId, string supplierId);
@@ -29,7 +33,9 @@
 
         IEnumerable<ProductDTO> ListArticleProducts(string articleId);
 
-        void UpdateArticle(CreateArticleInputModel articleInputModel);
+        EditExportModel GetEditArticle(string articleId);
+
+        Task PostEditArticleAsync(EditExportModel articleInputModel);
 
         void AddConformityToArticle(string articleId, string supplierId, ArticleConformityImportDTO articleConformityImportDTO);
 

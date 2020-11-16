@@ -13,14 +13,14 @@
     public class ConformityTypesService : IConformityTypesService
     {
         private readonly IDeletableEntityRepository<ConformityType> conformityTypesRepository;
-        private readonly IRepository<ArticleConformity> articleConformitiesRepository;
+        private readonly IRepository<ArticleConformityType> articleConformityTypeRepository;
 
         public ConformityTypesService(
             IDeletableEntityRepository<ConformityType> conformityTypesRepository,
-            IRepository<ArticleConformity> articleConformitiesRepository)
+            IRepository<ArticleConformityType> articleConformityTypeRepository)
         {
             this.conformityTypesRepository = conformityTypesRepository;
-            this.articleConformitiesRepository = articleConformitiesRepository;
+            this.articleConformityTypeRepository = articleConformityTypeRepository;
         }
 
         public async Task CreateAsync(ConformityTypeDTO conformityTypeImputDTO)
@@ -57,7 +57,7 @@
             }
 
             // if this conformity type has confirmations in the DB
-            if (this.articleConformitiesRepository.All().Any(ac => ac.Conformity.ConformityTypeId == conformityTypeId))
+            if (this.articleConformityTypeRepository.All().Any(ac => ac.Conformity.ConformityTypeId == conformityTypeId))
             {
                 throw new ArgumentException($"Cannot delete conformity with articles assigned to it.");
             }

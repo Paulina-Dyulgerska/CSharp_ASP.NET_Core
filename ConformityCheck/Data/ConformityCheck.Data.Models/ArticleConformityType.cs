@@ -11,5 +11,9 @@
         public int ConformityTypeId { get; set; }
 
         public virtual ConformityType ConformityType { get; set; }
+
+        public string ConformityId { get; set; }
+
+        public virtual Conformity Conformity { get; set; }
     }
 }

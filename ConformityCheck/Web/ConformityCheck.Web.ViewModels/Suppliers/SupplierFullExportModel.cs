@@ -13,7 +13,7 @@
         public string Name { get; set; }
 
         public string Number { get; set; }
-        
+
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }
@@ -34,10 +34,11 @@
         {
             configuration.CreateMap<Supplier, SupplierFullExportModel>()
                 .ForMember(x => x.ArticlesCount, opt => opt.MapFrom(s => s.ArticleSuppliers.Count))
-                .ForMember(x=>x.ContactPersonName, 
-                            opt=>opt.MapFrom(s=>s.ContactPersonFirstName + " " + s.ContactPersonLastName));
-                //.ForMember(x=>x.ArticlesConfirmed, opt=>opt.MapFrom(s=>s.ArticleSuppliers
-                //.Select(x=>x.Article.ArticleConformityTypes.))
+                .ForMember(
+                    x => x.ContactPersonName,
+                    opt => opt.MapFrom(s => s.ContactPersonFirstName + " " + s.ContactPersonLastName));
+            //.ForMember(x=>x.ArticlesConfirmed, opt=>opt.MapFrom(s=>s.ArticleSuppliers
+            //.Select(x=>x.Article.ArticleConformityTypes.))
         }
     }
 }

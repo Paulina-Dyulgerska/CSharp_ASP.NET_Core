@@ -13,10 +13,14 @@
     public class SuppliersService : ISuppliersService
     {
         private readonly IDeletableEntityRepository<Supplier> suppliersRepository;
+        private readonly IRepository<ArticleConformityType> articleConformityTypeRepository;
 
-        public SuppliersService(IDeletableEntityRepository<Supplier> suppliersRepository)
+        public SuppliersService(
+            IDeletableEntityRepository<Supplier> suppliersRepository,
+            IRepository<ArticleConformityType> articleConformityTypeRepository)
         {
             this.suppliersRepository = suppliersRepository;
+            this.articleConformityTypeRepository = articleConformityTypeRepository;
         }
 
         public int GetCount()

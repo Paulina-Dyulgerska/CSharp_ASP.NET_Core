@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConformityCheck.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201114171329_InitialCreate")]
+    [Migration("20201115213222_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -183,7 +183,7 @@ namespace ConformityCheck.Data.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("ConformityCheck.Data.Models.ArticleConformity", b =>
+            modelBuilder.Entity("ConformityCheck.Data.Models.ArticleConformityType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -194,31 +194,6 @@ namespace ConformityCheck.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConformityId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
-
-                    b.HasIndex("ConformityId");
-
-                    b.ToTable("ArticleConformities");
-                });
-
-            modelBuilder.Entity("ConformityCheck.Data.Models.ArticleConformityType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ArticleId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ConformityTypeId")
@@ -233,6 +208,8 @@ namespace ConformityCheck.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
+
+                    b.HasIndex("ConformityId");
 
                     b.HasIndex("ConformityTypeId");
 
@@ -307,6 +284,9 @@ namespace ConformityCheck.Data.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsMainSupplier")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -814,22 +794,15 @@ namespace ConformityCheck.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("ConformityCheck.Data.Models.ArticleConformity", b =>
-                {
-                    b.HasOne("ConformityCheck.Data.Models.Article", "Article")
-                        .WithMany("ArticleConformities")
-                        .HasForeignKey("ArticleId");
-
-                    b.HasOne("ConformityCheck.Data.Models.Conformity", "Conformity")
-                        .WithMany("ArticleConformities")
-                        .HasForeignKey("ConformityId");
-                });
-
             modelBuilder.Entity("ConformityCheck.Data.Models.ArticleConformityType", b =>
                 {
                     b.HasOne("ConformityCheck.Data.Models.Article", "Article")
                         .WithMany("ArticleConformityTypes")
                         .HasForeignKey("ArticleId");
+
+                    b.HasOne("ConformityCheck.Data.Models.Conformity", "Conformity")
+                        .WithMany("ArticleConformityTypes")
+                        .HasForeignKey("ConformityId");
 
                     b.HasOne("ConformityCheck.Data.Models.ConformityType", "ConformityType")
                         .WithMany("ArticleConformityTypes")

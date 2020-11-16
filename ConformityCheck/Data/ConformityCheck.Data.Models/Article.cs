@@ -12,7 +12,6 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.ArticleProducts = new HashSet<ArticleProduct>();
-            this.ArticleConformities = new HashSet<ArticleConformity>();
             this.ArticleSubstances = new HashSet<ArticleSubstance>();
             this.ArticleSuppliers = new HashSet<ArticleSupplier>();
             this.ArticleConformityTypes = new HashSet<ArticleConformityType>();
@@ -34,8 +33,6 @@
         public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<ArticleProduct> ArticleProducts { get; set; }
-
-        public virtual ICollection<ArticleConformity> ArticleConformities { get; set; }
 
         public virtual ICollection<ArticleConformityType> ArticleConformityTypes { get; set; }
 

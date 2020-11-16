@@ -43,8 +43,6 @@
 
         public DbSet<ArticleSupplier> ArticleSuppliers { get; set; }
 
-        public DbSet<ArticleConformity> ArticleConformities { get; set; }
-
         public DbSet<ArticleConformityType> ArticleConformityTypes { get; set; }
 
         public DbSet<ArticleProduct> ArticleProducts { get; set; }

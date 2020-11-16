@@ -6,26 +6,40 @@
 
 <h1>@this.ViewData["Title"]</h1>
 
-<table class="table table-striped table-bordered table-sm">
+<table class="table table-light table-responsive-md table-hover table-striped table-bordered table-sm">
     <thead>
         <tr>
-            <th scope="col">Article number</th>
+            <th scope="col">Article Nr.</th>
             <th scope="col">Article description</th>
-            <th scope="col">Article main supplier</th>
-            <th scope="col">Article description</th>
-            <th scope="col">Article description</th>
-            <th scope="col">Article description</th>
-            <th scope="col">Article description</th>
+            <th scope="col">Main supplier Nr.</th>
+            <th scope="col">Main supplier name</th>
             <th scope="col">Is confirmed</th>
+            <th scope="col">Missing confirmations</th>
+            <th scope="col">Confirmations</th>
             <th scope="col">Edit</th>
         </tr>
     </thead>
     @foreach (var article in this.Model.Articles)
     {
-        <tr class="table-light">
+        <tr>
             <td>@article.Number</td>
             <td>@article.Description</td>
+            <td>@article.MainSupplierNumber</td>
+            <td>@article.MainSupplierName</td>
             <td>@article.IsConfirmed</td>
+            <td>
+                @foreach (var unconfirmedConformity in article.ArticleMissingConformityTypes)
+                {
+                    <ul>@unconfirmedConformity</ul>
+                }
+            </td>
+            <td>
+                @foreach (var confirmedConformity in article.ArticleConformityTypes)
+                {
+                    <ul>@confirmedConformity</ul>
+                }
+            </td>
+            <td><a href="Edit?id=@article.Id" class="btn btn-primary" id="@article.Id">Edit</a></td>
         </tr>
     }
 </table>

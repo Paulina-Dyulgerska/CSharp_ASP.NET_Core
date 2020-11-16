@@ -12,6 +12,9 @@
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
+    using ConformityCheck.Web.ViewModels.Products;
+    using ConformityCheck.Web.ViewModels.Substances;
+    using ConformityCheck.Web.ViewModels.Suppliers;
 
     public class ArticlesService : IArticlesService
     {
@@ -21,6 +24,7 @@
         private readonly IDeletableEntityRepository<ConformityType> conformityTypesRepository;
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
+        private readonly IRepository<ArticleConformityType> articleConformityTypeRepository;
 
         public ArticlesService(
             IDeletableEntityRepository<Article> articlesRepository,
@@ -28,7 +32,8 @@
             IRepository<ArticleSupplier> articleSuppliersRepository,
             IDeletableEntityRepository<ConformityType> conformityTypesRepository,
             IDeletableEntityRepository<Conformity> conformitiesRepository,
-            IDeletableEntityRepository<ApplicationUser> usersRepository)
+            IDeletableEntityRepository<ApplicationUser> usersRepository,
+            IRepository<ArticleConformityType> articleConformityTypeRepository)
         {
             this.articlesRepository = articlesRepository;
             this.suppliersRepository = suppliersRepository;
@@ -36,6 +41,7 @@
             this.conformityTypesRepository = conformityTypesRepository;
             this.conformitiesRepository = conformitiesRepository;
             this.usersRepository = usersRepository;
+            this.articleConformityTypeRepository = articleConformityTypeRepository;
         }
 
         public int GetCount()
@@ -51,6 +57,31 @@
         public IEnumerable<T> GetAllAsNoTracking<T>()
         {
             return this.articlesRepository.AllAsNoTracking().To<T>().ToList();
+        }
+
+
+        public IEnumerable<ArticleExportModel> GetAllAsNoTrackingFullInfo()
+        {
+            //var articles = this.articlesRepository.AllAsNoTracking().Select(a => new ArticleExportModel
+            //{
+            //    Id = a.Id,
+            //    Number = a.Number,
+            //    Description = a.Description,
+            //    IsConfirmed = a.ArticleConformityTypes.All(x => x.Conformity != null && x.Conformity.IsAccepted),
+            //    MainSupplierId = a.ArticleSuppliers.FirstOrDefault(x => x.IsMainSupplier).SupplierId,
+            //    MainSupplierName = a.ArticleSuppliers.FirstOrDefault(x => x.IsMainSupplier).Supplier.Name,
+            //    MainSupplierNumber = a.ArticleSuppliers.FirstOrDefault(x => x.IsMainSupplier).Supplier.Number,
+            //    ArticleMissingConformityTypes = a.ArticleConformityTypes
+            //    .Select(x => $"{x.ConformityType.Description} => {x.Conformity != null}")
+            //    .ToList(),
+            //    ArticleConformityTypes = a.ArticleConformityTypes
+            //    .Select(x => $"{x.ConformityType.Description} => {x.Conformity.IsAccepted}")
+            //    .ToList(),
+            //}).ToList();
+
+            var articles = this.articlesRepository.AllAsNoTracking().To<ArticleExportModel>().ToList();
+
+            return articles;
         }
 
         public async Task CreateAsync(CreateArticleInputModel articleInputModel)
@@ -71,6 +102,7 @@
             {
                 Number = articleInputModel.Number.Trim().ToUpper(),
                 Description = this.PascalCaseConverter(articleInputModel.Description),
+
                 //UserId = userEntity.Id,
             };
 
@@ -107,23 +139,30 @@
 
         private async Task AddSupplierToArticleAsync(Article article, string supplierId)
         {
-            // var articleSuppliers = this.articlesRepository.All()
-            // .Where(a => a.Id == article.Id).Select(a => a.ArticleSuppliers).FirstOrDefault();
-            if (article.ArticleSuppliers.Any(x => x.SupplierId == supplierId))
+            var articleSuppliers = this.articleSuppliersRepository.All()
+                .Where(a => a.ArticleId == article.Id)
+                .ToList();
+
+            if (articleSuppliers.Any(x => x.SupplierId == supplierId))
             {
                 throw new ArgumentException("The supplier is already asigned to this article");
             }
 
-            var supplierEntity = this.GetSupplier(supplierId);
+            var supplierEntity = this.suppliersRepository.All().FirstOrDefault(x => x.Id == supplierId);
 
             if (supplierEntity == null)
             {
                 throw new ArgumentException("No such supplier");
             }
 
-            article.ArticleSuppliers.Add(new ArticleSupplier { Supplier = supplierEntity });
+            await this.articleSuppliersRepository.AddAsync(new ArticleSupplier
+            {
+                ArticleId = article.Id,
+                SupplierId = supplierId,
+                IsMainSupplier = true,
+            });
 
-            await this.articlesRepository.SaveChangesAsync();
+            var a = await this.articleSuppliersRepository.SaveChangesAsync();
         }
 
         public void DeleteSupplierFromArticle(string articleId, string supplierId)
@@ -237,11 +276,11 @@
 
             this.conformitiesRepository.AddAsync(conformity);
 
-            articleEntity.ArticleConformities.Add(new ArticleConformity
-            {
-                Article = articleEntity,
-                Conformity = conformity,
-            });
+            //articleEntity.ArticleConformities.Add(new ArticleConformity
+            //{
+            //    Article = articleEntity,
+            //    Conformity = conformity,
+            //});
 
             // TODO async-await
             this.conformitiesRepository.SaveChangesAsync();
@@ -253,9 +292,9 @@
             throw new NotImplementedException();
         }
 
-        public void UpdateArticle(CreateArticleInputModel articleInputModel)
+        public EditExportModel GetEditArticle(string articleId)
         {
-            var articleEntity = this.articlesRepository.All().FirstOrDefault(x => x.Number == articleInputModel.Number.Trim().ToUpper());
+            var articleEntity = this.GetArticle(articleId);
 
             // TODO - async-await
             if (articleEntity == null)
@@ -263,9 +302,40 @@
                 throw new ArgumentException($"There is no article with this number.");
             }
 
-            articleEntity.Number = articleInputModel.Number.Trim().ToUpper();
+            var articleExport = this.articlesRepository.All().To<ArticleExportModel>()
+                .FirstOrDefault(x => x.Id == articleId);
+            var article = new EditExportModel { Export = articleExport };
+            return article;
+        }
 
-            articleEntity.Description = this.PascalCaseConverter(articleInputModel.Description);
+        public async Task PostEditArticleAsync(EditExportModel articleInputModel)
+        {
+            var articleEntity = this.articlesRepository.All().FirstOrDefault(x => x.Id ==
+            articleInputModel.Export.Id);
+
+            // TODO - async-await
+            if (articleEntity == null)
+            {
+                throw new ArgumentException($"There is no article with this number.");
+            }
+
+            if (articleInputModel.Create.Description != null)
+            {
+                articleEntity.Description = this.PascalCaseConverter(articleInputModel.Create.Description);
+
+            }
+
+            if (articleInputModel.Create.Supplier.Id != null)
+            {
+                // TODO: to check the maintsupplier!!!
+                await this.AddSupplierToArticleAsync(articleEntity, articleInputModel.Create.Supplier.Id);
+            }
+
+            // TODO: to check is this already there
+            if (articleInputModel.Create.ConformityTypes != null)
+            {
+                await this.AddConformityTypesToArticleAsync(articleEntity, articleInputModel.Create.ConformityTypes);
+            }
 
             // TODO - all other article characteristics have to be able to be updated from this method!!! S buttons +add +add na vseki
             // supplier, product, substance i t.n. A otstrani shte ima - za delete na vseki zapis!!!
@@ -277,7 +347,7 @@
             }
 
             // TODO - async-await
-            this.articlesRepository.SaveChangesAsync();
+            //this.articlesRepository.SaveChangesAsync();
         }
 
         public IEnumerable<ConformityImportDTO> ListArticleConformities(string articleId)
@@ -343,10 +413,11 @@
                 .Where(x => x.Id == articleId).Select(x => x.ArticleSuppliers).FirstOrDefault().Count;
         }
 
-        public Task<bool> IsArticleFullyConfirmed(string articleId)
-        {
-            return this.
-        }
+        //public bool IsArticleFullyConfirmed(string articleId)
+        //{
+        //    return this.articlesRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == articleId)
+        //    .ArticleConformityTypes.All(x => x.Conformity.IsAccepted);
+        //}
 
         private string PascalCaseConverter(string stringToFix)
         {

@@ -11,7 +11,7 @@
     {
         public Conformity()
         {
-            this.ArticleConformities = new HashSet<ArticleConformity>();
+            this.ArticleConformityTypes = new HashSet<ArticleConformityType>();
             this.ProductConformities = new HashSet<ProductConformity>();
             this.Id = Guid.NewGuid().ToString();
         }
@@ -45,7 +45,7 @@
 
         public string Extension { get; set; }
 
-        public virtual ICollection<ArticleConformity> ArticleConformities { get; set; }
+        public virtual ICollection<ArticleConformityType> ArticleConformityTypes { get; set; }
 
         public virtual ICollection<ProductConformity> ProductConformities { get; set; }
     }

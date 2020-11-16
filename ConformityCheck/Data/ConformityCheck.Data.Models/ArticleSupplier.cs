@@ -11,5 +11,7 @@
         public string SupplierId { get; set; }
 
         public virtual Supplier Supplier { get; set; }
+
+        public bool IsMainSupplier { get; set; }
     }
 }
