@@ -7,98 +7,351 @@
     //var products = Model.ProductsAvailable.Select(x => new SelectListItem(x.Number, x.Id));
     //var substances = Model.SubstancesAvailable.Select(x => new SelectListItem($"{x.CASNumber} - {x.Description}", x.Id.ToString()));
 }
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
+    /* Create two equal columns that floats next to each other */
+    .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+    }
 
-<form method="post" class="col-md-4 mx-auto" enctype="multipart/form-data">
-    <h1>@this.ViewData["Title"]</h1>
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
 
-    <div asp-validation-summary="All" class="text-danger"></div>
+<div class="row">
 
-    <input type="text" hidden id="id" name="Export.Id" value="@Model.Export.Id" />
+    <div class="column col-md-3" style="background-color:aqua">
 
-    <div class="form-group">
-        <label asp-for="Export.Number"></label>
-        <span class="text-primary ">@Model.Export.Number</span>
-    </div>
+        <div>
+            <h2>My Phonebook</h2>
 
-    <div class="form-group">
-        <label asp-for="Export.Description">Article description:</label>
-        <textarea rows="2" asp-for="Export.Description" class="form-control" placeholder="@Model.Export.Description"></textarea>
-        <span asp-validation-for="Export.Description" class="text-danger"></span>
-    </div>
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
 
-    <div class="form-group">
-        <table class="table table-light table-responsive-md table-hover table-bordered table-sm">
-            <thead>
-                <tr>
-                    <th scope="col">Supplier</th>
-                    <th scope="col">Delete</th>
-                </tr>
-            </thead>
-            @foreach (var supplier in this.Model.Export.Suppliers)
-            {
-                <tr>
-                    <td>@supplier.NumberAndName</td>
-                    <td><a asp-action="DeleteSupplier" class="btn btn-primary" id="@supplier.Id">Delete</a></td>
-                </tr>
-            }
-        </table>
-    </div>
+            <ul id="myUL">
+                <li><a href="#">Adele</a></li>
+                <li><a href="#">Agnes</a></li>
 
-    <div class="form-group">
-        <p>If you wanna add supplier to the articles, please select one from the list:</p>
-        <label asp-for="Create.Supplier.Id"></label>
-        @*<select asp-for="SupplierId" class="form-control" asp-items="suppliers"></select>*@
-        <select asp-for="Create.Supplier.Id" class="form-control">
-            <option class="form-control" value=""></option>
-            @foreach (var item in @Model.Create.SuppliersAvailable)
-            {
-                <option class="form-control" value="@item.Id">@item.NumberAndName</option>
-            }
-        </select>
-        <span asp-validation-for="Create.Supplier.Id" class="text-danger"></span>
-    </div>
+                <li><a href="#">Billy</a></li>
+                <li><a href="#">Bob</a></li>
 
-    @*<div class="form-group">
-            <label asp-for="ProductsAvailable"></label>
-            <select asp-for="ProductsAvailable" class="form-control">
-                @foreach (var item in @Model.ProductsAvailable)
-                {
-                    <option class="form-control" value="@item">@item.Number</option>
+                <li><a href="#">Calvin</a></li>
+                <li><a href="#">Christina</a></li>
+                <li><a href="#">Cindy</a></li>
+            </ul>
+
+            <script>
+                function myFunction() {
+                    var input, filter, ul, li, a, i, txtValue;
+                    input = document.getElementById("myInput");
+                    filter = input.value.toUpperCase();
+                    ul = document.getElementById("myUL");
+                    li = ul.getElementsByTagName("li");
+                    for (i = 0; i < li.length; i++) {
+                        a = li[i].getElementsByTagName("a")[0];
+                        txtValue = a.textContent || a.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            li[i].style.display = "";
+                        } else {
+                            li[i].style.display = "none";
+                        }
+                    }
                 }
-            </select>
-            <span asp-validation-for="ProductsAvailable" class="text-danger"></span>
+            </script>
+        </div>
+
+        <div>
+            <h2>My Customers</h2>
+
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
+            <table id="myTable">
+                <tr class="header">
+                    <th style="width:60%;">Name</th>
+                    <th style="width:40%;">Country</th>
+                </tr>
+                <tr>
+                    <td>Alfreds Futterkiste</td>
+                    <td>Germany</td>
+                </tr>
+                <tr>
+                    <td>Berglunds snabbkop</td>
+                    <td>Sweden</td>
+                </tr>
+                <tr>
+                    <td>Island Trading</td>
+                    <td>UK</td>
+                </tr>
+                <tr>
+                    <td>Koniglich Essen</td>
+                    <td>Germany</td>
+                </tr>
+                <tr>
+                    <td>Laughing Bacchus Winecellars</td>
+                    <td>Canada</td>
+                </tr>
+                <tr>
+                    <td>Magazzini Alimentari Riuniti</td>
+                    <td>Italy</td>
+                </tr>
+                <tr>
+                    <td>North/South</td>
+                    <td>UK</td>
+                </tr>
+                <tr>
+                    <td>Paris specialites</td>
+                    <td>France</td>
+                </tr>
+            </table>
+
+            <script>
+                function myFunction() {
+                    var input, filter, table, tr, td, i, txtValue;
+                    input = document.getElementById("myInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("myTable");
+                    tr = table.getElementsByTagName("tr");
+                    for (i = 0; i < tr.length; i++) {
+                        td = tr[i].getElementsByTagName("td")[0];
+                        if (td) {
+                            txtValue = td.textContent || td.innerText;
+                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                tr[i].style.display = "";
+                            } else {
+                                tr[i].style.display = "none";
+                            }
+                        }
+                    }
+                }
+            </script>
+        </div>
+
+        <div>
+            <h2>Search/Filter Dropdown</h2>
+            <p>Click on the button to open the dropdown menu, and use the input field to search for a specific dropdown link.</p>
+
+            <div class="dropdown">
+                <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+                <div id="myDropdown" class="dropdown-content">
+                    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                    <a href="#about">About</a>
+                    <a href="#base">Base</a>
+                    <a href="#blog">Blog</a>
+                    <a href="#contact">Contact</a>
+                    <a href="#custom">Custom</a>
+                    <a href="#support">Support</a>
+                    <a href="#tools">Tools</a>
+                </div>
+            </div>
+
+            <script>
+                /* When the user clicks on the button,
+                toggle between hiding and showing the dropdown content */
+                function myFunction() {
+                    document.getElementById("myDropdown").classList.toggle("show");
+                }
+
+                function filterFunction() {
+                    var input, filter, ul, li, a, i;
+                    input = document.getElementById("myInput");
+                    filter = input.value.toUpperCase();
+                    div = document.getElementById("myDropdown");
+                    a = div.getElementsByTagName("a");
+                    for (i = 0; i < a.length; i++) {
+                        txtValue = a[i].textContent || a[i].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            a[i].style.display = "";
+                        } else {
+                            a[i].style.display = "none";
+                        }
+                    }
+                }
+            </script>
+        </div>
+
+        <div>
+            <h1>Custom Radio Buttons</h1>
+            <label class="container">
+                One
+                <input type="radio" checked="checked" name="radio">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">
+                Two
+                <input type="radio" name="radio">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">
+                Three
+                <input type="radio" name="radio">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">
+                Four
+                <input type="radio" name="radio">
+                <span class="checkmark"></span>
+            </label>
         </div>
 
         <div class="form-group">
-            <label asp-for="SubstancesAvailable"></label>
-            <select asp-for="SubstancesAvailable" class="form-control">
-                @foreach (var item in @Model.SubstancesAvailable)
-                {
-                    <option class="form-control" value="@item">@item.CASNumber</option>
-                }
-            </select>
-            <span asp-validation-for="SubstancesAvailable" class="text-danger"></span>
-        </div>*@
+            <input type="text" placeholder="Search..">
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Create.ConformityTypes"></label>
-        <select size="10" asp-for="Create.ConformityTypes" class="form-control">
-            @foreach (var item in @Model.Create.ConformityTypesAvailable)
-            {
-                <option class="form-control" value="@item.Id">@item.Description</option>
+
+        <div>
+            <!-- The form -->
+            <form class="example" action="action_page.php">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+
+
+        <h2>Search/Filter Dropdown</h2>
+        <p>Click on the button to open the dropdown menu, and use the input field to search for a specific dropdown link.</p>
+
+        <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+            <div id="myDropdown" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                <a href="#about">About</a>
+                <a href="#base">Base</a>
+                <a href="#blog">Blog</a>
+                <a href="#contact">Contact</a>
+                <a href="#custom">Custom</a>
+                <a href="#support">Support</a>
+                <a href="#tools">Tools</a>
+            </div>
+        </div>
+
+        <script>
+            /* When the user clicks on the button,
+            toggle between hiding and showing the dropdown content */
+            function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
             }
-        </select>
-        <span asp-validation-for="Create.ConformityTypes" class="text-danger"></span>
+
+            function filterFunction() {
+                var input, filter, ul, li, a, i;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                div = document.getElementById("myDropdown");
+                a = div.getElementsByTagName("a");
+                for (i = 0; i < a.length; i++) {
+                    txtValue = a[i].textContent || a[i].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        a[i].style.display = "";
+                    } else {
+                        a[i].style.display = "none";
+                    }
+                }
+            }
+        </script>
     </div>
 
-    <div id="conformitiesContainer">
-        <label asp-for="Create.ConformityTypesAvailable"></label>
-        <a class="btn btn-success" onclick="AddMoreConformities()">+</a>
+
+
+    <div class="column col-md-9" style="background-color:antiquewhite;">
+
+        <form method="post" class="col-md-6 mx-auto" enctype="multipart/form-data">
+            <h1>@this.ViewData["Title"]</h1>
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <input type="text" hidden id="id" name="Export.Id" value="@Model.Export.Id" />
+
+            <div class="form-group">
+                <label asp-for="Export.Number"></label>
+                <span class="text-primary ">@Model.Export.Number</span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Export.Description">Article description:</label>
+                <textarea rows="2" asp-for="Export.Description" class="form-control" placeholder="@Model.Export.Description"></textarea>
+                <span asp-validation-for="Export.Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <table class="table table-light table-responsive-md table-hover table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Supplier</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    @foreach (var supplier in this.Model.Export.Suppliers)
+                    {
+                        <tr>
+                            <td>@supplier.NumberAndName</td>
+                            <td><a asp-action="DeleteSupplier" class="btn btn-primary" id="@supplier.Id">Delete</a></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+            <div class="form-group">
+                <p>If you wanna add supplier to the articles, please select one from the list:</p>
+                <label asp-for="Create.Supplier.Id"></label>
+                <select asp-for="Create.Supplier.Id" class="form-control">
+                    <vc:suppliers></vc:suppliers>
+                </select>
+                @*<select asp-for="Create.Supplier.Id" class="form-control" asp-items="@Model.Create.SuppliersAvailable"></select>*@
+                <span asp-validation-for="Create.Supplier.Id" class="text-danger"></span>
+            </div>
+
+            @*<div class="form-group">
+                    <label asp-for="ProductsAvailable"></label>
+                    <select asp-for="ProductsAvailable" class="form-control">
+                        @foreach (var item in @Model.ProductsAvailable)
+                        {
+                            <option class="form-control" value="@item">@item.Number</option>
+                        }
+                    </select>
+                    <span asp-validation-for="ProductsAvailable" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="SubstancesAvailable"></label>
+                    <select asp-for="SubstancesAvailable" class="form-control">
+                        @foreach (var item in @Model.SubstancesAvailable)
+                        {
+                            <option class="form-control" value="@item">@item.CASNumber</option>
+                        }
+                    </select>
+                    <span asp-validation-for="SubstancesAvailable" class="text-danger"></span>
+                </div>*@
+
+            <div class="form-group">
+                <label asp-for="Create.ConformityTypes"></label>
+
+                <select size="10" asp-for="Create.ConformityTypes" class="form-control">
+
+                    @foreach (var item in @Model.Create.ConformityTypesAvailable)
+                    {
+                        <option class="form-control" value="@item.Id">@item.Description</option>
+                    }
+                </select>
+                <span asp-validation-for="Create.ConformityTypes" class="text-danger"></span>
+            </div>
+
+            <div id="conformitiesContainer">
+                <label asp-for="Create.ConformityTypesAvailable"></label>
+                <a class="btn btn-success" onclick="AddMoreConformities()">+</a>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" />
+            </div>
+        </form>
+
     </div>
 
-    <div class="form-group">
-        <input type="submit" class="btn btn-primary" />
-    </div>
-</form>
-
+</div>

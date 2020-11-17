@@ -39,7 +39,10 @@
                     <ul>@confirmedConformity</ul>
                 }
             </td>
-            <td><a href="Edit?id=@article.Id" class="btn btn-primary" id="@article.Id">Edit</a></td>
+            <td>
+                @*    <a href="Edit?id=@article.Id" class="btn btn-primary" id="@article.Id">Edit</a>*@
+                <a asp-action="Edit" class="btn btn-primary" asp-route-id="@article.Id">Edit</a>
+            </td>
         </tr>
     }
 </table>
