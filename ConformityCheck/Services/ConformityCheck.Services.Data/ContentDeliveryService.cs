@@ -51,6 +51,7 @@
                 .AllAsNoTracking()
                 .OrderByDescending(x => x.ModifiedOn)
                 .ThenByDescending(x => x.CreatedOn)
+                .ThenBy(x => x.Number)
                 .Select(x => new ArticleViewComponentModel
                 {
                     Id = x.Id,
@@ -63,7 +64,7 @@
         {
             return await this.suppliersRepository
                 .AllAsNoTracking()
-                .OrderBy(x => x.Number)
+                .OrderBy(x => x.Name)
                 .Select(x => new SupplierViewComponentModel
                 {
                     Id = x.Id,
@@ -78,6 +79,7 @@
                 .AllAsNoTracking()
                 .OrderByDescending(x => x.ModifiedOn)
                 .ThenByDescending(x => x.CreatedOn)
+                .ThenBy(x=>x.Name)
                 .Select(x => new SupplierViewComponentModel
                 {
                     Id = x.Id,
@@ -104,7 +106,7 @@
             return await this.conformityTypesRepository
                 .AllAsNoTracking()
                 .OrderByDescending(x => x.ModifiedOn)
-                .ThenByDescending(x=>x.CreatedOn)
+                .ThenByDescending(x => x.CreatedOn)
                 .Select(x => new ConformityTypeViewComponentModel
                 {
                     Id = x.Id,

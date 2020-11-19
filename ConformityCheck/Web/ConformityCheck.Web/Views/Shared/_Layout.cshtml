@@ -43,14 +43,245 @@
             </div>
         </nav>
     </header>
-    
+
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
-            @this.RenderBody()
+            <div class="row">
+                <div class="column col-md-3" style="background-color:aqua">
+
+                    <div>
+                        <h2>My Phonebook</h2>
+
+                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
+                        <ul id="myUL">
+                            <li><a href="#">Adele</a></li>
+                            <li><a href="#">Agnes</a></li>
+
+                            <li><a href="#">Billy</a></li>
+                            <li><a href="#">Bob</a></li>
+
+                            <li><a href="#">Calvin</a></li>
+                            <li><a href="#">Christina</a></li>
+                            <li><a href="#">Cindy</a></li>
+                        </ul>
+
+                        <script>
+                            function myFunction() {
+                                var input, filter, ul, li, a, i, txtValue;
+                                input = document.getElementById("myInput");
+                                filter = input.value.toUpperCase();
+                                ul = document.getElementById("myUL");
+                                li = ul.getElementsByTagName("li");
+                                for (i = 0; i < li.length; i++) {
+                                    a = li[i].getElementsByTagName("a")[0];
+                                    txtValue = a.textContent || a.innerText;
+                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                        li[i].style.display = "";
+                                    } else {
+                                        li[i].style.display = "none";
+                                    }
+                                }
+                            }
+                        </script>
+                    </div>
+
+                    <div>
+                        <h2>My Customers</h2>
+
+                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
+                        <table id="myTable">
+                            <tr class="header">
+                                <th style="width:60%;">Name</th>
+                                <th style="width:40%;">Country</th>
+                            </tr>
+                            <tr>
+                                <td>Alfreds Futterkiste</td>
+                                <td>Germany</td>
+                            </tr>
+                            <tr>
+                                <td>Berglunds snabbkop</td>
+                                <td>Sweden</td>
+                            </tr>
+                            <tr>
+                                <td>Island Trading</td>
+                                <td>UK</td>
+                            </tr>
+                            <tr>
+                                <td>Koniglich Essen</td>
+                                <td>Germany</td>
+                            </tr>
+                            <tr>
+                                <td>Laughing Bacchus Winecellars</td>
+                                <td>Canada</td>
+                            </tr>
+                            <tr>
+                                <td>Magazzini Alimentari Riuniti</td>
+                                <td>Italy</td>
+                            </tr>
+                            <tr>
+                                <td>North/South</td>
+                                <td>UK</td>
+                            </tr>
+                            <tr>
+                                <td>Paris specialites</td>
+                                <td>France</td>
+                            </tr>
+                        </table>
+
+                        <script>
+                            function myFunction() {
+                                var input, filter, table, tr, td, i, txtValue;
+                                input = document.getElementById("myInput");
+                                filter = input.value.toUpperCase();
+                                table = document.getElementById("myTable");
+                                tr = table.getElementsByTagName("tr");
+                                for (i = 0; i < tr.length; i++) {
+                                    td = tr[i].getElementsByTagName("td")[0];
+                                    if (td) {
+                                        txtValue = td.textContent || td.innerText;
+                                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                            tr[i].style.display = "";
+                                        } else {
+                                            tr[i].style.display = "none";
+                                        }
+                                    }
+                                }
+                            }
+                        </script>
+                    </div>
+
+                    <div>
+                        <h2>Search/Filter Dropdown</h2>
+                        <p>Click on the button to open the dropdown menu, and use the input field to search for a specific dropdown link.</p>
+
+                        <div class="dropdown">
+                            <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+                            <div id="myDropdown" class="dropdown-content">
+                                <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                                <a href="#about">About</a>
+                                <a href="#base">Base</a>
+                                <a href="#blog">Blog</a>
+                                <a href="#contact">Contact</a>
+                                <a href="#custom">Custom</a>
+                                <a href="#support">Support</a>
+                                <a href="#tools">Tools</a>
+                            </div>
+                        </div>
+
+                        <script>
+                            /* When the user clicks on the button,
+                            toggle between hiding and showing the dropdown content */
+                            function myFunction() {
+                                document.getElementById("myDropdown").classList.toggle("show");
+                            }
+
+                            function filterFunction() {
+                                var input, filter, ul, li, a, i;
+                                input = document.getElementById("myInput");
+                                filter = input.value.toUpperCase();
+                                div = document.getElementById("myDropdown");
+                                a = div.getElementsByTagName("a");
+                                for (i = 0; i < a.length; i++) {
+                                    txtValue = a[i].textContent || a[i].innerText;
+                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                        a[i].style.display = "";
+                                    } else {
+                                        a[i].style.display = "none";
+                                    }
+                                }
+                            }
+                        </script>
+                    </div>
+
+                    <div>
+                        <h1>Custom Radio Buttons</h1>
+                        <label class="container">
+                            One
+                            <input type="radio" checked="checked" name="radio">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">
+                            Two
+                            <input type="radio" name="radio">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">
+                            Three
+                            <input type="radio" name="radio">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">
+                            Four
+                            <input type="radio" name="radio">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" placeholder="Search..">
+                    </div>
+
+
+                    <div>
+                        <!-- The form -->
+                        <form class="example" action="action_page.php">
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+
+
+                    <h2>Search/Filter Dropdown</h2>
+                    <p>Click on the button to open the dropdown menu, and use the input field to search for a specific dropdown link.</p>
+
+                    <div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+                        <div id="myDropdown" class="dropdown-content">
+                            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                            <a href="#about">About</a>
+                            <a href="#base">Base</a>
+                            <a href="#blog">Blog</a>
+                            <a href="#contact">Contact</a>
+                            <a href="#custom">Custom</a>
+                            <a href="#support">Support</a>
+                            <a href="#tools">Tools</a>
+                        </div>
+                    </div>
+
+                    <script>
+                        /* When the user clicks on the button,
+                        toggle between hiding and showing the dropdown content */
+                        function myFunction() {
+                            document.getElementById("myDropdown").classList.toggle("show");
+                        }
+
+                        function filterFunction() {
+                            var input, filter, ul, li, a, i;
+                            input = document.getElementById("myInput");
+                            filter = input.value.toUpperCase();
+                            div = document.getElementById("myDropdown");
+                            a = div.getElementsByTagName("a");
+                            for (i = 0; i < a.length; i++) {
+                                txtValue = a[i].textContent || a[i].innerText;
+                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                    a[i].style.display = "";
+                                } else {
+                                    a[i].style.display = "none";
+                                }
+                            }
+                        }
+                    </script>
+                </div>
+                <div class="column col-md-9" style="background-color:antiquewhite;">
+                    @this.RenderBody()
+                </div>
+            </div>
         </main>
     </div>
-    
+
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

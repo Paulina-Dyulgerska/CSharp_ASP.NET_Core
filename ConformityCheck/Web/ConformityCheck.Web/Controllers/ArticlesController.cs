@@ -22,22 +22,19 @@
         private readonly IProductsService productService;
         private readonly IConformityTypesService conformityTypeService;
         private readonly ISubstancesService substanceService;
-        private readonly ApplicationDbContext db;
 
         public ArticlesController(
             IArticlesService articlesService,
             ISuppliersService supplierService,
             IProductsService productService,
             IConformityTypesService conformityTypeService,
-            ISubstancesService substanceService,
-            ApplicationDbContext db)
+            ISubstancesService substanceService)
         {
             this.articlesService = articlesService;
             this.supplierService = supplierService;
             this.productService = productService;
             this.conformityTypeService = conformityTypeService;
             this.substanceService = substanceService;
-            this.db = db;
         }
 
         public IActionResult ListAll()
@@ -70,7 +67,7 @@
             {
                 foreach (var error in this.ModelState.Values.SelectMany(v => v.Errors))
                 {
-                    // DoSomething(error);
+                    return this.View(input);
                 }
 
                 return this.View(input);

@@ -8,39 +8,14 @@
     //var substances = Model.SubstancesAvailable.Select(x => new SelectListItem($"{x.CASNumber} - {x.Description}", x.Id.ToString()));
 }
 
-
 <div>
-    <aside>
-        <div>
-            <vc:articles></vc:articles>
-        </div>
-    </aside>
-    <form method="post" class="col-md-4 mx-auto" enctype="multipart/form-data">
+    <form method="post" class="col-md-6 mx-auto" enctype="multipart/form-data">
         <h1>@this.ViewData["Title"]</h1>
 
         <div asp-validation-summary="All" class="text-danger"></div>
 
-        @* ako formata e za edit, trqbwa da imam takowa pole, v koeto da dyrja id-to na entity-to: *@
-        @*<input type="hidden" asp-for="Id"/>*@
-
-        @* TODO: SupplierNumbers or Names in a dropdown menu:
-                <div class="form-group">
-                <label asp-for="SupplierNumber"></label>
-                <select asp-for="SupplierNumber" class="form-control">
-                    @foreach (var ingredient in @Model.Ingredients)
-                    {
-                        <option class="form-control" value="@ingredient">@ingredient</option>
-                    }
-                </select>
-            <select asp-for="Ingredients" class="form-control" asp-items="@Model.Ingredients"></select>
-            <span asp-validation-for="Ingredients" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                    <label asp-for="SupplierEmail"></label>
-                    <select asp-for="SupplierEmail" class="form-control" asp-items="@Html.GetEnumSelectList<RecipeType>()"></select>
-                    <span asp-validation-for="SupplierEmail" class="text-danger"></span>
-                </div>*@
+        @*<select asp-for="SupplierId" class="form-control" asp-items="suppliers"></select>*@
+        @*<select asp-for="SupplierEmail" class="form-control" asp-items="@Html.GetEnumSelectList<RecipeType>()"></select>*@
 
         <div class="form-group">
             <label asp-for="Number"></label>
@@ -56,13 +31,8 @@
 
         <div class="form-group">
             <label asp-for="Supplier.Id"></label>
-            @*<select asp-for="SupplierId" class="form-control" asp-items="suppliers"></select>*@
             <select asp-for="Supplier.Id" class="form-control">
-                <option class="form-control" value=""></option>
-                @foreach (var item in @Model.SuppliersAvailable)
-                {
-                    <option class="form-control" value="@item.Id">@item.NumberAndName</option>
-                }
+                <vc:suppliers></vc:suppliers>
             </select>
             <span asp-validation-for="Supplier.Id" class="text-danger"></span>
         </div>
@@ -103,15 +73,6 @@
         <div id="conformitiesContainer">
             <label asp-for="ConformityTypesAvailable"></label>
             <a class="btn btn-success" onclick="AddMoreConformities()">+</a>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Supplier.Id"></label>
-            @*<select asp-for="SupplierId" class="form-control" asp-items="suppliers"></select>*@
-            <select asp-for="Supplier.Id" class="form-control">
-                <vc:suppliers></vc:suppliers>
-            </select>
-            <span asp-validation-for="Supplier.Id" class="text-danger"></span>
         </div>
 
         <div class="form-group">
