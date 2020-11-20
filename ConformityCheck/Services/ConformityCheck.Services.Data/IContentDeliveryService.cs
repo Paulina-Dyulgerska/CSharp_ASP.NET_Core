@@ -5,21 +5,30 @@
 
     using ConformityCheck.Web.ViewModels.Articles.ViewComponents;
     using ConformityCheck.Web.ViewModels.ConformityTypes.ViewComponents;
+    using ConformityCheck.Web.ViewModels.Products.ViewComponents;
+    using ConformityCheck.Web.ViewModels.Substances.ViewComponents;
     using ConformityCheck.Web.ViewModels.Suppliers.ViewComponents;
 
     public interface IContentDeliveryService
     {
-        Task<IEnumerable<ArticleViewComponentModel>> GetAllArticlesAsync();
+        Task<IEnumerable<ArticlesViewComponentModel>> GetAllArticlesAsync();
 
-        Task<IEnumerable<ArticleViewComponentModel>> GetLastCreatedArticlesAsync();
+        Task<IEnumerable<ArticlesViewComponentModel>> GetLastCreatedArticlesAsync();
 
-        Task<IEnumerable<SupplierViewComponentModel>> GetAllSuppliersAsync();
+        Task<IEnumerable<SuppliersViewComponentModel>> GetAllSuppliersAsync();
 
-        Task<IEnumerable<SupplierViewComponentModel>> GetLastCreatedSuppliersAsync();
+        Task<IEnumerable<SuppliersViewComponentModel>> GetLastCreatedSuppliersAsync();
 
-        Task<IEnumerable<ConformityTypeViewComponentModel>> GetAllConformityTypesAsync();
+        Task<IEnumerable<ConformityTypesViewComponentModel>> GetAllConformityTypesAsync();
 
-        Task<IEnumerable<ConformityTypeViewComponentModel>> GetLastCreatedConformityTypesAsync();
+        Task<IEnumerable<ConformityTypesViewComponentModel>> GetLastCreatedConformityTypesAsync();
 
+        Task<IEnumerable<ProductsViewComponentModel>> GetAllProductsAsync();
+
+        Task<IEnumerable<ProductsViewComponentModel>> GetLstCreatedProductsAsync();
+
+        Task<IEnumerable<SubstancesViewComponentModel>> GetAllSubstancesAsync();
+
+        Task<IEnumerable<SubstancesViewComponentModel>> GetLastCreatedSubstancesAsync();
     }
 }

@@ -9,7 +9,7 @@
 }
 
 <div>
-    <form method="post" class="col-md-6 mx-auto" enctype="multipart/form-data">
+    <form method="post" class="col-md-6 mx-auto">
         <h1>@this.ViewData["Title"]</h1>
 
         <div asp-validation-summary="All" class="text-danger"></div>
@@ -38,40 +38,31 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="ProductsAvailable"></label>
-            <select asp-for="ProductsAvailable" class="form-control">
-                @foreach (var item in @Model.ProductsAvailable)
-                {
-                    <option class="form-control" value="@item">@item.Number</option>
-                }
+            <label asp-for="Products"></label>
+            <select asp-for="Products" class="form-control">
+                <vc:products></vc:products>
             </select>
-            <span asp-validation-for="ProductsAvailable" class="text-danger"></span>
+            <span asp-validation-for="Products" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="SubstancesAvailable"></label>
-            <select asp-for="SubstancesAvailable" class="form-control">
-                @foreach (var item in @Model.SubstancesAvailable)
-                {
-                    <option class="form-control" value="@item">@item.CASNumber</option>
-                }
+            <label asp-for="Substances"></label>
+            <select asp-for="Substances" class="form-control">
+                <vc:substances></vc:substances>
             </select>
-            <span asp-validation-for="SubstancesAvailable" class="text-danger"></span>
+            <span asp-validation-for="Substances" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="ConformityTypes"></label>
             <select size="10" asp-for="ConformityTypes" class="form-control">
-                @foreach (var item in @Model.ConformityTypesAvailable)
-                {
-                    <option class="form-control" value="@item.Id">@item.Description</option>
-                }
+                <vc:conformity-types></vc:conformity-types>
             </select>
             <span asp-validation-for="ConformityTypes" class="text-danger"></span>
         </div>
 
         <div id="conformitiesContainer">
-            <label asp-for="ConformityTypesAvailable"></label>
+            <label asp-for="ConformityTypes"></label>
             <a class="btn btn-success" onclick="AddMoreConformities()">+</a>
         </div>
 

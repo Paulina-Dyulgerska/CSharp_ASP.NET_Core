@@ -37,27 +37,19 @@
             this.substanceService = substanceService;
         }
 
-        public IActionResult ListAll()
+        public async Task<IActionResult> ListAll()
         {
             //var articles = this.articlesService.GetAll<ArticleExportModel>();
             //var model = new ArticleExportModelList { Articles = articles };
 
-            var articles = this.articlesService.GetAllAsNoTrackingFullInfo();
-            var model = new ArticleExportModelList { Articles = articles };
+            var articles = await this.articlesService.GetAllAsNoTrackingFullInfoAsync<EditExportModel>();
+            var model = new EditExportModelList { Articles = articles };
             return this.View(model);
         }
 
         public IActionResult Create()
         {
-            var model = new CreateArticleInputModel
-            {
-                SuppliersAvailable = this.supplierService.GetAllAsNoTracking<SupplierExportModel>(),
-                ConformityTypesAvailable = this.conformityTypeService.GetAllAsNoTracking<ConformityTypeNumberModel>(),
-                ProductsAvailable = this.productService.GetAllAsNoTracking<ProductNumberExportModel>(),
-                SubstancesAvailable = this.substanceService.GetAllAsNoTracking<SubstanceNumberExportModel>(),
-            };
-
-            return this.View(model);
+            return this.View();
         }
 
         [HttpPost]
@@ -65,10 +57,10 @@
         {
             if (!this.ModelState.IsValid)
             {
-                foreach (var error in this.ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    return this.View(input);
-                }
+                //foreach (var error in this.ModelState.Values.SelectMany(v => v.Errors))
+                //{
+                //    return this.View(input);
+                //}
 
                 return this.View(input);
             }
@@ -82,27 +74,13 @@
 
         public IActionResult Details(int id)
         {
-            var model = new CreateArticleInputModel
-            {
-                SuppliersAvailable = this.supplierService.GetAllAsNoTracking<SupplierExportModel>(),
-                ConformityTypesAvailable = this.conformityTypeService.GetAllAsNoTracking<ConformityTypeNumberModel>(),
-                ProductsAvailable = this.productService.GetAllAsNoTracking<ProductNumberExportModel>(),
-                SubstancesAvailable = this.substanceService.GetAllAsNoTracking<SubstanceNumberExportModel>(),
-            };
 
-            return this.View(model);
+            return this.View();
         }
 
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var model = this.articlesService.GetEditArticle(id);
-            model.Create = new CreateArticleInputModel
-            {
-                SuppliersAvailable = this.supplierService.GetAllAsNoTracking<SupplierExportModel>(),
-                ConformityTypesAvailable = this.conformityTypeService.GetAllAsNoTracking<ConformityTypeNumberModel>(),
-                ProductsAvailable = this.productService.GetAllAsNoTracking<ProductNumberExportModel>(),
-                SubstancesAvailable = this.substanceService.GetAllAsNoTracking<SubstanceNumberExportModel>(),
-            };
+            var model = await this.articlesService.GetEditAsync(id);
 
             return this.View(model);
         }
@@ -110,17 +88,8 @@
         [HttpPost]
         public async Task<IActionResult> Edit(EditExportModel articleInputModel)
         {
-            //this.db.ArticleSuppliers.Add(new ArticleSupplier
-            //{
-            //    ArticleId = articleInputModel.Export.Id,
-            //    SupplierId = articleInputModel.Create.Supplier.Id,
-            //    IsMainSupplier = true,
-            //});
-
-            //var rt = this.db.SaveChanges();
-
-            // NEVer FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            await this.articlesService.PostEditArticleAsync(articleInputModel);
+            // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            await this.articlesService.PostEditAsync(articleInputModel);
 
             return this.RedirectToAction(nameof(this.ListAll));
         }

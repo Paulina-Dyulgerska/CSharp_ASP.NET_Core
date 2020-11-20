@@ -9,44 +9,28 @@
 
     public interface IArticlesService : IService
     {
-        Article GetArticle(string articleId);
+        Task<IEnumerable<T>> GetAllAsync<T>();
 
-        Supplier GetSupplier(string supplierId);
+        Task<IEnumerable<T>> GetAllAsNoTrackingAsync<T>();
+
+        Task<IEnumerable<T>> GetAllAsNoTrackingFullInfoAsync<T>();
 
         Task CreateAsync(CreateArticleInputModel articleInputModel);
 
-        //bool IsArticleFullyConfirmed(string articleId);
+        Task AddConformityTypesAsync(Article article, IEnumerable<int> conformityTypes);
 
-        IEnumerable<ArticleExportModel> GetAllAsNoTrackingFullInfo();
+        Task AddSupplierAsync(Article article, string supplierId, string mainSupplierId = null);
 
-        Task<int> DeleteArticleAsync(string articleId);
+        Task RemoveSupplierAsync(string articleId, string supplierId);
 
-        void DeleteSupplierFromArticle(string articleId, string supplierId);
+        Task<int> DeleteAsync(string articleId);
 
-        IEnumerable<string> GetSuppliersNumbersList(string articleId);
+        Task AddConformityAsync(string articleId, string supplierId, ArticleConformityImportDTO articleConformityImportDTO);
 
-        int GetSuppliersCount(string articleId);
+        Task DeleteConformityAsync(string articleId);
 
-        IEnumerable<SupplierExportDTO> ListArticleSuppliers(string articleId);
+        Task<EditExportModel> GetEditAsync(string articleId);
 
-        IEnumerable<ConformityImportDTO> ListArticleConformities(string articleId);
-
-        IEnumerable<ProductDTO> ListArticleProducts(string articleId);
-
-        EditExportModel GetEditArticle(string articleId);
-
-        Task PostEditArticleAsync(EditExportModel articleInputModel);
-
-        void AddConformityToArticle(string articleId, string supplierId, ArticleConformityImportDTO articleConformityImportDTO);
-
-        void DeleteConformity(string articleId);
-
-        IEnumerable<ArticleExportDTO> SearchByArticleNumber(string artileId); //part of the number
-
-        IEnumerable<ArticleExportDTO> SearchBySupplierNumber(string supplierNumber);
-
-        IEnumerable<ArticleExportDTO> SearchByConformityType(string conformityType);
-
-        IEnumerable<ArticleExportDTO> SearchByConfirmedStatus(string status); //confirmed or not
+        Task PostEditAsync(EditExportModel articleInputModel);
     }
 }

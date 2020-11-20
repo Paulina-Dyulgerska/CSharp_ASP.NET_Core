@@ -12,9 +12,11 @@
         [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9 -_]*")]
         [Display(Name = "Article description")]
         public string Description { get; set; }
-
+        
+        //validation is there such supplier in a service ?
         public string SupplierId { get; set; }
 
+        //validation is there such conformity in a service ?
         [Display(Name = "Select conformity types")]
         public IEnumerable<int> ConformityTypes { get; set; }
     }

@@ -2,12 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
-    using ConformityCheck.Web.ViewModels.ConformityTypes;
-    using ConformityCheck.Web.ViewModels.Products;
-    using ConformityCheck.Web.ViewModels.Substances;
     using ConformityCheck.Web.ViewModels.Suppliers;
-    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class CreateArticleInputModel
     {
@@ -26,20 +21,11 @@
         public SupplierInputModel Supplier { get; set; }
 
         [Display(Name = "Select conformity types (required) *")]
+        [Required]
         public IEnumerable<int> ConformityTypes { get; set; }
 
-        [Display(Name = "Select assembly to include article in")]
-        public IEnumerable<ProductNumberExportModel> ProductsAvailable { get; set; } =
-            new List<ProductNumberExportModel>();
+        public IEnumerable<string> Products { get; set; }
 
-        [Display(Name = "Select substances in article")]
-        public IEnumerable<SubstanceNumberExportModel> SubstancesAvailable { get; set; } =
-            new List<SubstanceNumberExportModel>();
-
-        public IEnumerable<SupplierExportModel> SuppliersAvailable { get; set; } =
-            new List<SupplierExportModel>();
-
-        public IEnumerable<ConformityTypeNumberModel> ConformityTypesAvailable { get; set; } =
-            new List<ConformityTypeNumberModel>();
+        public IEnumerable<string> Substances { get; set; }
     }
 }

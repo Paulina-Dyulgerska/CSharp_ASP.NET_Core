@@ -10,36 +10,52 @@
 
 <div>
     <form method="post" class="col-md-6 mx-auto" enctype="multipart/form-data">
+        @* za file mi trqbwa multipart/form-data, ako nqma da kachwam file, da go smenq!!!!! *@
         <h1>@this.ViewData["Title"]</h1>
 
         <div asp-validation-summary="All" class="text-danger"></div>
 
-        <input type="text" hidden id="id" name="Export.Id" value="@Model.Export.Id" />
+        <input type="text" hidden id="Id" name="Id" value="@Model.Id" />
 
         <div class="form-group">
-            <label asp-for="Export.Number"></label>
-            <span class="text-primary ">@Model.Export.Number</span>
+            <label asp-for="Number"></label>
+            <span class="text-primary ">@Model.Number</span>
         </div>
 
         <div class="form-group">
-            <label asp-for="Export.Description">Article description:</label>
-            <textarea rows="2" asp-for="Export.Description" class="form-control" placeholder="@Model.Export.Description"></textarea>
-            <span asp-validation-for="Export.Description" class="text-danger"></span>
+            <label asp-for="Description">Article description:</label>
+            <textarea rows="2" asp-for="Description" class="form-control" placeholder="@Model.Description"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <table class="table table-light table-responsive-md table-hover table-bordered table-sm">
                 <thead>
                     <tr>
-                        <th scope="col">Supplier</th>
+                        <th scope="col">Supplier name</th>
+                        <th scope="col">Supplier Nr.</th>
+                        <th scope="col">Is Article Main Supplier</th>
+                        <th scope="col">Change main supplier</th>
                         <th scope="col">Delete</th>
                     </tr>
                 </thead>
-                @foreach (var supplier in this.Model.Export.Suppliers)
+                @foreach (var supplier in this.Model.Suppliers)
                 {
                     <tr>
-                        <td>@supplier.NumberAndName</td>
-                        <td><a asp-action="DeleteSupplier" class="btn btn-primary" id="@supplier.Id">Delete</a></td>
+                        <td>@supplier.Name</td>
+                        <td>@supplier.Number</td>
+                        <td>@supplier.IsMainSupplier</td>
+                        <td>
+                            @if (supplier.IsMainSupplier)
+                            {
+                                <input asp-for="MainSupplierId" type="radio" value="@supplier.Id" checked />
+                            }
+                            else
+                            { 
+                                <input asp-for="MainSupplierId" type="radio" value="@supplier.Id" />
+                            }
+                        </td>
+                        <td><a asp-action="DeleteSupplier" class="btn btn-primary" id="@supplier.Id">Replace</a></td>
                     </tr>
                 }
             </table>
@@ -47,28 +63,39 @@
 
         <div class="form-group">
             <p>If you wanna add supplier to the articles, please select one from the list:</p>
-            <label asp-for="Create.Supplier.Id"></label>
-            <select asp-for="Create.Supplier.Id" class="form-control">
+            <label asp-for="Supplier.Id"></label>
+            <select asp-for="Supplier.Id" class="form-control">
                 <vc:suppliers></vc:suppliers>
             </select>
-            <span asp-validation-for="Create.Supplier.Id" class="text-danger"></span>
+            <span asp-validation-for="Supplier.Id" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="Create.ConformityTypes"></label>
-
-            <select size="10" asp-for="Create.ConformityTypes" class="form-control">
-
-                @foreach (var item in @Model.Create.ConformityTypesAvailable)
-                {
-                    <option class="form-control" value="@item.Id">@item.Description</option>
-                }
+            <label asp-for="ConformityTypes"></label>
+            <select size="10" asp-for="ConformityTypes" class="form-control">
+                <vc:conformity-types></vc:conformity-types>
             </select>
-            <span asp-validation-for="Create.ConformityTypes" class="text-danger"></span>
+            <span asp-validation-for="ConformityTypes" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Products"></label>
+            <select asp-for="Products" class="form-control">
+                <vc:products></vc:products>
+            </select>
+            <span asp-validation-for="Products" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Substances"></label>
+            <select asp-for="Substances" class="form-control">
+                <vc:substances></vc:substances>
+            </select>
+            <span asp-validation-for="Substances" class="text-danger"></span>
         </div>
 
         <div id="conformitiesContainer">
-            <label asp-for="Create.ConformityTypesAvailable"></label>
+            <label asp-for="ConformityTypes"></label>
             <a class="btn btn-success" onclick="AddMoreConformities()">+</a>
         </div>
 
