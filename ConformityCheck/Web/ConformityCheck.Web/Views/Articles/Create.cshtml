@@ -1,5 +1,5 @@
 ﻿@using ConformityCheck.Web.ViewModels.Articles
-@model CreateArticleInputModel
+@model ArticleCreateModel
 @{
     this.ViewData["Title"] = "Create new article";
     //var suppliers = Model.SuppliersAvailable.Select(x => new SelectListItem(x.NumberAndName, x.Id));
@@ -8,10 +8,10 @@
     //var substances = Model.SubstancesAvailable.Select(x => new SelectListItem($"{x.CASNumber} - {x.Description}", x.Id.ToString()));
 }
 
+<h3>@this.ViewData["Title"]</h3>
+
 <div>
     <form method="post" class="col-md-6 mx-auto">
-        <h1>@this.ViewData["Title"]</h1>
-
         <div asp-validation-summary="All" class="text-danger"></div>
 
         @*<select asp-for="SupplierId" class="form-control" asp-items="suppliers"></select>*@

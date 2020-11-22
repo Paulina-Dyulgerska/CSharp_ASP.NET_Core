@@ -1,9 +1,11 @@
-﻿namespace ConformityCheck.Web.ViewModels.Articles
+﻿namespace ConformityCheck.Web.ViewModels.Articles.Conformities
 {
+    using AutoMapper;
+    using ConformityCheck.Data.Models;
+    using ConformityCheck.Services.Mapping;
     using System;
-    using System.ComponentModel.DataAnnotations;
 
-    public class ArticleConformityInputModel
+    public class ConformityModel : IMapFrom<Conformity>
     {
         public string Id { get; set; }
 
@@ -13,5 +15,6 @@
         public DateTime? ConformationAcceptanceDate { get; set; }
 
         public bool IsAssepted { get; set; }
+
     }
 }

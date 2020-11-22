@@ -9,12 +9,17 @@
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class EditExportModel : IMapFrom<Article>, IHaveCustomMappings
+    public class ArticleEditModel : IMapFrom<Article>, IHaveCustomMappings
     {
         public string Id { get; set; }
 
+        [Display(Name = "Article Nr.")]
         public string Number { get; set; }
 
+        [Required]
+        [MaxLength(50)]
+        [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9 -_]*")]
+        [Display(Name = "Article description (required) *")]
         public string Description { get; set; }
 
         public string MainSupplierName { get; set; }
@@ -23,15 +28,9 @@
 
         public string MainSupplierId { get; set; }
 
-        public SupplierInputModel Supplier { get; set; }
-
-        [Required]
-        public IEnumerable<int> ConformityTypes { get; set; }
-
         public IEnumerable<string> Products { get; set; }
 
         public IEnumerable<string> Substances { get; set; }
-
 
         // confirmed - not confirmed according to the user or like it is now?
         public bool IsConfirmed { get; set; }
@@ -40,11 +39,13 @@
 
         public IEnumerable<string> ArticleConformityTypes { get; set; }
 
-        public IEnumerable<ArticleSupplierExportModel> Suppliers { get; set; }
+        public IEnumerable<ArticleSupplierModel> Suppliers { get; set; }
+
+        public IEnumerable<ArticleConformityTypeModel> ConformityTypesMainSupplier { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Article, EditExportModel>()
+            configuration.CreateMap<Article, ArticleEditModel>()
                 .ForMember(
                 x => x.MainSupplierId,
                 opt => opt.MapFrom(a => a.ArticleSuppliers.FirstOrDefault(x => x.IsMainSupplier).SupplierId))
@@ -55,8 +56,8 @@
                 x => x.MainSupplierNumber,
                 opt => opt.MapFrom(a => a.ArticleSuppliers.FirstOrDefault(x => x.IsMainSupplier).Supplier.Number))
                 .ForMember(
-                X => X.Suppliers,
-                opt => opt.MapFrom(a => a.ArticleSuppliers.Select(x => new ArticleSupplierExportModel
+                x => x.Suppliers,
+                opt => opt.MapFrom(a => a.ArticleSuppliers.Select(x => new ArticleSupplierModel
                 {
                     Id = x.SupplierId,
                     Name = x.Supplier.Name,
@@ -74,7 +75,18 @@
                 .ForMember(
                 x => x.IsConfirmed,
                 opt => opt.MapFrom(a => a.ArticleConformityTypes
-                .All(x => x.Conformity != null && x.Conformity.IsAccepted)));
+                .All(x => x.Conformity != null && x.Conformity.IsAccepted)))
+                .ForMember(
+                x => x.ConformityTypesMainSupplier,
+                opt => opt.MapFrom(a => a.ArticleConformityTypes
+                .Where(s => s.Conformity.SupplierId == this.MainSupplierId)
+                .Select(x => new ArticleConformityTypeModel
+                {
+                    ConformityTypeId = x.ConformityType.Id,
+                    ConformityTypeDescription = x.ConformityType.Description,
+                    ConformityId = x.ConformityId,
+                    ConformityIsAccepted = x.Conformity.IsAccepted,
+                })));
         }
     }
 }

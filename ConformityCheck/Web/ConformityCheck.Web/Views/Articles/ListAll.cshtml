@@ -1,10 +1,10 @@
-﻿@model EditExportModelList
+﻿@model IEnumerable<ArticleEditModel>
 
 @{
     this.ViewData["Title"] = "Articles";
 }
 
-<h1>@this.ViewData["Title"]</h1>
+<h3>@this.ViewData["Title"]</h3>
 
 <table class="table table-light table-responsive-md table-hover table-striped table-bordered table-sm">
     <thead>
@@ -19,7 +19,7 @@
             <th scope="col">Edit</th>
         </tr>
     </thead>
-    @foreach (var article in this.Model.Articles)
+    @foreach (var article in this.Model)
     {
         <tr>
             <td>@article.Number</td>

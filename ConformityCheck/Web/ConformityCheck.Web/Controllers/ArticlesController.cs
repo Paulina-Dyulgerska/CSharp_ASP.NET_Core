@@ -1,18 +1,9 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
-    using System;
-    using System.Linq;
     using System.Threading.Tasks;
-    using ConformityCheck.Data;
-    using ConformityCheck.Data.Common.Repositories;
-    using ConformityCheck.Data.Models;
+
     using ConformityCheck.Services.Data;
-    using ConformityCheck.Services.Data.Models;
     using ConformityCheck.Web.ViewModels.Articles;
-    using ConformityCheck.Web.ViewModels.ConformityTypes;
-    using ConformityCheck.Web.ViewModels.Products;
-    using ConformityCheck.Web.ViewModels.Substances;
-    using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.AspNetCore.Mvc;
 
     public class ArticlesController : BaseController
@@ -39,11 +30,7 @@
 
         public async Task<IActionResult> ListAll()
         {
-            //var articles = this.articlesService.GetAll<ArticleExportModel>();
-            //var model = new ArticleExportModelList { Articles = articles };
-
-            var articles = await this.articlesService.GetAllAsNoTrackingFullInfoAsync<EditExportModel>();
-            var model = new EditExportModelList { Articles = articles };
+            var model = await this.articlesService.GetAllAsNoTrackingFullInfoAsync<ArticleEditModel>();
             return this.View(model);
         }
 
@@ -53,55 +40,92 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateArticleInputModel input)
+        public async Task<IActionResult> Create(ArticleCreateModel input)
         {
             if (!this.ModelState.IsValid)
             {
-                //foreach (var error in this.ModelState.Values.SelectMany(v => v.Errors))
-                //{
-                //    return this.View(input);
-                //}
-
                 return this.View(input);
             }
 
             await this.articlesService.CreateAsync(input);
 
+            // return this.Json(input);
             return this.RedirectToAction(nameof(this.ListAll));
-
-            //return this.Json(input);
-        }
-
-        public IActionResult Details(int id)
-        {
-
-            return this.View();
         }
 
         public async Task<IActionResult> Edit(string id)
         {
-            var model = await this.articlesService.GetEditAsync(id);
+            var model = await this.articlesService.GetByIdAsync<ArticleEditModel>(id);
 
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditExportModel articleInputModel)
+        public async Task<IActionResult> Edit(ArticleEditModel input)
         {
             // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            await this.articlesService.PostEditAsync(articleInputModel);
+            await this.articlesService.EditAsync(input);
 
             return this.RedirectToAction(nameof(this.ListAll));
         }
 
-        public IActionResult AddSupplier(string id)
+        public async Task<IActionResult> AddSupplier(string id)
         {
-            return this.RedirectToAction(nameof(this.Edit));
+            var model = await this.articlesService.GetByIdAsync<ArticleSuppliersModel>(id);
+
+            return this.View(model);
         }
 
-        public IActionResult DeleteSupplier(string id)
+        [HttpPost]
+        public async Task<IActionResult> AddSupplier(ArticleSuppliersModel input)
         {
-            return this.RedirectToAction(nameof(this.Edit));
+            var article = await this.articlesService.GetByIdAsync(input.Id);
+            await this.articlesService.AddSupplierAsync(article, input.Supplier.Id);
+
+            return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
+        }
+
+        public async Task<IActionResult> ChangeMainSupplier(string id)
+        {
+            var model = await this.articlesService.GetByIdAsync<ArticleChangeMainSupplierModel>(id);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeMainSupplier(ArticleChangeMainSupplierModel input)
+        {
+            await this.articlesService.ChangeMainSupplierAsync(input);
+
+            return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
+        }
+
+        public async Task<IActionResult> RemoveSupplier(string id)
+        {
+            var model = await this.articlesService.GetByIdAsync<ArticleSuppliersModel>(id);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveSupplier(ArticleSuppliersModel input)
+        {
+            await this.articlesService.RemoveSupplierAsync(input);
+
+            return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
+        }
+
+        //public async Task<IActionResult> AddConformityType(string id)
+        //{
+        //    var model = await this.articlesService.GetByIdAsync<AddConformityToArticleModel>();
+
+        //    return this.View(model);
+        //}
+
+        // TODO
+        public IActionResult Details(int id)
+        {
+            return this.View();
         }
     }
 }

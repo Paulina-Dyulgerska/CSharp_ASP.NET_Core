@@ -2,9 +2,10 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class CreateArticleInputModel
+    public class ArticleCreateModel
     {
         [Required]
         [MaxLength(20)]

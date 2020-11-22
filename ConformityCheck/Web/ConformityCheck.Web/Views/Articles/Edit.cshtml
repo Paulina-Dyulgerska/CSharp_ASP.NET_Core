@@ -1,5 +1,5 @@
 ﻿@using ConformityCheck.Web.ViewModels.Articles
-@model EditExportModel
+@model ArticleEditModel
 @{
     this.ViewData["Title"] = "Edit article";
     //var suppliers = Model.SuppliersAvailable.Select(x => new SelectListItem(x.NumberAndName, x.Id));
@@ -8,35 +8,35 @@
     //var substances = Model.SubstancesAvailable.Select(x => new SelectListItem($"{x.CASNumber} - {x.Description}", x.Id.ToString()));
 }
 
+<h3>@this.ViewData["Title"]</h3>
+
 <div>
     <form method="post" class="col-md-6 mx-auto" enctype="multipart/form-data">
         @* za file mi trqbwa multipart/form-data, ako nqma da kachwam file, da go smenq!!!!! *@
-        <h1>@this.ViewData["Title"]</h1>
 
         <div asp-validation-summary="All" class="text-danger"></div>
 
         <input type="text" hidden id="Id" name="Id" value="@Model.Id" />
 
-        <div class="form-group">
-            <label asp-for="Number"></label>
+        <div>
+            <label asp-for="Number">Article number: </label>
             <span class="text-primary ">@Model.Number</span>
         </div>
 
         <div class="form-group">
-            <label asp-for="Description">Article description:</label>
+            <label asp-for="Description">Change article's description:</label>
             <textarea rows="2" asp-for="Description" class="form-control" placeholder="@Model.Description"></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
         <div class="form-group">
+            <label asp-for="Suppliers">Article's suppliers:</label>
             <table class="table table-light table-responsive-md table-hover table-bordered table-sm">
                 <thead>
                     <tr>
                         <th scope="col">Supplier name</th>
                         <th scope="col">Supplier Nr.</th>
-                        <th scope="col">Is Article Main Supplier</th>
-                        <th scope="col">Change main supplier</th>
-                        <th scope="col">Delete</th>
+                        <th scope="col">Is main supplier?</th>
                     </tr>
                 </thead>
                 @foreach (var supplier in this.Model.Suppliers)
@@ -44,38 +44,39 @@
                     <tr>
                         <td>@supplier.Name</td>
                         <td>@supplier.Number</td>
-                        <td>@supplier.IsMainSupplier</td>
-                        <td>
-                            @if (supplier.IsMainSupplier)
-                            {
-                                <input asp-for="MainSupplierId" type="radio" value="@supplier.Id" checked />
-                            }
-                            else
-                            { 
-                                <input asp-for="MainSupplierId" type="radio" value="@supplier.Id" />
-                            }
-                        </td>
-                        <td><a asp-action="DeleteSupplier" class="btn btn-primary" id="@supplier.Id">Replace</a></td>
+                        <td>@(supplier.IsMainSupplier ? "Yes" : "No")</td>
                     </tr>
                 }
             </table>
         </div>
 
         <div class="form-group">
-            <p>If you wanna add supplier to the articles, please select one from the list:</p>
-            <label asp-for="Supplier.Id"></label>
-            <select asp-for="Supplier.Id" class="form-control">
-                <vc:suppliers></vc:suppliers>
-            </select>
-            <span asp-validation-for="Supplier.Id" class="text-danger"></span>
-        </div>
+            <label asp-for="ConformityTypesMainSupplier"></label>
+            <table class="table table-light table-responsive-md table-hover table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Conformity type</th>
+                        <th scope="col">Conformity available</th>
+                        <th scope="col">Is accepted?</th>
+                        <th scope="col">Id</th>
+                    </tr>
+                </thead>
+                @foreach (var conformity in this.Model.ConformityTypesMainSupplier)
+                {
+                    <tr>
+                        <td>@conformity.ConformityTypeDescription</td>
+                        <td>@conformity.ConformityId</td>
+                        <td>@(conformity.ConformityIsAccepted ? "Yes" : "No")</td>
+                        <td>@conformity.ConformityTypeId</td>
 
-        <div class="form-group">
-            <label asp-for="ConformityTypes"></label>
-            <select size="10" asp-for="ConformityTypes" class="form-control">
-                <vc:conformity-types></vc:conformity-types>
-            </select>
-            <span asp-validation-for="ConformityTypes" class="text-danger"></span>
+                    </tr>
+                }
+            </table>
+
+            @*<select size="10" asp-for="ConformityTypes" class="form-control">
+                    <vc:conformity-types></vc:conformity-types>
+                </select>
+                <span asp-validation-for="ConformityTypes" class="text-danger"></span>*@
         </div>
 
         <div class="form-group">
@@ -95,7 +96,7 @@
         </div>
 
         <div id="conformitiesContainer">
-            <label asp-for="ConformityTypes"></label>
+            <label asp-for="ConformityTypesMainSupplier"></label>
             <a class="btn btn-success" onclick="AddMoreConformities()">+</a>
         </div>
 
@@ -104,3 +105,7 @@
         </div>
     </form>
 </div>
+
+@section SideBar{
+    <partial name="_SideMenu" model="Model" />
+}

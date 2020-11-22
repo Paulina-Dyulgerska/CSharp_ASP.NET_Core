@@ -4,7 +4,7 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class ConformityTypeNumberModel : IMapFrom<ConformityType>
+    public class ConformityTypeModel : IMapFrom<ConformityType>
     {
         public int Id { get; set; }
 

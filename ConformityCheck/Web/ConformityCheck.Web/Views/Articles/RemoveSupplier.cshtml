@@ -1,0 +1,57 @@
+﻿@using ConformityCheck.Web.ViewModels.Articles
+@model ArticleSuppliersModel
+@{
+    this.ViewData["Title"] = "Remove a supplier from article";
+}
+
+<h3>@this.ViewData["Title"]</h3>
+
+<div>
+    <form method="post" class="col-md-6 mx-auto">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <input type="text" hidden id="Id" name="Id" value="@Model.Id" />
+
+        <div>
+            <label asp-for="Number"></label>
+            <span class="text-primary ">@Model.Number</span>
+        </div>
+
+        <div>
+            <label asp-for="Description">Article description:</label>
+            <span class="text-primary ">@Model.Description</span>
+        </div>
+
+        <div class="form-group">
+            <table class="table table-light table-responsive-md table-hover table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Supplier name</th>
+                        <th scope="col">Supplier Nr.</th>
+                        <th scope="col">Is Article Main Supplier</th>
+                        <th scope="col">Remove supplier?</th>
+                    </tr>
+                </thead>
+                @foreach (var supplier in this.Model.Suppliers)
+                {
+                    <tr>
+                        <td>@supplier.Name</td>
+                        <td>@supplier.Number</td>
+                        <td>@(supplier.IsMainSupplier ? "Yes" : "No")</td>
+                        <td>
+                            <input asp-for="Supplier.Id" type="radio" value="@supplier.Id" />
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+@section SideBar{
+    <partial name="_SideMenu" model="Model" />
+}
