@@ -1,8 +1,9 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Articles
 {
+    using System.ComponentModel.DataAnnotations;
+
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
-    using System.ComponentModel.DataAnnotations;
 
     public class ArticleBaseModel : IMapFrom<Article>
     {

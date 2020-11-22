@@ -9,19 +9,8 @@
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class ArticleEditModel : IMapFrom<Article>, IHaveCustomMappings
+    public class ArticleEditModel : ArticleBaseModel, IMapFrom<Article>, IHaveCustomMappings
     {
-        public string Id { get; set; }
-
-        [Display(Name = "Article Nr.")]
-        public string Number { get; set; }
-
-        [Required]
-        [MaxLength(50)]
-        [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9 -_]*")]
-        [Display(Name = "Article description (required) *")]
-        public string Description { get; set; }
-
         public string MainSupplierName { get; set; }
 
         public string MainSupplierNumber { get; set; }
