@@ -1,9 +1,9 @@
-﻿namespace ConformityCheck.Services.Data.Models
+﻿namespace ConformityCheck.Web.ViewModels.Conformities
 {
     using System;
     using System.ComponentModel.DataAnnotations;
 
-   public class ArticleConformityImportDTO
+    public class ArticleConformityImportDTO
     {
         [Required]
         public string ConformityType { get; set; }

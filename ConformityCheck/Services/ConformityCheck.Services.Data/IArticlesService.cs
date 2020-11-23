@@ -6,6 +6,7 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data.Models;
     using ConformityCheck.Web.ViewModels.Articles;
+    using ConformityCheck.Web.ViewModels.Conformities;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
 
     public interface IArticlesService : IService
@@ -40,6 +41,6 @@
 
         Task EditAsync(ArticleEditModel articleInputModel);
 
-        Task ChangeMainSupplierAsync(ArticleChangeMainSupplierModel articleInputModel);
+        Task ChangeMainSupplierAsync(ArticleManageSuppliersModel articleInputModel);
     }
 }

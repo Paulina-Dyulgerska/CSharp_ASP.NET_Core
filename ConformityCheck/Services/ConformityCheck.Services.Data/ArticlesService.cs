@@ -11,6 +11,7 @@
     using ConformityCheck.Services.Data.Models;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Articles;
+    using ConformityCheck.Web.ViewModels.Conformities;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
     using ConformityCheck.Web.ViewModels.Products;
     using ConformityCheck.Web.ViewModels.Substances;
@@ -280,7 +281,7 @@
             await this.articlesRepository.SaveChangesAsync();
         }
 
-        public async Task ChangeMainSupplierAsync(ArticleChangeMainSupplierModel input)
+        public async Task ChangeMainSupplierAsync(ArticleManageSuppliersModel input)
         {
             var articleEntity = await this.articlesRepository
                 .All()
@@ -293,7 +294,7 @@
 
             foreach (var entity in articleSupplierEntitis)
             {
-                if (entity.SupplierId == input.MainSupplierId)
+                if (entity.SupplierId == input.Supplier.Id)
                 {
                     entity.IsMainSupplier = true;
                 }
@@ -437,37 +438,37 @@
 
 
         // not in the Interface!
-        public IEnumerable<ConformityImportDTO> ListArticleConformities(string articleId)
+        public IEnumerable<T> ListArticleConformities<T>(string articleId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<SupplierExportDTO> ListArticleSuppliers(string articleId)
+        public IEnumerable<T> ListArticleSuppliers<T>(string articleId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ProductDTO> ListArticleProducts(string articleId)
+        public IEnumerable<T> ListArticleProducts<T>(string articleId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ArticleExportDTO> SearchByArticleNumber(string artileId)
+        public IEnumerable<T> SearchByArticleNumber<T>(string artileId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ArticleExportDTO> SearchByConformityType(string conformityType)
+        public IEnumerable<T> SearchByConformityType<T>(string conformityType)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ArticleExportDTO> SearchByConfirmedStatus(string status)
+        public IEnumerable<T> SearchByConfirmedStatus<T>(string status)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ArticleExportDTO> SearchBySupplierNumber(string supplierNumber)
+        public IEnumerable<T> SearchBySupplierNumber<T>(string supplierNumber)
         {
             throw new NotImplementedException();
         }

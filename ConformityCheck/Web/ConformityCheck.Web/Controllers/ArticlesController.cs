@@ -30,7 +30,7 @@
 
         public async Task<IActionResult> ListAll()
         {
-            var model = await this.articlesService.GetAllAsNoTrackingFullInfoAsync<ArticleEditModel>();
+            var model = await this.articlesService.GetAllAsNoTrackingFullInfoAsync<ArticleFullInfoModel>();
             return this.View(model);
         }
 
@@ -87,13 +87,13 @@
 
         public async Task<IActionResult> ChangeMainSupplier(string id)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleChangeMainSupplierModel>(id);
+            var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersModel>(id);
 
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangeMainSupplier(ArticleChangeMainSupplierModel input)
+        public async Task<IActionResult> ChangeMainSupplier(ArticleManageSuppliersModel input)
         {
             await this.articlesService.ChangeMainSupplierAsync(input);
 

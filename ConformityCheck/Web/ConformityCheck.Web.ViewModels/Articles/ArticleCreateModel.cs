@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using ConformityCheck.Web.ViewModels.ConformityTypes;
+
     using ConformityCheck.Web.ViewModels.Suppliers;
 
     public class ArticleCreateModel : ArticleBaseModel

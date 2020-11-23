@@ -9,14 +9,8 @@
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class ArticleEditModel : IMapFrom<Article>, IHaveCustomMappings
+    public class ArticleEditModel : ArticleBaseModel, IMapFrom<Article>, IHaveCustomMappings
     {
-        public string Id { get; set; }
-
-        public string Number { get; set; }
-
-        public string Description { get; set; }
-
         public string MainSupplierName { get; set; }
 
         public string MainSupplierNumber { get; set; }

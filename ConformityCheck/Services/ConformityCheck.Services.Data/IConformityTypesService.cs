@@ -4,13 +4,16 @@
     using System.Threading.Tasks;
 
     using ConformityCheck.Services.Data.Models;
+    using ConformityCheck.Web.ViewModels.ConformityTypes;
 
     public interface IConformityTypesService : IService
     {
-        Task CreateAsync(ConformityTypeDTO conformityTypeImputDTO);
+        Task CreateAsync(ConformityTypeModel input);
 
-        Task<int> DeleteAsync(int conformityTypeId);
+        Task<int> DeleteAsync(int id);
 
-        IEnumerable<ConformityTypeDTO> ListAllConformityTypes();
+        Task<IEnumerable<T>> GetAllAsNoTrackingAsync<T>();
+
+        Task<IEnumerable<T>> GetAllAsNoTrackingFullInfoAsync<T>();
     }
 }
