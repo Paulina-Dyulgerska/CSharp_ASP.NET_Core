@@ -15,9 +15,9 @@
                 .WithOne(c => c.ConformityType)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            conformityType
-                .HasIndex(ct => ct.Description)
-                .IsUnique();
+            //conformityType
+            //    .HasIndex(ct => ct.Description)
+            //    .IsUnique();
         }
     }
 }

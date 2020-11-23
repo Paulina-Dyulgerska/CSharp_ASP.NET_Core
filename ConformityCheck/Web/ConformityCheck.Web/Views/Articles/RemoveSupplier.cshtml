@@ -40,7 +40,7 @@
                         <td>@supplier.Number</td>
                         <td>@(supplier.IsMainSupplier ? "Yes" : "No")</td>
                         <td>
-                            <input asp-for="Supplier.Id" type="radio" value="@supplier.Id" />
+                            <input asp-for="SupplierId" type="radio" value="@supplier.Id" />
                         </td>
                     </tr>
                 }
@@ -48,11 +48,11 @@
         </div>
 
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" />
+            <input type="submit" class="btn btn-primary" value="Ready" />
         </div>
     </form>
 </div>
 
 @section SideBar{
-    <partial name="_SideMenu" model="Model" />
+    <partial name="_SideMenuEdit" model="Model" />
 }

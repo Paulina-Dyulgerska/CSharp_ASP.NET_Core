@@ -10,7 +10,7 @@
 
     public class ArticleManageSuppliersModel : ArticleBaseModel, IMapFrom<Article>, IHaveCustomMappings
     {
-        public SupplierInputModel Supplier { get; set; }
+        public string SupplierId { get; set; }
 
         public IEnumerable<ArticleSupplierModel> Suppliers { get; set; }
 

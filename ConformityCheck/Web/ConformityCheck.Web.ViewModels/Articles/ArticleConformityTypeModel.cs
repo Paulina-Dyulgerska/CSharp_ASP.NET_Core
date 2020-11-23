@@ -1,12 +1,8 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Articles
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
     using AutoMapper;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
-    using ConformityCheck.Web.ViewModels.ConformityTypes;
 
     public class ArticleConformityTypeModel : IMapFrom<ArticleConformityType>, IHaveCustomMappings
     {

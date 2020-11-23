@@ -47,8 +47,12 @@
         <textarea asp-for="ContactPersonLastName" class="form-control" placeholder="Contact person last name"></textarea>
         <span asp-validation-for="ContactPersonLastName" class="text-danger"></span>
     </div>
-    
+
     <div class="form-group">
-        <input type="submit" class="btn btn-primary" name="Add supplier"/>
+        <input type="submit" class="btn btn-primary" value="Create" />
     </div>
 </form>
+
+@section SideBar{
+    <partial name="_SideMenuGeneral" />
+}

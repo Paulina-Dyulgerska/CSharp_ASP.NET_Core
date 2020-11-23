@@ -7,7 +7,7 @@
 
     public class ArticleCreateModel : ArticleBaseModel
     {
-        public SupplierInputModel Supplier { get; set; }
+        public string SupplierId { get; set; }
 
         [Display(Name = "Select conformity types (required) *")]
         [Required]

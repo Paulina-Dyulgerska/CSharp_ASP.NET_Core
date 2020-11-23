@@ -16,7 +16,9 @@
             <th scope="col">Is confirmed</th>
             <th scope="col">Missing confirmations</th>
             <th scope="col">Confirmations</th>
+            <th scope="col">Details</th>
             <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
         </tr>
     </thead>
     @foreach (var article in this.Model)
@@ -40,11 +42,21 @@
                 }
             </td>
             <td>
+                <a asp-action="Details" class="btn btn-primary" asp-route-id="@article.Id">Details</a>
+            </td>
+            <td>
                 @*    <a href="Edit?id=@article.Id" class="btn btn-primary" id="@article.Id">Edit</a>*@
                 <a asp-action="Edit" class="btn btn-primary" asp-route-id="@article.Id">Edit</a>
+            </td>
+            <td>
+                <a asp-action="Delete" class="btn btn-primary" asp-route-id="@article.Id">Delete</a>
             </td>
         </tr>
     }
 </table>
 
-<a asp-action="Create" class="btn btn-primary">Create new</a>
+<a asp-action="Create" class="btn btn-primary">Create article</a>
+
+@section SideBar{
+    <partial name="_SideMenuGeneral" />
+}

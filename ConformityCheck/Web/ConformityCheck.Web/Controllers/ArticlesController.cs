@@ -1,7 +1,7 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
     using System.Threading.Tasks;
-
+    using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels.Articles;
     using Microsoft.AspNetCore.Mvc;
@@ -80,7 +80,7 @@
         public async Task<IActionResult> AddSupplier(ArticleManageSuppliersModel input)
         {
             var article = await this.articlesService.GetByIdAsync(input.Id);
-            await this.articlesService.AddSupplierAsync(article, input.Supplier.Id);
+            await this.articlesService.AddSupplierAsync(article, input.SupplierId);
 
             return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
         }
@@ -143,6 +143,13 @@
             await this.articlesService.RemoveConformityTypesAsync(input);
 
             return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.articlesService.DeleteAsync(id);
+
+            return this.View();
         }
 
         // TODO

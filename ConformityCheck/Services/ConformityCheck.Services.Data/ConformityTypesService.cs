@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
 
     using ConformityCheck.Data.Common.Repositories;
@@ -49,23 +50,33 @@
         {
             var articles = await this.conformityTypesRepository
                 .AllAsNoTracking()
-                .OrderByDescending(x => x.CreatedOn)
+                .OrderBy(x => x.Description)
+                .ThenByDescending(x => x.CreatedOn)
                 .ThenByDescending(x => x.ModifiedOn)
-                .ThenBy(x => x.Description)
                 .To<T>()
                 .ToListAsync();
 
             return articles;
         }
 
-        public async Task CreateAsync(ConformityTypeModel input)
+        public async Task<T> GetByIdAsync<T>(int id)
         {
-            // if no description is provided
-            if (input.Description == null)
+            var entity = await this.conformityTypesRepository
+                .All()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
+
+            if (entity == null)
             {
-                throw new ArgumentNullException(nameof(input.Description));
+                throw new ArgumentException($"There is no such conformity type.");
             }
 
+            return entity;
+        }
+
+        public async Task CreateAsync(ConformityTypeModel input)
+        {
             // if this conformity type is already in the DB
             if (this.conformityTypesRepository.All()
                 .FirstOrDefault(c => c.Description.ToUpper() == input.Description.ToUpper()) != null)
@@ -73,9 +84,9 @@
                 throw new ArgumentException($"Has this conformity type {nameof(input.Description)}");
             }
 
-            ConformityType conformityType = new ConformityType
+            var conformityType = new ConformityType
             {
-                Description = input.Description.Trim(),
+                Description = input.Description.ToUpper(),
             };
 
             await this.conformityTypesRepository.AddAsync(conformityType);
@@ -83,10 +94,31 @@
             await this.conformityTypesRepository.SaveChangesAsync();
         }
 
-        public Task<int> DeleteAsync(int id)
+        public async Task EditAsync(ConformityTypeModel input)
         {
             // if this conformity type is not in the DB
-            if (this.conformityTypesRepository.All().FirstOrDefault(c => c.Id == id) == null)
+            var entity = await this.conformityTypesRepository
+                .All()
+                .FirstOrDefaultAsync(c => c.Id == input.Id);
+
+            if (entity == null)
+            {
+                throw new ArgumentException($"No such conformity type.");
+            }
+
+            entity.Description = input.Description.ToUpper();
+
+            await this.conformityTypesRepository.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteAsync(int id)
+        {
+            // if this conformity type is not in the DB
+            var conformityTypeEntity = await this.conformityTypesRepository
+                .All()
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (conformityTypeEntity == null)
             {
                 throw new ArgumentException($"No such conformity type");
             }
@@ -97,10 +129,10 @@
                 throw new ArgumentException($"Cannot delete conformity with articles assigned to it.");
             }
 
-            this.conformityTypesRepository
-                .Delete(this.conformityTypesRepository.All().FirstOrDefault(c => c.Id == id));
+            this.conformityTypesRepository.Delete(conformityTypeEntity);
 
-            return this.conformityTypesRepository.SaveChangesAsync();
+            return await this.conformityTypesRepository.SaveChangesAsync();
         }
+
     }
 }

@@ -4,7 +4,7 @@
     this.ViewData["Title"] = "Suppliers";
 }
 
-<h1>@this.ViewData["Title"]</h1>
+<h3>@this.ViewData["Title"]</h3>
 
 <table class="table table-light table-responsive-md table-hover table-striped table-bordered table-sm">
     <thead>
@@ -16,7 +16,9 @@
             <th scope="col">Phone number</th>
             <th scope="col">UserId</th>
             <th scope="col">Articles count</th>
+            <th scope="col">Details</th>
             <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
         </tr>
     </thead>
     @foreach (var supplier in this.Model.Suppliers)
@@ -29,9 +31,21 @@
             <td>@supplier.PhoneNumber</td>
             <td>@supplier.UserId</td>
             <td>@supplier.ArticlesCount</td>
-            <td><a asp-action="Edit" class="btn btn-primary" id="@supplier.Id">Edit</a></td>
+            <td>
+                <a asp-action="Details" class="btn btn-primary" asp-route-id="@supplier.Id">Details</a>
+            </td>
+            <td>
+                <a asp-action="Edit" class="btn btn-primary" id="@supplier.Id">Edit</a>
+            </td>
+            <td>
+                <a asp-action="Delete" class="btn btn-primary" asp-route-id="@supplier.Id">Delete</a>
+            </td>
         </tr>
     }
 </table>
 
 <a asp-action="Create" class="btn btn-primary">Create new</a>
+
+@section SideBar{
+    <partial name="_SideMenuGeneral" />
+}

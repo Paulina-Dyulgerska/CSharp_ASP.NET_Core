@@ -34,19 +34,19 @@
 
         <div class="form-group">
             <p>If you want to add a supplier to the article, please select one from the list:</p>
-            <label asp-for="Supplier.Id"></label>
-            <select asp-for="Supplier.Id" class="form-control">
+            <label asp-for="SupplierId"></label>
+            <select asp-for="SupplierId" class="form-control">
                 <vc:suppliers></vc:suppliers>
             </select>
-            <span asp-validation-for="Supplier.Id" class="text-danger"></span>
+            <span asp-validation-for="SupplierId" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" />
+            <input type="submit" class="btn btn-primary" value="Ready" />
         </div>
     </form>
 </div>
 
 @section SideBar{
-    <partial name="_SideMenu" model="Model" />
+    <partial name="_SideMenuEdit" model="Model" />
 }

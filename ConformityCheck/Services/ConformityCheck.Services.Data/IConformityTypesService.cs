@@ -15,5 +15,8 @@
         Task<IEnumerable<T>> GetAllAsNoTrackingAsync<T>();
 
         Task<IEnumerable<T>> GetAllAsNoTrackingFullInfoAsync<T>();
+
+        Task<T> GetByIdAsync<T>(int id);
+        Task EditAsync(ConformityTypeModel input);
     }
 }

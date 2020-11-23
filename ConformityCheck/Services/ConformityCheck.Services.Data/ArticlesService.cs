@@ -84,41 +84,41 @@
             return articles;
         }
 
-        public async Task<Article> GetByIdAsync(string articleId)
+        public async Task<T> GetByIdAsync<T>(string id)
         {
-            var articleEntity = await this.articlesRepository
+            var entity = await this.articlesRepository
                 .All()
-                .Where(x => x.Id == articleId)
-                .FirstOrDefaultAsync();
-
-            if (articleEntity == null)
-            {
-                throw new ArgumentException($"There is no article with this number.");
-            }
-
-            return articleEntity;
-        }
-
-        public async Task<T> GetByIdAsync<T>(string articleId)
-        {
-            var articleEntity = await this.articlesRepository
-                .All()
-                .Where(x => x.Id == articleId)
+                .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefaultAsync();
 
-            if (articleEntity == null)
+            if (entity == null)
             {
                 throw new ArgumentException($"There is no article with this number.");
             }
 
-            return articleEntity;
+            return entity;
         }
 
-        public async Task CreateAsync(ArticleCreateModel articleInputModel)
+        public async Task<Article> GetByIdAsync(string id)
+        {
+            var entity = await this.articlesRepository
+                .All()
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (entity == null)
+            {
+                throw new ArgumentException($"There is no article with this number.");
+            }
+
+            return entity;
+        }
+
+        public async Task CreateAsync(ArticleCreateModel input)
         {
             var articleEntity = await this.articlesRepository.AllAsNoTracking()
-                .FirstOrDefaultAsync(x => x.Number == articleInputModel.Number.Trim().ToUpper());
+                .FirstOrDefaultAsync(x => x.Number == input.Number.Trim().ToUpper());
 
             //var userEntity = this.usersRepository.AllAsNoTracking()
             //    .FirstOrDefault(x => x.UserName == articleInputModel.UserId);
@@ -131,8 +131,8 @@
 
             var article = new Article
             {
-                Number = articleInputModel.Number.Trim().ToUpper(),
-                Description = this.PascalCaseConverter(articleInputModel.Description),
+                Number = input.Number.Trim().ToUpper(),
+                Description = this.PascalCaseConverter(input.Description),
 
                 //UserId = userEntity.Id,
             };
@@ -141,14 +141,14 @@
 
             await this.articlesRepository.SaveChangesAsync();
 
-            if (articleInputModel.Supplier.Id != null)
+            if (input.SupplierId != null)
             {
-                await this.AddSupplierAsync(article, articleInputModel.Supplier.Id);
+                await this.AddSupplierAsync(article, input.SupplierId);
             }
 
-            if (articleInputModel.ConformityTypes.Any())
+            if (input.ConformityTypes.Any())
             {
-                await this.AddConformityTypesAsync(article, articleInputModel.ConformityTypes);
+                await this.AddConformityTypesAsync(article, input.ConformityTypes);
             }
 
             // TODO: products, substances to be added too.
@@ -245,37 +245,20 @@
             await this.articleSuppliersRepository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(ArticleEditModel articleInputModel)
+        public async Task EditAsync(ArticleEditModel input)
         {
             var articleEntity = await this.articlesRepository
                 .All()
-                .FirstOrDefaultAsync(x => x.Id == articleInputModel.Id);
+                .FirstOrDefaultAsync(x => x.Id == input.Id);
 
             if (articleEntity == null)
             {
                 throw new ArgumentException($"There is no article with this number.");
             }
 
-            if (articleInputModel.Description != null)
+            if (input.Description != null)
             {
-                articleEntity.Description = this.PascalCaseConverter(articleInputModel.Description);
-            }
-
-            // TODO: to check is this already there
-            if (articleInputModel.ConformityTypes != null)
-            {
-                //TODO!!!
-                //await this.AddConformityTypesAsync(articleEntity, articleInputModel.ConformityTypes);
-            }
-
-            // TODO - all other article characteristics have to be able to be updated from this method!!! 
-            //S buttons +add +add na vseki
-            // supplier, product, substance i t.n. A otstrani shte ima - za delete na vseki zapis!!!
-            // Suppliers - AddSupplierToArticle, DeleteSupplierFromArticle
-            // Conformities -AddConformity, DeleteConformity
-            // Products - ListArticleProducts only, no delete
-            // Sustances - Add/DeleteSubstance!!!! To have it in the interface
-            {
+                articleEntity.Description = this.PascalCaseConverter(input.Description);
             }
 
             await this.articlesRepository.SaveChangesAsync();
@@ -294,7 +277,7 @@
 
             foreach (var entity in articleSupplierEntitis)
             {
-                if (entity.SupplierId == input.Supplier.Id)
+                if (entity.SupplierId == input.SupplierId)
                 {
                     entity.IsMainSupplier = true;
                 }
@@ -310,7 +293,7 @@
         public async Task RemoveSupplierAsync(ArticleManageSuppliersModel input)
         {
             var articleSupplierEntity = await this.articleSuppliersRepository.All()
-                .FirstOrDefaultAsync(x => x.ArticleId == input.Id && x.SupplierId == input.Supplier.Id);
+                .FirstOrDefaultAsync(x => x.ArticleId == input.Id && x.SupplierId == input.SupplierId);
 
             if (articleSupplierEntity == null)
             {
@@ -321,6 +304,32 @@
 
             await this.articleSuppliersRepository.SaveChangesAsync();
         }
+
+        public async Task<int> DeleteAsync(string id)
+        {
+            var entity = await this.articlesRepository.All().FirstOrDefaultAsync(x => x.Id == id);
+
+            if (entity == null)
+            {
+                throw new ArgumentException("No such article id.");
+            }
+
+            this.articlesRepository.Delete(entity);
+
+            // TODO - da razbera kak da naprawq triene, no da mi istanat zapisite. Sigurno trqbwa da
+            // vkaram kolona IsDeleted vyv vsqka tablica ot dolnite 4...
+            // article.IsDeleted = true;
+            // foreach (var item in article.Suppliers)
+            // {
+            // }
+            // article.Suppliers.Clear();
+            // article.Substances.Clear();
+            // article.Products.Clear();
+            // article.Conformities.Clear();
+
+            return await this.articlesRepository.SaveChangesAsync();
+        }
+
 
 
         public async Task AddConformityAsync(string articleId, string supplierId, ArticleConformityImportDTO articleConformityImportDTO)
@@ -394,7 +403,7 @@
             await this.conformitiesRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteConformityAsync(string articleId)
+        public async Task DeleteConformityAsync(string id)
         {
             throw new NotImplementedException();
         }
@@ -402,73 +411,40 @@
 
 
 
-
-
-
-
-
-
-
-        public async Task<int> DeleteAsync(string articleId)
-        {
-            var articleEntity = await this.articlesRepository.All().FirstOrDefaultAsync(x => x.Id == articleId);
-
-            if (articleEntity == null)
-            {
-                throw new ArgumentException("No such article id");
-            }
-
-            this.articlesRepository.Delete(articleEntity);
-
-            // TODO - da razbera kak da naprawq triene, no da mi istanat zapisite. Sigurno trqbwa da
-            // vkaram kolona IsDeleted vyv vsqka tablica ot dolnite 4...
-            // article.IsDeleted = true;
-            // foreach (var item in article.Suppliers)
-            // {
-            // }
-            // article.Suppliers.Clear();
-            // article.Substances.Clear();
-            // article.Products.Clear();
-            // article.Conformities.Clear();
-            {
-            }
-
-            return await this.articlesRepository.SaveChangesAsync();
-        }
 
 
         // not in the Interface!
-        public IEnumerable<T> ListArticleConformities<T>(string articleId)
+        public IEnumerable<T> ListArticleConformities<T>(string id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> ListArticleSuppliers<T>(string articleId)
+        public IEnumerable<T> ListArticleSuppliers<T>(string id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> ListArticleProducts<T>(string articleId)
+        public IEnumerable<T> ListArticleProducts<T>(string id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> SearchByArticleNumber<T>(string artileId)
+        public IEnumerable<T> SearchByArticleNumber<T>(string id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> SearchByConformityType<T>(string conformityType)
+        public IEnumerable<T> SearchByConformityType<T>(string id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> SearchByConfirmedStatus<T>(string status)
+        public IEnumerable<T> SearchByConfirmedStatus<T>(string id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> SearchBySupplierNumber<T>(string supplierNumber)
+        public IEnumerable<T> SearchBySupplierNumber<T>(string id)
         {
             throw new NotImplementedException();
         }
@@ -484,8 +460,6 @@
 
             return st.ToString().Trim();
         }
-
-
 
         // for delete:
         //public IEnumerable<string> GetSuppliersIdsList(string articleId)

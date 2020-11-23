@@ -17,11 +17,11 @@
 
         Task<IEnumerable<T>> GetAllAsNoTrackingFullInfoAsync<T>();
 
-        Task<T> GetByIdAsync<T>(string articleId);
+        Task<T> GetByIdAsync<T>(string id);
 
-        Task<Article> GetByIdAsync(string articleId);
+        Task<Article> GetByIdAsync(string id);
 
-        Task CreateAsync(ArticleCreateModel articleInputModel);
+        Task CreateAsync(ArticleCreateModel input);
 
         Task AddConformityTypesAsync(Article article, IEnumerable<int> conformityTypes);
 
@@ -33,14 +33,14 @@
 
         Task RemoveSupplierAsync(ArticleManageSuppliersModel input);
 
-        Task<int> DeleteAsync(string articleId);
+        Task<int> DeleteAsync(string id);
 
         Task AddConformityAsync(string articleId, string supplierId, ArticleConformityImportDTO articleConformityImportDTO);
 
-        Task DeleteConformityAsync(string articleId);
+        Task DeleteConformityAsync(string id);
 
-        Task EditAsync(ArticleEditModel articleInputModel);
+        Task EditAsync(ArticleEditModel input);
 
-        Task ChangeMainSupplierAsync(ArticleManageSuppliersModel articleInputModel);
+        Task ChangeMainSupplierAsync(ArticleManageSuppliersModel input);
     }
 }

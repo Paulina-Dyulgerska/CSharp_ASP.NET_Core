@@ -32,7 +32,7 @@ namespace ConformityCheck.Web.Controllers
 
         public async Task<IActionResult> ListAll()
         {
-            var model = await this.conformityTypeService.GetAllAsNoTrackingFullInfoAsync<ConformityTypeFullModel>();
+            var model = await this.conformityTypeService.GetAllAsNoTrackingFullInfoAsync<ConformityTypeFullInfoModel>();
 
             return this.View(model);
         }
@@ -40,6 +40,36 @@ namespace ConformityCheck.Web.Controllers
         public IActionResult Create()
         {
             return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(ConformityTypeModel input)
+        {
+            await this.conformityTypeService.CreateAsync(input);
+
+            return this.RedirectToAction(nameof(this.ListAll));
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var model = await this.conformityTypeService.GetByIdAsync<ConformityTypeModel>(id);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ConformityTypeModel input)
+        {
+            await this.conformityTypeService.EditAsync(input);
+
+            return this.RedirectToAction(nameof(this.ListAll));
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.conformityTypeService.DeleteAsync(id);
+
+            return this.RedirectToAction(nameof(this.ListAll));
         }
     }
 }
