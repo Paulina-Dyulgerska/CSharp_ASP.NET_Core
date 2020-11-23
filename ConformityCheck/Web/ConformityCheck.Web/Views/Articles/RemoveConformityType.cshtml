@@ -1,7 +1,7 @@
 ﻿@using ConformityCheck.Web.ViewModels.Articles
-@model ArticleChangeMainSupplierModel
+@model ArticleManageConformityTypesModel
 @{
-    this.ViewData["Title"] = "Change or assign main supplier to the article";
+    this.ViewData["Title"] = "Remove conformity type from the article";
 }
 
 <h3>@this.ViewData["Title"]</h3>
@@ -23,32 +23,27 @@
             <span class="text-primary ">@Model.Description</span>
         </div>
 
-        <div class="form-group">
-            <label asp-for="Suppliers"></label>
+        <div>
+            <label asp-for="ConformityTypes"></label>
             <table class="table table-light table-responsive-md table-hover table-bordered table-sm">
                 <thead>
                     <tr>
-                        <th scope="col">Supplier name</th>
-                        <th scope="col">Supplier Nr.</th>
-                        <th scope="col">Is Article Main Supplier</th>
-                        <th scope="col">Change main supplier</th>
+                        <th scope="col">Conformity type</th>
+                        <th scope="col">Conformity available</th>
+                        <th scope="col">Is accepted?</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Remove conformity type?</th>
                     </tr>
                 </thead>
-                @foreach (var supplier in this.Model.Suppliers)
+                @foreach (var conformityType in this.Model.ConformityTypes)
                 {
                     <tr>
-                        <td>@supplier.Name</td>
-                        <td>@supplier.Number</td>
-                        <td>@(supplier.IsMainSupplier ? "Yes" : "No")</td>
+                        <td>@conformityType.Description</td>
+                        <td>@conformityType.ConformityId</td>
+                        <td>@(conformityType.ConformityIsAccepted ? "Yes" : "No")</td>
+                        <td>@conformityType.Id</td>
                         <td>
-                            @if (supplier.IsMainSupplier)
-                            {
-                                <input asp-for="MainSupplierId" type="radio" value="@supplier.Id" checked />
-                            }
-                            else
-                            {
-                                <input asp-for="MainSupplierId" type="radio" value="@supplier.Id" />
-                            }
+                            <input asp-for="ConformityType.Id" type="radio" value="@conformityType.Id" />
                         </td>
                     </tr>
                 }

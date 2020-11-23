@@ -6,14 +6,13 @@
     using AutoMapper;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
-    using ConformityCheck.Web.ViewModels.Articles.Conformities;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
 
     public class ArticleConformityTypeModel : IMapFrom<ArticleConformityType>, IHaveCustomMappings
     {
-        public int ConformityTypeId { get; set; }
+        public int Id { get; set; }
 
-        public string ConformityTypeDescription { get; set; }
+        public string Description { get; set; }
 
         public string ConformityId { get; set; }
 
@@ -23,10 +22,10 @@
         {
             configuration.CreateMap<ArticleConformityType, ArticleConformityTypeModel>()
                 .ForMember(
-                x => x.ConformityTypeId,
+                x => x.Id,
                 opt => opt.MapFrom(c => c.ConformityType.Id))
                 .ForMember(
-                x => x.ConformityTypeDescription,
+                x => x.Description,
                 opt => opt.MapFrom(x => x.ConformityType.Description))
                 .ForMember(
                 x => x.ConformityId,

@@ -157,7 +157,7 @@
         {
             foreach (var conformityType in conformityTypes)
             {
-                if (!this.conformityTypesRepository.AllAsNoTracking().Any(x => x.Id == conformityType))
+                if (!this.conformityTypesRepository.All().Any(x => x.Id == conformityType))
                 {
                     throw new ArgumentException($"There is no such conformity type.");
                 }
@@ -180,6 +180,29 @@
             }
 
             await this.articlesRepository.SaveChangesAsync();
+        }
+
+        public async Task AddConformityTypesAsync(ArticleManageConformityTypesModel input)
+        {
+            await this.AddConformityTypesAsync(
+                new Article { Id = input.Id },
+                new int[] { input.ConformityType.Id });
+        }
+
+        public async Task RemoveConformityTypesAsync(ArticleManageConformityTypesModel input)
+        {
+            var articleConformityTypeEntity = await this.articleConformityTypeRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.ArticleId == input.Id && x.ConformityTypeId == input.ConformityType.Id);
+
+            if (articleConformityTypeEntity == null)
+            {
+                throw new ArgumentException("No article with this conformity type.");
+            }
+
+            this.articleConformityTypeRepository.Delete(articleConformityTypeEntity);
+
+            await this.articleConformityTypeRepository.SaveChangesAsync();
         }
 
         public async Task AddSupplierAsync(Article article, string supplierId)
@@ -238,7 +261,7 @@
             }
 
             // TODO: to check is this already there
-            if (articleInputModel.ConformityTypesMainSupplier != null)
+            if (articleInputModel.ConformityTypes != null)
             {
                 //TODO!!!
                 //await this.AddConformityTypesAsync(articleEntity, articleInputModel.ConformityTypes);
@@ -283,7 +306,7 @@
             await this.articlesRepository.SaveChangesAsync();
         }
 
-        public async Task RemoveSupplierAsync(ArticleSuppliersModel input)
+        public async Task RemoveSupplierAsync(ArticleManageSuppliersModel input)
         {
             var articleSupplierEntity = await this.articleSuppliersRepository.All()
                 .FirstOrDefaultAsync(x => x.ArticleId == input.Id && x.SupplierId == input.Supplier.Id);

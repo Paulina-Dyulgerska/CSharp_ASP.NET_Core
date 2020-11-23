@@ -1,7 +1,7 @@
 ﻿@using ConformityCheck.Web.ViewModels.Articles
-@model ArticleManageSuppliersModel
+@model ArticleManageConformityTypesModel
 @{
-    this.ViewData["Title"] = "Add a supplier to the article";
+    this.ViewData["Title"] = "Add a conformity type to the article";
     //var suppliers = Model.SuppliersAvailable.Select(x => new SelectListItem(x.NumberAndName, x.Id));
     //var conformityTypes = Model.ConformityTypesAvailable.Select(x => new SelectListItem(x.Description, x.Id.ToString()));
     //var products = Model.ProductsAvailable.Select(x => new SelectListItem(x.Number, x.Id));
@@ -28,17 +28,17 @@
         </div>
 
         <div>
-            <label asp-for="Suppliers"></label>
-            <partial name="_ArticleSuppliersTable" model="Model" />
+            <label asp-for="ConformityTypes"></label>
+            <partial name="_ArticleConformityTypesTable" model="Model" />
         </div>
 
         <div class="form-group">
-            <p>If you want to add a supplier to the article, please select one from the list:</p>
-            <label asp-for="Supplier.Id"></label>
-            <select asp-for="Supplier.Id" class="form-control">
-                <vc:suppliers></vc:suppliers>
+            <p>If you want to add a conformity to the article, please select one from the list:</p>
+            <label asp-for="ConformityType.Id"></label>
+            <select asp-for="ConformityType.Id" class="form-control">
+                <vc:conformity-types></vc:conformity-types>
             </select>
-            <span asp-validation-for="Supplier.Id" class="text-danger"></span>
+            <span asp-validation-for="ConformityType.Id" class="text-danger"></span>
         </div>
 
         <div class="form-group">

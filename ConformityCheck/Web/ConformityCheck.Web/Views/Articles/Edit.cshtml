@@ -29,54 +29,14 @@
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <label asp-for="Suppliers">Article's suppliers:</label>
-            <table class="table table-light table-responsive-md table-hover table-bordered table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col">Supplier name</th>
-                        <th scope="col">Supplier Nr.</th>
-                        <th scope="col">Is main supplier?</th>
-                    </tr>
-                </thead>
-                @foreach (var supplier in this.Model.Suppliers)
-                {
-                    <tr>
-                        <td>@supplier.Name</td>
-                        <td>@supplier.Number</td>
-                        <td>@(supplier.IsMainSupplier ? "Yes" : "No")</td>
-                    </tr>
-                }
-            </table>
+        <div>
+            <label asp-for="Suppliers"></label>
+            <partial name="_ArticleSuppliersTable" model="Model" />
         </div>
 
-        <div class="form-group">
-            <label asp-for="ConformityTypesMainSupplier"></label>
-            <table class="table table-light table-responsive-md table-hover table-bordered table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col">Conformity type</th>
-                        <th scope="col">Conformity available</th>
-                        <th scope="col">Is accepted?</th>
-                        <th scope="col">Id</th>
-                    </tr>
-                </thead>
-                @foreach (var conformity in this.Model.ConformityTypesMainSupplier)
-                {
-                    <tr>
-                        <td>@conformity.ConformityTypeDescription</td>
-                        <td>@conformity.ConformityId</td>
-                        <td>@(conformity.ConformityIsAccepted ? "Yes" : "No")</td>
-                        <td>@conformity.ConformityTypeId</td>
-
-                    </tr>
-                }
-            </table>
-
-            @*<select size="10" asp-for="ConformityTypes" class="form-control">
-                    <vc:conformity-types></vc:conformity-types>
-                </select>
-                <span asp-validation-for="ConformityTypes" class="text-danger"></span>*@
+        <div>
+            <label asp-for="ConformityTypes"></label>
+            <partial name="_ArticleConformityTypesTable" model="Model" />
         </div>
 
         <div class="form-group">
@@ -96,7 +56,7 @@
         </div>
 
         <div id="conformitiesContainer">
-            <label asp-for="ConformityTypesMainSupplier"></label>
+            <label asp-for="ConformityTypes"></label>
             <a class="btn btn-success" onclick="AddMoreConformities()">+</a>
         </div>
 

@@ -71,13 +71,13 @@
 
         public async Task<IActionResult> AddSupplier(string id)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleSuppliersModel>(id);
+            var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersModel>(id);
 
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddSupplier(ArticleSuppliersModel input)
+        public async Task<IActionResult> AddSupplier(ArticleManageSuppliersModel input)
         {
             var article = await this.articlesService.GetByIdAsync(input.Id);
             await this.articlesService.AddSupplierAsync(article, input.Supplier.Id);
@@ -102,25 +102,48 @@
 
         public async Task<IActionResult> RemoveSupplier(string id)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleSuppliersModel>(id);
+            var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersModel>(id);
 
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveSupplier(ArticleSuppliersModel input)
+        public async Task<IActionResult> RemoveSupplier(ArticleManageSuppliersModel input)
         {
             await this.articlesService.RemoveSupplierAsync(input);
 
             return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
         }
 
-        //public async Task<IActionResult> AddConformityType(string id)
-        //{
-        //    var model = await this.articlesService.GetByIdAsync<AddConformityToArticleModel>();
+        public async Task<IActionResult> AddConformityType(string id)
+        {
+            var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesModel>(id);
 
-        //    return this.View(model);
-        //}
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddConformityType(ArticleManageConformityTypesModel input)
+        {
+            await this.articlesService.AddConformityTypesAsync(input);
+
+            return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
+        }
+
+        public async Task<IActionResult> RemoveConformityType(string id)
+        {
+            var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesModel>(id);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveConformityType(ArticleManageConformityTypesModel input)
+        {
+            await this.articlesService.RemoveConformityTypesAsync(input);
+
+            return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
+        }
 
         // TODO
         public IActionResult Details(int id)

@@ -99,7 +99,7 @@
         {
             return await this.conformityTypesRepository
                 .AllAsNoTracking()
-                .OrderBy(x => x.Description)
+                .OrderBy(x => x.Id)
                 //.Select(x => new ConformityTypeViewComponentModel
                 //{
                 //    Id = x.Id,

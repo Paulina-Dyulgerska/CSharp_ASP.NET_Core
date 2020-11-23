@@ -1,5 +1,5 @@
 ﻿@using ConformityCheck.Web.ViewModels.Articles
-@model ArticleSuppliersModel
+@model ArticleManageSuppliersModel
 @{
     this.ViewData["Title"] = "Remove a supplier from article";
 }
@@ -18,11 +18,12 @@
         </div>
 
         <div>
-            <label asp-for="Description">Article description:</label>
+            <label asp-for="Description"></label>
             <span class="text-primary ">@Model.Description</span>
         </div>
 
         <div class="form-group">
+            <label asp-for="Suppliers"></label>
             <table class="table table-light table-responsive-md table-hover table-bordered table-sm">
                 <thead>
                     <tr>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConformityCheck.Web.ViewModels.Articles.Conformities
+namespace ConformityCheck.Web.ViewModels.Conformities
 {
    public class ConformityExportModel
     {

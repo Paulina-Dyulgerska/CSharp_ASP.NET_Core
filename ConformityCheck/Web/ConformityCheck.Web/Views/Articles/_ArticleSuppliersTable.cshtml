@@ -1,0 +1,17 @@
+﻿<table class="table table-light table-responsive-md table-hover table-bordered table-sm">
+    <thead>
+        <tr>
+            <th scope="col">Supplier name</th>
+            <th scope="col">Supplier Nr.</th>
+            <th scope="col">Is Article's Main Supplier</th>
+        </tr>
+    </thead>
+    @foreach (var supplier in this.Model.Suppliers)
+    {
+        <tr>
+            <td>@supplier.Name</td>
+            <td>@supplier.Number</td>
+            <td>@(supplier.IsMainSupplier ? "Yes" : "No")</td>
+        </tr>
+    }
+</table>

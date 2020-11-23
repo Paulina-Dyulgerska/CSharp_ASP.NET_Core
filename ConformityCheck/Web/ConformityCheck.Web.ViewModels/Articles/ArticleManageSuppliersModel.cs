@@ -6,19 +6,22 @@
     using AutoMapper;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
+    using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class ArticleChangeMainSupplierModel : ArticleBaseModel, IMapFrom<Article>, IHaveCustomMappings
+    public class ArticleManageSuppliersModel : ArticleBaseModel, IMapFrom<Article>, IHaveCustomMappings
     {
-        public string MainSupplierId { get; set; }
+        public SupplierInputModel Supplier { get; set; }
 
         public IEnumerable<ArticleSupplierModel> Suppliers { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Article, ArticleChangeMainSupplierModel>()
+            configuration.CreateMap<Article, ArticleManageSuppliersModel>()
                 .ForMember(
-                x => x.Suppliers,
+                X => X.Suppliers,
                 opt => opt.MapFrom(a => a.ArticleSuppliers
+                .OrderByDescending(x => x.IsMainSupplier)
+                .ThenBy(x => x.Supplier.Name)
                 //.Select(x => new ArticleSupplierModel
                 //{
                 //    Id = x.SupplierId,
