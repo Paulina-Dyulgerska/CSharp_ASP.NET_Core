@@ -6,56 +6,64 @@
 
 <h3>@this.ViewData["Title"]</h3>
 
-<table class="table table-light table-responsive-md table-hover table-striped table-bordered table-sm">
-    <thead>
-        <tr>
-            <th scope="col">Article Nr.</th>
-            <th scope="col">Article description</th>
-            <th scope="col">Main supplier Nr.</th>
-            <th scope="col">Main supplier name</th>
-            <th scope="col">Is confirmed</th>
-            <th scope="col">Missing confirmations</th>
-            <th scope="col">Confirmations</th>
-            <th scope="col">Details</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
-        </tr>
-    </thead>
-    @foreach (var article in this.Model)
-    {
-        <tr>
-            <td>@article.Number</td>
-            <td>@article.Description</td>
-            <td>@article.MainSupplierNumber</td>
-            <td>@article.MainSupplierName</td>
-            <td>@article.IsConfirmed</td>
-            <td>
-                @foreach (var unconfirmedConformity in article.ArticleMissingConformityTypes)
-                {
-                    <ul>@unconfirmedConformity</ul>
-                }
-            </td>
-            <td>
-                @foreach (var confirmedConformity in article.ArticleConformityTypes)
-                {
-                    <ul>@confirmedConformity</ul>
-                }
-            </td>
-            <td>
-                <a asp-action="Details" class="btn btn-primary" asp-route-id="@article.Id">Details</a>
-            </td>
-            <td>
-                @*    <a href="Edit?id=@article.Id" class="btn btn-primary" id="@article.Id">Edit</a>*@
-                <a asp-action="Edit" class="btn btn-primary" asp-route-id="@article.Id">Edit</a>
-            </td>
-            <td>
-                <a asp-action="Delete" class="btn btn-primary" asp-route-id="@article.Id">Delete</a>
-            </td>
-        </tr>
-    }
-</table>
+<input size="36" type="text" id="searchInput" placeholder="Search for article number or name...">
 
-<a asp-action="Create" class="btn btn-primary">Create article</a>
+<div class="container-fluid">
+    <table id="table" class="table table-light table-responsive-md table-hover table-striped table-bordered table-sm">
+        <thead>
+            <tr class="d-flex">
+                <th class="col-2">
+                    Article Nr.
+                    <button onclick="sortList()">Sort</button>
+                </th>
+                <th class="col-2">Article description</th>
+                <th class="col-1">Main supplier Nr.</th>
+                <th class="col-1">Main supplier name</th>
+                <th class="col-1">Is confirmed</th>
+                <th class="col-1">Missing confirmations</th>
+                <th class="col-1">Confirmations</th>
+                <th class="col-1">Details</th>
+                <th class="col-1">Edit</th>
+                <th class="col-1">Delete</th>
+            </tr>
+        </thead>
+        @foreach (var article in this.Model)
+        {
+            <tr class="d-flex">
+                <td id="search" class="col-2">@article.Number</td>
+                <td id="search" class="col-2">@article.Description</td>
+                <td class="col-1">@article.MainSupplierNumber</td>
+                <td class="col-1">@article.MainSupplierName</td>
+                <td class="col-1">@article.IsConfirmed</td>
+                <td class="col-1">
+                    @foreach (var unconfirmedConformity in article.ArticleMissingConformityTypes)
+                    {
+                        <span>@unconfirmedConformity</span>
+                    }
+                </td>
+                <td class="col-1">
+                    @foreach (var confirmedConformity in article.ArticleConformityTypes)
+                    {
+                        <span>@confirmedConformity</span>
+                    }
+                </td>
+                <td class="col-1">
+                    <a asp-action="Details" class="btn btn-primary" asp-route-id="@article.Id">Details</a>
+                </td>
+                <td class="col-1">
+                    @*    <a href="Edit?id=@article.Id" class="btn btn-primary" id="@article.Id">Edit</a>*@
+                    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@article.Id">Edit</a>
+                </td>
+                <td class="col-1">
+                    <a asp-action="Delete" class="btn btn-primary" asp-route-id="@article.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <a asp-action="Create" class="btn btn-primary">Create article</a>
+
+</div>
 
 @section SideBar{
     <partial name="_SideMenuGeneral" />
