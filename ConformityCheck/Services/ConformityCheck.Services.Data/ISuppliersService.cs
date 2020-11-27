@@ -5,9 +5,10 @@
     using ConformityCheck.Services.Data.Models;
     using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public interface ISuppliersService : IService
+    public interface ISuppliersService : IService<string>
     {
         Task CreateAsync(CreateSupplierInputModel supplierInputModel);
+        Task EditAsync(SupplierEditInputModel input);
 
         //void AddArticle(int supplierId, int articleId);
 

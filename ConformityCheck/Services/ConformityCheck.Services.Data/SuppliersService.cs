@@ -9,6 +9,7 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Suppliers;
+    using Microsoft.EntityFrameworkCore;
 
     public class SuppliersService : ISuppliersService
     {
@@ -28,54 +29,111 @@
             return this.suppliersRepository.AllAsNoTracking().Count();
         }
 
-        public IEnumerable<T> GetAll<T>()
+        public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
-            return this.suppliersRepository.All().To<T>().ToList();
+            return await this.suppliersRepository.All().To<T>().ToListAsync();
         }
 
-        public IEnumerable<T> GetAllAsNoTracking<T>()
+        public async Task<IEnumerable<T>> GetAllAsNoTrackingAsync<T>()
         {
-            return this.suppliersRepository.AllAsNoTracking().To<T>().ToList();
+            return await this.suppliersRepository.AllAsNoTracking().To<T>().ToListAsync();
         }
 
-        public async Task CreateAsync(CreateSupplierInputModel supplierInputModel)
+        public async Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsync<T>()
         {
-            var supplierEntity = this.suppliersRepository.AllAsNoTracking()
-                .Where(x => x.Name == supplierInputModel.Name.Trim().ToUpper() ||
-                x.Number == supplierInputModel.Number.Trim().ToUpper()).FirstOrDefault();
+            return await this.suppliersRepository
+                .AllAsNoTracking()
+                .OrderBy(x => x.Name)
+                .ThenBy(x => x.Number)
+                .ThenByDescending(x => x.CreatedOn)
+                .ThenByDescending(x => x.ModifiedOn)
+                .To<T>()
+                .ToListAsync();
+        }
+
+        public async Task<T> GetByIdAsync<T>(string id)
+        {
+            var entity = await this.suppliersRepository
+                .All()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
+
+            if (entity == null)
+            {
+                throw new ArgumentException($"There is no supplier with this number.");
+            }
+
+            return entity;
+        }
+
+        public async Task CreateAsync(CreateSupplierInputModel input)
+        {
+            var entity = await this.suppliersRepository.AllAsNoTracking()
+                .Where(x => x.Name == input.Name.Trim().ToUpper() || x.Number == input.Number.Trim().ToUpper())
+                .FirstOrDefaultAsync();
 
             //var userEntity = this.usersRepository.AllAsNoTracking()
             //    .FirstOrDefault(x => x.UserName == articleInputModel.UserId);
             //take the user and record its id in the article, product, conformity, etc.
 
-            if (supplierEntity != null)
+            if (entity != null)
             {
                 throw new ArgumentException($"There is already a supplier with this number or name.");
             }
 
-            supplierEntity = new Supplier
+            entity = new Supplier
             {
-                Number = supplierInputModel.Number.Trim().ToUpper(),
-                Name = this.PascalCaseConverter(supplierInputModel.Name),
-                Email = supplierInputModel.Email?.Trim(),
-                PhoneNumber = supplierInputModel.PhoneNumber?.Trim(),
-                ContactPersonFirstName = supplierInputModel.ContactPersonFirstName == null ? null :
-                            this.PascalCaseConverter(supplierInputModel.ContactPersonFirstName),
-                ContactPersonLastName = supplierInputModel.ContactPersonLastName == null ? null :
-                            this.PascalCaseConverter(supplierInputModel.ContactPersonLastName),
+                Number = input.Number.Trim().ToUpper(),
+                Name = this.PascalCaseConverter(input.Name),
+                Email = input.Email?.Trim(),
+                PhoneNumber = input.PhoneNumber?.Trim(),
+                ContactPersonFirstName = input.ContactPersonFirstName == null ? null :
+                            this.PascalCaseConverter(input.ContactPersonFirstName),
+                ContactPersonLastName = input.ContactPersonLastName == null ? null :
+                            this.PascalCaseConverter(input.ContactPersonLastName),
             };
 
-            await this.suppliersRepository.AddAsync(supplierEntity);
+            await this.suppliersRepository.AddAsync(entity);
 
             await this.suppliersRepository.SaveChangesAsync();
         }
 
-        //public async Task<Supplier> GetOrCreateSupplierAsync(CreateArticleInputModel articleViewModel)
-        //{
-        //    
+        public async Task EditAsync(SupplierEditInputModel input)
+        {
+            var entity = await this.suppliersRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == input.Id);
 
-        //    return supplierEntity;
-        //}
+            //var userEntity = this.usersRepository.AllAsNoTracking()
+            //    .FirstOrDefault(x => x.UserName == articleInputModel.UserId);
+            //take the user and record its id in the article, product, conformity, etc.
+
+            if (entity == null)
+            {
+                throw new ArgumentException($"There is no such supplier.");
+            }
+
+            var hasThisName = await this.suppliersRepository
+                .AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.Name == input.Name.Trim().ToUpper() && x.Id != input.Id) != null;
+
+            if (hasThisName)
+            {
+                throw new ArgumentException($"There is already a supplier with this name.");
+            }
+
+            entity.Name = this.PascalCaseConverter(input.Name);
+            entity.Email = input.Email?.Trim();
+            entity.PhoneNumber = input.PhoneNumber?.Trim();
+            entity.ContactPersonFirstName = input.ContactPersonFirstName == null ?
+                null : this.PascalCaseConverter(input.ContactPersonFirstName);
+            entity.ContactPersonLastName = input.ContactPersonLastName == null ?
+                null : this.PascalCaseConverter(input.ContactPersonLastName);
+
+            await this.suppliersRepository.SaveChangesAsync();
+        }
+        
         private string PascalCaseConverter(string stringToFix)
         {
             var st = new StringBuilder();
@@ -87,5 +145,9 @@
 
             return st.ToString().Trim();
         }
+
+
+
+
     }
 }

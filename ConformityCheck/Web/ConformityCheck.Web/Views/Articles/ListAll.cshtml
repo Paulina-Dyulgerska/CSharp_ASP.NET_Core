@@ -8,6 +8,8 @@
 
 <input size="36" type="text" id="searchInput" placeholder="Search for article number or name...">
 
+<a asp-action="Create" class="btn btn-primary">Create article</a>
+
 <div class="container-fluid">
     <table id="table" class="table table-light table-responsive-md table-hover table-striped table-bordered table-sm">
         <thead>
@@ -60,9 +62,6 @@
             </tr>
         }
     </table>
-
-    <a asp-action="Create" class="btn btn-primary">Create article</a>
-
 </div>
 
 @section SideBar{

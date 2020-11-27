@@ -51,19 +51,9 @@
             return this.articlesRepository.AllAsNoTracking().Count();
         }
 
-        public IEnumerable<T> GetAll<T>()
-        {
-            return this.articlesRepository.All().To<T>().ToList();
-        }
-
         public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             return await this.articlesRepository.All().To<T>().ToListAsync();
-        }
-
-        public IEnumerable<T> GetAllAsNoTracking<T>()
-        {
-            return this.articlesRepository.AllAsNoTracking().To<T>().ToList();
         }
 
         public async Task<IEnumerable<T>> GetAllAsNoTrackingAsync<T>()
@@ -71,7 +61,7 @@
             return await this.articlesRepository.AllAsNoTracking().To<T>().ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsNoTrackingFullInfoAsync<T>()
+        public async Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsync<T>()
         {
             var articles = await this.articlesRepository
                 .AllAsNoTracking()
@@ -154,56 +144,48 @@
             // TODO: products, substances to be added too.
         }
 
-        public async Task AddConformityTypesAsync(Article article, IEnumerable<int> conformityTypes)
+        public async Task EditAsync(ArticleEditInputModel input)
         {
-            foreach (var conformityType in conformityTypes)
+            var articleEntity = await this.articlesRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == input.Id);
+
+            if (articleEntity == null)
             {
-                if (!this.conformityTypesRepository.All().Any(x => x.Id == conformityType))
-                {
-                    throw new ArgumentException($"There is no such conformity type.");
-                }
+                throw new ArgumentException($"There is no article with this number.");
+            }
 
-                var articleConformityType = await this.articleConformityTypeRepository
-                     .AllAsNoTracking()
-                     .FirstOrDefaultAsync(x => x.ArticleId == article.Id && x.ConformityTypeId == conformityType);
-
-                if (articleConformityType != null)
-                {
-                    continue;
-                    //throw new ArgumentException($"This conformity is already asigned to this article.");
-                }
-
-                await this.articleConformityTypeRepository.AddAsync(new ArticleConformityType
-                {
-                    ArticleId = article.Id,
-                    ConformityTypeId = conformityType,
-                });
+            if (input.Description != null)
+            {
+                articleEntity.Description = this.PascalCaseConverter(input.Description);
             }
 
             await this.articlesRepository.SaveChangesAsync();
         }
 
-        public async Task AddConformityTypesAsync(ArticleManageConformityTypesModel input)
+        public async Task<int> DeleteAsync(string id)
         {
-            await this.AddConformityTypesAsync(
-                new Article { Id = input.Id },
-                new int[] { input.ConformityType.Id });
-        }
+            var entity = await this.articlesRepository.All().FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task RemoveConformityTypesAsync(ArticleManageConformityTypesModel input)
-        {
-            var articleConformityTypeEntity = await this.articleConformityTypeRepository
-                .All()
-                .FirstOrDefaultAsync(x => x.ArticleId == input.Id && x.ConformityTypeId == input.ConformityType.Id);
-
-            if (articleConformityTypeEntity == null)
+            if (entity == null)
             {
-                throw new ArgumentException("No article with this conformity type.");
+                throw new ArgumentException("No such article id.");
             }
 
-            this.articleConformityTypeRepository.Delete(articleConformityTypeEntity);
+            this.articlesRepository.Delete(entity);
 
-            await this.articleConformityTypeRepository.SaveChangesAsync();
+            // TODO - da razbera kak da naprawq triene, no da mi istanat zapisite. Sigurno trqbwa da
+            // vkaram kolona IsDeleted vyv vsqka tablica ot dolnite 4...
+            // article.IsDeleted = true;
+            // foreach (var item in article.Suppliers)
+            // {
+            // }
+            // article.Suppliers.Clear();
+            // article.Substances.Clear();
+            // article.Products.Clear();
+            // article.Conformities.Clear();
+
+            return await this.articlesRepository.SaveChangesAsync();
         }
 
         public async Task AddSupplierAsync(Article article, string supplierId)
@@ -245,26 +227,7 @@
             await this.articleSuppliersRepository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(ArticleEditModel input)
-        {
-            var articleEntity = await this.articlesRepository
-                .All()
-                .FirstOrDefaultAsync(x => x.Id == input.Id);
-
-            if (articleEntity == null)
-            {
-                throw new ArgumentException($"There is no article with this number.");
-            }
-
-            if (input.Description != null)
-            {
-                articleEntity.Description = this.PascalCaseConverter(input.Description);
-            }
-
-            await this.articlesRepository.SaveChangesAsync();
-        }
-
-        public async Task ChangeMainSupplierAsync(ArticleManageSuppliersModel input)
+        public async Task ChangeMainSupplierAsync(ArticleManageSuppliersInputModel input)
         {
             var articleEntity = await this.articlesRepository
                 .All()
@@ -290,7 +253,7 @@
             await this.articlesRepository.SaveChangesAsync();
         }
 
-        public async Task RemoveSupplierAsync(ArticleManageSuppliersModel input)
+        public async Task RemoveSupplierAsync(ArticleManageSuppliersInputModel input)
         {
             var articleSupplierEntity = await this.articleSuppliersRepository.All()
                 .FirstOrDefaultAsync(x => x.ArticleId == input.Id && x.SupplierId == input.SupplierId);
@@ -305,31 +268,57 @@
             await this.articleSuppliersRepository.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteAsync(string id)
+        public async Task AddConformityTypeAsync(ArticleManageConformityTypesInputModel input)
         {
-            var entity = await this.articlesRepository.All().FirstOrDefaultAsync(x => x.Id == id);
-
-            if (entity == null)
-            {
-                throw new ArgumentException("No such article id.");
-            }
-
-            this.articlesRepository.Delete(entity);
-
-            // TODO - da razbera kak da naprawq triene, no da mi istanat zapisite. Sigurno trqbwa da
-            // vkaram kolona IsDeleted vyv vsqka tablica ot dolnite 4...
-            // article.IsDeleted = true;
-            // foreach (var item in article.Suppliers)
-            // {
-            // }
-            // article.Suppliers.Clear();
-            // article.Substances.Clear();
-            // article.Products.Clear();
-            // article.Conformities.Clear();
-
-            return await this.articlesRepository.SaveChangesAsync();
+            await this.AddConformityTypesAsync(
+                new Article { Id = input.Id },
+                new int[] { input.ConformityTypeId });
         }
 
+        public async Task AddConformityTypesAsync(Article article, IEnumerable<int> conformityTypes)
+        {
+            foreach (var conformityType in conformityTypes)
+            {
+                if (!this.conformityTypesRepository.All().Any(x => x.Id == conformityType))
+                {
+                    throw new ArgumentException($"There is no such conformity type.");
+                }
+
+                var articleConformityType = await this.articleConformityTypeRepository
+                     .AllAsNoTracking()
+                     .FirstOrDefaultAsync(x => x.ArticleId == article.Id && x.ConformityTypeId == conformityType);
+
+                if (articleConformityType != null)
+                {
+                    continue;
+                    //throw new ArgumentException($"This conformity is already asigned to this article.");
+                }
+
+                await this.articleConformityTypeRepository.AddAsync(new ArticleConformityType
+                {
+                    ArticleId = article.Id,
+                    ConformityTypeId = conformityType,
+                });
+            }
+
+            await this.articlesRepository.SaveChangesAsync();
+        }
+
+        public async Task RemoveConformityTypesAsync(ArticleManageConformityTypesInputModel input)
+        {
+            var articleConformityTypeEntity = await this.articleConformityTypeRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.ArticleId == input.Id && x.ConformityTypeId == input.ConformityTypeId);
+
+            if (articleConformityTypeEntity == null)
+            {
+                throw new ArgumentException("No article with this conformity type.");
+            }
+
+            this.articleConformityTypeRepository.Delete(articleConformityTypeEntity);
+
+            await this.articleConformityTypeRepository.SaveChangesAsync();
+        }
 
 
         public async Task AddConformityAsync(string articleId, string supplierId, ArticleConformityImportDTO articleConformityImportDTO)
@@ -407,10 +396,6 @@
         {
             throw new NotImplementedException();
         }
-
-
-
-
 
 
         // not in the Interface!

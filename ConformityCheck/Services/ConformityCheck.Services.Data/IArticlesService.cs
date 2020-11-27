@@ -9,38 +9,30 @@
     using ConformityCheck.Web.ViewModels.Conformities;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
 
-    public interface IArticlesService : IService
+    public interface IArticlesService : IService<string>
     {
-        Task<IEnumerable<T>> GetAllAsync<T>();
-
-        Task<IEnumerable<T>> GetAllAsNoTrackingAsync<T>();
-
-        Task<IEnumerable<T>> GetAllAsNoTrackingFullInfoAsync<T>();
-
-        Task<T> GetByIdAsync<T>(string id);
-
         Task<Article> GetByIdAsync(string id);
 
         Task CreateAsync(ArticleCreateModel input);
 
-        Task AddConformityTypesAsync(Article article, IEnumerable<int> conformityTypes);
+        Task EditAsync(ArticleEditInputModel input);
 
-        Task RemoveConformityTypesAsync(ArticleManageConformityTypesModel input);
-
-        Task AddConformityTypesAsync(ArticleManageConformityTypesModel input);
+        Task<int> DeleteAsync(string id);
 
         Task AddSupplierAsync(Article article, string supplierId);
 
-        Task RemoveSupplierAsync(ArticleManageSuppliersModel input);
+        Task ChangeMainSupplierAsync(ArticleManageSuppliersInputModel input);
 
-        Task<int> DeleteAsync(string id);
+        Task RemoveSupplierAsync(ArticleManageSuppliersInputModel input);
+
+        Task AddConformityTypeAsync(ArticleManageConformityTypesInputModel input);
+
+        Task AddConformityTypesAsync(Article article, IEnumerable<int> conformityTypes);
+
+        Task RemoveConformityTypesAsync(ArticleManageConformityTypesInputModel input);
 
         Task AddConformityAsync(string articleId, string supplierId, ArticleConformityImportDTO articleConformityImportDTO);
 
         Task DeleteConformityAsync(string id);
-
-        Task EditAsync(ArticleEditModel input);
-
-        Task ChangeMainSupplierAsync(ArticleManageSuppliersModel input);
     }
 }

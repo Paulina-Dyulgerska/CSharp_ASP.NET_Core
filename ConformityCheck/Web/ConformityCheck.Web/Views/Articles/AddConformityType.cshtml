@@ -15,7 +15,7 @@
 
         <div asp-validation-summary="All" class="text-danger"></div>
 
-        <input type="text" hidden id="Id" name="Id" value="@Model.Id" />
+        <input asp-for="Id" hidden value="@Model.Id" />
 
         <div>
             <label asp-for="Number"></label>
@@ -34,15 +34,15 @@
 
         <div class="form-group">
             <p>If you want to add a conformity to the article, please select one from the list:</p>
-            <label asp-for="ConformityType.Id"></label>
-            <select asp-for="ConformityType.Id" class="form-control">
+            <label asp-for="ConformityTypeId"></label>
+            <select asp-for="ConformityTypeId" class="form-control">
                 <vc:conformity-types></vc:conformity-types>
             </select>
-            <span asp-validation-for="ConformityType.Id" class="text-danger"></span>
+            <span asp-validation-for="ConformityTypeId" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Ready"  />
+            <input type="submit" class="btn btn-primary" value="Ready" />
         </div>
     </form>
 </div>

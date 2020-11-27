@@ -10,7 +10,7 @@
 
     public class ArticleManageConformityTypesModel : ArticleBaseModel, IMapFrom<Article>, IMapTo<Article>, IHaveCustomMappings
     {
-        public ConformityTypeModel ConformityType { get; set; }
+        public int ConformityTypeId { get; set; }
 
         public IEnumerable<ArticleConformityTypeModel> ConformityTypes { get; set; }
 

@@ -29,11 +29,11 @@
 
         public DateTime IssueDate { get; set; }
 
-        public DateTime? ConformationAcceptanceDate { get; set; }
-
         public bool IsAccepted { get; set; }
 
         public bool IsValid { get; set; }
+
+        public DateTime? ValidityDate { get; set; }
 
         public string Comments { get; set; }
 

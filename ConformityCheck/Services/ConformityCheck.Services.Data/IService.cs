@@ -1,13 +1,18 @@
 ﻿namespace ConformityCheck.Services.Data
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
-    public interface IService
+    public interface IService<TKey>
     {
         int GetCount();
 
-        IEnumerable<T> GetAll<T>();
+        Task<T> GetByIdAsync<T>(TKey id);
 
-        IEnumerable<T> GetAllAsNoTracking<T>();
+        Task<IEnumerable<T>> GetAllAsync<T>();
+
+        Task<IEnumerable<T>> GetAllAsNoTrackingAsync<T>();
+
+        Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsync<T>();
     }
 }

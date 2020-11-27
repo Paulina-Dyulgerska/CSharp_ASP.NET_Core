@@ -1,12 +1,11 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Suppliers
 {
-    using System.ComponentModel.DataAnnotations;
-    using System.Linq;
     using AutoMapper;
+
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class SupplierFullExportModel : IMapFrom<Supplier>, IHaveCustomMappings
+    public class SupplierFullInfoModel : IMapFrom<Supplier>, IHaveCustomMappings
     {
         public string Id { get; set; }
 
@@ -32,7 +31,7 @@
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Supplier, SupplierFullExportModel>()
+            configuration.CreateMap<Supplier, SupplierFullInfoModel>()
                 .ForMember(x => x.ArticlesCount, opt => opt.MapFrom(s => s.ArticleSuppliers.Count))
                 .ForMember(
                     x => x.ContactPersonName,

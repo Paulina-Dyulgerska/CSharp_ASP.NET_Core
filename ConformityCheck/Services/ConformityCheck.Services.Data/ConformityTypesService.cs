@@ -3,12 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
-    using ConformityCheck.Services.Data.Models;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
     using Microsoft.EntityFrameworkCore;
@@ -31,14 +29,9 @@
             return this.conformityTypesRepository.AllAsNoTracking().Count();
         }
 
-        public IEnumerable<T> GetAll<T>()
+        public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
-            return this.conformityTypesRepository.All().To<T>().ToList();
-        }
-
-        public IEnumerable<T> GetAllAsNoTracking<T>()
-        {
-            return this.conformityTypesRepository.AllAsNoTracking().To<T>().ToList();
+            return await this.conformityTypesRepository.All().To<T>().ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllAsNoTrackingAsync<T>()
@@ -46,7 +39,7 @@
             return await this.conformityTypesRepository.AllAsNoTracking().To<T>().ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsNoTrackingFullInfoAsync<T>()
+        public async Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsync<T>()
         {
             var articles = await this.conformityTypesRepository
                 .AllAsNoTracking()
@@ -83,6 +76,10 @@
             {
                 throw new ArgumentException($"Has this conformity type {nameof(input.Description)}");
             }
+
+            //var userEntity = this.usersRepository.AllAsNoTracking()
+            //    .FirstOrDefault(x => x.UserName == articleInputModel.UserId);
+            //take the user and record its id in the article, product, conformity, etc.
 
             var conformityType = new ConformityType
             {
@@ -133,6 +130,5 @@
 
             return await this.conformityTypesRepository.SaveChangesAsync();
         }
-
     }
 }

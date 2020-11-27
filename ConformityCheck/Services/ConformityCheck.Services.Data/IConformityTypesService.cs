@@ -1,22 +1,15 @@
 ﻿namespace ConformityCheck.Services.Data
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using ConformityCheck.Services.Data.Models;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
 
-    public interface IConformityTypesService : IService
+    public interface IConformityTypesService : IService<int>
     {
         Task CreateAsync(ConformityTypeModel input);
 
-        Task<int> DeleteAsync(int id);
-
-        Task<IEnumerable<T>> GetAllAsNoTrackingAsync<T>();
-
-        Task<IEnumerable<T>> GetAllAsNoTrackingFullInfoAsync<T>();
-
-        Task<T> GetByIdAsync<T>(int id);
         Task EditAsync(ConformityTypeModel input);
+
+        Task<int> DeleteAsync(int id);
     }
 }

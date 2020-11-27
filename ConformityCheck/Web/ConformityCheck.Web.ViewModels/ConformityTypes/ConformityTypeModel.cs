@@ -12,6 +12,7 @@
         [Required]
         [MinLength(2)]
         [MaxLength(50)]
+        [RegularExpression("[A-Za-z0-9-_ ]{2,}")]
         public string Description { get; set; }
     }
 }

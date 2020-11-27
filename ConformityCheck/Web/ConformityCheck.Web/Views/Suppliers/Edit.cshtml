@@ -1,0 +1,70 @@
+﻿@using ConformityCheck.Web.ViewModels.Suppliers
+@model SupplierEditModel
+@{
+    this.ViewData["Title"] = "Edit supplier";
+    //var suppliers = Model.SuppliersAvailable.Select(x => new SelectListItem(x.NumberAndName, x.Id));
+    //var conformityTypes = Model.ConformityTypesAvailable.Select(x => new SelectListItem(x.Description, x.Id.ToString()));
+    //var products = Model.ProductsAvailable.Select(x => new SelectListItem(x.Number, x.Id));
+    //var substances = Model.SubstancesAvailable.Select(x => new SelectListItem($"{x.CASNumber} - {x.Description}", x.Id.ToString()));
+}
+
+<h3>@this.ViewData["Title"]</h3>
+
+<div>
+    <form method="post" class="col-md-6 mx-auto">
+        @* za file mi trqbwa multipart/form-data, ako nqma da kachwam file, da go smenq!!!!! *@
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <input asp-for="Id" hidden value="@Model.Id" />
+
+        <div>
+            <label asp-for="Number">Supplier's number:</label>
+            <span class="text-primary ">@Model.Number</span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Name">Change supplier's name:</label>
+            <input asp-for="Name" class="form-control" value="@Model.Name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" value="@Model.Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="PhoneNumber"></label>
+            <input asp-for="PhoneNumber" class="form-control" value="@Model.PhoneNumber" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="ContactPersonFirstName"></label>
+            <input asp-for="ContactPersonFirstName" class="form-control" value="@Model.ContactPersonFirstName" />
+            <span asp-validation-for="ContactPersonFirstName" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="ContactPersonLastName"></label>
+            <input asp-for="ContactPersonLastName" class="form-control" value="@Model.ContactPersonLastName" />
+            <span asp-validation-for="ContactPersonLastName" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="UserId"></label>
+            <input asp-for="UserId" class="form-control" value="@Model.UserId" />
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Ready" />
+        </div>
+    </form>
+</div>
+
+@section SideBar{
+    @*<partial name="_SideMenuEdit" model="Model" />*@
+}

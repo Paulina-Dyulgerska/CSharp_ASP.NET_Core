@@ -1,17 +1,8 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
-
-    using ConformityCheck.Data.Common.Repositories;
-    using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
-    using ConformityCheck.Services.Data.Models;
-    using ConformityCheck.Web.ViewModels.Articles;
-    using ConformityCheck.Web.ViewModels.ConformityTypes;
-    using ConformityCheck.Web.ViewModels.Products;
-    using ConformityCheck.Web.ViewModels.Substances;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.AspNetCore.Mvc;
 
@@ -37,19 +28,15 @@
             this.substancesService = substancesService;
         }
 
-        public IActionResult ListAll()
+        public async Task<IActionResult> ListAll()
         {
-            var suppliers = this.suppliersService.GetAll<SupplierFullExportModel>();
-            var model = new SupplierFullExportModelList { Suppliers = suppliers };
+            var model = await this.suppliersService.GetAllAsync<SupplierFullInfoModel>();
+
             return this.View(model);
         }
 
         public IActionResult Create()
         {
-            //string lastNumber = this.supplierService.GetLastSupplierNumber();
-
-            //return this.View(lastNumber);
-
             return this.View();
         }
 
@@ -71,6 +58,28 @@
             return this.RedirectToAction(nameof(this.ListAll));
 
             //return this.Json(input);
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            var model = await this.suppliersService.GetByIdAsync<SupplierEditModel>(id);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(SupplierEditInputModel input)
+        {
+            // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            await this.suppliersService.EditAsync(input);
+
+            // TODO: return this.RedirectToAction(nameof(this.Details), "Suppliers", new { input.Id });
+            return this.RedirectToAction(nameof(this.ListAll));
         }
     }
 }

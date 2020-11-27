@@ -1,10 +1,12 @@
-﻿@model SupplierFullExportModelList
+﻿@model IEnumerable<SupplierFullInfoModel>
 
 @{
     this.ViewData["Title"] = "Suppliers";
 }
 
 <h3>@this.ViewData["Title"]</h3>
+
+<a asp-action="Create" class="btn btn-primary">Create new</a>
 
 <table class="table table-light table-responsive-md table-hover table-striped table-bordered table-sm">
     <thead>
@@ -21,7 +23,7 @@
             <th scope="col">Delete</th>
         </tr>
     </thead>
-    @foreach (var supplier in this.Model.Suppliers)
+    @foreach (var supplier in this.Model)
     {
         <tr>
             <td>@supplier.Number</td>
@@ -35,7 +37,7 @@
                 <a asp-action="Details" class="btn btn-primary" asp-route-id="@supplier.Id">Details</a>
             </td>
             <td>
-                <a asp-action="Edit" class="btn btn-primary" id="@supplier.Id">Edit</a>
+                <a asp-action="Edit" class="btn btn-primary" asp-route-id="@supplier.Id">Edit</a>
             </td>
             <td>
                 <a asp-action="Delete" class="btn btn-primary" asp-route-id="@supplier.Id">Delete</a>
@@ -44,7 +46,6 @@
     }
 </table>
 
-<a asp-action="Create" class="btn btn-primary">Create new</a>
 
 @section SideBar{
     <partial name="_SideMenuGeneral" />
