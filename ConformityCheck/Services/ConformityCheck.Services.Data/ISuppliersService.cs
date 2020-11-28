@@ -2,13 +2,15 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using ConformityCheck.Services.Data.Models;
     using ConformityCheck.Web.ViewModels.Suppliers;
 
     public interface ISuppliersService : IService<string>
     {
         Task CreateAsync(CreateSupplierInputModel supplierInputModel);
+
         Task EditAsync(SupplierEditInputModel input);
+
+        Task<IEnumerable<T>> GetArticlesBySupplierIdAsync<T>(string id);
 
         //void AddArticle(int supplierId, int articleId);
 

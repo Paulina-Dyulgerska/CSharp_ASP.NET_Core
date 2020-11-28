@@ -291,7 +291,7 @@
                 if (articleConformityType != null)
                 {
                     continue;
-                    //throw new ArgumentException($"This conformity is already asigned to this article.");
+                    //throw new ArgumentException($"This conformity type is already asigned to this article.");
                 }
 
                 await this.articleConformityTypeRepository.AddAsync(new ArticleConformityType
@@ -319,84 +319,6 @@
 
             await this.articleConformityTypeRepository.SaveChangesAsync();
         }
-
-
-        public async Task AddConformityAsync(string articleId, string supplierId, ArticleConformityImportDTO articleConformityImportDTO)
-        {
-            var articleEntity = await this.articlesRepository.All().FirstOrDefaultAsync(x => x.Id == articleId);
-            var supplierEntity = await this.suppliersRepository.All().FirstOrDefaultAsync(x => x.Id == supplierId);
-
-            if (articleEntity == null)
-            {
-                throw new ArgumentException("No such article");
-            }
-
-            if (supplierEntity == null)
-            {
-                throw new ArgumentException("No such supplier");
-            }
-
-            var hasThisSUpplier = articleEntity.ArticleSuppliers.Select(x => x.SupplierId)
-                .Any(x => x == supplierId);
-
-            if (!hasThisSUpplier)
-            {
-                throw new ArgumentException("The article does not have such supplier.");
-            }
-
-            // to create table in the dbContext ArticleConformitys as a dbContextSet, 
-            //to make all dbContextSets ending s or without s!!! But similar!!
-            // to chech dali veche nqmam takowa conformity na tozi article s tozi dostawchik!!!!
-            {
-            }
-
-            var conformityType = await this.conformityTypesRepository.AllAsNoTracking()
-    .FirstOrDefaultAsync(x => x.Id == int.Parse(articleConformityImportDTO.ConformityType));
-
-            if (conformityType == null)
-            {
-                throw new ArgumentException($"There is no such conformity type.");
-            }
-
-            if (!articleEntity.ArticleConformityTypes.Any(x => x.ConformityTypeId ==
-                        int.Parse(articleConformityImportDTO.ConformityType)))
-            {
-                return;
-                //throw new ArgumentException($"This conformity is already asigned to this article.");
-            }
-
-            //var hasConformity = articleEntity.ArticleConformityTypes
-            //    .FirstOrDefault(x => x.ConformityTypeId == conformityType.Id).Conformity;
-            var articleConformityType = await this.articleConformityTypeRepository.All()
-                .FirstOrDefaultAsync(x => x.ConformityTypeId == conformityType.Id && x.ArticleId == articleId);
-
-            if (articleConformityType.Conformity != null)
-            {
-                this.conformitiesRepository.Delete(articleConformityType.Conformity);
-            }
-
-            articleConformityType.Conformity = new Conformity
-            {
-                ConformityTypeId = conformityType.Id,
-                IssueDate = articleConformityImportDTO.IssueDate,
-                ConformationAcceptanceDate = articleConformityImportDTO.ConformationAcceptanceDate,
-                IsAccepted = articleConformityImportDTO.IsAssepted,
-                IsValid = true,
-                SupplierId = supplierEntity.Id,
-                Comments = articleConformityImportDTO.Comments,
-                FileUrl = "Az ne sym go naprawila oshte",
-            };
-
-            await this.conformitiesRepository.AddAsync(articleConformityType.Conformity);
-
-            await this.conformitiesRepository.SaveChangesAsync();
-        }
-
-        public async Task DeleteConformityAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
-
 
         // not in the Interface!
         public IEnumerable<T> ListArticleConformities<T>(string id)

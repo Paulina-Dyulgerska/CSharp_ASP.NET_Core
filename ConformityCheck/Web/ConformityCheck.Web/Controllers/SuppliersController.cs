@@ -3,6 +3,8 @@
     using System.Linq;
     using System.Threading.Tasks;
     using ConformityCheck.Services.Data;
+    using ConformityCheck.Web.ViewModels.Articles;
+    using ConformityCheck.Web.ViewModels.Articles.ViewComponents;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.AspNetCore.Mvc;
 
@@ -80,6 +82,13 @@
 
             // TODO: return this.RedirectToAction(nameof(this.Details), "Suppliers", new { input.Id });
             return this.RedirectToAction(nameof(this.ListAll));
+        }
+
+        public async Task<IActionResult> GetArticlesById(string id)
+        {
+            var model = await this.suppliersService.GetArticlesBySupplierIdAsync<ArticleBaseModel>(id);
+
+            return this.Json(model);
         }
     }
 }

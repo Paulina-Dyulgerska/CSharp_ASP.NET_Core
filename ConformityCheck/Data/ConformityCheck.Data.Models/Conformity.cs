@@ -31,6 +31,8 @@
 
         public bool IsAccepted { get; set; }
 
+        public DateTime? AcceptanceDate { get; set; }
+
         public bool IsValid { get; set; }
 
         public DateTime? ValidityDate { get; set; }

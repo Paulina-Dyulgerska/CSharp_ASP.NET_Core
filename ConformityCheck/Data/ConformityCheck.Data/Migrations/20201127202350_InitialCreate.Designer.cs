@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConformityCheck.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201115213222_InitialCreate")]
+    [Migration("20201127202350_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -308,11 +308,11 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime?>("AcceptanceDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ConformationAcceptanceDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("ConformityTypeId")
                         .HasColumnType("int");
@@ -350,6 +350,9 @@ namespace ConformityCheck.Data.Migrations
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("ValidityDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -392,9 +395,6 @@ namespace ConformityCheck.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Description")
-                        .IsUnique();
 
                     b.HasIndex("IsDeleted");
 

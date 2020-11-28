@@ -8,6 +8,7 @@
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
+    using ConformityCheck.Web.ViewModels.Articles.ViewComponents;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.EntityFrameworkCore;
 
@@ -15,13 +16,16 @@
     {
         private readonly IDeletableEntityRepository<Supplier> suppliersRepository;
         private readonly IRepository<ArticleConformityType> articleConformityTypeRepository;
+        private readonly IRepository<ArticleSupplier> articleSupplierRepository;
 
         public SuppliersService(
             IDeletableEntityRepository<Supplier> suppliersRepository,
-            IRepository<ArticleConformityType> articleConformityTypeRepository)
+            IRepository<ArticleConformityType> articleConformityTypeRepository,
+            IRepository<ArticleSupplier> articleSupplierRepository)
         {
             this.suppliersRepository = suppliersRepository;
             this.articleConformityTypeRepository = articleConformityTypeRepository;
+            this.articleSupplierRepository = articleSupplierRepository;
         }
 
         public int GetCount()
@@ -133,7 +137,23 @@
 
             await this.suppliersRepository.SaveChangesAsync();
         }
-        
+
+        public async Task<IEnumerable<T>> GetArticlesBySupplierIdAsync<T>(string id)
+        {
+            return await this.articleSupplierRepository
+                .AllAsNoTracking()
+                .Where(x => x.SupplierId == id)
+                .OrderBy(x => x.Article.Number)
+                .Select(x => new Article
+                {
+                    Id = x.ArticleId,
+                    Number = x.Article.Number,
+                    Description = x.Article.Description,
+                })
+                .To<T>()
+                .ToListAsync();
+        }
+
         private string PascalCaseConverter(string stringToFix)
         {
             var st = new StringBuilder();
@@ -145,9 +165,6 @@
 
             return st.ToString().Trim();
         }
-
-
-
 
     }
 }

@@ -443,9 +443,10 @@ namespace ConformityCheck.Data.Migrations
                     ConformityTypeId = table.Column<int>(nullable: false),
                     SupplierId = table.Column<string>(nullable: false),
                     IssueDate = table.Column<DateTime>(nullable: false),
-                    ConformationAcceptanceDate = table.Column<DateTime>(nullable: true),
                     IsAccepted = table.Column<bool>(nullable: false),
+                    AcceptanceDate = table.Column<DateTime>(nullable: true),
                     IsValid = table.Column<bool>(nullable: false),
+                    ValidityDate = table.Column<DateTime>(nullable: true),
                     Comments = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
                     FileUrl = table.Column<string>(nullable: true),
@@ -666,12 +667,6 @@ namespace ConformityCheck.Data.Migrations
                 name: "IX_Conformities_UserId",
                 table: "Conformities",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ConformityTypes_Description",
-                table: "ConformityTypes",
-                column: "Description",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ConformityTypes_IsDeleted",

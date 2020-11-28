@@ -30,11 +30,27 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="ArticleId"></label>
-            <select asp-for="ArticleId" class="form-control">
-                <vc:articles></vc:articles>
-            </select>
-            <span asp-validation-for="ArticleId" class="text-danger"></span>
+            <p>
+                * Please select one the options below. The choosen conformity type will be assigned to the article/s 
+                if missing. Available opitions are:
+            </p>
+            <div class="form-group">
+                <label asp-for="ValidForAllArticles">Conformity for all suppliers' articles:</label>
+                <input asp-for="ValidForAllArticles" type="checkbox"> <br />
+                <label asp-for="ValidForSingleArticle">Conformity for a single article.</label>
+                <input asp-for="ValidForSingleArticle" type="checkbox"> <br />
+                <p>
+                    (Articles list will be generated is a single article's confirmation is choosen)
+                </p>
+            </div>
+
+            <div class="ArticleId" style="display:none">
+                <label asp-for="ArticleId"></label>
+                <select asp-for="ArticleId" class="form-control">
+                    <option>Select Supplier First</option>
+                </select>
+                <span asp-validation-for="ArticleId" class="text-danger"></span>
+            </div>
         </div>
 
         <div class="form-group">
@@ -65,6 +81,8 @@
             <input asp-for="FileUrl" class="form-control" placeholder="Add file" />
         </div>
 
+        @* TODO: add the declared substances and assing the restrictions. *@
+
         <div class="form-group">
             <input type="submit" class="btn btn-primary" value="Create" />
         </div>
@@ -75,3 +93,6 @@
     <partial name="_SideMenuGeneral" />
 }
 
+@section Scripts{
+    <script src="~/js/articlesBySupplier.js"></script>
+}

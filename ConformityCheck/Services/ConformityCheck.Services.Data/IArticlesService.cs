@@ -30,9 +30,5 @@
         Task AddConformityTypesAsync(Article article, IEnumerable<int> conformityTypes);
 
         Task RemoveConformityTypesAsync(ArticleManageConformityTypesInputModel input);
-
-        Task AddConformityAsync(string articleId, string supplierId, ArticleConformityImportDTO articleConformityImportDTO);
-
-        Task DeleteConformityAsync(string id);
     }
 }

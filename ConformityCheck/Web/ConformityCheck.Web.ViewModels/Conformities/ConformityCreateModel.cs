@@ -6,22 +6,30 @@
     public class ConformityCreateModel
     {
         [Required]
+        [Display(Name = "* Conformity type:")]
         public string ConformityTypeId { get; set; }
 
         [Required]
+        [Display(Name = "* Supplier:")]
         public string SupplierId { get; set; }
+
+        public bool ValidForAllArticles { get; set; }
+
+        public bool ValidForSingleArticle { get; set; }
 
         public string ArticleId { get; set; }
 
         // vsichki dates da sa v UTC, i tuk i na servera i na DB-a!!!
         [Required]
-        public DateTime IssueDate { get; set; }
+        [DataType(DataType.Date)]
+        [Display(Name = "* Conformity date:")]
+        public DateTime IssueDate { get; set; } //vsichki dates da sa v UTC, i tuk i na servera i na DB-a!!!
 
         public bool IsAssepted { get; set; }
 
         public bool IsValid { get; set; }
 
-        public DateTime? ValidityDate { get; set; }
+        public DateTime? ValidityDate { get; set; } //vsichki dates da sa v UTC, i tuk i na servera i na DB-a!!!
 
         public string Comments { get; set; }
 

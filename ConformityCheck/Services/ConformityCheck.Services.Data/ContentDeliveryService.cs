@@ -65,6 +65,23 @@
                 .ToListAsync();
         }
 
+        //public async Task<IEnumerable<ArticlesViewComponentModel>> GetArticlesBySupplierIdAsync(string id)
+        //{
+        //    return await this.artc
+        //        .AllAsNoTracking()
+        //        .Where(x=>x.ArticleSuppliers)
+        //        .OrderByDescending(x => x.CreatedOn)
+        //        .ThenByDescending(x => x.ModifiedOn)
+        //        .ThenBy(x => x.Number)
+        //        //.Select(x => new ArticleViewComponentModel
+        //        //{
+        //        //    Id = x.Id,
+        //        //    NumberAndDescription = $"{x.Number} - {x.Description}",
+        //        //})
+        //        .To<ArticlesViewComponentModel>()
+        //        .ToListAsync();
+        //}
+
         public async Task<IEnumerable<SuppliersViewComponentModel>> GetAllSuppliersAsync()
         {
             return await this.suppliersRepository

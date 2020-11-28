@@ -10,9 +10,11 @@ namespace ConformityCheck.Web.ViewModels.Conformities
 
         public string SupplierId { get; set; }
 
+        public string ArticleId { get; set; }
+
         public DateTime IssueDate { get; set; }
 
-        public DateTime? ConformationAcceptanceDate { get; set; }
+        public DateTime? ValidityDate { get; set; }
 
         public bool IsAccepted { get; set; }
 
@@ -23,7 +25,5 @@ namespace ConformityCheck.Web.ViewModels.Conformities
         public string UserId { get; set; }
 
         public string FileUrl { get; set; }
-
-        public string Extension { get; set; }
     }
 }
