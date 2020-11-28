@@ -44,6 +44,8 @@
         {
             if (!this.ModelState.IsValid)
             {
+                input.ValidForSingleArticle = false;
+
                 return this.View(input);
             }
 

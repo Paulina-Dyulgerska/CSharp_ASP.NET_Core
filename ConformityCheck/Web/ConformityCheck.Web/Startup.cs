@@ -8,6 +8,7 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Data.Repositories;
     using ConformityCheck.Data.Seeding;
+    using ConformityCheck.Services;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Services.Messaging;
@@ -74,6 +75,7 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<IContentDeliveryService, ContentDeliveryService>();
             services.AddTransient<IConformityService, ConformityService>();
+            services.AddTransient<IContentCheckService, ContentCheckService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

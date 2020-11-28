@@ -37,6 +37,7 @@ $(document).ready(function () {
 
 $('#ValidForSingleArticle').change();
 $(document).ready(function () {
+    $('#ValidForSingleArticle').prop('checked', false)
     $('#ValidForSingleArticle').change(function () {
         if ($('#ValidForSingleArticle').prop('checked')) {
             $('.ArticleId').show();

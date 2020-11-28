@@ -18,4 +18,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Services\ConformityCheck.Services.Data\ConformityCheck.Services.Data.csproj" />
+  </ItemGroup>
+
 </Project>

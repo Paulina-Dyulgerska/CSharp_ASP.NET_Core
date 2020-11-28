@@ -13,7 +13,15 @@
     <form method="post" class="col-md-6 mx-auto">
         <div asp-validation-summary="All" class="text-danger"></div>
 
-        <div class="form-group">
+        <br />
+        <div class="form-group font-weight-bold">
+            <label asp-for="IsAccepted">If the conformity is accepted, please check the box:</label>
+            <br />
+            <input asp-for="IsAccepted" type="checkbox" />
+            <span asp-validation-for="IsAccepted" class="text-danger"></span>
+        </div>
+
+        <div class="form-group font-weight-bold">
             <label asp-for="ConformityTypeId"></label>
             <select asp-for="ConformityTypeId" class="form-control">
                 <vc:conformity-types></vc:conformity-types>
@@ -21,7 +29,7 @@
             <span asp-validation-for="ConformityTypeId" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
+        <div class="form-group font-weight-bold">
             <label asp-for="SupplierId"></label>
             <select asp-for="SupplierId" class="form-control">
                 <vc:suppliers></vc:suppliers>
@@ -31,20 +39,20 @@
 
         <div class="form-group">
             <p>
-                * Please select one the options below. The choosen conformity type will be assigned to the article/s 
+                * Please select one the options below. The choosen conformity type will be assigned to the article/s
                 if missing. Available opitions are:
             </p>
             <div class="form-group">
-                <label asp-for="ValidForAllArticles">Conformity for all suppliers' articles:</label>
+                <label class="font-weight-bold" asp-for="ValidForAllArticles">Conformity for all suppliers' articles:</label>
                 <input asp-for="ValidForAllArticles" type="checkbox"> <br />
-                <label asp-for="ValidForSingleArticle">Conformity for a single article.</label>
+                <label class="font-weight-bold" asp-for="ValidForSingleArticle">Conformity for a single article.</label>
                 <input asp-for="ValidForSingleArticle" type="checkbox"> <br />
                 <p>
                     (Articles list will be generated is a single article's confirmation is choosen)
                 </p>
             </div>
 
-            <div class="ArticleId" style="display:none">
+            <div class="ArticleId font-weight-bold" style="display:none">
                 <label asp-for="ArticleId"></label>
                 <select asp-for="ArticleId" class="form-control">
                     <option>Select Supplier First</option>
@@ -53,22 +61,22 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group font-weight-bold">
             <label asp-for="IssueDate"></label>
             <input asp-for="IssueDate" class="form-control" placeholder="Date of conformity creation" />
             <span asp-validation-for="IssueDate" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="IsAssepted"></label>
-            <input asp-for="IsAssepted" type="checkbox" />
-            <span asp-validation-for="IsAssepted" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
             <label asp-for="IsValid"></label>
             <input asp-for="IsValid" type="checkbox" />
             <span asp-validation-for="IsValid" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ValidityDate"></label>
+            <input asp-for="ValidityDate" class="form-control" placeholder="Date till the conformity is valid" />
+            <span asp-validation-for="ValidityDate" class="text-danger"></span>
         </div>
 
         <div id="conformitiesContainer">
@@ -80,6 +88,7 @@
             <label asp-for="FileUrl"></label>
             <input asp-for="FileUrl" class="form-control" placeholder="Add file" />
         </div>
+
 
         @* TODO: add the declared substances and assing the restrictions. *@
 

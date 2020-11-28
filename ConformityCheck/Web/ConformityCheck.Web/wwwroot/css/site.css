@@ -59,3 +59,15 @@ body {
     box-sizing: border-box;
 }
 
+input[type='checkbox'] {
+    /*-webkit-appearance: none;*/
+    width: 15px;
+    height: 15px;
+    background: white;
+    border-radius: 5px;
+    /*border: 2px solid #555;*/
+}
+
+/*    input[type='checkbox']:checked {
+        background: #abd;
+    }*/
