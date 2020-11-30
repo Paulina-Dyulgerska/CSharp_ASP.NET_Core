@@ -44,8 +44,9 @@
         {
             if (!this.ModelState.IsValid)
             {
+                //input.ValidForSingleArticle = false;
+                //return this.RedirectToAction(nameof(this.Create));
                 input.ValidForSingleArticle = false;
-
                 return this.View(input);
             }
 

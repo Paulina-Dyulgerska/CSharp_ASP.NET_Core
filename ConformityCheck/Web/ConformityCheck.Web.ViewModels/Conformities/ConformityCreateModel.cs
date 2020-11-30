@@ -5,12 +5,13 @@
     using System.ComponentModel.DataAnnotations;
 
     using ConformityCheck.Common.ValidationAttributes;
+    using Microsoft.AspNetCore.Http;
 
     public class ConformityCreateModel : IValidatableObject
     {
         [Required]
         [Display(Name = "* Conformity type:")]
-        //[ConformimtyTypeEntityAttribute] 
+        [ConformityTypeEntityAttribute]
         public int ConformityTypeId { get; set; }
 
         [Required]
@@ -22,7 +23,7 @@
 
         public bool ValidForSingleArticle { get; set; }
 
-        //[ArticleEntityAttribute]
+        [ArticleEntityAttribute(allowNull: true)]
         [Display(Name = "* Article:")]
         public string ArticleId { get; set; }
 
@@ -30,25 +31,24 @@
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "* Issue date:")]
-        [DateAttribute(minDate: "01/01/2020")]
+        [DateAttribute(minDate: "01/01/2000")]
         public DateTime IssueDate { get; set; }
 
-        //[[Already have accepted???]] Ckech and validate?
+        // [[Already have accepted conformity in the DB???]] Check and validate if there is one?
         public bool IsAccepted { get; set; }
 
-        public bool IsValid { get; set; }
-
         [DataType(DataType.Date)]
+        [Display(Name = "Validity date:")]
         public DateTime? ValidityDate { get; set; }
 
         public string Comments { get; set; }
 
         public string UserId { get; set; }
 
-        public string FileUrl { get; set; }
-
-        //check with attribtute fro all acceptable types!!! but just pdf will accept!
-        public string Extension { get; set; }
+        // [Required]
+        // [FileExtensionAttribute(extension: "pdf")]
+        // [FileSize(size: 10 * 1024 * 1024)]
+        public IFormFile File { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

@@ -12,7 +12,7 @@
         [Required]
         [MinLength(2)]
         [MaxLength(50)]
-        [RegularExpression("[A-Za-z0-9-_ ]{2,}")]
+        [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9 _-]*$", ErrorMessage = "The field Description could contain only letters, digits, '-', '_' or ' '.")]
         public string Description { get; set; }
     }
 }

@@ -4,22 +4,21 @@
 
     using ConformityCheck.Services;
 
-    public class SupplierEntityAttribute : ValidationAttribute
+    public class ConformityTypeEntityAttribute : ValidationAttribute
     {
 
-        public SupplierEntityAttribute()
+        public ConformityTypeEntityAttribute()
         {
-            this.ErrorMessage = $"No such supplier.";
+            this.ErrorMessage = $"No such conformity type.";
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-
             var context = (IContentCheckService)validationContext.GetService(typeof(IContentCheckService));
 
-            var supplierEntity = context.SupplierEntityCheck(value.ToString());
+            var conformityTypeEntity = context.ConformityTypeEntityCheck(int.Parse(value.ToString()));
 
-            if (!supplierEntity)
+            if (!conformityTypeEntity)
             {
                 return new ValidationResult(this.ErrorMessage);
             }

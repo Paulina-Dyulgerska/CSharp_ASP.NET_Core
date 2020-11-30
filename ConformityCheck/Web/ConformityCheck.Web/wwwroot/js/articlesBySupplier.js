@@ -21,15 +21,19 @@ $('#SupplierId').change(function () {
     });
 });
 
+$(document).ready(function () {
+    //$('#ValidForSingleArticle').removeAttr('checked')
+    $('#ValidForSingleArticle').prop('checked', false);
+    $('#ValidForAllArticles').prop('checked', false);
+    $('.ArticleId').hide();
+});
+
 $('#ValidForAllArticles').change();
 $(document).ready(function () {
     $('#ValidForAllArticles').change(function () {
         if ($('#ValidForAllArticles').prop('checked')) {
-            $('.ArticleId').hide();
-            //$('#ArticleId').html("");
             $('#ValidForSingleArticle').prop('disabled', true);
         } else {
-            $('.ArticleId').show();
             $('#ValidForSingleArticle').prop('disabled', false);
         }
     });
@@ -37,7 +41,6 @@ $(document).ready(function () {
 
 $('#ValidForSingleArticle').change();
 $(document).ready(function () {
-    $('#ValidForSingleArticle').prop('checked', false)
     $('#ValidForSingleArticle').change(function () {
         if ($('#ValidForSingleArticle').prop('checked')) {
             $('.ArticleId').show();
@@ -45,7 +48,58 @@ $(document).ready(function () {
         } else {
             $('.ArticleId').hide();
             $('#ValidForAllArticles').prop('disabled', false);
-            //$('#ArticleId').html("");
         }
     });
 });
+
+//$('body > div > main > div > div.col-10 > div > form > div:nth-child(12) > input').submit();
+//$(document).ready(function () {
+//    //$('#ValidForSingleArticle').removeAttr('checked')
+//    $('body > div > main > div > div.col-10 > div > form > div:nth-child(12) > input').submit(function (e) {
+//        console.log('Hi 1')
+//        if (!($('#ValidForSingleArticle').prop('checked') && $('#ArticleId').select())) {
+//            console.log('Hi 2')
+//            e.preventDefault();
+//            alert('Please select an article!');
+//            return;
+//        } else {
+//            console.log('Hi 3')
+//        }
+//    });
+//});
+
+//$(document).ready(function ($) {
+//    console.log('Hi 3');
+
+//    var allowSubmit = false;
+//    $('#btn').click(function (event) {
+//        console.log('Hi 4');
+
+//        var form = $(".col-md-6 mx-auto");
+//        if (form.valid() && !allowSubmit) {
+
+//            event.preventDefault();
+
+//            //run our functions
+//            _ourfunction(test, {
+
+//                success: function (data) {
+
+//                    if (!($('#ValidForSingleArticle').prop('checked') && $('#ArticleId').select())) {
+//                        console.log('Hi 2');
+//                        alert('Please select an article!');
+//                        return;
+//                    } else {
+//                        console.log('Hi 3');
+//                    }
+//                },
+//                error: function (data) {
+//                    console.log("error");
+//                }
+//            });
+
+//            allowSubmit = true;
+
+//        }
+//    });
+//});

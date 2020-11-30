@@ -184,14 +184,13 @@
                 IssueDate = input.IssueDate.Date,
                 IsAccepted = input.IsAccepted,
                 AcceptanceDate = DateTime.UtcNow.Date,
-                IsValid = input.IsValid,
-                ValidityDate = input.IsValid ? DateTime.UtcNow.Date.AddYears(3) : (DateTime?)null,
+                ValidityDate = input.IsAccepted ? DateTime.UtcNow.Date.AddYears(3) : (DateTime?)null,
                 SupplierId = input.SupplierId,
                 Comments = input.Comments,
                 FileUrl = "Az ne sym go naprawila oshte",
             };
 
-            if (input.ValidityDate != null && input.IsValid)
+            if (input.ValidityDate != null && input.IsAccepted)
             {
                 articleConformityType.Conformity.ValidityDate = input.ValidityDate;
             }

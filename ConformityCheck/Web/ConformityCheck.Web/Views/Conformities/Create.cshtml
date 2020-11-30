@@ -10,7 +10,7 @@
 <h3>@this.ViewData["Title"]</h3>
 
 <div>
-    <form method="post" class="col-md-6 mx-auto">
+    <form method="post" class="col-md-6 mx-auto" enctype="multipart/form-data">
         <div asp-validation-summary="All" class="text-danger"></div>
 
         <br />
@@ -48,7 +48,7 @@
                 <label class="font-weight-bold" asp-for="ValidForSingleArticle">Conformity for a single article.</label>
                 <input asp-for="ValidForSingleArticle" type="checkbox"> <br />
                 <p>
-                    (Articles list will be generated is a single article's confirmation is choosen)
+                    (Articles list will be generated if a single article's confirmation is choosen)
                 </p>
             </div>
 
@@ -68,12 +68,6 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="IsValid"></label>
-            <input asp-for="IsValid" type="checkbox" />
-            <span asp-validation-for="IsValid" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
             <label asp-for="ValidityDate"></label>
             <input asp-for="ValidityDate" class="form-control" placeholder="Date till the conformity is valid" />
             <span asp-validation-for="ValidityDate" class="text-danger"></span>
@@ -82,11 +76,13 @@
         <div id="conformitiesContainer">
             <label asp-for="Comments"></label>
             <input asp-for="Comments" class="form-control" placeholder="Add comments to the conformity" />
+            <span asp-validation-for="Comments" class="text-danger"></span>
         </div>
 
         <div id="conformitiesContainer">
-            <label asp-for="FileUrl"></label>
-            <input asp-for="FileUrl" class="form-control" placeholder="Add file" />
+            <label asp-for="File"></label>
+            <input asp-for="File" class="form-control" placeholder="Add file" />
+            <span asp-validation-for="File" class="text-danger"></span>
         </div>
 
 

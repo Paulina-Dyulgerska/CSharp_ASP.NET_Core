@@ -4,22 +4,28 @@
 
     using ConformityCheck.Services;
 
-    public class SupplierEntityAttribute : ValidationAttribute
+    public class ArticleEntityAttribute : ValidationAttribute
     {
 
-        public SupplierEntityAttribute()
+        public ArticleEntityAttribute(bool allowNull = false)
         {
-            this.ErrorMessage = $"No such supplier.";
+            this.ErrorMessage = $"No such article.";
+            this.AllowNull = allowNull;
         }
+
+        public bool AllowNull { get; }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if (value == null && this.AllowNull)
+            {
+                return ValidationResult.Success;
+            }
 
             var context = (IContentCheckService)validationContext.GetService(typeof(IContentCheckService));
+            var articleEntity = context.ArticleEntityCheck(value.ToString());
 
-            var supplierEntity = context.SupplierEntityCheck(value.ToString());
-
-            if (!supplierEntity)
+            if (!articleEntity)
             {
                 return new ValidationResult(this.ErrorMessage);
             }

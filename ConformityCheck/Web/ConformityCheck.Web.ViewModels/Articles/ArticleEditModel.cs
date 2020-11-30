@@ -22,11 +22,7 @@
         public IEnumerable<string> Substances { get; set; }
 
         // confirmed - not confirmed according to the user or like it is now?
-        public bool IsConfirmed { get; set; }
-
-        public IEnumerable<string> ArticleMissingConformityTypes { get; set; }
-
-        public IEnumerable<string> ArticleConformityTypes { get; set; }
+        public bool? IsConfirmed { get; set; }
 
         public IEnumerable<ArticleSupplierModel> Suppliers { get; set; }
 
@@ -47,8 +43,8 @@
                 .ForMember(
                 x => x.Suppliers,
                 opt => opt.MapFrom(a => a.ArticleSuppliers
-                .OrderByDescending(x=>x.IsMainSupplier)
-                .ThenBy(x=>x.Supplier.Name)
+                .OrderByDescending(x => x.IsMainSupplier)
+                .ThenBy(x => x.Supplier.Name)
                 //.Select(x => new ArticleSupplierModel
                 //{
                 //    Id = x.SupplierId,
@@ -57,14 +53,6 @@
                 //    IsMainSupplier = x.IsMainSupplier,
                 //})
                 ))
-                .ForMember(
-                x => x.ArticleConformityTypes,
-                opt => opt.MapFrom(a => a.ArticleConformityTypes.Select(x =>
-                $"{x.ConformityType.Description} => {x.Conformity.IsAccepted}").ToList()))
-                .ForMember(
-                x => x.ArticleMissingConformityTypes,
-                opt => opt.MapFrom(a => a.ArticleConformityTypes.Select(x =>
-                $"{x.ConformityType.Description} => {x.Conformity != null}").ToList()))
                 .ForMember(
                 x => x.IsConfirmed,
                 opt => opt.MapFrom(a => a.ArticleConformityTypes
