@@ -4,28 +4,21 @@
 
     using ConformityCheck.Services;
 
-    public class ArticleEntityAttribute : ValidationAttribute
+    public class DescriptionDublicatedAttribute : ValidationAttribute
     {
-
-        public ArticleEntityAttribute(bool allowNull = false)
+        public DescriptionDublicatedAttribute()
         {
-            this.ErrorMessage = $"No such article.";
-            this.AllowNull = allowNull;
+            this.ErrorMessage = $"There is already a conformity type with this description.";
         }
-
-        public bool AllowNull { get; }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value == null && this.AllowNull)
-            {
-                return ValidationResult.Success;
-            }
-
             var context = (IContentCheckService)validationContext.GetService(typeof(IContentCheckService));
-            var articleEntity = context.ArticleEntityIdCheck(value.ToString());
 
-            if (!articleEntity)
+            var hasDescription = context
+                .ConformityTypeEntityDescriptionCheck(value.ToString());
+
+            if (hasDescription)
             {
                 return new ValidationResult(this.ErrorMessage);
             }

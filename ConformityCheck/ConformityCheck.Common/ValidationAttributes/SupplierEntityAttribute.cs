@@ -17,7 +17,7 @@
 
             var context = (IContentCheckService)validationContext.GetService(typeof(IContentCheckService));
 
-            var supplierEntity = context.SupplierEntityCheck(value.ToString());
+            var supplierEntity = context.SupplierEntityIdCheck(value.ToString());
 
             if (!supplierEntity)
             {

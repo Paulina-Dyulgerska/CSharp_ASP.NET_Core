@@ -10,7 +10,7 @@
 
         Task EditAsync(SupplierEditInputModel input);
 
-        Task<IEnumerable<T>> GetArticlesBySupplierIdAsync<T>(string id);
+        Task<IEnumerable<T>> GetArticlesByIdAsync<T>(string id);
 
         //void AddArticle(int supplierId, int articleId);
 

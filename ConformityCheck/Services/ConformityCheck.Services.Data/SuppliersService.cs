@@ -15,8 +15,8 @@
     public class SuppliersService : ISuppliersService
     {
         private readonly IDeletableEntityRepository<Supplier> suppliersRepository;
-        private readonly IRepository<ArticleConformityType> articleConformityTypeRepository;
-        private readonly IRepository<ArticleSupplier> articleSupplierRepository;
+        private readonly IRepository<ArticleConformityType> articleConformityTypesRepository;
+        private readonly IRepository<ArticleSupplier> articleSuppliersRepository;
 
         public SuppliersService(
             IDeletableEntityRepository<Supplier> suppliersRepository,
@@ -24,8 +24,8 @@
             IRepository<ArticleSupplier> articleSupplierRepository)
         {
             this.suppliersRepository = suppliersRepository;
-            this.articleConformityTypeRepository = articleConformityTypeRepository;
-            this.articleSupplierRepository = articleSupplierRepository;
+            this.articleConformityTypesRepository = articleConformityTypeRepository;
+            this.articleSuppliersRepository = articleSupplierRepository;
         }
 
         public int GetCount()
@@ -138,20 +138,22 @@
             await this.suppliersRepository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetArticlesBySupplierIdAsync<T>(string id)
+        public async Task<IEnumerable<T>> GetArticlesByIdAsync<T>(string id)
         {
-            return await this.articleSupplierRepository
+            var articles =  await this.articleSuppliersRepository
                 .AllAsNoTracking()
                 .Where(x => x.SupplierId == id)
                 .OrderBy(x => x.Article.Number)
-                .Select(x => new Article
-                {
-                    Id = x.ArticleId,
-                    Number = x.Article.Number,
-                    Description = x.Article.Description,
-                })
+                //.Select(x => new Article
+                //{
+                //    Id = x.ArticleId,
+                //    Number = x.Article.Number,
+                //    Description = x.Article.Description,
+                //})
                 .To<T>()
                 .ToListAsync();
+
+            return articles;
         }
 
         private string PascalCaseConverter(string stringToFix)

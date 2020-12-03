@@ -9,7 +9,7 @@
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class ArticleEditModel : ArticleBaseModel, IMapFrom<Article>, IHaveCustomMappings
+    public class ArticleEditModel : ArticleBaseInputModel, IMapFrom<Article>, IHaveCustomMappings
     {
         public string MainSupplierName { get; set; }
 
@@ -26,6 +26,7 @@
 
         public IEnumerable<ArticleSupplierModel> Suppliers { get; set; }
 
+        // The validation of the Id of the choosen entities will be in the service!
         public IEnumerable<ArticleConformityTypeModel> ConformityTypes { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)

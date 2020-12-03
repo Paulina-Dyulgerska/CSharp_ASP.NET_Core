@@ -4,11 +4,11 @@
     using System.Linq;
 
     using AutoMapper;
+    using ConformityCheck.Common.ValidationAttributes;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
-    using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class ArticleManageSuppliersModel : ArticleBaseModel, IMapFrom<Article>, IHaveCustomMappings
+    public class ArticleManageSuppliersModel : ArticleBaseInputModel, IMapFrom<Article>, IHaveCustomMappings
     {
         public string SupplierId { get; set; }
 
@@ -17,19 +17,17 @@
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Article, ArticleManageSuppliersModel>()
-                .ForMember(
-                X => X.Suppliers,
-                opt => opt.MapFrom(a => a.ArticleSuppliers
-                .OrderByDescending(x => x.IsMainSupplier)
-                .ThenBy(x => x.Supplier.Name)
-                //.Select(x => new ArticleSupplierModel
-                //{
-                //    Id = x.SupplierId,
-                //    Name = x.Supplier.Name,
-                //    Number = x.Supplier.Number,
-                //    IsMainSupplier = x.IsMainSupplier,
-                //})
-                ));
+                .ForMember(x => x.Suppliers, opt => opt.MapFrom(a => a.ArticleSuppliers
+                                                         .OrderByDescending(x => x.IsMainSupplier)
+                                                         .ThenBy(x => x.Supplier.Name)
+                                                         //.Select(x => new ArticleSupplierModel
+                                                         //{
+                                                         //    Id = x.SupplierId,
+                                                         //    Name = x.Supplier.Name,
+                                                         //    Number = x.Supplier.Number,
+                                                         //    IsMainSupplier = x.IsMainSupplier,
+                                                         //})
+                                                         ));
         }
     }
 }

@@ -7,7 +7,7 @@
     using ConformityCheck.Common.ValidationAttributes;
     using Microsoft.AspNetCore.Http;
 
-    public class ConformityCreateModel : IValidatableObject
+    public class ConformityCreateInputModel : IValidatableObject
     {
         [Required]
         [Display(Name = "* Conformity type:")]
@@ -15,16 +15,16 @@
         public int ConformityTypeId { get; set; }
 
         [Required]
-        [SupplierEntityAttribute]
         [Display(Name = "* Supplier:")]
+        [SupplierEntityAttribute]
         public string SupplierId { get; set; }
 
         public bool ValidForAllArticles { get; set; }
 
         public bool ValidForSingleArticle { get; set; }
 
-        [ArticleEntityAttribute(allowNull: true)]
         [Display(Name = "* Article:")]
+        [ArticleEntityAttribute(allowNull: true)]
         public string ArticleId { get; set; }
 
         // vsichki dates da sa v UTC, i tuk i na servera i na DB-a!!!

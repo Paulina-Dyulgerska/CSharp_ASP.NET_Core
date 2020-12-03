@@ -1,0 +1,97 @@
+﻿@using ConformityCheck.Web.ViewModels.Articles
+@model ArticleManageConformitiesModel
+@{
+    this.ViewData["Title"] = "Add a conformity to the article";
+    //var suppliers = Model.SuppliersAvailable.Select(x => new SelectListItem(x.NumberAndName, x.Id));
+    //var conformityTypes = Model.ConformityTypesAvailable.Select(x => new SelectListItem(x.Description, x.Id.ToString()));
+    //var products = Model.ProductsAvailable.Select(x => new SelectListItem(x.Number, x.Id));
+    //var substances = Model.SubstancesAvailable.Select(x => new SelectListItem($"{x.CASNumber} - {x.Description}", x.Id.ToString()));
+}
+
+<h3>@this.ViewData["Title"]</h3>
+
+<div>
+    <form method="post" class="col-md-6 mx-auto" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <input asp-for="Id" hidden value="@Model.Id" />
+
+        <div>
+            <label asp-for="Number"></label>
+            <span class="text-primary ">@Model.Number</span>
+        </div>
+
+        <div>
+            <label asp-for="Description"></label>
+            <span class="text-primary ">@Model.Description</span>
+        </div>
+
+        <div>
+            <label asp-for="ConformityTypes"></label>
+            <partial name="_ArticleConformityTypesTable" model="Model" />
+        </div>
+
+        <div>
+            <label asp-for="Suppliers"></label>
+            <partial name="_ArticleSuppliersTable" model="Model" />
+        </div>
+
+        <div class="SupplierId font-weight-bold">
+            <label asp-for="Conformity.SupplierId">Select supplier:</label>
+            <select asp-for="Conformity.SupplierId" class="form-control"></select>
+            <span asp-validation-for="Conformity.SupplierId" class="text-danger"></span>
+        </div>
+
+        <div class="ConformityTypeId font-weight-bold">
+            <label asp-for="Conformity.ConformityTypeId">Select conformity type:</label>
+            <select asp-for="Conformity.ConformityTypeId" class="form-control"></select>
+            <span asp-validation-for="Conformity.ConformityTypeId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group font-weight-bold">
+            <label asp-for="Conformity.IsAccepted">If the conformity is accepted, please check the box:</label>
+            <br />
+            <input asp-for="Conformity.IsAccepted" type="checkbox" />
+            <span asp-validation-for="Conformity.IsAccepted" class="text-danger"></span>
+        </div>
+
+        <div class="form-group font-weight-bold">
+            <label asp-for="Conformity.IssueDate"></label>
+            <input asp-for="Conformity.IssueDate" class="form-control" placeholder="Date of conformity creation" />
+            <span asp-validation-for="Conformity.IssueDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Conformity.ValidityDate"></label>
+            <input asp-for="Conformity.ValidityDate" class="form-control" placeholder="Date till the conformity is valid" />
+            <span asp-validation-for="Conformity.ValidityDate" class="text-danger"></span>
+        </div>
+
+        <div id="conformitiesContainer">
+            <label asp-for="Conformity.Comments"></label>
+            <input asp-for="Conformity.Comments" class="form-control" placeholder="Add comments to the conformity" />
+            <span asp-validation-for="Conformity.Comments" class="text-danger"></span>
+        </div>
+
+        <div id="conformitiesContainer">
+            <label asp-for="Conformity.File"></label>
+            <input asp-for="Conformity.File" class="form-control" placeholder="Add file" />
+            <span asp-validation-for="Conformity.File" class="text-danger"></span>
+        </div>
+
+
+        @* TODO: add the declared substances and assing the restrictions. *@
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Create" />
+        </div>
+    </form>
+</div>
+
+@section SideBar{
+    <partial name="_SideMenuEdit" model="Model" />
+}
+
+@section Scripts{
+    <script src="~/js/suppliersByArticle.js"></script>
+}

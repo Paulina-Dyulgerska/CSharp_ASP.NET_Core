@@ -3,9 +3,9 @@
     using System.ComponentModel.DataAnnotations;
     using System.Text.RegularExpressions;
 
-    public class DescriptionAttribute : ValidationAttribute
+    public class DescriptionRegExAttribute : ValidationAttribute
     {
-        public DescriptionAttribute()
+        public DescriptionRegExAttribute()
         {
             this.ErrorMessage = "The field Description could contain only letters, digits, '-', '_' or ' '.";
         }

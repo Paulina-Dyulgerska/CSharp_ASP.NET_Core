@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ConformityCheck.Web.ViewModels.Conformities
+﻿namespace ConformityCheck.Web.ViewModels.Conformities
 {
-   public class ConformityExportModel
+    using System;
+
+    public class ConformityFullInfoModel
     {
         public int ConformityTypeId { get; set; }
 

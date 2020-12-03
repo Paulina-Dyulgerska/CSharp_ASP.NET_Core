@@ -82,7 +82,7 @@
             return entity;
         }
 
-        public async Task CreateAsync(ConformityCreateModel input)
+        public async Task CreateAsync(ConformityCreateInputModel input)
         {
             var conformityType = await this.conformityTypesRepository
                 .AllAsNoTracking()
@@ -146,7 +146,7 @@
             await this.conformitiesRepository.SaveChangesAsync();
         }
 
-        private async Task AddConformityToAnArticle(ConformityCreateModel input, ArticleSupplier articleSupplierEntity)
+        private async Task AddConformityToAnArticle(ConformityCreateInputModel input, ArticleSupplier articleSupplierEntity)
         {
             var articleConformityType = await this.articleConformityTypeRepository
                                     .All()

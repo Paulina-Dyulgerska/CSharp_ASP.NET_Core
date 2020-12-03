@@ -43,7 +43,7 @@ namespace ConformityCheck.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ConformityTypeModel input)
+        public async Task<IActionResult> Create(ConformityTypeInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
@@ -57,13 +57,13 @@ namespace ConformityCheck.Web.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await this.conformityTypeService.GetByIdAsync<ConformityTypeModel>(id);
+            var model = await this.conformityTypeService.GetByIdAsync<ConformityTypeInputModel>(id);
 
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(ConformityTypeModel input)
+        public async Task<IActionResult> Edit(ConformityTypeInputModel input)
         {
             if (!this.ModelState.IsValid)
             {

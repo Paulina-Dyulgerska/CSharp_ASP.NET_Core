@@ -68,7 +68,7 @@
             return entity;
         }
 
-        public async Task CreateAsync(ConformityTypeModel input)
+        public async Task CreateAsync(ConformityTypeInputModel input)
         {
             // if this conformity type is already in the DB
             if (this.conformityTypesRepository.All()
@@ -91,7 +91,7 @@
             await this.conformityTypesRepository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(ConformityTypeModel input)
+        public async Task EditAsync(ConformityTypeInputModel input)
         {
             // if this conformity type is not in the DB
             var entity = await this.conformityTypesRepository
@@ -102,6 +102,8 @@
             {
                 throw new ArgumentException($"No such conformity type.");
             }
+
+
 
             entity.Description = input.Description.ToUpper();
 

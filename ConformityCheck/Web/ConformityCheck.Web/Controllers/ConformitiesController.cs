@@ -40,7 +40,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ConformityCreateModel input)
+        public async Task<IActionResult> Create(ConformityCreateInputModel input)
         {
             if (!this.ModelState.IsValid)
             {

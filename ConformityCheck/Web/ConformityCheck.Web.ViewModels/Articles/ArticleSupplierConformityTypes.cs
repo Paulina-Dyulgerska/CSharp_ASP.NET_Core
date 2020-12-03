@@ -5,24 +5,28 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class ArticleConformityTypeModel : IMapFrom<ArticleConformityType>, IHaveCustomMappings
+    public class ArticleSupplierConformityTypes : IMapFrom<ArticleConformityType>, IHaveCustomMappings
     {
-        [ArticleEntityAttribute]
+        [ConformityTypeEntityAttribute]
         public int Id { get; set; }
 
         public string Description { get; set; }
 
-        [ConformityTypeEntityAttribute]
+        //[ConformityEntityAttribute]
         public string ConformityId { get; set; }
 
         public bool ConformityIsAccepted { get; set; }
 
         public bool ConformityIsValid { get; set; }
 
+        [SupplierEntityAttribute]
+        public string SupplierId { get; set; }
+
+        public bool SupplierConfirmed { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<ArticleConformityType, ArticleConformityTypeModel>()
+            configuration.CreateMap<ArticleConformityType, ArticleSupplierConformityTypes>()
                 .ForMember(
                 x => x.Id,
                 opt => opt.MapFrom(c => c.ConformityType.Id))
@@ -37,7 +41,10 @@
                 opt => opt.MapFrom(x => x.Conformity.IsAccepted))
                 .ForMember(
                 x => x.ConformityIsValid,
-                opt => opt.MapFrom(x => x.Conformity.IsValid));
+                opt => opt.MapFrom(x => x.Conformity.IsValid))
+                .ForMember(
+                x => x.SupplierId,
+                opt => opt.MapFrom(x => x.Conformity.SupplierId));
         }
     }
 }

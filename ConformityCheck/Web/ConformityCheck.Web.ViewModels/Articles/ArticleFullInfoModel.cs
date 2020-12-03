@@ -7,7 +7,7 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class ArticleFullInfoModel : ArticleBaseModel, IMapFrom<Article>, IHaveCustomMappings
+    public class ArticleFullInfoModel : ArticleBaseInputModel, IMapFrom<Article>, IHaveCustomMappings
     {
         public string MainSupplierName { get; set; }
 

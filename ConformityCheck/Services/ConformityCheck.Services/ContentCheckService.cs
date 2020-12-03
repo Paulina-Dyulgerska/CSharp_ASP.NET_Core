@@ -1,9 +1,10 @@
 ﻿namespace ConformityCheck.Services
 {
     using System.Linq;
-
+    using System.Threading.Tasks;
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
+    using Microsoft.EntityFrameworkCore;
 
     public class ContentCheckService : IContentCheckService
     {
@@ -42,14 +43,14 @@
             this.articleSubstancesRepository = articleSubstancesRepository;
         }
 
-        public bool ArticleEntityCheck(string id)
+        public bool ArticleEntityIdCheck(string id)
         {
             var a = this.articlesRepository.AllAsNoTracking().Any(x => x.Id == id);
 
             return a;
         }
 
-        public bool ArticleSupplierEntityCheck(string articleId, string supplierId)
+        public bool ArticleSupplierEntityIdCheck(string articleId, string supplierId)
         {
             return this.articleSuppliersRepository
                 .AllAsNoTracking()
@@ -57,27 +58,34 @@
                             x.SupplierId == supplierId);
         }
 
-        public bool ConformityTypeEntityCheck(int id)
+        public bool ConformityTypeEntityIdCheck(int id)
         {
             return this.conformityTypesRepository.AllAsNoTracking().Any(x => x.Id == id);
         }
 
-        public bool ConformityTypeEntityCheck(string id)
+        public bool ConformityTypeEntityDescriptionCheck(string input)
+        {
+            return this.conformityTypesRepository
+                .AllAsNoTracking()
+                .Any(x => x.Description.ToUpper() == input.ToUpper());
+        }
+
+        public bool ConformityEntityIdCheck(string id)
         {
             return this.conformitiesRepository.AllAsNoTracking().Any(x => x.Id == id);
         }
 
-        public bool ProductEntityCheck(string id)
+        public bool ProductEntityIdCheck(string id)
         {
             return this.productsRepository.AllAsNoTracking().Any(x => x.Id == id);
         }
 
-        public bool SubstanceEntityCheck(int id)
+        public bool SubstanceEntityIdCheck(int id)
         {
             return this.substancesRepository.AllAsNoTracking().Any(x => x.Id == id);
         }
 
-        public bool SupplierEntityCheck(string id)
+        public bool SupplierEntityIdCheck(string id)
         {
             return this.suppliersRepository.AllAsNoTracking().Any(x => x.Id == id);
         }

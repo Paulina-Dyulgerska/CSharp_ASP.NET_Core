@@ -5,6 +5,6 @@ namespace ConformityCheck.Services.Data
 {
     public interface IConformityService : IService<string>
     {
-        Task CreateAsync(ConformityCreateModel input);
+        Task CreateAsync(ConformityCreateInputModel input);
     }
 }

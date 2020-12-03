@@ -1,19 +1,21 @@
 ﻿namespace ConformityCheck.Services
 {
+    using System.Threading.Tasks;
+
     public interface IContentCheckService
     {
-        bool ArticleEntityCheck(string id);
+        bool ArticleEntityIdCheck(string id);
 
-        bool ArticleSupplierEntityCheck(string articleId, string supplierId);
+        bool ArticleSupplierEntityIdCheck(string articleId, string supplierId);
 
-        bool ConformityTypeEntityCheck(string id);
+        bool ConformityTypeEntityIdCheck(int id);
 
-        bool ConformityTypeEntityCheck(int id);
+        bool ConformityTypeEntityDescriptionCheck(string input);
 
-        bool ProductEntityCheck(string id);
+        bool ProductEntityIdCheck(string id);
 
-        bool SubstanceEntityCheck(int id);
+        bool SubstanceEntityIdCheck(int id);
 
-        bool SupplierEntityCheck(string id);
+        bool SupplierEntityIdCheck(string id);
     }
 }

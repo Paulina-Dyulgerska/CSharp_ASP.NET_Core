@@ -40,7 +40,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ArticleCreateModel input)
+        public async Task<IActionResult> Create(ArticleCreateInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
@@ -91,8 +91,7 @@
                 return this.View(input);
             }
 
-            var article = await this.articlesService.GetByIdAsync(input.Id);
-            await this.articlesService.AddSupplierAsync(article, input.SupplierId);
+            await this.articlesService.AddSupplierAsync(input);
 
             return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
         }
@@ -177,6 +176,26 @@
             return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
         }
 
+        public async Task<IActionResult> AddConformity(string id)
+        {
+            var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesModel>(id);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddConformity(ArticleManageConformitiesModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            await this.articlesService.AddConformityAsync(input);
+
+            return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Conformity.ArticleId });
+        }
+
         public async Task<IActionResult> Delete(string id)
         {
             await this.articlesService.DeleteAsync(id);
@@ -189,6 +208,23 @@
             var model = await this.articlesService.GetByIdAsync<ArticleEditModel>(id);
 
             return this.View(model);
+        }
+
+        public async Task<IActionResult> GetSuppliersById(string id)
+        {
+            var model = await this.articlesService.GetSuppliersByIdAsync<ArticleSupplierModel>(id);
+
+            return this.Json(model);
+        }
+
+        public async Task<IActionResult> GetConformityTypesByIdAndSupplier(
+            string articleId,
+            string supplierId)
+        {
+            var model = await this.articlesService
+                .GetConformityTypesByIdAsync(articleId, supplierId);
+
+            return this.Json(model);
         }
     }
 }

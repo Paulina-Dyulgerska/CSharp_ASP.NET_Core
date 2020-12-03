@@ -5,7 +5,7 @@
 
     using ConformityCheck.Common.ValidationAttributes;
 
-    public class ArticleCreateModel : ArticleBaseModel
+    public class ArticleCreateInputModel : ArticleBaseInputModel
     {
         [SupplierEntityAttribute]
         public string SupplierId { get; set; }

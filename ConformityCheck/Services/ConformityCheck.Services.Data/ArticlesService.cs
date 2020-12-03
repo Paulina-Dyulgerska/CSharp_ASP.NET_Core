@@ -26,7 +26,7 @@
         private readonly IDeletableEntityRepository<ConformityType> conformityTypesRepository;
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
-        private readonly IRepository<ArticleConformityType> articleConformityTypeRepository;
+        private readonly IRepository<ArticleConformityType> articleConformityTypesRepository;
 
         public ArticlesService(
             IDeletableEntityRepository<Article> articlesRepository,
@@ -43,7 +43,7 @@
             this.conformityTypesRepository = conformityTypesRepository;
             this.conformitiesRepository = conformitiesRepository;
             this.usersRepository = usersRepository;
-            this.articleConformityTypeRepository = articleConformityTypeRepository;
+            this.articleConformityTypesRepository = articleConformityTypeRepository;
         }
 
         public int GetCount()
@@ -105,7 +105,7 @@
             return entity;
         }
 
-        public async Task CreateAsync(ArticleCreateModel input)
+        public async Task CreateAsync(ArticleCreateInputModel input)
         {
             var articleEntity = await this.articlesRepository.AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Number == input.Number.Trim().ToUpper());
@@ -133,7 +133,11 @@
 
             if (input.SupplierId != null)
             {
-                await this.AddSupplierAsync(article, input.SupplierId);
+                await this.AddSupplierAsync(new ArticleManageSuppliersInputModel()
+                {
+                    Id = article.Id,
+                    SupplierId = input.SupplierId,
+                });
             }
 
             if (input.ConformityTypes.Any())
@@ -188,23 +192,23 @@
             return await this.articlesRepository.SaveChangesAsync();
         }
 
-        public async Task AddSupplierAsync(Article article, string supplierId)
+        public async Task AddSupplierAsync(ArticleManageSuppliersInputModel input)
         {
             var articleSuppliers = await this.articleSuppliersRepository
                 .AllAsNoTracking()
-                .Where(a => a.ArticleId == article.Id)
+                .Where(a => a.ArticleId == input.Id)
                 .ToListAsync();
 
             var initialNumberOfSuppliers = articleSuppliers.Count();
 
-            if (articleSuppliers.Any(x => x.SupplierId == supplierId))
+            if (articleSuppliers.Any(x => x.SupplierId == input.SupplierId))
             {
                 throw new ArgumentException("The supplier is already asigned to this article");
             }
 
             var supplierEntity = await this.suppliersRepository
                 .AllAsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == supplierId);
+                .FirstOrDefaultAsync(x => x.Id == input.SupplierId);
 
             if (supplierEntity == null)
             {
@@ -213,8 +217,8 @@
 
             var articleSupplierEntity = new ArticleSupplier
             {
-                ArticleId = article.Id,
-                SupplierId = supplierId,
+                ArticleId = input.Id,
+                SupplierId = input.SupplierId,
             };
 
             await this.articleSuppliersRepository.AddAsync(articleSupplierEntity);
@@ -284,7 +288,7 @@
                     throw new ArgumentException($"There is no such conformity type.");
                 }
 
-                var articleConformityType = await this.articleConformityTypeRepository
+                var articleConformityType = await this.articleConformityTypesRepository
                      .AllAsNoTracking()
                      .FirstOrDefaultAsync(x => x.ArticleId == article.Id && x.ConformityTypeId == conformityType);
 
@@ -294,7 +298,7 @@
                     //throw new ArgumentException($"This conformity type is already asigned to this article.");
                 }
 
-                await this.articleConformityTypeRepository.AddAsync(new ArticleConformityType
+                await this.articleConformityTypesRepository.AddAsync(new ArticleConformityType
                 {
                     ArticleId = article.Id,
                     ConformityTypeId = conformityType,
@@ -304,9 +308,14 @@
             await this.articlesRepository.SaveChangesAsync();
         }
 
+        public async Task AddConformityAsync(ArticleManageConformitiesModel input)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task RemoveConformityTypesAsync(ArticleManageConformityTypesInputModel input)
         {
-            var articleConformityTypeEntity = await this.articleConformityTypeRepository
+            var articleConformityTypeEntity = await this.articleConformityTypesRepository
                 .All()
                 .FirstOrDefaultAsync(x => x.ArticleId == input.Id && x.ConformityTypeId == input.ConformityTypeId);
 
@@ -315,9 +324,42 @@
                 throw new ArgumentException("No article with this conformity type.");
             }
 
-            this.articleConformityTypeRepository.Delete(articleConformityTypeEntity);
+            this.articleConformityTypesRepository.Delete(articleConformityTypeEntity);
 
-            await this.articleConformityTypeRepository.SaveChangesAsync();
+            await this.articleConformityTypesRepository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetSuppliersByIdAsync<T>(string id)
+        {
+            return await this.articleSuppliersRepository
+                .AllAsNoTracking()
+                .Where(x => x.ArticleId == id)
+                .OrderByDescending(x => x.IsMainSupplier)
+                .ThenBy(x => x.Supplier.Name)
+                .To<T>()
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ArticleSupplierConformityTypes>> GetConformityTypesByIdAsync(string articleId, string supplierId)
+        {
+            var entities = await this.articleConformityTypesRepository
+                .AllAsNoTracking()
+                .Where(x => x.ArticleId == articleId)
+                .OrderBy(x => x.ConformityTypeId)
+                .To<ArticleSupplierConformityTypes>()
+                .ToListAsync();
+
+            foreach (var entity in entities)
+            {
+                if (entity.SupplierId == supplierId
+                    && entity.ConformityIsAccepted
+                    && entity.ConformityIsValid)
+                {
+                    entity.SupplierConfirmed = true;
+                }
+            }
+
+            return entities;
         }
 
         // not in the Interface!
@@ -367,6 +409,8 @@
 
             return st.ToString().Trim();
         }
+
+
 
         // for delete:
         //public IEnumerable<string> GetSuppliersIdsList(string articleId)

@@ -6,7 +6,6 @@
 
     public class ConformityTypeEntityAttribute : ValidationAttribute
     {
-
         public ConformityTypeEntityAttribute()
         {
             this.ErrorMessage = $"No such conformity type.";
@@ -16,7 +15,7 @@
         {
             var context = (IContentCheckService)validationContext.GetService(typeof(IContentCheckService));
 
-            var conformityTypeEntity = context.ConformityTypeEntityCheck(int.Parse(value.ToString()));
+            var conformityTypeEntity = context.ConformityTypeEntityIdCheck(int.Parse(value.ToString()));
 
             if (!conformityTypeEntity)
             {

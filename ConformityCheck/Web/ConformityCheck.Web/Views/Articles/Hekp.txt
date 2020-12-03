@@ -1,0 +1,1419 @@
+﻿<body>
+
+    <div class="mask-overlay"></div>
+
+
+
+    <header>
+         <a href="tel:+359875333456" class="visible-xs header-tel"></a> 
+        <a href="https://comsed.net/contacts" class="visible-xs header-tel"></a>
+
+        <div class="log-reg visible-xs">
+
+            <a href="https://comsed.net/index.php?route=account/login"><span class="fa fa-user"></span> Вход/Регистрация</a>
+
+        </div>
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-xs-7 col-sm-4 col-md-3">
+
+                    <a href="https://comsed.net/" class="logo" data-toggle="tooltip" data-placement="right" title="" data-original-title="Начало">
+                        <img src="https://comsed.net/image/catalog/Logo-and-backgrounds/logo.svg?128" class="img-responsive" alt="">
+                    </a>
+
+                </div>
+
+                <div class="col-xs-5 col-sm-8 col-md-9">
+
+                    <ul class="pull-right reg-cart clearfix">
+
+                        <li><a href="https://comsed.net/index.php?route=account/login"><span class="fa fa-user fa-lg"></span> Вход/Регистрация</a></li>
+
+                        <li id="cart" class="dropdown">
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="cart-icon"></i><span>6 <span>продукт(а) - 285.<sup>88</sup><span class="currency-symbol">лв.</span></span></span></a>
+                            <a href="https://comsed.net/index.php?route=checkout/cart" role="button" aria-expanded="false"><i class="cart-icon"></i><span>6 <span>продукт(а) - 285.<sup>88</sup><span class="currency-symbol">лв.</span></span></span></a>
+
+                            <ul class="dropdown-menu">
+                                <li class="title"><span class="triangle"></span>Вашата кошница</li>
+
+                                <li>
+                                    <a href="https://comsed.net/разтеглив-робо-дакел-silverlit-с-р-у"><img src="https://comsed.net/image/cache/catalog/toys/373041/373041-1-65x54.webp"><span>Разтеглив Робо-Дакел Silverlit, с Р/У</span></a>
+                                    <span class="items">2</span>
+                                    <span class="price"><span>57.<sup>33</sup><span class="currency-symbol">лв.</span></span></span>
+                                    <button class="delete-order" onclick="cart.remove('YToxOntzOjEwOiJwcm9kdWN0X2lkIjtpOjI0Njg3Nzt9');"></button>
+                                </li>
+                                <li>
+                                    <a href="https://comsed.net/радиоуправляема-кола-дики-бързи-и-яростни-lykan-hypersport-1-16"><img src="https://comsed.net/image/cache/catalog/toys/045102/045102-1-65x54.webp"><span>Радиоуправляема кола Дики, Бързи и яростни: Lykan Hypersport, 1:16</span></a>
+                                    <span class="items">1</span>
+                                    <span class="price"><span>46.<sup>83</sup><span class="currency-symbol">лв.</span></span></span>
+                                    <button class="delete-order" onclick="cart.remove('YToxOntzOjEwOiJwcm9kdWN0X2lkIjtpOjI0ODM3NDt9');"></button>
+                                </li>
+                                <li>
+                                    <a href="https://comsed.net/lego-dots-41913-мегапакет-с-гривни"><img src="https://comsed.net/image/cache/catalog/toys/0041913/0041913-1-65x54.webp"><span>LEGO® DOTS™ 41913 - Мегапакет с гривни</span></a>
+                                    <span class="items">1</span>
+                                    <span class="price"><span>41.<sup>23</sup><span class="currency-symbol">лв.</span></span></span>
+                                    <button class="delete-order" onclick="cart.remove('YToxOntzOjEwOiJwcm9kdWN0X2lkIjtpOjI0NTU0OTt9');"></button>
+                                </li>
+                                <li>
+                                    <a href="https://comsed.net/мини-маус-с-мини-купър"><img src="https://comsed.net/image/cache/catalog/toys/130051/130051-1-65x54.webp"><span>Мини Маус с мини купър</span></a>
+                                    <span class="items">1</span>
+                                    <span class="price"><span>37.<sup>73</sup><span class="currency-symbol">лв.</span></span></span>
+                                    <button class="delete-order" onclick="cart.remove('YToxOntzOjEwOiJwcm9kdWN0X2lkIjtpOjI0NzY4ODt9');"></button>
+                                </li>
+                                <li>
+                                    <a href="https://comsed.net/замръзналото-кралство-2-елза"><img src="https://comsed.net/image/cache/catalog/toys/130023/130023-1-65x54.webp"><span>Замръзналото Кралство 2 - Елза</span></a>
+                                    <span class="items">1</span>
+                                    <span class="price"><span>45.<sup>43</sup><span class="currency-symbol">лв.</span></span></span>
+                                    <button class="delete-order" onclick="cart.remove('YToxOntzOjEwOiJwcm9kdWN0X2lkIjtpOjIzNzU1NTt9');"></button>
+                                </li>
+
+
+                                <li class="price-sum">Сума<span>285.<sup>88</sup><span class="currency-symbol">лв.</span></span></li>
+                                <li class="price-sum">Всичко<span>285.<sup>88</sup><span class="currency-symbol">лв.</span></span></li>
+
+                                <li class="cart-btns">
+                                    <button onclick="location='https://comsed.net/index.php?route=checkout/cart'">ВИЖ КОШНИЦАТА</button>
+                                    <button onclick="location='https://comsed.net/index.php?route=checkout/checkout'">ЗАВЪРШИ ПОРЪЧКАТА</button>
+                                </li>
+                            </ul>
+                        </li>
+
+                         <li class="hidden-lg hidden-md hidden-sm dropdown mobile-search">
+
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+
+                            <form class="dropdown-menu search-form hidden-lg hidden-md hidden-sm" method="POST" action="#">
+
+                                <div class="input-group">
+
+                                    <input type="text" class="form-control" placeholder="Търси артикул">
+
+                                    <span class="input-group-btn">
+
+                                        <button class="btn btn-default" type="button">Търси</button>
+
+                                    </span>
+
+                                </div>/input-group
+
+                            </form>
+
+                        </li> 
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <div class="background-bg" style="background-image: url(https://comsed.net/image/catalog/Logo-and-backgrounds/home-background.jpg)"></div>
+
+    <a href="https://comsed.net/index.php?route=information/contact" class="chat hidden-xs"><i></i>пиши ни</a>
+
+    <div id="scroll" style="z-index: 99999999" class="drop-rigt-mouseleave-exception">
+        <img class="drop-rigt-mouseleave-exception" src="/catalog/view/theme/design/listing-lego/img/scroll.svg">
+    </div>
+    <div class="header-bg listing-header"></div>
+
+    <div class="container mt15">
+
+        <div class="row">
+
+            <section class="col-sm-12 full-width-nav site-navigation no-filters-link">
+
+                 nav menu 
+                <nav class="navbar navbar-default">
+
+                     Brand and toggle get grouped for better mobile display 
+
+                    <div class="navbar-header">
+
+                        <div class="input-group header-search">
+                            <a href="https://comsed.net/%D0%B2%D1%81%D0%B8%D1%87%D0%BA%D0%B8/?sort=p.promo&amp;order=DESC" class="link-filters no-filters">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <span>ДЕТАЙЛНИ ФИЛТРИ</span>
+                            </a>
+                            <a class="link-filters active" onclick="filters.toggle();"><span>ДЕТАЙЛНИ ФИЛТРИ</span></a>
+                        </div>
+
+                        <a id="top_menu_mobile_button" href="#" class="hidden-lg hidden-md hidden-sm" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            Меню
+                        </a>
+
+                    </div>
+
+                     Collect the nav links, forms, and other content for toggling 
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                        <ul class="nav navbar-nav">
+
+                             											<li><a href="/">Начало</a></li>
+                                                                                        <li><a href="https://comsed.net/about-us">За нас</a></li>
+                                                                                        <li><a href="/news">Новини</a></li>
+                                                                                        <li><a href="/promo">Промоции</a></li>
+                                                                                        <li><a href="/blog">Блог</a></li>
+                                                                                        <li><a href="https://comsed.net/contacts">КОНТАКТИ</a></li>
+                                                         
+                            <li class="icon-home"><a href="https://comsed.net/" data-toggle="tooltip" data-placement="top" data-original-title="Начало">Начало</a></li>
+                            <li class="icon-categories visible-xs"><a href="https://comsed.net/категории">Категории</a></li>
+                            <li class="icon-filter-menu visible-xs"><a href="%D0%B2%D1%81%D0%B8%D1%87%D0%BA%D0%B8?sort=p.custom_sales_count&amp;order=DESC">Детайлни филтри</a></li>
+                            <li class="hidden-xs"><a href="https://comsed.net/категории">Категории</a></li>
+                            <li class="icon-brands"><a href="https://comsed.net/марки">Марки</a></li>
+                            <li class="icon-promo"><a href="https://comsed.net/promo">Промоции</a></li>
+                            <li class="icon-aboutus"><a href="https://comsed.net/about-us">За нас</a></li>
+                            <li class="icon-news"><a href="https://comsed.net/news">Новини</a></li>
+                            <li class="icon-blog"><a href="https://comsed.net/blog">Блог</a></li>
+                            <li class="icon-contacts"><a href="https://comsed.net/contacts">Контакти</a></li>
+                            <li class="icon-address"><a href="https://comsed.net/a%D0%B4%D1%80%D0%B5%D1%81%D0%B8-%D0%BD%D0%B0-%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B8%D1%82%D0%B5" data-toggle="tooltip" data-placement="top" data-original-title="Адреси на магазините">Адреси на магазините</a></li>
+                             <li class="close-toggle-menu visible-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in">Затвори</a></li> 
+
+                        </ul>
+                        <div class="visible-xs log-in-menu">
+                            <ul>
+                                <li><a href="https://comsed.net/index.php?route=account/login">Вход/Регистрация</a></li>
+                            </ul>
+                        </div>
+                        <ul class="visible-xs mobile-menu">
+                            <li><a href="https://comsed.net/%D0%BE%D0%B1%D1%89%D0%B8-%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F">Общи условия</a></li>
+                            <li><a href="https://comsed.net/brands">Марки</a></li>
+                            <li><a href="https://comsed.net/%D0%BA%D0%B0%D0%BA-%D0%B4%D0%B0-%D1%82%D1%8A%D1%80%D1%81%D1%8F">Как да търся</a></li>
+                            <li><a href="https://comsed.net/a%D0%B4%D1%80%D0%B5%D1%81%D0%B8-%D0%BD%D0%B0-%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B8%D1%82%D0%B5">Адреси на магазините</a></li>
+                            <li><a href="https://comsed.net/%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0">Доставка</a></li>
+                            <li><a href="https://comsed.net/%D0%BE%D1%82%D0%BA%D0%B0%D0%B7-%D0%BE%D1%82-%D0%BF%D0%BE%D1%80%D1%8A%D1%87%D0%BA%D0%B0">Отказ от поръчка</a></li>
+                            <li><a href="https://comsed.net/%D0%BA%D0%B0%D1%80%D0%B8%D0%B5%D1%80%D0%B8">Кариери</a></li>
+                            <li><a href="https://comsed.net/index.php?route=information/information&amp;information_id=25">Ваучери</a></li>
+                        </ul>
+
+                    </div> /.navbar-collapse 
+
+                </nav>
+
+                <script type="text/javascript">
+	$('#top_menu_mobile_button').on('click', function(){
+		$(this).toggleClass('active');
+	});
+                </script>           nav menu end 
+
+                <div class="site-bg clearfix">
+
+                    <ol class="breadcrumb hidden-xs">
+                        <li><a href="https://comsed.net/index.php?route=common/home">Начало</a></li>
+                        <li><a href="https://comsed.net/index.php?route=checkout/cart">Количка</a></li>
+                        <li><a href="https://comsed.net/index.php?route=checkout/checkout2">Поръчка</a></li>
+                    </ol>
+
+                    <h1 class="red-title mb20 hidden-xs">Завършване на поръчка</h1>
+                    <div class="row">
+
+                        <div class="form-cart-checkout clearfix">
+
+                            <div id="login-text" class="col-xs-12 col-sm-12">
+                                <div class="text text-center">Имате регистрация? Натиснете <a onclick="$('#login').removeClass('hide'); $(this).parent().remove();">тук за вход</a>  или <a href="" class="btn btn-facebook">Вход с Facebook</a> </div>
+                            </div>
+
+                             login 
+                            <div id="login" class="well hide">
+                                <h2>Регистриран клиент</h2>
+                                <p><strong>Аз съм регистриран клиент</strong></p>
+                                <div class="alert alert-danger hide">sadsa</div>
+                                <form id="form-login" action="https://comsed.net/index.php?route=checkout/login/save" method="post" enctype="multipart/form-data">
+                                    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+                                        <div class="form-group">
+                                            <label class="control-label" for="input-email">Адрес на е-поща</label>
+                                            <input type="text" name="email" value="" placeholder="Адрес на е-поща" id="input-email" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label" for="input-password">Парола</label>
+                                            <input type="password" name="password" value="" placeholder="Парола" id="input-password" class="form-control">
+                                            <a href="https://comsed.net/index.php?route=account/forgotten">Забравена парола</a>
+                                        </div>
+                                        <input id="login-submit" type="submit" value="Вход" class="btn btn-primary mb20">
+                                    </div>
+                                </form>
+                                <script type="text/javascript">
+                                $('#form-login').submit(function(e){
+                                    e.preventDefault();
+                                    $('#login-submit').attr('disabled', 'disabled');
+
+                                     $.ajax({
+                                            url: $(this).attr('action'),
+                                            dataType: 'json',
+                                            method: 'post',
+                                            data: $('#form-login').serialize(),
+                                            success: function(json) {
+                                                $('#login-submit').removeAttr('disabled');
+                                                if(json['error'])
+                                                {
+                                                    $('#login .alert').html(json['error']['warning']).removeClass('hide');
+                                                }
+                                                else
+                                                {
+                                                    location.reload();
+                                                }
+                                            },
+                                            error: function(xhr, ajaxOptions, thrownError)
+                                            {
+                                                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                                            }
+                                    });
+                                });
+                                </script>
+                            </div>
+
+                            <div class="form-container">
+                                <form id="checkout-data" action="">
+                                    <div class="col-xs-12 col-sm-12 row">
+                                        <div class="title-listing">
+                                            <h3 class="title">Данни на получателя</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="input-group">
+                                                <label for="firstname">Име: <span>*</span></label>
+                                                <input id="firstname" type="text" name="firstname" required="" class="form-control" placeholder="Въведете име" value="">
+                                                <label id="error-firstname" for="firstname" class="error hide"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="input-group">
+                                                <label for="lastname">Фамилия: <span>*</span></label>
+                                                <input id="lastname" type="text" name="lastname" required="" class="form-control" placeholder="Въведете фамилия" value="">
+                                                <label id="error-lastname" for="lastname" class="error hide"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="input-group">
+                                                <label for="email">E-mail: <span>*</span></label>
+                                                <input id="email" type="email" name="email" required="" class="form-control" placeholder="Въведете e-mail" value="">
+                                                <label id="error-email" for="email" class="error hide"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="input-group">
+                                                <label for="telephone">Телефон: <span>*</span></label>
+                                                <input id="telephone" type="tel" name="telephone" required="" class="form-control" placeholder="Въведете телефон" value="">
+                                                <label id="error-telephone" for="telephone" class="error hide"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div id="register" class="input-group checkbox">
+                                            <input type="checkbox" name="register" id="register2" class="form-control" onchange="$('#register-box').toggleClass('hide');">
+                                            <label for="register2">Направи ми регистрация</label>
+                                            <label id="error-register" for="register" class="error hide"></label>
+                                        </div>
+                                    </div>
+                                    <div id="register-box" class="row hide">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="input-group">
+                                                <label for="">Въведете парола: <span>*</span></label>
+                                                <input id="password" type="password" name="password" required="" class="form-control">
+                                                <label id="error-password" for="password" class="error hide"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 mb20">
+                                            <div class="input-group">
+                                                <label for="">Повтори парола: <span>*</span></label>
+                                                <input type="password" name="password2" required="" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                     shipping method 
+                                    <div id="shipping_method" class="col-xs-12 col-sm-12 row">
+                                        <div class="title-listing">
+                                            <h3 class="title">Метод на доставка</h3>
+                                        </div>
+                                        <label id="error-shipping_method" class="error hide"></label>
+                                    </div>
+
+
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="input-group radio">
+                                            <input type="radio" name="shipping_method" id="shipping_free.free" class="form-control" value="free.free">
+                                            <label for="shipping_free.free">Безплатна доставка до адрес <b>- 0 лв.</b></label>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div id="pickup_courier_anchor" class="col-xs-12 col-sm-12">
+
+                                        <input id="courier_office_id" type="hidden" name="courier_office_id" value="">
+                                        <input id="courier_code" type="hidden" name="courier_code" value="">
+
+                                        <div class="input-group radio">
+
+                                            <input type="radio" name="shipping_method" id="shipping_pickup_courier.pickup_courier" class="form-control" value="pickup_courier.pickup_courier">
+                                            <label for="shipping_pickup_courier.pickup_courier">Доставка до офис на куриер Еcont или Speedy <b> - 0 лв.</b></label>
+
+                                            <div class="hide pickup_info" style="width: 100%">
+                                                <div id="courier_msg"><b>Моля избете офис на куриер от картата.</b></div>
+                                                <div id="courier_office_locator" style="width: 100%"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                     /shipping method 
+                                     address 
+                                    <div id="shippin_address">
+                                        <input id="skip_address" type="hidden" name="skip_address" value="">
+                                        <div class="col-xs-12 col-sm-12 row">
+                                            <div class="title-listing">
+                                                <h3 class="title">Адрес за доставка</h3>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6">
+                                                <div class="input-group">
+                                                    <label for="country_id">Държава: <span>*</span></label>
+                                                    <select id="country_id" name="country_id" required="" class="form-control">
+                                                        <option value="244">Aaland Islands</option>
+                                                        <option value="1">Afghanistan</option>
+                                                        <option value="2">Albania</option>
+                                                        <option value="3">Algeria</option>
+                                                        <option value="4">American Samoa</option>
+                                                        <option value="5">Andorra</option>
+                                                        <option value="6">Angola</option>
+                                                        <option value="7">Anguilla</option>
+                                                        <option value="8">Antarctica</option>
+                                                        <option value="9">Antigua and Barbuda</option>
+                                                        <option value="10">Argentina</option>
+                                                        <option value="11">Armenia</option>
+                                                        <option value="12">Aruba</option>
+                                                        <option value="252">Ascension Island (British)</option>
+                                                        <option value="13">Australia</option>
+                                                        <option value="14">Austria</option>
+                                                        <option value="15">Azerbaijan</option>
+                                                        <option value="16">Bahamas</option>
+                                                        <option value="17">Bahrain</option>
+                                                        <option value="18">Bangladesh</option>
+                                                        <option value="19">Barbados</option>
+                                                        <option value="20">Belarus</option>
+                                                        <option value="21">Belgium</option>
+                                                        <option value="22">Belize</option>
+                                                        <option value="23">Benin</option>
+                                                        <option value="24">Bermuda</option>
+                                                        <option value="25">Bhutan</option>
+                                                        <option value="26">Bolivia</option>
+                                                        <option value="245">Bonaire, Sint Eustatius and Saba</option>
+                                                        <option value="27">Bosnia and Herzegovina</option>
+                                                        <option value="28">Botswana</option>
+                                                        <option value="29">Bouvet Island</option>
+                                                        <option value="30">Brazil</option>
+                                                        <option value="31">British Indian Ocean Territory</option>
+                                                        <option value="32">Brunei Darussalam</option>
+                                                        <option value="33" selected="selected">Bulgaria</option>
+                                                        <option value="34">Burkina Faso</option>
+                                                        <option value="35">Burundi</option>
+                                                        <option value="36">Cambodia</option>
+                                                        <option value="37">Cameroon</option>
+                                                        <option value="38">Canada</option>
+                                                        <option value="251">Canary Islands</option>
+                                                        <option value="39">Cape Verde</option>
+                                                        <option value="40">Cayman Islands</option>
+                                                        <option value="41">Central African Republic</option>
+                                                        <option value="42">Chad</option>
+                                                        <option value="43">Chile</option>
+                                                        <option value="44">China</option>
+                                                        <option value="45">Christmas Island</option>
+                                                        <option value="46">Cocos (Keeling) Islands</option>
+                                                        <option value="47">Colombia</option>
+                                                        <option value="48">Comoros</option>
+                                                        <option value="49">Congo</option>
+                                                        <option value="50">Cook Islands</option>
+                                                        <option value="51">Costa Rica</option>
+                                                        <option value="52">Cote D'Ivoire</option>
+                                                        <option value="53">Croatia</option>
+                                                        <option value="54">Cuba</option>
+                                                        <option value="246">Curacao</option>
+                                                        <option value="55">Cyprus</option>
+                                                        <option value="56">Czech Republic</option>
+                                                        <option value="237">Democratic Republic of Congo</option>
+                                                        <option value="57">Denmark</option>
+                                                        <option value="58">Djibouti</option>
+                                                        <option value="59">Dominica</option>
+                                                        <option value="60">Dominican Republic</option>
+                                                        <option value="61">East Timor</option>
+                                                        <option value="62">Ecuador</option>
+                                                        <option value="63">Egypt</option>
+                                                        <option value="64">El Salvador</option>
+                                                        <option value="65">Equatorial Guinea</option>
+                                                        <option value="66">Eritrea</option>
+                                                        <option value="67">Estonia</option>
+                                                        <option value="68">Ethiopia</option>
+                                                        <option value="69">Falkland Islands (Malvinas)</option>
+                                                        <option value="70">Faroe Islands</option>
+                                                        <option value="71">Fiji</option>
+                                                        <option value="72">Finland</option>
+                                                        <option value="74">France, Metropolitan</option>
+                                                        <option value="75">French Guiana</option>
+                                                        <option value="76">French Polynesia</option>
+                                                        <option value="77">French Southern Territories</option>
+                                                        <option value="126">FYROM</option>
+                                                        <option value="78">Gabon</option>
+                                                        <option value="79">Gambia</option>
+                                                        <option value="80">Georgia</option>
+                                                        <option value="81">Germany</option>
+                                                        <option value="82">Ghana</option>
+                                                        <option value="83">Gibraltar</option>
+                                                        <option value="84">Greece</option>
+                                                        <option value="85">Greenland</option>
+                                                        <option value="86">Grenada</option>
+                                                        <option value="87">Guadeloupe</option>
+                                                        <option value="88">Guam</option>
+                                                        <option value="89">Guatemala</option>
+                                                        <option value="256">Guernsey</option>
+                                                        <option value="90">Guinea</option>
+                                                        <option value="91">Guinea-Bissau</option>
+                                                        <option value="92">Guyana</option>
+                                                        <option value="93">Haiti</option>
+                                                        <option value="94">Heard and Mc Donald Islands</option>
+                                                        <option value="95">Honduras</option>
+                                                        <option value="96">Hong Kong</option>
+                                                        <option value="97">Hungary</option>
+                                                        <option value="98">Iceland</option>
+                                                        <option value="99">India</option>
+                                                        <option value="100">Indonesia</option>
+                                                        <option value="101">Iran (Islamic Republic of)</option>
+                                                        <option value="102">Iraq</option>
+                                                        <option value="103">Ireland</option>
+                                                        <option value="254">Isle of Man</option>
+                                                        <option value="104">Israel</option>
+                                                        <option value="105">Italy</option>
+                                                        <option value="106">Jamaica</option>
+                                                        <option value="107">Japan</option>
+                                                        <option value="257">Jersey</option>
+                                                        <option value="108">Jordan</option>
+                                                        <option value="109">Kazakhstan</option>
+                                                        <option value="110">Kenya</option>
+                                                        <option value="111">Kiribati</option>
+                                                        <option value="113">Korea, Republic of</option>
+                                                        <option value="253">Kosovo, Republic of</option>
+                                                        <option value="114">Kuwait</option>
+                                                        <option value="115">Kyrgyzstan</option>
+                                                        <option value="116">Lao People's Democratic Republic</option>
+                                                        <option value="117">Latvia</option>
+                                                        <option value="118">Lebanon</option>
+                                                        <option value="119">Lesotho</option>
+                                                        <option value="120">Liberia</option>
+                                                        <option value="121">Libyan Arab Jamahiriya</option>
+                                                        <option value="122">Liechtenstein</option>
+                                                        <option value="123">Lithuania</option>
+                                                        <option value="124">Luxembourg</option>
+                                                        <option value="125">Macau</option>
+                                                        <option value="127">Madagascar</option>
+                                                        <option value="128">Malawi</option>
+                                                        <option value="129">Malaysia</option>
+                                                        <option value="130">Maldives</option>
+                                                        <option value="131">Mali</option>
+                                                        <option value="132">Malta</option>
+                                                        <option value="133">Marshall Islands</option>
+                                                        <option value="134">Martinique</option>
+                                                        <option value="135">Mauritania</option>
+                                                        <option value="136">Mauritius</option>
+                                                        <option value="137">Mayotte</option>
+                                                        <option value="138">Mexico</option>
+                                                        <option value="139">Micronesia, Federated States of</option>
+                                                        <option value="140">Moldova, Republic of</option>
+                                                        <option value="141">Monaco</option>
+                                                        <option value="142">Mongolia</option>
+                                                        <option value="242">Montenegro</option>
+                                                        <option value="143">Montserrat</option>
+                                                        <option value="144">Morocco</option>
+                                                        <option value="145">Mozambique</option>
+                                                        <option value="146">Myanmar</option>
+                                                        <option value="147">Namibia</option>
+                                                        <option value="148">Nauru</option>
+                                                        <option value="149">Nepal</option>
+                                                        <option value="150">Netherlands</option>
+                                                        <option value="151">Netherlands Antilles</option>
+                                                        <option value="152">New Caledonia</option>
+                                                        <option value="153">New Zealand</option>
+                                                        <option value="154">Nicaragua</option>
+                                                        <option value="155">Niger</option>
+                                                        <option value="156">Nigeria</option>
+                                                        <option value="157">Niue</option>
+                                                        <option value="158">Norfolk Island</option>
+                                                        <option value="112">North Korea</option>
+                                                        <option value="159">Northern Mariana Islands</option>
+                                                        <option value="160">Norway</option>
+                                                        <option value="161">Oman</option>
+                                                        <option value="162">Pakistan</option>
+                                                        <option value="163">Palau</option>
+                                                        <option value="247">Palestinian Territory, Occupied</option>
+                                                        <option value="164">Panama</option>
+                                                        <option value="165">Papua New Guinea</option>
+                                                        <option value="166">Paraguay</option>
+                                                        <option value="167">Peru</option>
+                                                        <option value="168">Philippines</option>
+                                                        <option value="169">Pitcairn</option>
+                                                        <option value="170">Poland</option>
+                                                        <option value="171">Portugal</option>
+                                                        <option value="172">Puerto Rico</option>
+                                                        <option value="173">Qatar</option>
+                                                        <option value="174">Reunion</option>
+                                                        <option value="175">Romania</option>
+                                                        <option value="176">Russian Federation</option>
+                                                        <option value="177">Rwanda</option>
+                                                        <option value="178">Saint Kitts and Nevis</option>
+                                                        <option value="179">Saint Lucia</option>
+                                                        <option value="180">Saint Vincent and the Grenadines</option>
+                                                        <option value="181">Samoa</option>
+                                                        <option value="182">San Marino</option>
+                                                        <option value="183">Sao Tome and Principe</option>
+                                                        <option value="184">Saudi Arabia</option>
+                                                        <option value="185">Senegal</option>
+                                                        <option value="243">Serbia</option>
+                                                        <option value="186">Seychelles</option>
+                                                        <option value="187">Sierra Leone</option>
+                                                        <option value="188">Singapore</option>
+                                                        <option value="189">Slovak Republic</option>
+                                                        <option value="190">Slovenia</option>
+                                                        <option value="191">Solomon Islands</option>
+                                                        <option value="192">Somalia</option>
+                                                        <option value="193">South Africa</option>
+                                                        <option value="194">South Georgia &amp; South Sandwich Islands</option>
+                                                        <option value="248">South Sudan</option>
+                                                        <option value="195">Spain</option>
+                                                        <option value="196">Sri Lanka</option>
+                                                        <option value="249">St. Barthelemy</option>
+                                                        <option value="197">St. Helena</option>
+                                                        <option value="250">St. Martin (French part)</option>
+                                                        <option value="198">St. Pierre and Miquelon</option>
+                                                        <option value="199">Sudan</option>
+                                                        <option value="200">Suriname</option>
+                                                        <option value="201">Svalbard and Jan Mayen Islands</option>
+                                                        <option value="202">Swaziland</option>
+                                                        <option value="203">Sweden</option>
+                                                        <option value="204">Switzerland</option>
+                                                        <option value="205">Syrian Arab Republic</option>
+                                                        <option value="206">Taiwan</option>
+                                                        <option value="207">Tajikistan</option>
+                                                        <option value="208">Tanzania, United Republic of</option>
+                                                        <option value="209">Thailand</option>
+                                                        <option value="210">Togo</option>
+                                                        <option value="211">Tokelau</option>
+                                                        <option value="212">Tonga</option>
+                                                        <option value="213">Trinidad and Tobago</option>
+                                                        <option value="255">Tristan da Cunha</option>
+                                                        <option value="214">Tunisia</option>
+                                                        <option value="215">Turkey</option>
+                                                        <option value="216">Turkmenistan</option>
+                                                        <option value="217">Turks and Caicos Islands</option>
+                                                        <option value="218">Tuvalu</option>
+                                                        <option value="219">Uganda</option>
+                                                        <option value="220">Ukraine</option>
+                                                        <option value="221">United Arab Emirates</option>
+                                                        <option value="222">United Kingdom</option>
+                                                        <option value="223">United States</option>
+                                                        <option value="224">United States Minor Outlying Islands</option>
+                                                        <option value="225">Uruguay</option>
+                                                        <option value="226">Uzbekistan</option>
+                                                        <option value="227">Vanuatu</option>
+                                                        <option value="228">Vatican City State (Holy See)</option>
+                                                        <option value="229">Venezuela</option>
+                                                        <option value="230">Viet Nam</option>
+                                                        <option value="231">Virgin Islands (British)</option>
+                                                        <option value="232">Virgin Islands (U.S.)</option>
+                                                        <option value="233">Wallis and Futuna Islands</option>
+                                                        <option value="234">Western Sahara</option>
+                                                        <option value="235">Yemen</option>
+                                                        <option value="238">Zambia</option>
+                                                        <option value="239">Zimbabwe</option>
+                                                    </select>
+                                                    <label id="error-country_id" for="country_id" class="error hide"></label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6">
+                                                <div class="input-group">
+                                                    <label for="zone_id">Област: <span>*</span></label>
+                                                    <select id="zone_id" name="zone_id" required="" class="form-control"><option value="">Изберете област</option><option value="479">Благоевград</option><option value="480">Бургас</option><option value="501">Варна</option><option value="502">Велико Търново</option><option value="503">Видин</option><option value="504">Враца</option><option value="482">Габрово</option><option value="481">Добрич</option><option value="484">Кърджали</option><option value="485">Кюстендил</option><option value="486">Ловеч</option><option value="487">Монтана</option><option value="488">Пазарджик</option><option value="489">Перник</option><option value="490">Плевен</option><option value="491">Пловдив</option><option value="492">Разград</option><option value="3968">Русе</option><option value="494">Силистра</option><option value="495">Сливен</option><option value="496">Смолян</option><option value="497">София</option><option value="498" selected="selected">София - град</option><option value="499">Стара Загора</option><option value="500">Търговище</option><option value="483">Хасково</option><option value="493">Шумен</option><option value="505">Ямбол</option></select>
+                                                    <label id="error-zone_id" for="zone_id" class="error hide"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6">
+                                                <div class="input-group">
+                                                    <label for="city">Населено място: <span>*</span></label>
+                                                    <input id="city" type="text" name="city" required="" class="form-control">
+                                                    <label id="error-city" for="city" class="error hide"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12">
+                                                <div class="input-group">
+                                                    <label id="address_1" for="">Адрес: <span>*</span></label>
+                                                    <input id="address" type="text" name="address_1" required="" class="form-control" placeholder="Въведете адрес за доставката">
+                                                    <label id="error-address_1" for="address_1" class="error hide"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     /address 
+                                     invoice 
+                                    <div class="col-xs-12 col-sm-12 mb20">
+                                        <div class="input-group checkbox">
+                                            <input id="invoice" type="checkbox" name="invoice" class="form-control" onchange="$('#invoice_form').toggleClass('hide');">
+                                            <label for="invoice">Искам да ми се издаде фактура</label>
+                                        </div>
+
+                                        <div id="invoice_form" class="hide">
+                                            <div class="input-group">
+                                                <label id="invoice_company_name" for="input-invoice-company-name">Име на фирмата: <span>*</span></label>
+                                                <input type="text" name="invoice_company_name" value="" placeholder="Име на фирмата" id="input-invoice-company-name" class="form-control">
+                                                <label id="error-invoice_company_name" for="input-invoice-company-name" class="error hide"></label>
+                                            </div>
+
+                                            <div class="input-group">
+                                                <label id="invoice_mol" for="input-invoice-mol">МОЛ <span>*</span></label>
+                                                <input type="text" name="invoice_mol" value="" placeholder="МОЛ" id="input-invoice-mol" class="form-control">
+                                                <label id="error-invoice_mol" for="input-invoice-mol" class="error hide"></label>
+                                            </div>
+
+                                            <div class="input-group">
+                                                <label id="invoice_bulstat" for="input-invoice-bulstat">ЕИК <span>*</span></label>
+                                                <input type="text" name="invoice_bulstat" value="" placeholder="ЕИК (БУЛСТАТ)" id="input-invoice-bulstat" class="form-control">
+                                                <label id="error-invoice_bulstat" for="input-invoice-bulstat" class="error hide"></label>
+                                            </div>
+
+                                            <div class="input-group">
+                                                <label id="invoice_address" for="input-invoice-address">Адрес <span>*</span></label>
+                                                <input type="text" name="invoice_address" value="" placeholder="Адрес" id="input-invoice-address" class="form-control">
+                                                <label id="error-invoice_address" for="input-invoice-address" class="error hide"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     /invoice 
+                                     comment 
+                                    <div class="col-xs-12 col-sm-12 row">
+                                        <div class="input-group">
+                                            <label for="comment">Добавете пояснения или указания към поръчката си.</label>
+                                            <textarea id="comment" name="comment" class="form-control"></textarea>
+                                            <label id="error-comment" for="comment" class="error hide"></label>
+                                        </div>
+                                    </div>
+                                     /comment 
+                                      <div class="col-xs-12 col-sm-12">
+                                         <div class="input-group checkbox displa-table-center">
+                                             <input type="checkbox" name="email_check" id="email_check" class="form-control">
+                                             <label for="email_check">Искам да получавам e-mail с продукти в АКЦИЯ и специални предложения</label>
+                                         </div>
+                                     </div> 
+
+                                    <div id="products">
+                                        <div class="cart-table">
+                                            <table class="table table-striped step2">
+                                                <thead>
+                                                    <tr>
+                                                        <td class="text-left">Артикул</td>
+                                                        <td class="text-left">Наименование</td>
+                                                        <td class="text-center">Бр.</td>
+                                                        <td class="text-center">Ед. цена</td>
+                                                        <td class="text-center">Цена</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><div class="item-image"><img src="https://comsed.net/image/cache/catalog/toys/373041/373041-1-65x54.jpg"><div class="art-number">373041</div></div></td>
+                                                        <td class="title text-left"><a href="https://comsed.net/разтеглив-робо-дакел-silverlit-с-р-у">Разтеглив Робо-Дакел Silverlit, с Р/У</a></td>
+                                                        <td class="quantity-td text-center"><b>2</b></td>
+                                                        <td class="unite-price text-center">57.<sup>33</sup><span class="currency-symbol">лв.</span></td>
+                                                        <td class="final-price text-center">114.<sup>66</sup><span class="currency-symbol">лв.</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><div class="item-image"><img src="https://comsed.net/image/cache/catalog/toys/045102/045102-1-65x54.jpg"><div class="art-number">045102</div></div></td>
+                                                        <td class="title text-left"><a href="https://comsed.net/радиоуправляема-кола-дики-бързи-и-яростни-lykan-hypersport-1-16">Радиоуправляема кола Дики, Бързи и яростни: Lykan Hypersport, 1:16</a></td>
+                                                        <td class="quantity-td text-center"><b>1</b></td>
+                                                        <td class="unite-price text-center">46.<sup>83</sup><span class="currency-symbol">лв.</span></td>
+                                                        <td class="final-price text-center">46.<sup>83</sup><span class="currency-symbol">лв.</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><div class="item-image"><img src="https://comsed.net/image/cache/catalog/toys/0041913/0041913-1-65x54.jpg"><div class="art-number">0041913</div></div></td>
+                                                        <td class="title text-left"><a href="https://comsed.net/lego-dots-41913-мегапакет-с-гривни">LEGO® DOTS™ 41913 - Мегапакет с гривни</a></td>
+                                                        <td class="quantity-td text-center"><b>1</b></td>
+                                                        <td class="unite-price text-center">41.<sup>23</sup><span class="currency-symbol">лв.</span></td>
+                                                        <td class="final-price text-center">41.<sup>23</sup><span class="currency-symbol">лв.</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><div class="item-image"><img src="https://comsed.net/image/cache/catalog/toys/130051/130051-1-65x54.jpg"><div class="art-number">130051</div></div></td>
+                                                        <td class="title text-left"><a href="https://comsed.net/мини-маус-с-мини-купър">Мини Маус с мини купър</a></td>
+                                                        <td class="quantity-td text-center"><b>1</b></td>
+                                                        <td class="unite-price text-center">37.<sup>73</sup><span class="currency-symbol">лв.</span></td>
+                                                        <td class="final-price text-center">37.<sup>73</sup><span class="currency-symbol">лв.</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><div class="item-image"><img src="https://comsed.net/image/cache/catalog/toys/130023/130023-1-65x54.jpg"><div class="art-number">130023</div></div></td>
+                                                        <td class="title text-left"><a href="https://comsed.net/замръзналото-кралство-2-елза">Замръзналото Кралство 2 - Елза</a></td>
+                                                        <td class="quantity-td text-center"><b>1</b></td>
+                                                        <td class="unite-price text-center">45.<sup>43</sup><span class="currency-symbol">лв.</span></td>
+                                                        <td class="final-price text-center">45.<sup>43</sup><span class="currency-symbol">лв.</span></td>
+                                                    </tr>
+
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="4"><strong>Сума:</strong></td>
+                                                        <td>285.<sup>88</sup><span class="currency-symbol">лв.</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4"><strong>Безплатна доставка до адрес:</strong></td>
+                                                        <td>0.<sup>00</sup><span class="currency-symbol">лв.</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4"><strong>Всичко:</strong></td>
+                                                        <td>285.<sup>88</sup><span class="currency-symbol">лв.</span></td>
+                                                    </tr>
+
+                                                </tfoot>
+                                            </table>
+                                        </div>
+
+                                        <div id="btn-cnfrm-src" class="hide"></div>
+
+                                        <script type="text/javascript">
+  if($('#button-confirm').length){
+    $('#btn-cnfrm').text($('#button-confirm').val());
+  }
+                                        </script>
+                                    </div>
+
+                                     payment method 
+                                    <div id="payment_method" class="col-xs-12 col-sm-12 row">
+                                        <div class="title-listing">
+                                            <h3 class="title">Начин на плащане</h3>
+                                        </div>
+                                        <label id="error-payment_method" class="error hide"></label>
+                                    </div>
+
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="input-group radio">
+                                            <input type="radio" name="payment_method" id="pay_cod" class="form-control" value="cod">
+                                            <label for="pay_cod">Плащане при доставка</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="input-group radio">
+                                            <input type="radio" name="payment_method" id="pay_borica" class="form-control" value="borica">
+                                            <label for="pay_borica">Плащане с банкова карта Visa, MasterCard, Visa Electron</label>
+
+                                            <div id="borica-info" style="display: none" class="radio-box clearfix">
+                                                <div style="overflow: visible;">
+                                                    <div style="line-height:1.3; position:relative; overflow:visible;">
+                                                        <img src="https://comsed.net/image/borica/borica_logo.gif" style="width:85px; height:20px; position:absolute; top:-5px; right:0px;" alt="">
+                                                        <h3>Плащанe с банкова карта</h3>
+                                                        <p>
+                                                            Улеснено плащане с кредитна карта <b>Visa</b> или <b>MasterCard</b> или дебитна карта <b>Visa Electron</b> или <b>Maestro</b>. 100% сигурно, извършва се посредством системата на Борика. <br>
+                                                            <span style="color: red;">При нерезлизирана онлайн поръчка, сумата може да бъде възстановена само към <b>BG</b> сметка. Ако откажете онлайн поръчка, платена с карта, преди да бъде изпратена от наша страна моля, да ни уведомите писмено на <a href="mailto:online@comsed.net">online@comsed.net</a> - сумата не се възстановява автоматично.</span>
+                                                        </p>
+                                                        <p></p>
+                                                          <div style="margin-bottom:0; overflow:hidden;">  
+                                                        <img src="https://comsed.net/image/borica/visa_logo.gif" alt="" align="left" border="0" style="margin-left:-10px;">
+                                                        <img src="https://comsed.net/image/borica/mastercard_logo.gif" alt="" align="left" border="0" style="margin-left:-20px;">
+                                                        <img src="https://comsed.net/image/borica/visa_electron_logo.gif" alt="" align="left" border="0" style="margin-left:-20px;">
+                                                        <img src="https://comsed.net/image/borica/maestro_logo.gif" alt="" align="left" border="0" style="margin-left:-20px;">
+                                                         </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <script type="text/javascript">
+	$('input[name=payment_method]').click(function(){
+		if($(this).attr('value') == 'borica')
+			$('#borica-info').show();
+		else
+			$('#borica-info').hide();
+	});
+	//$('input[name=payment_method]').click();
+                                            </script>
+                                        </div>
+                                    </div>
+                                     /payment method 
+
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div id="terms" class="input-group checkbox displa-table-center">
+                                            <input type="checkbox" name="terms" id="terms2" class="form-control">
+                                            <label for="terms2">Прочел съм и съм съгласен с <a href="https://comsed.net/index.php?route=information/information/agree&amp;information_id=9" class="agree"><b>Общи условия</b></a></label>
+                                            <label id="error-terms" for="terms" class="error hide"></label>
+                                        </div>
+                                    </div>
+
+                                     confirm 
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div id="error-box" class="alert alert-danger hide"></div>
+                                        <button id="btn-cnfrm" value="Потвърди" class="form-control btn btn-primary">Потвърди</button>
+                                        <script type="text/javascript">
+	                   						$('#btn-cnfrm').click(function(e){
+	                   							e.preventDefault();
+	                   							$('#btn-cnfrm').attr('disabled', 'disabled');
+	                   							if(jQuery.isEmptyObject(addOrder()))
+	                   							{
+	                   								$('#button-confirm').click();
+	                   							}
+	                   							else
+	                   							{
+	                   								$('#btn-cnfrm').removeAttr('disabled', 'disabled');
+	                   							}
+	                   						});
+                                        </script>
+                                    </div>
+                                     /confirm 
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div> col-sm-12 
+
+                </div> row 
+
+            </section>
+
+        </div> row 
+
+    </div> container 
+
+    <script type="text/javascript">
+$('#country_id').change(function() {
+	$.ajax({
+		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
+		dataType: 'json',
+		beforeSend: function() {
+			$('#zone_id').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+		},
+		complete: function() {
+			$('.fa-spin').remove();
+		},
+		success: function(json) {
+			html = '<option value="">Изберете област</option>';
+
+			if (json['zone'] && json['zone'] != '')
+			{
+				for (i = 0; i < json['zone'].length; i++)
+				{
+					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
+					if (json['zone'][i]['zone_id'] == '498')
+					{
+						html += ' selected="selected"';
+					}
+
+					html += '>' + json['zone'][i]['name'] + '</option>';
+				}
+			} else
+			{
+				html += '<option value="0" selected="selected">Няма налични области за избраната държава</option>';
+			}
+
+			$('#zone_id').html(html);
+		},
+		error: function(xhr, ajaxOptions, thrownError)
+		{
+			alert('Настъпи грешка при зареждането на областите. Код на грешка 2.');
+			//alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('#country_id').change();
+    </script>
+
+
+
+     save 
+    <script type="text/javascript">
+function save()
+{
+	$.ajax({
+		url: 'index.php?route=checkout/checkout2/save',
+		dataType: 'json',
+		method: 'post',
+		data: $('#checkout-data').serialize(),
+        async: false,
+		beforeSend: function() {
+
+		},
+		success: function(json) {
+            if(json['redirect'])
+            {
+                location = json['redirect'];
+            }
+            $('#products').html(clib.get('https://comsed.net/index.php?route=checkout/checkout2/products'));
+		},
+		error: function(xhr, ajaxOptions, thrownError)
+		{
+			alert('Настъпи грешка. Моля, опитайте отново. Код на грешка 3.');
+			//alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
+$('#products').html(clib.get('https://comsed.net/index.php?route=checkout/checkout2/products'));
+save();
+    </script>
+
+     add order 
+    <script type="text/javascript">
+function addOrder()
+{
+    var errors = {};
+    $order_id = 0;
+    $.ajax({
+            url: 'index.php?route=checkout/checkout2/addOrder',
+            dataType: 'json',
+            method: 'post',
+            data: $('#checkout-data').serialize(),
+            async: false,
+            beforeSend: function() {
+
+            },
+            success: function(json) {
+
+            	if(json['redirect'])
+	            {
+	                location = json['redirect'];
+	            }
+
+                if(json['error'])
+                {
+                    errors = json.error;
+                }
+                else if(!('order_id' in json) || parseInt(json['order_id']) == 0)
+                {
+                	var error = 'Настъпи грешка. Моля, опитайте отново. Код на грешка: 0';
+                    errors['missing_order_id'] = error;
+                    alert(error);
+                }
+
+                $('#products').html(clib.get('https://comsed.net/index.php?route=checkout/checkout2/products'));
+            },
+            error: function(xhr, ajaxOptions, thrownError)
+            {
+            	var error = 'Настъпи грешка. Моля, опитайте отново. Код на грешка: -1';
+            	alert(error);
+                //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                errors['add_order_connection_error'] = error;
+            }
+    });
+
+    $('label.error').text('');
+    $('label.error').addClass('hide');
+    $('#error-box').addClass('hide');
+    var error_box_html = '';
+
+    $.each( errors, function (key, val)
+    {
+        $('#error-' + key).text(val);
+        $('#error-' + key).removeClass('hide');
+        error_box_html += '<a href="#' + key + '">' + val + '</a></br>';
+        //console.log(key + ":" + val);
+    });
+
+    if(error_box_html != '')
+    {
+        $('#error-box').html(error_box_html);
+        $('#error-box').removeClass('hide');
+    }
+    else
+    {
+        $('#error-box').addClass('hide');
+    }
+
+    return errors;
+}
+$('label.error').addClass('hide');
+    </script>
+
+    <script type="text/javascript">
+	$('#checkout-data input[type=radio]').click(function(){
+
+		if($(this).attr('name') == 'shipping_method')
+		{
+			$('#courier_code').val('');
+			$('#courier_office_id').val('');
+			$('#courier_msg').html('<b>Моля избете офис на куриер от картата.</b>');
+
+
+			$('.pickup_info').addClass('hide');
+			if ($(this).attr('id') == 'shipping_pickup.pickup' || $(this).attr('id') == 'shipping_pickup_courier.pickup_courier')
+			{
+				$('#pickup_warehouse_id').change();
+				$('#shippin_address').hide();
+				$('#skip_address').val(1);
+				$(this).siblings('.pickup_info').removeClass('hide');
+			}
+			else
+			{
+				$('#address, #postcode, #city').val('');
+				$('#addresses').change();
+			 	$('#shippin_address').show();
+			 	$('#skip_address').val('');
+			}
+
+			if ($(this).attr('id') == 'shipping_pickup_courier.pickup_courier')
+			{
+				$('#courier_office_id').val(-1);
+				if($('#courier_office_locator').html() == '')
+				{
+					$('#courier_office_locator').load('https://comsed.net/index.php?route=checkout/checkout2/courier_office_locator&d='+ new Date().getTime(), function(office){
+						 courier_on_select_callback = function (office){
+							var text = 'Получаване в офис на' + office.courier;
+							$('#address').val(office.courier_name + ": " + office.address);
+							$('#city').val(office.city);
+							$('#courier_code').val(office.courier_code);
+							$('#courier_office_id').val(office.office_id);
+							$('#courier_msg').html( "<b>Куриерска фирма</b>: " + office.courier_name + "<br><b>Офис</b>: " + office.title + " [" + office.office_id + "]" + "<br/><b>Адрес</b>: " + office.address);
+
+							$('html, body').animate({
+						        scrollTop: $("#pickup_courier_anchor").offset().top
+						    }, 200);
+						};
+					});
+				}
+			}
+		}
+		save();
+	});
+
+
+	$('#pickup_warehouse_id').change(function(){
+		var text = 'Получаване на поръчката в наш магазин: ' + $(this).val();
+		$('#address, #postcode, #city').val(text);
+		$('#country_id').val(33);
+		$('#country_id').change();
+	});
+    </script>
+
+     default 
+    <script type="text/javascript">
+	//shipping method
+	$('#shipping_flat\\.flat, #shipping_free\\.free').click();
+	//register
+	$('#register2').click();
+
+	save();
+    </script>
+
+    <script type="text/javascript">
+ 	ga('require', 'ec');
+
+			ga('ec:addProduct', {
+			'id': '373041',
+			'name':  'Разтеглив Робо-Дакел Silverlit, с Р/У',
+			'price':  '57.33',
+			'quantity':  '2'
+		});
+			ga('ec:addProduct', {
+			'id': '045102',
+			'name':  'Радиоуправляема кола Дики, Бързи и яростни: Lykan Hypersport, 1:16',
+			'price':  '46.83',
+			'quantity':  '1'
+		});
+			ga('ec:addProduct', {
+			'id': '0041913',
+			'name':  'LEGO® DOTS™ 41913 - Мегапакет с гривни',
+			'price':  '41.23',
+			'quantity':  '1'
+		});
+			ga('ec:addProduct', {
+			'id': '130051',
+			'name':  'Мини Маус с мини купър',
+			'price':  '37.73',
+			'quantity':  '1'
+		});
+			ga('ec:addProduct', {
+			'id': '130023',
+			'name':  'Замръзналото Кралство 2 - Елза',
+			'price':  '45.43',
+			'quantity':  '1'
+		});
+
+	ga('ec:setAction','checkout', {
+		'step': 1,
+		'option': 'One Step Checkout'
+	});
+    </script>
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 hidden-xs hidden-sm">
+                        <img src="/image/catalog/Logo-and-backgrounds/logo.svg" class="img-responsive" alt="">
+                        <p>Фирма КОМСЕД и Верига детски магазини КОМСЕД са сред водещите и най-бързо развиващи се фирми в областта на детските играчки,  бебешките и детски принадлежности. <br><br>КОМСЕД АД, ул. Тодор Каблешков 76, 1404 София, <br><a href="tel:+359875333456" class="footer-tel">0875 333 456</a>, <a href="tel:+070013513" class="link"> 0700 13 513</a><br><a href="https://comsed.net/contacts" class="contact-us">Пишете ни</a></p>
+                    </div>
+                    <div class="col-md-4 visible-xs"><a href="https://comsed.net/contacts" class="contact-us">Пишете ни</a></div>
+                    <div class="col-md-4">
+                        <div class="col-md-6 col-sm-12">
+                            <h3>Навигация</h3>
+                            <ul class="clearfix">
+                                <li><a href="https://comsed.net/">Начало</a></li>
+                                <li><a href="https://comsed.net/about-us">За нас</a></li>
+                                <li><a href="https://comsed.net/promo">Промоции</a></li>
+                                <li><a href="https://comsed.net/lego">LEGO</a></li>
+                                <li><a href="https://comsed.net/Ravensburger">Ravensburger</a></li>
+                                <li><a href="https://comsed.net/index.php?route=information/information&amp;information_id=25">Талони за подарък</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <h3>Полезно</h3>
+                            <ul class="clearfix w-auto">
+                                <li><a href="https://comsed.net/общи-условия">Общи условия</a></li>
+                                <li><a href="https://comsed.net/често-задавани-въпроси">Често задавани въпроси</a></li>
+                                <li><a href="https://comsed.net/aдреси-на-магазините">Адреси на магазините</a></li>
+                                <li><a href="https://comsed.net/доставка">Доставка</a></li>
+                                <li><a href="https://comsed.net/отказ-от-поръчка">Отказ от поръчка</a></li>
+                                <li><a href="https://comsed.net/кариери">Кариери</a></li>
+                                <li><a href="https://comsed.net/gdpr">Лични данни</a></li>
+                                <li><a href="https://comsed.net/бисквитки">Бисквитки</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Последвай ни в:</h3>
+                        <ul class="social-icons clearfix">
+                            <li class="fb"><a href="https://www.facebook.com/comsed.net/" target="_blank"></a></li>
+                            <li class="yt"><a href="https://www.youtube.com/channel/UCs3-j6coJBXfcqsAofw5wxQ" target="_blank"></a></li>
+                            <li class="in"><a href="https://www.instagram.com/comsedtoystore/" target="_blank"></a></li>
+                            <li class="gg"><a href="https://plus.google.com/110911496583474621766" target="_blank"></a></li>
+                            <li class="tw"><a href="https://twitter.com/ad_comsed?lang=bg" target="_blank"></a></li>
+                             <li class="ln"><a href="#" target="_blank"></a></li> 
+                        </ul>
+                        <div class="text">Приемаме плащания с:</div>
+                        <img src="/catalog/view/theme/design/img/cards.png" alt="">
+                    </div>
+                </div> row 
+            </div> container 
+        </div> footer-top 
+        <div class="footer-brands">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <hr>
+                        <h3>Марки:</h3>
+                        <ul class="columns">
+                            <li><a href="https://comsed.net/всички/3pommes/">3Pommes</a></li>
+                            <li><a href="https://comsed.net/всички/agu/">AGU</a></li>
+                            <li><a href="https://comsed.net/всички/aurora/">Aurora</a></li>
+                            <li><a href="https://comsed.net/всички/babyfehn/">babyFEHN</a></li>
+                            <li><a href="https://comsed.net/всички/babyono-1/">BabyOno</a></li>
+                            <li><a href="https://comsed.net/всички/barbie/">Barbie</a></li>
+                            <li><a href="https://comsed.net/всички/bburago/">Bburago</a></li>
+                            <li><a href="https://comsed.net/всички/birba-trybeyond/">Birba/Trybeyond</a></li>
+                            <li><a href="https://comsed.net/всички/bontempi/">Bontempi</a></li>
+                            <li><a href="https://comsed.net/всички/cangaroo/">Cangaroo</a></li>
+                            <li><a href="https://comsed.net/всички/canpol/">Canpol</a></li>
+                            <li><a href="https://comsed.net/всички/chicco/">Chicco</a></li>
+                            <li><a href="https://comsed.net/всички/chipolino/">Chipolino</a></li>
+                            <li><a href="https://comsed.net/всички/comsed/">Comsed</a></li>
+                            <li><a href="https://comsed.net/всички/cybex/">Cybex</a></li>
+                            <li><a href="https://comsed.net/всички/dickie-toys/">Dickie Toys</a></li>
+                            <li><a href="https://comsed.net/всички/disney/">Disney</a></li>
+                            <li><a href="https://comsed.net/всички/eastcolight/">Eastcolight</a></li>
+                            <li><a href="https://comsed.net/всички/edison-giocattoli/">Edison Giocattoli</a></li>
+                            <li><a href="https://comsed.net/всички/eichhorn/">Eichhorn</a></li>
+                            <li><a href="https://comsed.net/всички/engino/">Engino</a></li>
+                            <li><a href="https://comsed.net/всички/falk/">Falk</a></li>
+                            <li><a href="https://comsed.net/всички/faro/">Faro</a></li>
+                            <li><a href="https://comsed.net/всички/fisher-price/">Fisher Price</a></li>
+                            <li><a href="https://comsed.net/всички/glitza/">Glitza</a></li>
+                            <li><a href="https://comsed.net/всички/goki/">Goki</a></li>
+                            <li><a href="https://comsed.net/всички/hasbro/">Hasbro</a></li>
+                            <li><a href="https://comsed.net/всички/hipp/">HiPP</a></li>
+                            <li><a href="https://comsed.net/всички/hot-wheels/">Hot Wheels</a></li>
+                            <li><a href="https://comsed.net/всички/injusa/">Injusa</a></li>
+                            <li><a href="https://comsed.net/всички/intex/">INTEX</a></li>
+                            <li><a href="https://comsed.net/всички/jakks-pacific/">Jakks Pacific</a></li>
+                            <li><a href="https://comsed.net/всички/janod/">Janod</a></li>
+                            <li><a href="https://comsed.net/всички/jognson-s/">Johnson's</a></li>
+                            <li><a href="https://comsed.net/всички/kiddy/">Kiddy</a></li>
+                            <li><a href="https://comsed.net/всички/kikkaboo/">Kikkaboo</a></li>
+                            <li><a href="https://comsed.net/всички/kitikate/">Kitikate</a></li>
+                            <li><a href="https://comsed.net/всички/lego/">LEGO®</a></li>
+                            <li><a href="https://comsed.net/всички/little-tikes/">Little Tikes</a></li>
+                            <li><a href="https://comsed.net/всички/lorelli/">Lorelli</a></li>
+                            <li><a href="https://comsed.net/всички/mattel/">Mattel</a></li>
+                            <li><a href="https://comsed.net/всички/mayoral/">Mayoral</a></li>
+                            <li><a href="https://comsed.net/всички/mega-bloks/">Mega Bloks</a></li>
+                            <li><a href="https://comsed.net/всички/?filter_manufacturer_id=2520">MGA</a></li>
+                            <li><a href="https://comsed.net/всички/minime/">MiniMe</a></li>
+                            <li><a href="https://comsed.net/всички/mondo/">Mondo</a></li>
+                            <li><a href="https://comsed.net/всички/moni/">Moni</a></li>
+                            <li><a href="https://comsed.net/всички/monnalisa/">Monnalisa</a></li>
+                            <li><a href="https://comsed.net/всички/mutsy/">Mutsy</a></li>
+                            <li><a href="https://comsed.net/всички/nikko/">Nikko</a></li>
+                            <li><a href="https://comsed.net/всички/noris/">Noris</a></li>
+                            <li><a href="https://comsed.net/всички/nuby/">Nuby</a></li>
+                            <li><a href="https://comsed.net/всички/nuk/">Nuk</a></li>
+                            <li><a href="https://comsed.net/всички/philips-avent/">Philips-Avent</a></li>
+                            <li><a href="https://comsed.net/всички/playgro/">Playgro</a></li>
+                            <li><a href="https://comsed.net/всички/playland/">PlayLand</a></li>
+                            <li><a href="https://comsed.net/всички/playmobil/">Playmobil</a></li>
+                            <li><a href="https://comsed.net/всички/quinny/">Quinny</a></li>
+                            <li><a href="https://comsed.net/всички/ravensburger/">Ravensburger</a></li>
+                            <li><a href="https://comsed.net/всички/safety-1st/">Safety 1st</a></li>
+                            <li><a href="https://comsed.net/всички/sauvinex/">Sauvinex</a></li>
+                            <li><a href="https://comsed.net/всички/ses/">SES</a></li>
+                            <li><a href="https://comsed.net/всички/silverlit/">Silverlit</a></li>
+                            <li><a href="https://comsed.net/всички/simba-toys/">Simba Toys</a></li>
+                            <li><a href="https://comsed.net/всички/smartrike/">smarTrike</a></li>
+                            <li><a href="https://comsed.net/всички/smoby/">Smoby</a></li>
+                            <li><a href="https://comsed.net/всички/spin-master/">Spin Master</a></li>
+                            <li><a href="https://comsed.net/всички/stamp/">Stamp</a></li>
+                            <li><a href="https://comsed.net/всички/star-balls/">Star</a></li>
+                            <li><a href="https://comsed.net/всички/taf-toys/">Taf Toys</a></li>
+                            <li><a href="https://comsed.net/всички/thames-kosmos/">Thames&amp;Kosmos</a></li>
+                            <li><a href="https://comsed.net/всички/thinkle-stars/">Thinkle Stars</a></li>
+                            <li><a href="https://comsed.net/всички/tiny-love/">Tiny Love</a></li>
+                            <li><a href="https://comsed.net/всички/tommee-tippee/">Tommee Tippee</a></li>
+                            <li><a href="https://comsed.net/всички/tomy-1/">TOMY</a></li>
+                            <li><a href="https://comsed.net/всички/toy-state/">Toy State</a></li>
+                            <li><a href="https://comsed.net/всички/z/">Z+</a></li>
+                            <li><a href="https://comsed.net/всички/zapf-creation/">Zapf Creation</a></li>
+                            <li><a href="https://comsed.net/всички/zuru/">ZURU</a></li>
+                            <li><a href="https://comsed.net/всички/бочко/">Бочко</a></li>
+                            <li><a href="https://comsed.net/всички/други-марки/">Други марки</a></li>
+                            <li><a href="https://comsed.net/всички/издателства/">Издателства</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div> footer-brands 
+        <div class="footer-bottom">
+            <div class="container">
+                <span class="pull-left">© Всички права запазени <a href="https://comsed.net/">Comsed.net</a> @ 2015 - 2018</span>
+                <span class="pull-right">Изработка на уеб-сайт от <a href="https://grindwebstudio.com/" target="_blank">Grind Web Studio</a></span>
+            </div>
+        </div> footer-bottom 
+    </footer>
+
+    <script type="text/javascript">
+$( "div.product-icons ul li i.unisex-icon" ).parent().siblings('li').children('i.boy-icon, i.girl-icon').parent().remove();
+    </script>
+
+    <script type="text/javascript">
+    ga('send', 'pageview');
+    </script>
+
+     Google Code for Remarketing Tag 
+    ------------------------------------------------
+    Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
+    ------------------------------------------------- 
+    <script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 877366444;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+    </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+        <div style="display:inline;">
+            <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/877366444/?guid=ON&amp;script=0" />
+        </div>
+    </noscript>
+
+
+
+
+     Start of HubSpot Embed Code 
+     <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/6767100.js"></script> 
+     End of HubSpot Embed Code 
+
+
+
+</body>
+
+
+//$(document).ready(function () {
+//    val1 = "5";
+//    val2 = "2";
+
+//    $.ajax({
+//        type: "GET",
+//        url: '@Url.Action("GetArticlesById")',
+//        data: { id: id },
+//        dataType: "json",
+//        success: function (msg) {
+//            console.log(msg);
+//        },
+//        error: function (req, status, error) {
+//            console.log(msg);
+//        }
+//    });
+//});
+
+//$(document).ready(function () {
+//    var queryparams = window.location.search;
+//    //using URLSearchParams to extract the querystring parameter
+//    if (queryparams && typeof (queryparams) === "string" && queryparams.length > 0) {
+//        var urlParams = new URLSearchParams(window.location.search);
+//        var documentid = urlParams.get('documentid');
+//        //call the JS function that will make the AJAX request and fetch the data
+//        loadDocumentManagerForDocument(documentid); //see below for definition!
+//    }
+//});
+
+//function loadDocumentManagerForDocument(documentid) {
+//    if (documentid) {
+//        //AJAX call to Razor page handler to fetch the document details
+//        $.ajax({
+//            type: "GET",
+//            url: `/DocumentManager/DocumentManager?handler=document&documentid=${documentid}`,
+//            contentType: "application/json",
+//            dataType: "json",
+//            success: function (response) {
+//                //populate the form elements with the returned data
+//            },
+//            failure: function (response) {
+//                //handle the error
+//            }
+//        });
+//    }
+//}
+
+//$(function () {
+//    $("#btnGet").click(function () {
+//        $.ajax({
+//            type: "POST",
+//            url: "/Home/AjaxMethod",
+//            data: { "name": $("#txtName").val() },
+//            success: function (response) {
+//                alert("Hello: " + response.Name + " .\nCurrent Date and Time: " + response.DateTime);
+//            },
+//            failure: function (response) {
+//                alert(response.responseText);
+//            },
+//            error: function (response) {
+//                alert(response.responseText);
+//            }
+//        });
+//    });
+//});

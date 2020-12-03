@@ -10,13 +10,13 @@
     {
         Task<Article> GetByIdAsync(string id);
 
-        Task CreateAsync(ArticleCreateModel input);
+        Task CreateAsync(ArticleCreateInputModel input);
 
         Task EditAsync(ArticleEditInputModel input);
 
         Task<int> DeleteAsync(string id);
 
-        Task AddSupplierAsync(Article article, string supplierId);
+        Task AddSupplierAsync(ArticleManageSuppliersInputModel input);
 
         Task ChangeMainSupplierAsync(ArticleManageSuppliersInputModel input);
 
@@ -27,5 +27,13 @@
         Task AddConformityTypesAsync(Article article, IEnumerable<int> conformityTypes);
 
         Task RemoveConformityTypesAsync(ArticleManageConformityTypesInputModel input);
+
+        Task AddConformityAsync(ArticleManageConformitiesModel input);
+
+        Task<IEnumerable<T>> GetSuppliersByIdAsync<T>(string id);
+
+        Task<IEnumerable<ArticleSupplierConformityTypes>> GetConformityTypesByIdAsync(
+            string articleId,
+            string supplierId);
     }
 }

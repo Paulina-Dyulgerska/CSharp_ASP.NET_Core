@@ -20,6 +20,7 @@
 
         <div>
             <label asp-for="Number">Article number: </label>
+            <input asp-for="Number" hidden value="@Model.Number"/>
             <span class="text-primary ">@Model.Number</span>
         </div>
 
