@@ -1,4 +1,4 @@
-﻿namespace ConformityCheck.Web.ViewModels.ConformityTypes
+﻿namespace ConformityCheck.Web.ViewModels.Suppliers
 {
     using System;
 

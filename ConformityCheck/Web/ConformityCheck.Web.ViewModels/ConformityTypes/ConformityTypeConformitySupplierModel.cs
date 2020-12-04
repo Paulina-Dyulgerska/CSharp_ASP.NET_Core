@@ -1,11 +1,11 @@
-﻿namespace ConformityCheck.Web.ViewModels.Articles
+﻿namespace ConformityCheck.Web.ViewModels.Suppliers
 {
     using AutoMapper;
     using ConformityCheck.Common.ValidationAttributes;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class ArticleSupplierConformityTypes : IMapFrom<ArticleConformityType>, IHaveCustomMappings
+    public class ConformityTypeConformitySupplierModel : IMapFrom<ArticleConformityType>, IHaveCustomMappings
     {
         [ConformityTypeEntityAttribute]
         public int Id { get; set; }
@@ -26,7 +26,7 @@
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<ArticleConformityType, ArticleSupplierConformityTypes>()
+            configuration.CreateMap<ArticleConformityType, ConformityTypeConformitySupplierModel>()
                 .ForMember(
                 x => x.Id,
                 opt => opt.MapFrom(c => c.ConformityType.Id))

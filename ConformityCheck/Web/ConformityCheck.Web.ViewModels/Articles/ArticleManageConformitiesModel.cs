@@ -1,4 +1,4 @@
-﻿namespace ConformityCheck.Web.ViewModels.Articles
+﻿namespace ConformityCheck.Web.ViewModels.Suppliers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -12,7 +12,7 @@
     {
         public IEnumerable<ArticleConformityTypeModel> ConformityTypes { get; set; }
 
-        public IEnumerable<ArticleSupplierModel> Suppliers { get; set; }
+        public IEnumerable<SupplierModel> Suppliers { get; set; }
 
         public ConformityCreateInputModel Conformity { get; set; }
 

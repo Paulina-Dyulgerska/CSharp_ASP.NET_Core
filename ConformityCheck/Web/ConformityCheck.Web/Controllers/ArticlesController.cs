@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
 
     using ConformityCheck.Services.Data;
-    using ConformityCheck.Web.ViewModels.Articles;
+    using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.AspNetCore.Mvc;
 
     public class ArticlesController : BaseController
@@ -176,26 +176,6 @@
             return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
         }
 
-        public async Task<IActionResult> AddConformity(string id)
-        {
-            var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesModel>(id);
-
-            return this.View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddConformity(ArticleManageConformitiesModel input)
-        {
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(input);
-            }
-
-            await this.articlesService.AddConformityAsync(input);
-
-            return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Conformity.ArticleId });
-        }
-
         public async Task<IActionResult> Delete(string id)
         {
             await this.articlesService.DeleteAsync(id);
@@ -212,7 +192,7 @@
 
         public async Task<IActionResult> GetSuppliersById(string id)
         {
-            var model = await this.articlesService.GetSuppliersByIdAsync<ArticleSupplierModel>(id);
+            var model = await this.articlesService.GetSuppliersByIdAsync<SupplierModel>(id);
 
             return this.Json(model);
         }

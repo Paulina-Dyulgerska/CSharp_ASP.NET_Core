@@ -1,5 +1,5 @@
 ﻿using ConformityCheck.Services.Data;
-using ConformityCheck.Web.ViewModels.ConformityTypes;
+using ConformityCheck.Web.ViewModels.Suppliers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

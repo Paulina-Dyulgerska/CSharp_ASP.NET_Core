@@ -1,4 +1,4 @@
-﻿namespace ConformityCheck.Web.ViewModels.Articles.ViewComponents
+﻿namespace ConformityCheck.Web.ViewModels.Suppliers.ViewComponents
 {
     using AutoMapper;
     using ConformityCheck.Data.Models;

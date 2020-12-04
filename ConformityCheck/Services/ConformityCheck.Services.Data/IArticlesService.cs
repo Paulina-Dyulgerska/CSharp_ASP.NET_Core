@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
 
     using ConformityCheck.Data.Models;
-    using ConformityCheck.Web.ViewModels.Articles;
+    using ConformityCheck.Web.ViewModels.Suppliers;
 
     public interface IArticlesService : IService<string>
     {
@@ -28,11 +28,9 @@
 
         Task RemoveConformityTypesAsync(ArticleManageConformityTypesInputModel input);
 
-        Task AddConformityAsync(ArticleManageConformitiesModel input);
-
         Task<IEnumerable<T>> GetSuppliersByIdAsync<T>(string id);
 
-        Task<IEnumerable<ArticleSupplierConformityTypes>> GetConformityTypesByIdAsync(
+        Task<IEnumerable<ConformityTypeConformitySupplierModel>> GetConformityTypesByIdAsync(
             string articleId,
             string supplierId);
     }

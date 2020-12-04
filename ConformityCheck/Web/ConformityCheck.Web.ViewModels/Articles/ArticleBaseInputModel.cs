@@ -1,4 +1,4 @@
-﻿namespace ConformityCheck.Web.ViewModels.Articles
+﻿namespace ConformityCheck.Web.ViewModels.Suppliers
 {
     using System.ComponentModel.DataAnnotations;
     using AutoMapper;

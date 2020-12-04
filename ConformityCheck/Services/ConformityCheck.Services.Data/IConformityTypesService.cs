@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    using ConformityCheck.Web.ViewModels.ConformityTypes;
+    using ConformityCheck.Web.ViewModels.Suppliers;
 
     public interface IConformityTypesService : IService<int>
     {

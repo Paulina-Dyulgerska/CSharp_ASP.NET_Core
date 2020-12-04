@@ -1,4 +1,4 @@
-﻿namespace ConformityCheck.Web.ViewModels.Articles
+﻿namespace ConformityCheck.Web.ViewModels.Suppliers
 {
     using AutoMapper;
     using ConformityCheck.Common.ValidationAttributes;

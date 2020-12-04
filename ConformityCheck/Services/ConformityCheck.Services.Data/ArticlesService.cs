@@ -10,9 +10,9 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data.Models;
     using ConformityCheck.Services.Mapping;
-    using ConformityCheck.Web.ViewModels.Articles;
+    using ConformityCheck.Web.ViewModels.Suppliers;
     using ConformityCheck.Web.ViewModels.Conformities;
-    using ConformityCheck.Web.ViewModels.ConformityTypes;
+    using ConformityCheck.Web.ViewModels.Suppliers;
     using ConformityCheck.Web.ViewModels.Products;
     using ConformityCheck.Web.ViewModels.Substances;
     using ConformityCheck.Web.ViewModels.Suppliers;
@@ -308,11 +308,6 @@
             await this.articlesRepository.SaveChangesAsync();
         }
 
-        public async Task AddConformityAsync(ArticleManageConformitiesModel input)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task RemoveConformityTypesAsync(ArticleManageConformityTypesInputModel input)
         {
             var articleConformityTypeEntity = await this.articleConformityTypesRepository
@@ -340,13 +335,13 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ArticleSupplierConformityTypes>> GetConformityTypesByIdAsync(string articleId, string supplierId)
+        public async Task<IEnumerable<ConformityTypeConformitySupplierModel>> GetConformityTypesByIdAsync(string articleId, string supplierId)
         {
             var entities = await this.articleConformityTypesRepository
                 .AllAsNoTracking()
                 .Where(x => x.ArticleId == articleId)
                 .OrderBy(x => x.ConformityTypeId)
-                .To<ArticleSupplierConformityTypes>()
+                .To<ConformityTypeConformitySupplierModel>()
                 .ToListAsync();
 
             foreach (var entity in entities)

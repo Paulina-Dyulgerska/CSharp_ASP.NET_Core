@@ -1,4 +1,4 @@
-﻿@using ConformityCheck.Web.ViewModels.Articles
+﻿@using ConformityCheck.Web.ViewModels.Suppliers
 @model ArticleManageConformitiesModel
 @{
     this.ViewData["Title"] = "Add a conformity to the article";
@@ -11,29 +11,22 @@
 <h3>@this.ViewData["Title"]</h3>
 
 <div>
-    <form method="post" class="col-md-6 mx-auto" enctype="multipart/form-data">
+    <form method="post" asp-controller="Conformities" asp-action="AddConformity" class="col-md-6 mx-auto" enctype="multipart/form-data">
         <div asp-validation-summary="All" class="text-danger"></div>
 
         <input asp-for="Id" hidden value="@Model.Id" />
+        <input asp-for="Conformity.ArticleId" hidden value="@Model.Id" />
 
         <div>
             <label asp-for="Number"></label>
+            <input asp-for="Number" hidden value="@Model.Number" />
             <span class="text-primary ">@Model.Number</span>
         </div>
 
         <div>
             <label asp-for="Description"></label>
+            <input asp-for="Description" hidden value="@Model.Description" />
             <span class="text-primary ">@Model.Description</span>
-        </div>
-
-        <div>
-            <label asp-for="ConformityTypes"></label>
-            <partial name="_ArticleConformityTypesTable" model="Model" />
-        </div>
-
-        <div>
-            <label asp-for="Suppliers"></label>
-            <partial name="_ArticleSuppliersTable" model="Model" />
         </div>
 
         <div class="SupplierId font-weight-bold">
@@ -79,7 +72,7 @@
             <span asp-validation-for="Conformity.File" class="text-danger"></span>
         </div>
 
-
+        <input asp-for="Conformity.ValidForSingleArticle" value="true" checked hidden />
         @* TODO: add the declared substances and assing the restrictions. *@
 
         <div class="form-group">

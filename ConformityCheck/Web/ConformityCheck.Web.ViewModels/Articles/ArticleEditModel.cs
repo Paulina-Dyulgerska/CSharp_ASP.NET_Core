@@ -1,4 +1,4 @@
-﻿namespace ConformityCheck.Web.ViewModels.Articles
+﻿namespace ConformityCheck.Web.ViewModels.Suppliers
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -24,7 +24,7 @@
         // confirmed - not confirmed according to the user or like it is now?
         public bool? IsConfirmed { get; set; }
 
-        public IEnumerable<ArticleSupplierModel> Suppliers { get; set; }
+        public IEnumerable<SupplierModel> Suppliers { get; set; }
 
         // The validation of the Id of the choosen entities will be in the service!
         public IEnumerable<ArticleConformityTypeModel> ConformityTypes { get; set; }

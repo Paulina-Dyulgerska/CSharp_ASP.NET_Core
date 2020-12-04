@@ -1,4 +1,4 @@
-﻿namespace ConformityCheck.Web.ViewModels.ConformityTypes.ViewComponents
+﻿namespace ConformityCheck.Web.ViewModels.Suppliers.ViewComponents
 {
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;

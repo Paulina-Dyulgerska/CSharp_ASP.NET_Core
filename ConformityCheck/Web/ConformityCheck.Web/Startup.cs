@@ -74,7 +74,7 @@
             services.AddTransient<ISuppliersService, SuppliersService>();
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<IContentDeliveryService, ContentDeliveryService>();
-            services.AddTransient<IConformityService, ConformityService>();
+            services.AddTransient<IConformitiesService, ConformitiesService>();
             services.AddTransient<IContentCheckService, ContentCheckService>();
         }
 

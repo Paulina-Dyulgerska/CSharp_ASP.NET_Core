@@ -3,8 +3,8 @@
     using System.Linq;
     using System.Threading.Tasks;
     using ConformityCheck.Services.Data;
-    using ConformityCheck.Web.ViewModels.Articles;
-    using ConformityCheck.Web.ViewModels.Articles.ViewComponents;
+    using ConformityCheck.Web.ViewModels.Suppliers;
+    using ConformityCheck.Web.ViewModels.Suppliers.ViewComponents;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.AspNetCore.Mvc;
 

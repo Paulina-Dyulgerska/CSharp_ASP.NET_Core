@@ -11,7 +11,7 @@
     using ConformityCheck.Web.ViewModels.Conformities;
     using Microsoft.EntityFrameworkCore;
 
-    public class ConformityService : IConformityService
+    public class ConformitiesService : IConformitiesService
     {
         private readonly IDeletableEntityRepository<Article> articlesRepository;
         private readonly IDeletableEntityRepository<Supplier> suppliersRepository;
@@ -21,7 +21,7 @@
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
         private readonly IRepository<ArticleConformityType> articleConformityTypeRepository;
 
-        public ConformityService(
+        public ConformitiesService(
             IDeletableEntityRepository<Article> articlesRepository,
             IDeletableEntityRepository<Supplier> suppliersRepository,
             IRepository<ArticleSupplier> articleSuppliersRepository,
@@ -202,5 +202,8 @@
         {
             throw new NotImplementedException();
         }
+
+        //Task AddConformityAsync(ArticleManageConformitiesModel input);
+
     }
 }

@@ -1,7 +1,7 @@
-﻿using ConformityCheck.Common.ValidationAttributes;
-
-namespace ConformityCheck.Web.ViewModels.Articles
+﻿namespace ConformityCheck.Web.ViewModels.Suppliers
 {
+    using ConformityCheck.Common.ValidationAttributes;
+
     public class ArticleManageSuppliersInputModel
     {
         [ArticleEntityAttribute]
