@@ -1,12 +1,9 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using ConformityCheck.Services.Data;
-    using ConformityCheck.Web.ViewModels.Suppliers;
+    using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.Conformities;
     using Microsoft.AspNetCore.Mvc;
 
@@ -65,7 +62,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddConformity(ArticleManageConformitiesModel input)
+        public async Task<IActionResult> AddConformity(ArticleManageConformitiesInputModel input)
         {
             if (!this.ModelState.IsValid)
             {

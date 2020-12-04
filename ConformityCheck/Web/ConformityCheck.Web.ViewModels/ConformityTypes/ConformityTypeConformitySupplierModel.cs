@@ -1,4 +1,4 @@
-﻿namespace ConformityCheck.Web.ViewModels.Suppliers
+﻿namespace ConformityCheck.Web.ViewModels.ConformityTypes
 {
     using AutoMapper;
     using ConformityCheck.Common.ValidationAttributes;
@@ -22,6 +22,8 @@
         [SupplierEntityAttribute]
         public string SupplierId { get; set; }
 
+        public string SupplierName { get; set; }
+
         public bool SupplierConfirmed { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
@@ -44,7 +46,11 @@
                 opt => opt.MapFrom(x => x.Conformity.IsValid))
                 .ForMember(
                 x => x.SupplierId,
-                opt => opt.MapFrom(x => x.Conformity.SupplierId));
+                opt => opt.MapFrom(x => x.Conformity.SupplierId))
+                .ForMember(
+                x => x.SupplierName,
+                opt => opt.MapFrom(x => x.Conformity.Supplier.Name))
+                ;
         }
     }
 }

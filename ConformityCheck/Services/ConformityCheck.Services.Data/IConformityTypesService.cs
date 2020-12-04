@@ -2,13 +2,13 @@
 {
     using System.Threading.Tasks;
 
-    using ConformityCheck.Web.ViewModels.Suppliers;
+    using ConformityCheck.Web.ViewModels.ConformityTypes;
 
     public interface IConformityTypesService : IService<int>
     {
-        Task CreateAsync(ConformityTypeInputModel input);
+        Task CreateAsync(ConformityTypeCreateInputModel input);
 
-        Task EditAsync(ConformityTypeInputModel input);
+        Task EditAsync(ConformityTypeEditInputModel input);
 
         Task<int> DeleteAsync(int id);
     }

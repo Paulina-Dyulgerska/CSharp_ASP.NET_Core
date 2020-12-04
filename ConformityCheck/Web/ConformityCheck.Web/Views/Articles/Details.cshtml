@@ -1,4 +1,4 @@
-﻿@using ConformityCheck.Web.ViewModels.Suppliers
+﻿@using ConformityCheck.Web.ViewModels.Articles
 @model ArticleEditModel
 @{
     this.ViewData["Title"] = "Details for article";
@@ -13,26 +13,46 @@
 <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model.Id">Edit</a>
 
 <div>
-    <div>
+    <div class="form-group">
         <label asp-for="Number">Article number: </label>
         <span class="text-primary ">@Model.Number</span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Description">Change article's description:</label>
+        <label asp-for="Description">Article's description:</label>
         <span class="text-primary">@Model.Description</span>
     </div>
 
-    <div>
+    <div class="form-group">
+        <label asp-for="IsConfirmed">Article confirmed:</label>
+        <span class="text-primary">@(Model.IsConfirmed ? "Yes" : "No")</span>
+    </div>
+
+    <div class="form-group">
         <label asp-for="Suppliers"></label>
         <partial name="_ArticleSuppliersTable" model="Model" />
     </div>
 
-    <div>
+    <div class="form-group">
         <label asp-for="ConformityTypes"></label>
         <partial name="_ArticleConformityTypesTable" model="Model" />
     </div>
 
+    @*<th class="col-1">Missing confirmations</th>
+        <th class="col-1">Confirmations</th>
+
+        <td class="col-1">
+            @foreach (var unconfirmedConformity in article.ArticleMissingConformityTypes)
+            {
+                <span>@unconfirmedConformity</span>
+            }
+        </td>
+        <td class="col-1">
+            @foreach (var confirmedConformity in article.ArticleConformityTypes)
+            {
+                <span>@confirmedConformity</span>
+            }
+        </td>*@
     <div class="form-group">
         <label asp-for="Products"></label>
         @* TODO - just view *@

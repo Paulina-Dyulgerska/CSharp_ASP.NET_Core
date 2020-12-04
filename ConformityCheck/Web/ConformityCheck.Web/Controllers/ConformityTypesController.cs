@@ -1,13 +1,11 @@
-﻿using ConformityCheck.Services.Data;
-using ConformityCheck.Web.ViewModels.Suppliers;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ConformityCheck.Web.Controllers
+﻿namespace ConformityCheck.Web.Controllers
 {
+    using System.Threading.Tasks;
+
+    using ConformityCheck.Services.Data;
+    using ConformityCheck.Web.ViewModels.ConformityTypes;
+    using Microsoft.AspNetCore.Mvc;
+
     public class ConformityTypesController : Controller
     {
         private readonly IArticlesService articlesService;
@@ -43,7 +41,7 @@ namespace ConformityCheck.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ConformityTypeInputModel input)
+        public async Task<IActionResult> Create(ConformityTypeCreateInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
@@ -57,13 +55,13 @@ namespace ConformityCheck.Web.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await this.conformityTypeService.GetByIdAsync<ConformityTypeInputModel>(id);
+            var model = await this.conformityTypeService.GetByIdAsync<ConformityTypeEditInputModel>(id);
 
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(ConformityTypeInputModel input)
+        public async Task<IActionResult> Edit(ConformityTypeEditInputModel input)
         {
             if (!this.ModelState.IsValid)
             {

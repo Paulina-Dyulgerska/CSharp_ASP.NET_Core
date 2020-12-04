@@ -1,4 +1,4 @@
-﻿namespace ConformityCheck.Web.ViewModels.Suppliers
+﻿namespace ConformityCheck.Web.ViewModels.ConformityTypes
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -6,11 +6,8 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class ConformityTypeInputModel : IMapFrom<ConformityType>
+    public class ConformityTypeCreateInputModel : IMapFrom<ConformityType>
     {
-        [ConformityTypeEntityAttribute]
-        public int Id { get; set; }
-
         [Required]
         [MinLength(2)]
         [MaxLength(50)]

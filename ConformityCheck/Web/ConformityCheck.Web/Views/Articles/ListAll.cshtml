@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ArticleFullInfoModel>
+﻿@model IEnumerable<ArticleListAllModel>
 
 @{
     this.ViewData["Title"] = "Articles";
@@ -22,8 +22,6 @@
                 <th class="col-1">Main supplier Nr.</th>
                 <th class="col-1">Main supplier name</th>
                 <th class="col-1">Is confirmed</th>
-                <th class="col-1">Missing confirmations</th>
-                <th class="col-1">Confirmations</th>
                 <th class="col-1">Details</th>
                 <th class="col-1">Edit</th>
                 <th class="col-1">Delete</th>
@@ -37,18 +35,6 @@
                 <td class="col-1">@article.MainSupplierNumber</td>
                 <td class="col-1">@article.MainSupplierName</td>
                 <td class="col-1">@article.IsConfirmed</td>
-                <td class="col-1">
-                    @foreach (var unconfirmedConformity in article.ArticleMissingConformityTypes)
-                    {
-                        <span>@unconfirmedConformity</span>
-                    }
-                </td>
-                <td class="col-1">
-                    @foreach (var confirmedConformity in article.ArticleConformityTypes)
-                    {
-                        <span>@confirmedConformity</span>
-                    }
-                </td>
                 <td class="col-1">
                     <a asp-action="Details" class="btn btn-primary" asp-route-id="@article.Id">Details</a>
                 </td>

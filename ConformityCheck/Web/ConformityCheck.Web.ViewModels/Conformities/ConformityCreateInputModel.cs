@@ -5,6 +5,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using ConformityCheck.Common.ValidationAttributes;
+    using ConformityCheck.Services;
     using Microsoft.AspNetCore.Http;
 
     public class ConformityCreateInputModel : IValidatableObject
@@ -75,6 +76,16 @@
             if (!this.ValidForSingleArticle && !this.ValidForAllArticles)
             {
                 yield return new ValidationResult("Please choose one of the options for conformity coverage.");
+            }
+
+            var context = (IContentCheckService)validationContext
+                .GetService(typeof(IContentCheckService));
+            var articleSupplierEntity = context
+                .ArticleSupplierEntityIdCheck(this.ArticleId, this.SupplierId);
+
+            if (!articleSupplierEntity && this.ArticleId != null)
+            {
+                yield return new ValidationResult("The article does not have such supplier.");
             }
         }
     }

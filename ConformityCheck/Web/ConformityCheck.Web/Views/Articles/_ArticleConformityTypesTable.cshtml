@@ -4,6 +4,8 @@
             <th scope="col">Conformity type</th>
             <th scope="col">Conformity available</th>
             <th scope="col">Is accepted?</th>
+            <th scope="col">Is valid?</th>
+            <th scope="col">Supplier</th>
             <th scope="col">Id</th>
         </tr>
     </thead>
@@ -13,6 +15,8 @@
             <td>@conformityType.Description</td>
             <td>@conformityType.ConformityId</td>
             <td>@(conformityType.ConformityIsAccepted ? "Yes" : "No")</td>
+            <td>@conformityType.ConformityIsValid</td>
+            <td>@conformityType.SupplierName</td>
             <td>@conformityType.Id</td>
         </tr>
     }

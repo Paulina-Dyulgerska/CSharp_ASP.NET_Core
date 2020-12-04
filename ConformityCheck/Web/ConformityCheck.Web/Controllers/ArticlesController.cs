@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
 
     using ConformityCheck.Services.Data;
+    using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.AspNetCore.Mvc;
 
@@ -30,7 +31,7 @@
 
         public async Task<IActionResult> ListAll()
         {
-            var model = await this.articlesService.GetAllAsNoTrackingOrderedAsync<ArticleFullInfoModel>();
+            var model = await this.articlesService.GetAllAsNoTrackingOrderedAsync<ArticleListAllModel>();
             return this.View(model);
         }
 

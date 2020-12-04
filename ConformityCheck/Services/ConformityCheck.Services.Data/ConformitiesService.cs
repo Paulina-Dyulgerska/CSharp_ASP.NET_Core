@@ -84,46 +84,9 @@
 
         public async Task CreateAsync(ConformityCreateInputModel input)
         {
-            var conformityType = await this.conformityTypesRepository
-                .AllAsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == input.ConformityTypeId);
-
-            if (conformityType == null)
-            {
-                throw new ArgumentException($"There is no such conformity type.");
-            }
-
-            //DONE WITH ATTRIBUTE!!!
-            //var supplierEntity = await this.suppliersRepository
-            //    .All()
-            //    .FirstOrDefaultAsync(x => x.Id == input.SupplierId);
-
-            //if (supplierEntity == null)
-            //{
-            //    throw new ArgumentException("No such supplier");
-            //}
-
             if (input.ValidForSingleArticle)
             {
-                var articleEntity = await this.articlesRepository
-                    .AllAsNoTracking()
-                    .FirstOrDefaultAsync(x => x.Id == input.ArticleId);
-
-                if (articleEntity == null && input.ArticleId != null)
-                {
-                    throw new ArgumentException("No such article");
-                }
-
-                var articleSupplierEntity = await this.articleSuppliersRepository
-                    .AllAsNoTracking()
-                    .FirstOrDefaultAsync(x => x.ArticleId == input.ArticleId && x.SupplierId == input.SupplierId);
-
-                if (articleSupplierEntity == null && input.ArticleId != null)
-                {
-                    throw new ArgumentException("The article does not have such supplier.");
-                }
-
-                await this.AddConformityToAnArticle(input, articleSupplierEntity);
+                await this.AddConformityToAnArticle(input);
 
                 await this.articlesRepository.SaveChangesAsync();
 
@@ -140,45 +103,57 @@
 
             foreach (var articleSupplierEntity in articleSuppliersEntities)
             {
-                await this.AddConformityToAnArticle(input, articleSupplierEntity);
+                await this.AddConformityToAnArticle(input);
             }
 
             await this.conformitiesRepository.SaveChangesAsync();
         }
 
-        private async Task AddConformityToAnArticle(ConformityCreateInputModel input, ArticleSupplier articleSupplierEntity)
+        private async Task AddConformityToAnArticle(ConformityCreateInputModel input)
         {
-            var articleConformityType = await this.articleConformityTypeRepository
+            var articleConformityTypes = await this.articleConformityTypeRepository
                                     .All()
-                                    .FirstOrDefaultAsync(x => x.ConformityTypeId == input.ConformityTypeId
-                                                                && x.ArticleId == articleSupplierEntity.ArticleId);
-
-            if (articleConformityType == null)
+                                    .Where(x => x.ConformityTypeId == input.ConformityTypeId
+                                                    && x.ArticleId == input.ArticleId)
+                                    .ToListAsync();
+            foreach (var articleConformityType in articleConformityTypes)
             {
-                await this.articleConformityTypeRepository.AddAsync(new ArticleConformityType
+
+            }
+
+            var articleConformityTypeSupplier = await this.articleConformityTypeRepository
+                        .All()
+                        .FirstOrDefaultAsync(x => x.ConformityTypeId == input.ConformityTypeId
+                                        && x.ArticleId == input.ArticleId
+                                        && x.Conformity.SupplierId == input.SupplierId);
+
+            if (articleConformityTypeSupplier == null)
+            {
+                articleConformityTypeSupplier = new ArticleConformityType
                 {
-                    ArticleId = articleSupplierEntity.ArticleId,
+                    ArticleId = input.ArticleId,
                     ConformityTypeId = input.ConformityTypeId,
-                });
+                };
+
+                await this.articleConformityTypeRepository.AddAsync(articleConformityTypeSupplier);
             }
 
             await this.articleConformityTypeRepository.SaveChangesAsync();
 
-            articleConformityType = await this.articleConformityTypeRepository
-                                    .All()
-                                    .FirstOrDefaultAsync(x => x.ConformityTypeId == input.ConformityTypeId
-                                                                && x.ArticleId == articleSupplierEntity.ArticleId);
+            // TOOD pravq proverka s Where i vzimam wsichki zapisi s takiv articleId i conftypeId i ot tqh 
+            // obrabotvam po razlichnite suppliers i prezenqm dali da pravq nov zasip za veche potvyrdil supplier ili ne,
+            // kakto i opredelqm da se napravi nov zapis, kogato supplier-a NE E vse oshte potvyrdil towa conformity type!!!
 
-            if (articleConformityType.ConformityId != null)
+            if (articleConformityTypeSupplier.ConformityId != null)
             {
                 var conformityEntity = await this.conformitiesRepository
                     .All()
-                    .FirstOrDefaultAsync(x => x.Id == articleConformityType.ConformityId);
+                    .FirstOrDefaultAsync(x => x.Id == articleConformityTypeSupplier.ConformityId);
 
                 this.conformitiesRepository.Delete(conformityEntity);
             }
 
-            articleConformityType.Conformity = new Conformity
+            articleConformityTypeSupplier.Conformity = new Conformity
             {
                 ConformityTypeId = input.ConformityTypeId,
                 IssueDate = input.IssueDate.Date,
@@ -192,10 +167,10 @@
 
             if (input.ValidityDate != null && input.IsAccepted)
             {
-                articleConformityType.Conformity.ValidityDate = input.ValidityDate;
+                articleConformityTypeSupplier.Conformity.ValidityDate = input.ValidityDate;
             }
 
-            await this.conformitiesRepository.AddAsync(articleConformityType.Conformity);
+            await this.conformitiesRepository.AddAsync(articleConformityTypeSupplier.Conformity);
         }
 
         public async Task DeleteConformityAsync(string id)

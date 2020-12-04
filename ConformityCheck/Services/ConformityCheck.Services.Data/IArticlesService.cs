@@ -4,7 +4,8 @@
     using System.Threading.Tasks;
 
     using ConformityCheck.Data.Models;
-    using ConformityCheck.Web.ViewModels.Suppliers;
+    using ConformityCheck.Web.ViewModels.Articles;
+    using ConformityCheck.Web.ViewModels.ConformityTypes;
 
     public interface IArticlesService : IService<string>
     {

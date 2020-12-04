@@ -12,6 +12,8 @@
     using ConformityCheck.Web.ViewModels.Substances.ViewComponents;
     using ConformityCheck.Web.ViewModels.Suppliers.ViewComponents;
     using Microsoft.EntityFrameworkCore;
+    using ConformityCheck.Web.ViewModels.Articles.ViewComponents;
+    using ConformityCheck.Web.ViewModels.ConformityTypes.ViewComponents;
 
     public class ContentDeliveryService : IContentDeliveryService
     {

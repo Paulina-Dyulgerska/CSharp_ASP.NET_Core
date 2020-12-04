@@ -17,6 +17,8 @@
     using ConformityCheck.Web.ViewModels.Substances;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.EntityFrameworkCore;
+    using ConformityCheck.Web.ViewModels.Articles;
+    using ConformityCheck.Web.ViewModels.ConformityTypes;
 
     public class ArticlesService : IArticlesService
     {

@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using ConformityCheck.Web.ViewModels.Suppliers.ViewComponents;
-    using ConformityCheck.Web.ViewModels.Suppliers.ViewComponents;
+    using ConformityCheck.Web.ViewModels.Articles.ViewComponents;
+    using ConformityCheck.Web.ViewModels.ConformityTypes.ViewComponents;
     using ConformityCheck.Web.ViewModels.Products.ViewComponents;
     using ConformityCheck.Web.ViewModels.Substances.ViewComponents;
     using ConformityCheck.Web.ViewModels.Suppliers.ViewComponents;

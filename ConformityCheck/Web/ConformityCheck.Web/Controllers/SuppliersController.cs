@@ -7,6 +7,7 @@
     using ConformityCheck.Web.ViewModels.Suppliers.ViewComponents;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.AspNetCore.Mvc;
+    using ConformityCheck.Web.ViewModels.Articles;
 
     public class SuppliersController : BaseController
     {
@@ -86,7 +87,7 @@
 
         public async Task<IActionResult> GetArticlesById(string id)
         {
-            var model = await this.suppliersService.GetArticlesByIdAsync<ArticleBaseInputModel>(id);
+            var model = await this.suppliersService.GetArticlesByIdAsync<ArticleBaseModel>(id);
 
             return this.Json(model);
         }

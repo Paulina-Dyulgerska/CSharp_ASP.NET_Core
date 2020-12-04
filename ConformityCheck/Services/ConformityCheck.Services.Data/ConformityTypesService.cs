@@ -8,6 +8,7 @@
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
+    using ConformityCheck.Web.ViewModels.ConformityTypes;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.EntityFrameworkCore;
 
@@ -68,7 +69,7 @@
             return entity;
         }
 
-        public async Task CreateAsync(ConformityTypeInputModel input)
+        public async Task CreateAsync(ConformityTypeCreateInputModel input)
         {
             // if this conformity type is already in the DB
             if (this.conformityTypesRepository.All()
@@ -91,7 +92,7 @@
             await this.conformityTypesRepository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(ConformityTypeInputModel input)
+        public async Task EditAsync(ConformityTypeEditInputModel input)
         {
             // if this conformity type is not in the DB
             var entity = await this.conformityTypesRepository
@@ -102,8 +103,6 @@
             {
                 throw new ArgumentException($"No such conformity type.");
             }
-
-
 
             entity.Description = input.Description.ToUpper();
 
