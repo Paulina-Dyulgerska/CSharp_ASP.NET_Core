@@ -4,8 +4,11 @@
     using ConformityCheck.Common.ValidationAttributes;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
+    using ConformityCheck.Web.ViewModels.Conformities;
+    using System.Collections.Generic;
+    using System.Linq;
 
-    public class SupplierModel : IMapFrom<ArticleSupplier>, IHaveCustomMappings
+    public class SupplierModel : IMapFrom<ArticleSupplier>, IMapFrom<Supplier>, IHaveCustomMappings
     {
         [SupplierEntityAttribute]
         public string Id { get; set; }
@@ -15,6 +18,8 @@
         public string Name { get; set; }
 
         public bool IsMainSupplier { get; set; }
+
+        public bool HasAllConformed { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

@@ -1,0 +1,33 @@
+﻿@model ArticleEditModel
+
+@foreach (var conformityType in this.Model.ConformityTypes)
+{
+    <table class="table table-light table-responsive-md table-hover table-bordered table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Conformity type</th>
+                <th scope="col">Supplier number</th>
+                <th scope="col">Supplier name</th>
+                <th scope="col">Conformity available</th>
+                <th scope="col">Is accepted?</th>
+                <th scope="col">Is valid?</th>
+                <th scope="col">Id</th>
+            </tr>
+        </thead>
+        @foreach (var supplier in this.Model.Suppliers)
+        {
+            var conformityBySupplier = Model.Conformities.FirstOrDefault(x => x.ConformityType.Id == conformityType.Id
+                                                  && x.Supplier.Id == supplier.Id);
+            <tr>
+                <td>@conformityType.Description</td>
+                <td>@supplier.Number</td>
+                <td>@supplier.Name</td>
+                <td>@(conformityBySupplier != null ? "Yes" : "No")</td>
+                <td>@(conformityBySupplier != null && conformityBySupplier.IsAccepted ? "Yes" : "No")</td>
+                <td>@(conformityBySupplier != null && conformityBySupplier.IsValid ? "Yes" : "No")</td>
+                <td>@(conformityBySupplier != null ? conformityBySupplier.Id : "-")</td>
+            </tr>
+            @*<tr>@String.Join(", ", supplier.Conformities.Select(x=>x.Id))</tr>*@
+        }
+    </table>
+}

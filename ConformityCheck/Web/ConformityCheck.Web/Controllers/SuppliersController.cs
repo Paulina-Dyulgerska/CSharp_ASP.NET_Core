@@ -87,7 +87,7 @@
 
         public async Task<IActionResult> GetArticlesById(string id)
         {
-            var model = await this.suppliersService.GetArticlesByIdAsync<ArticleBaseModel>(id);
+            var model = await this.suppliersService.GetArticlesByIdAsync<ArticleModel>(id);
 
             return this.Json(model);
         }

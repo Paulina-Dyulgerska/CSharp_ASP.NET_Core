@@ -11,8 +11,6 @@
     {
         public Conformity()
         {
-            this.ArticleConformityTypes = new HashSet<ArticleConformityType>();
-            this.ProductConformities = new HashSet<ProductConformity>();
             this.Id = Guid.NewGuid().ToString();
         }
 
@@ -27,13 +25,17 @@
 
         public virtual Supplier Supplier { get; set; }
 
+        [Required]
+        [ForeignKey(nameof(Article))]
+        public string ArticleId { get; set; }
+
+        public virtual Article Article { get; set; }
+
         public DateTime IssueDate { get; set; }
 
         public bool IsAccepted { get; set; }
 
         public DateTime? AcceptanceDate { get; set; }
-
-        public bool IsValid { get; set; }
 
         public DateTime? ValidityDate { get; set; }
 
@@ -46,9 +48,5 @@
         public string FileUrl { get; set; }
 
         public string Extension { get; set; }
-
-        public virtual ICollection<ArticleConformityType> ArticleConformityTypes { get; set; }
-
-        public virtual ICollection<ProductConformity> ProductConformities { get; set; }
     }
 }

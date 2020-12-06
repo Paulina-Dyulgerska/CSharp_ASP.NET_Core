@@ -49,7 +49,7 @@
 
         public DbSet<ArticleSubstance> ArticleSubstances { get; set; }
 
-        public DbSet<ProductConformity> ProductConformities { get; set; }
+        public DbSet<ProductConformityType> ProductConformityTypes { get; set; }
 
         public DbSet<SubstanceRegulationList> SubstanceRegulationLists { get; set; }
 

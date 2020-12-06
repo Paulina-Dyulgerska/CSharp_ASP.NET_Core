@@ -7,7 +7,7 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class ArticleListAllModel : ArticleBaseModel, IHaveCustomMappings
+    public class ArticleListAllModel : ArticleModel, IHaveCustomMappings
     {
         public string MainSupplierName { get; set; }
 
@@ -26,8 +26,8 @@
                 opt => opt.MapFrom(a => a.ArticleSuppliers.FirstOrDefault(x => x.IsMainSupplier).Supplier.Number))
                 .ForMember(
                 x => x.IsConfirmed,
-                opt => opt.MapFrom(a => a.ArticleConformityTypes
-                .All(x => x.Conformity != null && x.Conformity.IsAccepted)));
+                opt => opt.MapFrom(a => a.Conformities
+                .All(x => x.IsAccepted)));
         }
     }
 }

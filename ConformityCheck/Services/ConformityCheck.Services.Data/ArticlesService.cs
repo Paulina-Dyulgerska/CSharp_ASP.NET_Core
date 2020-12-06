@@ -337,20 +337,24 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ConformityTypeConformitySupplierModel>> GetConformityTypesByIdAsync(string articleId, string supplierId)
+        public async Task<IEnumerable<ConformityTypeModel>> GetConformityTypesByIdAsync(string articleId, string supplierId)
         {
             var entities = await this.articleConformityTypesRepository
                 .AllAsNoTracking()
                 .Where(x => x.ArticleId == articleId)
                 .OrderBy(x => x.ConformityTypeId)
-                .To<ConformityTypeConformitySupplierModel>()
+                .To<ConformityTypeModel>()
                 .ToListAsync();
 
             foreach (var entity in entities)
             {
-                if (entity.SupplierId == supplierId
-                    && entity.ConformityIsAccepted
-                    && entity.ConformityIsValid)
+                var hasConformityEntity = await this.conformitiesRepository
+                    .AllAsNoTracking()
+                    .AnyAsync(x => x.ArticleId == articleId
+                                && x.SupplierId == supplierId
+                                && x.ConformityTypeId == entity.Id);
+
+                if (hasConformityEntity)
                 {
                     entity.SupplierConfirmed = true;
                 }

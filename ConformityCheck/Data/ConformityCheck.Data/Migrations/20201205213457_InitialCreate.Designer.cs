@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConformityCheck.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201128162115_InitialCreate")]
+    [Migration("20201205213457_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -193,9 +193,6 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<string>("ArticleId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ConformityId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("ConformityTypeId")
                         .HasColumnType("int");
 
@@ -208,8 +205,6 @@ namespace ConformityCheck.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
-
-                    b.HasIndex("ConformityId");
 
                     b.HasIndex("ConformityTypeId");
 
@@ -311,6 +306,10 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<DateTime?>("AcceptanceDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ArticleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
 
@@ -335,9 +334,6 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsValid")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("IssueDate")
                         .HasColumnType("datetime2");
 
@@ -355,6 +351,8 @@ namespace ConformityCheck.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
 
                     b.HasIndex("ConformityTypeId");
 
@@ -445,15 +443,15 @@ namespace ConformityCheck.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("ConformityCheck.Data.Models.ProductConformity", b =>
+            modelBuilder.Entity("ConformityCheck.Data.Models.ProductConformityType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ConformityId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ConformityTypeId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -466,11 +464,11 @@ namespace ConformityCheck.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConformityId");
+                    b.HasIndex("ConformityTypeId");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductConformities");
+                    b.ToTable("ProductConformityTypes");
                 });
 
             modelBuilder.Entity("ConformityCheck.Data.Models.RegulationList", b =>
@@ -800,10 +798,6 @@ namespace ConformityCheck.Data.Migrations
                         .WithMany("ArticleConformityTypes")
                         .HasForeignKey("ArticleId");
 
-                    b.HasOne("ConformityCheck.Data.Models.Conformity", "Conformity")
-                        .WithMany("ArticleConformityTypes")
-                        .HasForeignKey("ConformityId");
-
                     b.HasOne("ConformityCheck.Data.Models.ConformityType", "ConformityType")
                         .WithMany("ArticleConformityTypes")
                         .HasForeignKey("ConformityTypeId")
@@ -848,6 +842,12 @@ namespace ConformityCheck.Data.Migrations
 
             modelBuilder.Entity("ConformityCheck.Data.Models.Conformity", b =>
                 {
+                    b.HasOne("ConformityCheck.Data.Models.Article", "Article")
+                        .WithMany("Conformities")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("ConformityCheck.Data.Models.ConformityType", "ConformityType")
                         .WithMany("Conformities")
                         .HasForeignKey("ConformityTypeId")
@@ -879,14 +879,16 @@ namespace ConformityCheck.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("ConformityCheck.Data.Models.ProductConformity", b =>
+            modelBuilder.Entity("ConformityCheck.Data.Models.ProductConformityType", b =>
                 {
-                    b.HasOne("ConformityCheck.Data.Models.Conformity", "Conformity")
-                        .WithMany("ProductConformities")
-                        .HasForeignKey("ConformityId");
+                    b.HasOne("ConformityCheck.Data.Models.ConformityType", "ConformityType")
+                        .WithMany("ProductConformityTypes")
+                        .HasForeignKey("ConformityTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("ConformityCheck.Data.Models.Product", "Product")
-                        .WithMany("ProductConformities")
+                        .WithMany("ProductConformityTypes")
                         .HasForeignKey("ProductId");
                 });
 

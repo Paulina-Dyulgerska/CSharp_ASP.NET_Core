@@ -11,7 +11,7 @@
         public Product()
         {
             this.ArticleProducts = new HashSet<ArticleProduct>();
-            this.ProductConformities = new HashSet<ProductConformity>();
+            this.ProductConformityTypes = new HashSet<ProductConformityType>();
             this.Id = Guid.NewGuid().ToString();
         }
 
@@ -29,6 +29,6 @@
 
         public virtual ICollection<ArticleProduct> ArticleProducts { get; set; }
 
-        public virtual ICollection<ProductConformity> ProductConformities { get; set; }
+        public virtual ICollection<ProductConformityType> ProductConformityTypes { get; set; }
     }
 }

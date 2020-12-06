@@ -2,14 +2,14 @@
 {
     using ConformityCheck.Data.Common.Models;
 
-    public class ProductConformity : BaseModel<int>
+    public class ProductConformityType : BaseModel<int>
     {
         public string ProductId { get; set; }
 
         public virtual Product Product { get; set; }
 
-        public string ConformityId { get; set; }
+        public int ConformityTypeId { get; set; }
 
-        public virtual Conformity Conformity { get; set; }
+        public virtual ConformityType ConformityType { get; set; }
     }
 }

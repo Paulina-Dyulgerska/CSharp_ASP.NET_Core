@@ -1,5 +1,4 @@
-﻿@using ConformityCheck.Web.ViewModels.Suppliers
-@model ArticleManageConformityTypesModel
+﻿@model ArticleManageConformityTypesModel
 @{
     this.ViewData["Title"] = "Remove conformity type from the article";
 }
@@ -29,8 +28,8 @@
                 <thead>
                     <tr>
                         <th scope="col">Conformity type</th>
-                        <th scope="col">Conformity available</th>
-                        <th scope="col">Is accepted?</th>
+                        @*<th scope="col">Conformity available</th>
+                        <th scope="col">Is accepted?</th>*@
                         <th scope="col">Id</th>
                         <th scope="col">Remove conformity type?</th>
                     </tr>
@@ -39,8 +38,8 @@
                 {
                     <tr>
                         <td>@conformityType.Description</td>
-                        <td>@conformityType.ConformityId</td>
-                        <td>@(conformityType.ConformityIsAccepted ? "Yes" : "No")</td>
+                        @*<td>@conformityType.ConformityId</td>
+                        <td>@(conformityType.ConformityIsAccepted ? "Yes" : "No")</td>*@
                         <td>@conformityType.Id</td>
                         <td>
                             <input asp-for="ConformityTypeId" type="radio" value="@conformityType.Id" />

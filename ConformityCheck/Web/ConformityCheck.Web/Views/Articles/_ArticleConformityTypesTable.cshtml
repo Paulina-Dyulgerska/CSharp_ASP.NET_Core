@@ -1,22 +1,17 @@
-﻿<table class="table table-light table-responsive-md table-hover table-bordered table-sm">
+﻿@model IEnumerable<ConformityTypeModel>
+
+<table class="table table-light table-responsive-md table-hover table-bordered table-sm">
     <thead>
         <tr>
+            <th scope="col">Conformity Id</th>
             <th scope="col">Conformity type</th>
-            <th scope="col">Conformity available</th>
-            <th scope="col">Is accepted?</th>
-            <th scope="col">Is valid?</th>
-            <th scope="col">Supplier</th>
-            <th scope="col">Id</th>
         </tr>
     </thead>
-    @foreach (var conformityType in this.Model.ConformityTypes)
+    @foreach (var conformityType in this.Model)
     {
+
         <tr>
             <td>@conformityType.Description</td>
-            <td>@conformityType.ConformityId</td>
-            <td>@(conformityType.ConformityIsAccepted ? "Yes" : "No")</td>
-            <td>@conformityType.ConformityIsValid</td>
-            <td>@conformityType.SupplierName</td>
             <td>@conformityType.Id</td>
         </tr>
     }

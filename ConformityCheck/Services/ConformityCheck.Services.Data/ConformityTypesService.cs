@@ -16,13 +16,16 @@
     {
         private readonly IDeletableEntityRepository<ConformityType> conformityTypesRepository;
         private readonly IRepository<ArticleConformityType> articleConformityTypeRepository;
+        private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
 
         public ConformityTypesService(
             IDeletableEntityRepository<ConformityType> conformityTypesRepository,
-            IRepository<ArticleConformityType> articleConformityTypeRepository)
+            IRepository<ArticleConformityType> articleConformityTypeRepository,
+            IDeletableEntityRepository<Conformity> conformitiesRepository)
         {
             this.conformityTypesRepository = conformityTypesRepository;
             this.articleConformityTypeRepository = articleConformityTypeRepository;
+            this.conformitiesRepository = conformitiesRepository;
         }
 
         public int GetCount()
@@ -122,7 +125,7 @@
             }
 
             // if this conformity type has confirmations in the DB
-            if (this.articleConformityTypeRepository.All().Any(ac => ac.Conformity.ConformityTypeId == id))
+            if (this.conformitiesRepository.All().Any(ac => ac.ConformityTypeId == id))
             {
                 throw new ArgumentException($"Cannot delete conformity with articles assigned to it.");
             }

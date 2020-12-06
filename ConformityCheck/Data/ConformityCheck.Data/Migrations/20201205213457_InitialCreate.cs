@@ -375,6 +375,34 @@ namespace ConformityCheck.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ArticleConformityTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    ArticleId = table.Column<string>(nullable: true),
+                    ConformityTypeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleConformityTypes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ArticleConformityTypes_Articles_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Articles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ArticleConformityTypes_ConformityTypes_ConformityTypeId",
+                        column: x => x.ConformityTypeId,
+                        principalTable: "ConformityTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ArticleProducts",
                 columns: table => new
                 {
@@ -396,6 +424,34 @@ namespace ConformityCheck.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ArticleProducts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductConformityTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    ProductId = table.Column<string>(nullable: true),
+                    ConformityTypeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductConformityTypes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductConformityTypes_ConformityTypes_ConformityTypeId",
+                        column: x => x.ConformityTypeId,
+                        principalTable: "ConformityTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ProductConformityTypes_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -442,10 +498,10 @@ namespace ConformityCheck.Data.Migrations
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     ConformityTypeId = table.Column<int>(nullable: false),
                     SupplierId = table.Column<string>(nullable: false),
+                    ArticleId = table.Column<string>(nullable: false),
                     IssueDate = table.Column<DateTime>(nullable: false),
                     IsAccepted = table.Column<bool>(nullable: false),
                     AcceptanceDate = table.Column<DateTime>(nullable: true),
-                    IsValid = table.Column<bool>(nullable: false),
                     ValidityDate = table.Column<DateTime>(nullable: true),
                     Comments = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
@@ -455,6 +511,12 @@ namespace ConformityCheck.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Conformities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Conformities_Articles_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Articles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Conformities_ConformityTypes_ConformityTypeId",
                         column: x => x.ConformityTypeId,
@@ -475,78 +537,10 @@ namespace ConformityCheck.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ArticleConformityTypes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    ArticleId = table.Column<string>(nullable: true),
-                    ConformityTypeId = table.Column<int>(nullable: false),
-                    ConformityId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ArticleConformityTypes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ArticleConformityTypes_Articles_ArticleId",
-                        column: x => x.ArticleId,
-                        principalTable: "Articles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ArticleConformityTypes_Conformities_ConformityId",
-                        column: x => x.ConformityId,
-                        principalTable: "Conformities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ArticleConformityTypes_ConformityTypes_ConformityTypeId",
-                        column: x => x.ConformityTypeId,
-                        principalTable: "ConformityTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductConformities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    ProductId = table.Column<string>(nullable: true),
-                    ConformityId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductConformities", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProductConformities_Conformities_ConformityId",
-                        column: x => x.ConformityId,
-                        principalTable: "Conformities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ProductConformities_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_ArticleConformityTypes_ArticleId",
                 table: "ArticleConformityTypes",
                 column: "ArticleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ArticleConformityTypes_ConformityId",
-                table: "ArticleConformityTypes",
-                column: "ConformityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ArticleConformityTypes_ConformityTypeId",
@@ -649,6 +643,11 @@ namespace ConformityCheck.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Conformities_ArticleId",
+                table: "Conformities",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Conformities_ConformityTypeId",
                 table: "Conformities",
                 column: "ConformityTypeId");
@@ -679,13 +678,13 @@ namespace ConformityCheck.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductConformities_ConformityId",
-                table: "ProductConformities",
-                column: "ConformityId");
+                name: "IX_ProductConformityTypes_ConformityTypeId",
+                table: "ProductConformityTypes",
+                column: "ConformityTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductConformities_ProductId",
-                table: "ProductConformities",
+                name: "IX_ProductConformityTypes_ProductId",
+                table: "ProductConformityTypes",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -793,7 +792,10 @@ namespace ConformityCheck.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ProductConformities");
+                name: "Conformities");
+
+            migrationBuilder.DropTable(
+                name: "ProductConformityTypes");
 
             migrationBuilder.DropTable(
                 name: "Settings");
@@ -802,13 +804,16 @@ namespace ConformityCheck.Data.Migrations
                 name: "SubstanceRegulationLists");
 
             migrationBuilder.DropTable(
-                name: "Articles");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Conformities");
+                name: "Articles");
+
+            migrationBuilder.DropTable(
+                name: "Suppliers");
+
+            migrationBuilder.DropTable(
+                name: "ConformityTypes");
 
             migrationBuilder.DropTable(
                 name: "Products");
@@ -818,12 +823,6 @@ namespace ConformityCheck.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Substances");
-
-            migrationBuilder.DropTable(
-                name: "ConformityTypes");
-
-            migrationBuilder.DropTable(
-                name: "Suppliers");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

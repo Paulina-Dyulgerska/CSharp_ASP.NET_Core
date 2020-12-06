@@ -10,9 +10,9 @@
     using ConformityCheck.Web.ViewModels.ConformityTypes;
     using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class ArticleManageConformitiesModel : ArticleBaseModel, IHaveCustomMappings
+    public class ArticleManageConformitiesModel : ArticleModel, IHaveCustomMappings
     {
-        public IEnumerable<ConformityTypeConformitySupplierModel> ConformityTypes { get; set; }
+        public IEnumerable<ConformityTypeModel> ConformityTypes { get; set; }
 
         public IEnumerable<SupplierModel> Suppliers { get; set; }
 

@@ -1,17 +1,21 @@
-﻿<table class="table table-light table-responsive-md table-hover table-bordered table-sm">
+﻿@model IEnumerable<SupplierModel>
+
+<table class="table table-light table-responsive-md table-hover table-bordered table-sm">
     <thead>
         <tr>
             <th scope="col">Supplier name</th>
             <th scope="col">Supplier Nr.</th>
             <th scope="col">Is Article's Main Supplier</th>
+            <th scope="col">All Confirmed</th>
         </tr>
     </thead>
-    @foreach (var supplier in this.Model.Suppliers)
+    @foreach (var supplier in this.Model)
     {
         <tr>
             <td>@supplier.Name</td>
             <td>@supplier.Number</td>
             <td>@(supplier.IsMainSupplier ? "Yes" : "No")</td>
+            <td>@(supplier.HasAllConformed ? "Yes" : "No")</td>
         </tr>
     }
 </table>
