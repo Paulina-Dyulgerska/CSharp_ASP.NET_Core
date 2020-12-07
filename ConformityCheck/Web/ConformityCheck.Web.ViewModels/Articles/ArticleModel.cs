@@ -7,9 +7,7 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class ArticleModel : IMapFrom<Article>,
-        //IMapFrom<ArticleSupplier>,
-        IMapTo<Article>
+    public class ArticleModel : IMapFrom<Article>, IMapTo<Article>
     {
         [ArticleEntityAttribute]
         public string Id { get; set; }
@@ -26,20 +24,5 @@
         //[Display(Name = "* Article description:")]
         //[DescriptionRegExAttribute]
         public string Description { get; set; }
-
-        ////da vidq zashto mi e i da go iztriq
-        //public void CreateMappings(IProfileExpression configuration)
-        //{
-        //    configuration.CreateMap<ArticleSupplier, ArticleBaseInputModel>()
-        //        .ForMember(
-        //        x => x.Id,
-        //        opt => opt.MapFrom(a => a.ArticleId))
-        //        .ForMember(
-        //        x => x.Description,
-        //        opt => opt.MapFrom(a => a.Article.Description))
-        //        .ForMember(
-        //        x => x.Number,
-        //        opt => opt.MapFrom(a => a.Article.Number));
-        //}
     }
 }

@@ -29,14 +29,17 @@
 
                 foreach (var item in this.suppliers)
                 {
+                    item.HasAllConformed = true;
+
                     foreach (var conformityType in this.ConformityTypes)
                     {
                         var conformity = this.Conformities
                             .FirstOrDefault(x => x.ConformityType.Id == conformityType.Id
                                             && x.Supplier.Id == item.Id);
-                        if (conformity != null && conformity.IsAccepted && conformity.IsValid)
+                        if (conformity == null || !conformity.IsAccepted || !conformity.IsValid)
                         {
-                            item.HasAllConformed = true;
+                            item.HasAllConformed = false;
+                            break;
                         }
                     }
                 }

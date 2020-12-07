@@ -140,7 +140,7 @@
 
         public async Task<IEnumerable<T>> GetArticlesByIdAsync<T>(string id)
         {
-            var articles =  await this.articleSuppliersRepository
+            var articles = await this.articleSuppliersRepository
                 .AllAsNoTracking()
                 .Where(x => x.SupplierId == id)
                 .OrderBy(x => x.Article.Number)

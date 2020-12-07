@@ -1,0 +1,85 @@
+﻿@model ConformityEditModel
+@{
+    this.ViewData["Title"] = "Edit conformity";
+    //var suppliers = Model.SuppliersAvailable.Select(x => new SelectListItem(x.NumberAndName, x.Id));
+    //var conformityTypes = Model.ConformityTypesAvailable.Select(x => new SelectListItem(x.Description, x.Id.ToString()));
+    //var products = Model.ProductsAvailable.Select(x => new SelectListItem(x.Number, x.Id));
+    //var substances = Model.SubstancesAvailable.Select(x => new SelectListItem($"{x.CASNumber} - {x.Description}", x.Id.ToString()));
+}
+
+<h3>@this.ViewData["Title"]</h3>
+
+<div>
+    <form method="post" class="col-md-6 mx-auto" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <input asp-for="SupplierId" hidden value="@Model.SupplierId">
+        <input asp-for="ConformityTypeId" hidden value="@Model.ConformityTypeId">
+        <input asp-for="ArticleId" hidden value="@Model.ArticleId">
+        <input asp-for="ValidForSingleArticle" hidden value="@Model.ValidForSingleArticle">
+
+        <div class="form-group font-weight-bold">
+            <label asp-for="ConformityTypeDescription">Conformity type:</label>
+            <span class="text-primary ">@Model.ConformityTypeDescription</span>
+        </div>
+
+        <div class="form-group font-weight-bold">
+            <label asp-for="SupplierNumber">Supplier:</label>
+            <span class="text-primary ">@Model.SupplierNumber - @Model.SupplierName</span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ArticleNumber">Article Nr:</label>
+            <span class="text-primary ">@Model.ArticleNumber - @Model.ArticleDescription</span>
+        </div>
+
+        <div class="form-group font-weight-bold">
+            <label asp-for="IssueDate">Date of conformity creation:</label>
+            <input asp-for="IssueDate" class="form-control" placeholder="@Model.IssueDate" />
+            <span asp-validation-for="IssueDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ValidityDate">Date till the conformity is valid:</label>
+            <input asp-for="ValidityDate" class="form-control" placeholder="@Model.ValidityDate" />
+            <span asp-validation-for="ValidityDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Comments">Edit comments to the conformity</label>
+            <input asp-for="Comments" class="form-control" placeholder="@Model.Comments" />
+            <span asp-validation-for="Comments" class="text-danger"></span>
+        </div>
+
+        @* TODO - fix file *@
+        <div class="form-group">
+            <label asp-for="FileUrl"></label>
+            <input asp-for="FileUrl" class="form-control" placeholder="Add file" />
+            <span asp-validation-for="FileUrl" class="text-danger"></span>
+        </div>
+
+        <div class="form-group font-weight-bold">
+            <label asp-for="IsAccepted">If the conformity is accepted, please check the box:</label>
+            <br />
+            @if (Model.IsAccepted)
+            {
+                <input asp-for="IsAccepted" type="checkbox" checked />
+            }
+            else
+            {
+                <input asp-for="IsAccepted" type="checkbox" />
+            }
+            <span asp-validation-for="IsAccepted" class="text-danger"></span>
+        </div>
+
+        @* TODO: add the declared substances and assing the restrictions. *@
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Create" />
+        </div>
+    </form>
+</div>
+
+@section SideBar{
+    <partial name="_SideMenuGeneral" />
+}

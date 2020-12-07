@@ -75,5 +75,27 @@
             //return this.RedirectToAction("Edit", "Articles", new { input.Conformity.ArticleId });
             return this.RedirectToAction(nameof(ArticlesController.Edit), "Articles", new { id });
         }
+
+        public async Task<IActionResult> Edit(ConformityEditBaseModel input)
+        {
+            var model = await this.conformitiesService.GetForEditAsync(input);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ConformityCreateInputModel input)
+        {
+            // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            await this.conformitiesService.EditAsync(input);
+            var id = input.ArticleId;
+
+            return this.RedirectToAction(nameof(ArticlesController.Details), "Articles", new { id });
+        }
     }
 }

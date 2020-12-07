@@ -171,25 +171,38 @@
 
         public async Task<int> DeleteAsync(string id)
         {
-            var entity = await this.articlesRepository.All().FirstOrDefaultAsync(x => x.Id == id);
+            var articleEntity = await this.articlesRepository.All().FirstOrDefaultAsync(x => x.Id == id);
+            this.articlesRepository.Delete(articleEntity);
 
-            if (entity == null)
+            var articleSuppliersEntities = await this.articleSuppliersRepository
+                .All()
+                .Where(x => x.ArticleId == id)
+                .ToListAsync();
+            foreach (var articleSuppliersEntity in articleSuppliersEntities)
             {
-                throw new ArgumentException("No such article id.");
+                this.articleSuppliersRepository.Delete(articleSuppliersEntity);
             }
 
-            this.articlesRepository.Delete(entity);
+            var articleConformityTypesEntities = await this.articleConformityTypesRepository
+                .All()
+                .Where(x => x.ArticleId == id)
+                .ToListAsync();
+            foreach (var articleConformityTypesEntity in articleConformityTypesEntities)
+            {
+                this.articleConformityTypesRepository.Delete(articleConformityTypesEntity);
+            }
 
-            // TODO - da razbera kak da naprawq triene, no da mi istanat zapisite. Sigurno trqbwa da
-            // vkaram kolona IsDeleted vyv vsqka tablica ot dolnite 4...
-            // article.IsDeleted = true;
-            // foreach (var item in article.Suppliers)
-            // {
-            // }
-            // article.Suppliers.Clear();
+            var articleConformitiesEntities = await this.conformitiesRepository
+                .All()
+                .Where(x => x.ArticleId == id)
+                .ToListAsync();
+            foreach (var articleConformitiesEntity in articleConformitiesEntities)
+            {
+                this.conformitiesRepository.Delete(articleConformitiesEntity);
+            }
+
             // article.Substances.Clear();
             // article.Products.Clear();
-            // article.Conformities.Clear();
 
             return await this.articlesRepository.SaveChangesAsync();
         }

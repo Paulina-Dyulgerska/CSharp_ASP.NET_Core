@@ -7,5 +7,11 @@
     public interface IConformitiesService : IService<string>
     {
         Task CreateAsync(ConformityCreateInputModel input);
+
+        Task EditAsync(ConformityCreateInputModel input);
+
+        Task DeleteAsync(string id);
+
+        Task<ConformityEditModel> GetForEditAsync(ConformityEditBaseModel input);
     }
 }

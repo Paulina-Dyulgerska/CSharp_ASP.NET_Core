@@ -5,10 +5,12 @@
     using System.ComponentModel.DataAnnotations;
 
     using ConformityCheck.Common.ValidationAttributes;
+    using ConformityCheck.Data.Models;
     using ConformityCheck.Services;
+    using ConformityCheck.Services.Mapping;
     using Microsoft.AspNetCore.Http;
 
-    public class ConformityCreateInputModel : IValidatableObject
+    public class ConformityCreateInputModel : IMapFrom<Conformity>, IMapFrom<ConformityEditModel>, IValidatableObject
     {
         [Required]
         [Display(Name = "* Conformity type:")]
@@ -35,7 +37,6 @@
         [DateAttribute(minDate: "01/01/2000")]
         public DateTime IssueDate { get; set; }
 
-        // [[Already have accepted conformity in the DB???]] Check and validate if there is one?
         public bool IsAccepted { get; set; }
 
         [DataType(DataType.Date)]

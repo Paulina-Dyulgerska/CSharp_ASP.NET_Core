@@ -12,6 +12,7 @@
                 <th scope="col">Is accepted?</th>
                 <th scope="col">Is valid?</th>
                 <th scope="col">Id</th>
+                <th scope="col">Add | Edit</th>
             </tr>
         </thead>
         @foreach (var supplier in this.Model.Suppliers)
@@ -26,6 +27,12 @@
                 <td>@(conformityBySupplier != null && conformityBySupplier.IsAccepted ? "Yes" : "No")</td>
                 <td>@(conformityBySupplier != null && conformityBySupplier.IsValid ? "Yes" : "No")</td>
                 <td>@(conformityBySupplier != null ? conformityBySupplier.Id : "-")</td>
+                <td class="col-1">
+                    <a asp-controller="Conformities" asp-action="Edit" class="btn btn-primary" 
+                       asp-route-articleId="@Model.Id" 
+                       asp-route-supplierId="@supplier.Id"
+                       asp-route-conformityTypeId="@conformityType.Id">Add | Edit</a>
+                </td>
             </tr>
             @*<tr>@String.Join(", ", supplier.Conformities.Select(x=>x.Id))</tr>*@
         }

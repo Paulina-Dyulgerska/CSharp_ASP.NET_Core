@@ -8,7 +8,10 @@
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
+    using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.Conformities;
+    using ConformityCheck.Web.ViewModels.ConformityTypes;
+    using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.EntityFrameworkCore;
 
     public class ConformitiesService : IConformitiesService
@@ -109,6 +112,54 @@
             await this.conformitiesRepository.SaveChangesAsync();
         }
 
+
+        public async Task<ConformityEditModel> GetForEditAsync(ConformityEditBaseModel input)
+        {
+            var entity = await this.conformitiesRepository
+                                .AllAsNoTracking()
+                                .Where(x => x.ArticleId == input.ArticleId
+                                   && x.SupplierId == input.SupplierId
+                                   && x.ConformityTypeId == input.ConformityTypeId)
+                                .To<ConformityEditModel>()
+                                .FirstOrDefaultAsync();
+
+            if (entity == null)
+            {
+                var articleEntity = await this.articlesRepository
+                    .AllAsNoTracking()
+                    .Where(x => x.Id == input.ArticleId)
+                    .FirstOrDefaultAsync();
+                var conformityTypeEntity = await this.conformityTypesRepository
+                    .AllAsNoTracking()
+                    .Where(x => x.Id == input.ConformityTypeId)
+                    .FirstOrDefaultAsync();
+                var supplierEntity = await this.suppliersRepository
+                    .AllAsNoTracking()
+                    .Where(x => x.Id == input.SupplierId)
+                    .FirstOrDefaultAsync();
+
+                entity = new ConformityEditModel
+                {
+                    ArticleId = articleEntity.Id,
+                    ArticleNumber = articleEntity.Number,
+                    ArticleDescription = articleEntity.Description,
+                    ConformityTypeId = conformityTypeEntity.Id,
+                    ConformityTypeDescription = conformityTypeEntity.Description,
+                    SupplierId = supplierEntity.Id,
+                    SupplierName = supplierEntity.Name,
+                    SupplierNumber = supplierEntity.Number,
+                };
+            }
+
+            return entity;
+        }
+
+        public async Task EditAsync(ConformityCreateInputModel input)
+        {
+
+        }
+
+
         private async Task AddConformityToAnArticle(ConformityCreateInputModel input)
         {
             //ArticleConformityType sa samo zadyljitelnite da gi ima potvyrdeni!!!
@@ -166,12 +217,11 @@
             await this.conformitiesRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteConformityAsync(string id)
+        public Task DeleteAsync(string id)
         {
             throw new NotImplementedException();
         }
 
         //Task AddConformityAsync(ArticleManageConformitiesModel input);
-
     }
 }
