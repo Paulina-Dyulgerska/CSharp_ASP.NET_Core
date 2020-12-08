@@ -113,7 +113,7 @@
         }
 
 
-        public async Task<ConformityEditModel> GetForEditAsync(ConformityEditBaseModel input)
+        public async Task<ConformityEditModel> GetForEditAsync(ConformityEditGetModel input)
         {
             var entity = await this.conformitiesRepository
                                 .AllAsNoTracking()

@@ -30,7 +30,7 @@
 
         public async Task<IActionResult> ListAll()
         {
-            var model = await this.conformityTypeService.GetAllAsNoTrackingOrderedAsync<ConformityTypeModel>();
+            var model = await this.conformityTypeService.GetAllAsNoTrackingOrderedAsync<ConformityTypeExportModel>();
 
             return this.View(model);
         }

@@ -13,7 +13,7 @@
         // [ConformityEntityAttribute]
         public string Id { get; set; }
 
-        public ConformityTypeModel ConformityType { get; set; }
+        public ConformityTypeExportModel ConformityType { get; set; }
 
         public SupplierModel Supplier { get; set; }
 

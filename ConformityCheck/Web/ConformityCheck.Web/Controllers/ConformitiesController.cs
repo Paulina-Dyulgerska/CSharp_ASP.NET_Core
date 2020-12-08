@@ -76,7 +76,7 @@
             return this.RedirectToAction(nameof(ArticlesController.Edit), "Articles", new { id });
         }
 
-        public async Task<IActionResult> Edit(ConformityEditBaseModel input)
+        public async Task<IActionResult> Edit(ConformityEditGetModel input)
         {
             var model = await this.conformitiesService.GetForEditAsync(input);
 

@@ -350,13 +350,13 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ConformityTypeModel>> GetConformityTypesByIdAsync(string articleId, string supplierId)
+        public async Task<IEnumerable<ConformityTypeExportModel>> GetConformityTypesByIdAsync(string articleId, string supplierId)
         {
             var entities = await this.articleConformityTypesRepository
                 .AllAsNoTracking()
                 .Where(x => x.ArticleId == articleId)
                 .OrderBy(x => x.ConformityTypeId)
-                .To<ConformityTypeModel>()
+                .To<ConformityTypeExportModel>()
                 .ToListAsync();
 
             foreach (var entity in entities)

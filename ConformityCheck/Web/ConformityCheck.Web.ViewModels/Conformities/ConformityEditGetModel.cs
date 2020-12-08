@@ -1,6 +1,6 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Conformities
 {
-   public class ConformityEditBaseModel
+   public class ConformityEditGetModel
     {
         public int ConformityTypeId { get; set; }
 

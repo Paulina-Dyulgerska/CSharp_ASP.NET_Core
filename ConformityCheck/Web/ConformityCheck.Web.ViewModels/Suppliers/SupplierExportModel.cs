@@ -6,7 +6,7 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    // TODO: delete if not used!
+    // TODO: delete if not used! or change SupplierModel to this name and purposes!
     public class SupplierExportModel : IMapFrom<Supplier>, IHaveCustomMappings
     {
         public string Id { get; set; }

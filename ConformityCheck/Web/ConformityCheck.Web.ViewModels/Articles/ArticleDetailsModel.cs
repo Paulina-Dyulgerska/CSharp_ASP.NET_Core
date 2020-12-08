@@ -50,7 +50,7 @@
             }
         }
 
-        public IEnumerable<ConformityTypeModel> ConformityTypes { get; set; }
+        public IEnumerable<ConformityTypeExportModel> ConformityTypes { get; set; }
 
         public IEnumerable<ConformityExportModel> Conformities { get; set; }
 
