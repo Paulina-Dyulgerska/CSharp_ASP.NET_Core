@@ -13,7 +13,7 @@
 
         Task CreateAsync(ArticleCreateInputModel input);
 
-        Task EditAsync(ArticleEditInputModel input);
+        Task EditAsync(ArticleEditModel input);
 
         Task<int> DeleteAsync(string id);
 

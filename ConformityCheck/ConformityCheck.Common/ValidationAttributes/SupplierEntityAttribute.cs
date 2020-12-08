@@ -7,16 +7,22 @@
     public class SupplierEntityAttribute : ValidationAttribute
     {
 
-        public SupplierEntityAttribute()
+        public SupplierEntityAttribute(bool allowNull = false)
         {
             this.ErrorMessage = $"No such supplier.";
+            this.AllowNull = allowNull;
         }
+
+        public bool AllowNull { get; }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if (value == null && this.AllowNull)
+            {
+                return ValidationResult.Success;
+            }
 
             var context = (IContentCheckService)validationContext.GetService(typeof(IContentCheckService));
-
             var supplierEntity = context.SupplierEntityIdCheck(value.ToString());
 
             if (!supplierEntity)

@@ -9,8 +9,11 @@
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
 
-    public class ArticleManageConformityTypesModel : ArticleModel, IHaveCustomMappings
+    public class ArticleManageConformityTypesModel : ArticleBaseModel, IHaveCustomMappings
     {
+        [ArticleEntityAttribute]
+        public string Id { get; set; }
+
         [ConformityTypeEntityAttribute]
         public int ConformityTypeId { get; set; }
 

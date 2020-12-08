@@ -8,7 +8,7 @@
     {
         Task CreateAsync(ConformityCreateInputModel input);
 
-        Task EditAsync(ConformityCreateInputModel input);
+        Task EditAsync(ConformityEditModel input);
 
         Task DeleteAsync(string id);
 

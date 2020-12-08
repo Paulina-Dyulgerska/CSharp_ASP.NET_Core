@@ -1,13 +1,20 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Articles
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using AutoMapper;
     using ConformityCheck.Common.ValidationAttributes;
+    using ConformityCheck.Data.Models;
+    using ConformityCheck.Services.Mapping;
 
-    public class ArticleEditInputModel
+    public class ArticleBaseModel : IMapFrom<Article>, IMapTo<Article>
     {
-        [ArticleEntityAttribute]
-        public string Id { get; set; }
+        [Required]
+        [MaxLength(20)]
+        [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9-]*$", ErrorMessage = "The field Article Nr. could contain only letters, digits or '-'.")]
+        [Display(Name = "* Article Nr.:")]
+        public string Number { get; set; }
 
         [Required]
         [MaxLength(50)]

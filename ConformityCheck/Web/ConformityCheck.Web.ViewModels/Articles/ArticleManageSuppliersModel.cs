@@ -9,8 +9,11 @@
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class ArticleManageSuppliersModel : ArticleModel, IHaveCustomMappings
+    public class ArticleManageSuppliersModel : ArticleBaseModel, IHaveCustomMappings
     {
+        [ArticleEntityAttribute]
+        public string Id { get; set; }
+
         [SupplierEntityAttribute]
         public string SupplierId { get; set; }
 

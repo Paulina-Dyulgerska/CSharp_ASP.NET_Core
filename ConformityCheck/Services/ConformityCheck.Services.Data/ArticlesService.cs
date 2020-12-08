@@ -150,7 +150,7 @@
             // TODO: products, substances to be added too.
         }
 
-        public async Task EditAsync(ArticleEditInputModel input)
+        public async Task EditAsync(ArticleEditModel input)
         {
             var articleEntity = await this.articlesRepository
                 .All()

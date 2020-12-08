@@ -17,7 +17,7 @@
 
         public SupplierModel Supplier { get; set; }
 
-        public ArticleModel Article { get; set; }
+        public ArticleBaseModel Article { get; set; }
 
         public bool IsAccepted { get; set; }
 

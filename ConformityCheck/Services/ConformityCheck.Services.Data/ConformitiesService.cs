@@ -154,7 +154,7 @@
             return entity;
         }
 
-        public async Task EditAsync(ConformityCreateInputModel input)
+        public async Task EditAsync(ConformityEditModel input)
         {
 
         }

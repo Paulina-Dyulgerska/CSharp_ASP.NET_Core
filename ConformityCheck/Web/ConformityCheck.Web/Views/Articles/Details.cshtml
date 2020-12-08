@@ -1,5 +1,5 @@
 ﻿@using ConformityCheck.Web.ViewModels.Articles
-@model ArticleEditModel
+@model ArticleDetailsModel
 @{
     this.ViewData["Title"] = "Details for article";
     //var suppliers = Model.SuppliersAvailable.Select(x => new SelectListItem(x.NumberAndName, x.Id));
@@ -35,7 +35,7 @@
 
     <div class="form-group">
         <label asp-for="ConformityTypes"></label>
-        <partial name="_ArticleConformityTypesSuppliersTable" model="Model" />
+        <partial name="_ArticleDetailsTable" model="Model" />
     </div>
 
     @*<th class="col-1">Missing confirmations</th>

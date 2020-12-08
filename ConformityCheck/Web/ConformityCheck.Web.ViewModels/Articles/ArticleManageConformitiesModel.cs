@@ -4,14 +4,18 @@
     using System.Linq;
 
     using AutoMapper;
+    using ConformityCheck.Common.ValidationAttributes;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Conformities;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
     using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class ArticleManageConformitiesModel : ArticleModel, IHaveCustomMappings
+    public class ArticleManageConformitiesModel : ArticleBaseModel, IHaveCustomMappings
     {
+        [ArticleEntityAttribute]
+        public string Id { get; set; }
+
         public IEnumerable<ConformityTypeModel> ConformityTypes { get; set; }
 
         public IEnumerable<SupplierModel> Suppliers { get; set; }

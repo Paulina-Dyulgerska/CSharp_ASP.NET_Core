@@ -16,20 +16,24 @@
         <input asp-for="SupplierId" hidden value="@Model.SupplierId">
         <input asp-for="ConformityTypeId" hidden value="@Model.ConformityTypeId">
         <input asp-for="ArticleId" hidden value="@Model.ArticleId">
-        <input asp-for="ValidForSingleArticle" hidden value="@Model.ValidForSingleArticle">
 
         <div class="form-group font-weight-bold">
             <label asp-for="ConformityTypeDescription">Conformity type:</label>
+            <input asp-for="ConformityTypeDescription" class="form-control" hidden />
             <span class="text-primary ">@Model.ConformityTypeDescription</span>
         </div>
 
         <div class="form-group font-weight-bold">
             <label asp-for="SupplierNumber">Supplier:</label>
+            <input asp-for="SupplierNumber" class="form-control" hidden />
+            <input asp-for="SupplierName" class="form-control" hidden />
             <span class="text-primary ">@Model.SupplierNumber - @Model.SupplierName</span>
         </div>
 
-        <div class="form-group">
+        <div class="form-group font-weight-bold">
             <label asp-for="ArticleNumber">Article Nr:</label>
+            <input asp-for="ArticleNumber" class="form-control" hidden />
+            <input asp-for="ArticleDescription" class="form-control" hidden />
             <span class="text-primary ">@Model.ArticleNumber - @Model.ArticleDescription</span>
         </div>
 
@@ -75,7 +79,7 @@
         @* TODO: add the declared substances and assing the restrictions. *@
 
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Create" />
+            <input type="submit" class="btn btn-primary" value="Save changes" />
         </div>
     </form>
 </div>

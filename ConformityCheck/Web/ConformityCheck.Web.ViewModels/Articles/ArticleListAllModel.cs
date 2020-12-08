@@ -1,14 +1,17 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Articles
 {
-    using System.Collections.Generic;
     using System.Linq;
 
     using AutoMapper;
+    using ConformityCheck.Common.ValidationAttributes;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class ArticleListAllModel : ArticleModel, IHaveCustomMappings
+    public class ArticleListAllModel : ArticleBaseModel, IHaveCustomMappings
     {
+        [ArticleEntityAttribute]
+        public string Id { get; set; }
+
         public string MainSupplierName { get; set; }
 
         public string MainSupplierNumber { get; set; }

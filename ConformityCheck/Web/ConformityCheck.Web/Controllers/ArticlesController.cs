@@ -64,11 +64,17 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(ArticleEditInputModel input)
+        public async Task<IActionResult> Edit(ArticleEditModel input)
         {
             // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (!this.ModelState.IsValid)
             {
+                var model = await this.articlesService.GetByIdAsync<ArticleEditModel>(input.Id);
+                input.ConformityTypes = model.ConformityTypes;
+                input.Conformities = model.Conformities;
+                input.Suppliers = model.Suppliers;
+                input.Substances = model.Substances;
+                input.Products = model.Products;
                 return this.View(input);
             }
 
@@ -186,7 +192,7 @@
 
         public async Task<IActionResult> Details(string id)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleEditModel>(id);
+            var model = await this.articlesService.GetByIdAsync<ArticleDetailsModel>(id);
 
             return this.View(model);
         }

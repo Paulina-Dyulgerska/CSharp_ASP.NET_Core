@@ -54,7 +54,7 @@
             return this.RedirectToAction("ListAll", "Articles");
         }
 
-        public async Task<IActionResult> AddConformity(string id)
+        public async Task<IActionResult> AddToArticleConformityType(string id)
         {
             var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesModel>(id);
 
@@ -62,7 +62,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddConformity(ArticleManageConformitiesInputModel input)
+        public async Task<IActionResult> AddToArticleConformityType(ArticleManageConformitiesInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
@@ -84,7 +84,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(ConformityCreateInputModel input)
+        public async Task<IActionResult> Edit(ConformityEditModel input)
         {
             // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (!this.ModelState.IsValid)

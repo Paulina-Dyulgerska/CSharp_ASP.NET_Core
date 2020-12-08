@@ -9,7 +9,7 @@
     public class ConformityTypeModel : IMapFrom<ConformityType>, IMapFrom<ArticleConformityType>, IHaveCustomMappings
     {
         //[ConformityTypeEntityAttribute]
-        public int Id { get; set; }
+        public int Id { get; set; } //go out!!!
 
         public string Description { get; set; }
 

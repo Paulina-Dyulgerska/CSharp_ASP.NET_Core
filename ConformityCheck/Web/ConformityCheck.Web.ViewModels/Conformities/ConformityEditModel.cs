@@ -28,8 +28,6 @@
         [DataType(DataType.Date)]
         public DateTime? ValidityDate { get; set; }
 
-        public bool ValidForSingleArticle => true;
-
         public string Comments { get; set; }
 
         public string UserId { get; set; }
