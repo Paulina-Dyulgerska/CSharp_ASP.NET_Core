@@ -5,14 +5,10 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class SupplierModel : IMapFrom<ArticleSupplier>, IMapFrom<Supplier>, IHaveCustomMappings
+    public class SupplierModel : SupplierBaseModel, IMapFrom<ArticleSupplier>, IHaveCustomMappings
     {
         [SupplierEntityAttribute]
-        public string Id { get; set; } //Go out!!!
-
-        public string Number { get; set; }
-
-        public string Name { get; set; }
+        public string Id { get; set; }
 
         public bool IsMainSupplier { get; set; }
 

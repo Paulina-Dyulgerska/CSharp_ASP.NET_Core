@@ -71,7 +71,7 @@
             return entity;
         }
 
-        public async Task CreateAsync(CreateSupplierInputModel input)
+        public async Task CreateAsync(SupplierCreateInputModel input)
         {
             var entity = await this.suppliersRepository.AllAsNoTracking()
                 .Where(x => x.Name == input.Name.Trim().ToUpper() || x.Number == input.Number.Trim().ToUpper())

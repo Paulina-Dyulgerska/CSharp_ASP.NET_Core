@@ -106,12 +106,12 @@
 
             foreach (var articleSupplierEntity in articleSuppliersEntities)
             {
+                input.ArticleId = articleSupplierEntity.ArticleId;
                 await this.AddConformityToAnArticle(input);
             }
 
             await this.conformitiesRepository.SaveChangesAsync();
         }
-
 
         public async Task<ConformityEditModel> GetForEditAsync(ConformityEditGetModel input)
         {

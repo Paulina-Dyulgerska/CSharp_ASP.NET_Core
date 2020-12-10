@@ -193,6 +193,7 @@
         public async Task<IActionResult> Details(string id)
         {
             var model = await this.articlesService.GetByIdAsync<ArticleDetailsModel>(id);
+            //var model = await this.articlesService.GetByIdAsync<ArticleEditModel>(id);
 
             return this.View(model);
         }

@@ -16,7 +16,7 @@
         [ArticleEntityAttribute]
         public string Id { get; set; }
 
-        public IEnumerable<ConformityTypeExportModel> ConformityTypes { get; set; }
+        public IEnumerable<ConformityTypeModel> ConformityTypes { get; set; }
 
         public IEnumerable<SupplierModel> Suppliers { get; set; }
 

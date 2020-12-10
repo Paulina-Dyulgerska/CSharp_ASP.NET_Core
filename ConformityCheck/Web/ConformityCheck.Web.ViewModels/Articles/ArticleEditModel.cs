@@ -12,9 +12,13 @@
     using ConformityCheck.Web.ViewModels.ConformityTypes;
     using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class ArticleEditModel : ArticleBaseModel, IMapFrom<Article>, IHaveCustomMappings
+    public class ArticleEditModel : ArticleBaseModel, /*IMapFrom<Article>, */IHaveCustomMappings
     {
         private IEnumerable<SupplierModel> suppliers;
+
+        public ArticleEditModel()
+        {
+        }
 
         [ArticleEntityAttribute]
         public string Id { get; set; }
@@ -49,15 +53,17 @@
             }
         }
 
-        public IEnumerable<ConformityTypeExportModel> ConformityTypes { get; set; }
+        //public bool IsConfirmed => this.Suppliers.Count() > 0 && this.Suppliers.All(x => x.HasAllConformed);
 
-        public IEnumerable<ConformityExportModel> Conformities { get; set; }
+        public IEnumerable<ConformityTypeModel> ConformityTypes { get; set; }
+
+        public IEnumerable<ConformityModel> Conformities { get; set; }
 
         public IEnumerable<string> Products { get; set; }
 
         public IEnumerable<string> Substances { get; set; }
 
-        public void CreateMappings(IProfileExpression configuration)
+        public virtual void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Article, ArticleEditModel>()
                 .ForMember(

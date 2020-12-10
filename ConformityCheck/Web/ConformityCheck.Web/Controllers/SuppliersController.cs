@@ -44,7 +44,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateSupplierInputModel input)
+        public async Task<IActionResult> Create(SupplierCreateInputModel input)
         {
             if (!this.ModelState.IsValid)
             {

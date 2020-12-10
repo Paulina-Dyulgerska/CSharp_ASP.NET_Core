@@ -8,12 +8,12 @@
     using ConformityCheck.Web.ViewModels.ConformityTypes;
     using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class ConformityExportModel : IMapFrom<Conformity>
+    public class ConformityModel : IMapFrom<Conformity>
     {
         // [ConformityEntityAttribute]
         public string Id { get; set; }
 
-        public ConformityTypeExportModel ConformityType { get; set; }
+        public ConformityTypeModel ConformityType { get; set; }
 
         public SupplierModel Supplier { get; set; }
 
