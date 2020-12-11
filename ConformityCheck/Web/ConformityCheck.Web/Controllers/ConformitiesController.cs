@@ -84,7 +84,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(ConformityEditModel input)
+        public async Task<IActionResult> Edit(ConformityEditInputModel input)
         {
             // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (!this.ModelState.IsValid)

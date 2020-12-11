@@ -1,5 +1,5 @@
 ﻿@using ConformityCheck.Web.ViewModels.Suppliers
-@model SupplierEditModel
+@model SupplierEditInputModel
 @{
     this.ViewData["Title"] = "Edit supplier";
     //var suppliers = Model.SuppliersAvailable.Select(x => new SelectListItem(x.NumberAndName, x.Id));
@@ -20,6 +20,7 @@
 
         <div>
             <label asp-for="Number">Supplier's number:</label>
+            <input asp-for="Number" hidden />
             <span class="text-primary ">@Model.Number</span>
         </div>
 

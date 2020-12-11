@@ -65,7 +65,7 @@
 
         public async Task<IActionResult> Edit(string id)
         {
-            var model = await this.suppliersService.GetByIdAsync<SupplierEditModel>(id);
+            var model = await this.suppliersService.GetByIdAsync<SupplierEditInputModel>(id);
 
             return this.View(model);
         }

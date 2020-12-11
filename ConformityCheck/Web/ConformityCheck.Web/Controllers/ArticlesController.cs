@@ -58,18 +58,18 @@
         {
             //trqbwa li da checkwam v DB za wsqko edno id, dali go imam v bazata?
 
-            var model = await this.articlesService.GetByIdAsync<ArticleEditModel>(id);
+            var model = await this.articlesService.GetByIdAsync<ArticleEditInputModel>(id);
 
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(ArticleEditModel input)
+        public async Task<IActionResult> Edit(ArticleEditInputModel input)
         {
             // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (!this.ModelState.IsValid)
             {
-                var model = await this.articlesService.GetByIdAsync<ArticleEditModel>(input.Id);
+                var model = await this.articlesService.GetByIdAsync<ArticleEditInputModel>(input.Id);
                 input.ConformityTypes = model.ConformityTypes;
                 input.Conformities = model.Conformities;
                 input.Suppliers = model.Suppliers;
@@ -200,7 +200,7 @@
 
         public async Task<IActionResult> GetSuppliersById(string id)
         {
-            var model = await this.articlesService.GetSuppliersByIdAsync<SupplierModel>(id);
+            var model = await this.articlesService.GetSuppliersByIdAsync<SupplierExportModel>(id);
 
             return this.Json(model);
         }

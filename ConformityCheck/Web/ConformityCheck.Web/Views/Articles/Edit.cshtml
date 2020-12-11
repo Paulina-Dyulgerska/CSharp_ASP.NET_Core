@@ -1,5 +1,5 @@
 ﻿@using ConformityCheck.Web.ViewModels.Articles
-@model ArticleEditModel
+@model ArticleEditInputModel
 @{
     this.ViewData["Title"] = "Edit article";
     //var suppliers = Model.SuppliersAvailable.Select(x => new SelectListItem(x.NumberAndName, x.Id));
@@ -26,14 +26,9 @@
 
         <div class="form-group font-weight-bold">
             <label asp-for="Description">Change article's description:</label>
-            <textarea rows="2" asp-for="Description" class="form-control" placeholder="@Model.Description"></textarea>
+            <textarea rows="2" asp-for="Description" class="form-control" value="@Model.Description"></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
-
-        @*<div class="form-group">
-            <label asp-for="IsConfirmed">Article confirmed:</label>
-            <span class="text-primary">@(Model.IsConfirmed  ? "Yes" : "No")</span>
-        </div>*@
 
         <div class="form-group">
             <label asp-for="Suppliers"></label>
@@ -42,7 +37,7 @@
 
         <div class="form-group">
             <label asp-for="ConformityTypes"></label>
-            <partial name="_ArticleEditTable" model="Model" />
+            <partial name="_ArticleConformitiesTable" model="Model" />
         </div>
 
         <div class="form-group">

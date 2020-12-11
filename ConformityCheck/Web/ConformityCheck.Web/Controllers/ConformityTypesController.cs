@@ -30,7 +30,7 @@
 
         public async Task<IActionResult> ListAll()
         {
-            var model = await this.conformityTypeService.GetAllAsNoTrackingOrderedAsync<ConformityTypeModel>();
+            var model = await this.conformityTypeService.GetAllAsNoTrackingOrderedAsync<ConformityTypeExportModel>();
 
             return this.View(model);
         }
@@ -76,7 +76,15 @@
 
         public async Task<IActionResult> Delete(int id)
         {
-            await this.conformityTypeService.DeleteAsync(id);
+            try
+            {
+                await this.conformityTypeService.DeleteAsync(id);
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
 
             return this.RedirectToAction(nameof(this.ListAll));
         }
