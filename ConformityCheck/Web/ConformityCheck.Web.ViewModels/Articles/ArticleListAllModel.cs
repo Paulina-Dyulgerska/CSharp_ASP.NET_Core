@@ -9,7 +9,6 @@
 
     public class ArticleListAllModel : ArticleBaseModel, IHaveCustomMappings
     {
-        [ArticleEntityAttribute]
         public string Id { get; set; }
 
         public string MainSupplierName { get; set; }

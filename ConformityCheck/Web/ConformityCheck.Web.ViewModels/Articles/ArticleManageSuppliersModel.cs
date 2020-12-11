@@ -14,10 +14,9 @@
         [ArticleEntityAttribute]
         public string Id { get; set; }
 
-        [SupplierEntityAttribute]
         public string SupplierId { get; set; }
 
-        public IEnumerable<SupplierModel> Suppliers { get; set; }
+        public IEnumerable<SupplierExportModel> Suppliers { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

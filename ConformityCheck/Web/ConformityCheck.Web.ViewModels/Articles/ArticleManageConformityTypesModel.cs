@@ -14,10 +14,9 @@
         [ArticleEntityAttribute]
         public string Id { get; set; }
 
-        [ConformityTypeEntityAttribute]
         public int ConformityTypeId { get; set; }
 
-        public IEnumerable<ConformityTypeModel> ConformityTypes { get; set; }
+        public IEnumerable<ConformityTypeExportModel> ConformityTypes { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

@@ -1,5 +1,6 @@
 ﻿namespace ConformityCheck.Common.ValidationAttributes
 {
+    using System.Collections;
     using System.ComponentModel.DataAnnotations;
 
     using ConformityCheck.Services;
@@ -15,11 +16,19 @@
         {
             var context = (IContentCheckService)validationContext.GetService(typeof(IContentCheckService));
 
-            var conformityTypeEntity = context.ConformityTypeEntityIdCheck(int.Parse(value.ToString()));
-
-            if (!conformityTypeEntity)
+            if (!(value is ICollection))
             {
-                return new ValidationResult(this.ErrorMessage);
+                value = new[] { value };
+            }
+
+            foreach (var conformityType in value as ICollection)
+            {
+                var conformityTypeEntity = context.ConformityTypeEntityIdCheck(int.Parse(conformityType.ToString()));
+
+                if (!conformityTypeEntity)
+                {
+                    return new ValidationResult(this.ErrorMessage);
+                }
             }
 
             return ValidationResult.Success;

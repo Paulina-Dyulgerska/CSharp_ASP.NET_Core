@@ -8,17 +8,10 @@
 
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
-    using ConformityCheck.Services.Data.Models;
     using ConformityCheck.Services.Mapping;
-    using ConformityCheck.Web.ViewModels.Suppliers;
-    using ConformityCheck.Web.ViewModels.Conformities;
-    using ConformityCheck.Web.ViewModels.Suppliers;
-    using ConformityCheck.Web.ViewModels.Products;
-    using ConformityCheck.Web.ViewModels.Substances;
-    using ConformityCheck.Web.ViewModels.Suppliers;
-    using Microsoft.EntityFrameworkCore;
     using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
+    using Microsoft.EntityFrameworkCore;
 
     public class ArticlesService : IArticlesService
     {
@@ -78,33 +71,11 @@
 
         public async Task<T> GetByIdAsync<T>(string id)
         {
-            var entity = await this.articlesRepository
+            return await this.articlesRepository
                 .All()
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefaultAsync();
-
-            if (entity == null)
-            {
-                throw new ArgumentException($"There is no article with this number.");
-            }
-
-            return entity;
-        }
-
-        public async Task<Article> GetByIdAsync(string id)
-        {
-            var entity = await this.articlesRepository
-                .All()
-                .Where(x => x.Id == id)
-                .FirstOrDefaultAsync();
-
-            if (entity == null)
-            {
-                throw new ArgumentException($"There is no article with this number.");
-            }
-
-            return entity;
         }
 
         public async Task CreateAsync(ArticleCreateInputModel input)
@@ -116,6 +87,7 @@
             //    .FirstOrDefault(x => x.UserName == articleInputModel.UserId);
             //take the user and record its id in the article, product, conformity, etc.
 
+            // TODO: make a validation attribute for this or to generate numbers authomaticaly!!!:
             if (articleEntity != null)
             {
                 throw new ArgumentException($"There is already an article with this number.");
@@ -150,16 +122,11 @@
             // TODO: products, substances to be added too.
         }
 
-        public async Task EditAsync(ArticleEditModel input)
+        public async Task EditAsync(ArticleEditInputModel input)
         {
             var articleEntity = await this.articlesRepository
                 .All()
                 .FirstOrDefaultAsync(x => x.Id == input.Id);
-
-            if (articleEntity == null)
-            {
-                throw new ArgumentException($"There is no article with this number.");
-            }
 
             if (input.Description != null)
             {
@@ -178,6 +145,7 @@
                 .All()
                 .Where(x => x.ArticleId == id)
                 .ToListAsync();
+
             foreach (var articleSuppliersEntity in articleSuppliersEntities)
             {
                 this.articleSuppliersRepository.Delete(articleSuppliersEntity);
@@ -187,6 +155,7 @@
                 .All()
                 .Where(x => x.ArticleId == id)
                 .ToListAsync();
+
             foreach (var articleConformityTypesEntity in articleConformityTypesEntities)
             {
                 this.articleConformityTypesRepository.Delete(articleConformityTypesEntity);
@@ -196,6 +165,7 @@
                 .All()
                 .Where(x => x.ArticleId == id)
                 .ToListAsync();
+
             foreach (var articleConformitiesEntity in articleConformitiesEntities)
             {
                 this.conformitiesRepository.Delete(articleConformitiesEntity);
@@ -218,16 +188,8 @@
 
             if (articleSuppliers.Any(x => x.SupplierId == input.SupplierId))
             {
-                throw new ArgumentException("The supplier is already asigned to this article");
-            }
-
-            var supplierEntity = await this.suppliersRepository
-                .AllAsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == input.SupplierId);
-
-            if (supplierEntity == null)
-            {
-                throw new ArgumentException("There is no such supplier created.");
+                // The supplier is already asigned to this article.
+                return;
             }
 
             var articleSupplierEntity = new ArticleSupplier
@@ -277,11 +239,6 @@
             var articleSupplierEntity = await this.articleSuppliersRepository.All()
                 .FirstOrDefaultAsync(x => x.ArticleId == input.Id && x.SupplierId == input.SupplierId);
 
-            if (articleSupplierEntity == null)
-            {
-                throw new ArgumentException("No such article or supplier.");
-            }
-
             this.articleSuppliersRepository.Delete(articleSupplierEntity);
 
             await this.articleSuppliersRepository.SaveChangesAsync();
@@ -298,19 +255,15 @@
         {
             foreach (var conformityType in conformityTypes)
             {
-                if (!this.conformityTypesRepository.All().Any(x => x.Id == conformityType))
-                {
-                    throw new ArgumentException($"There is no such conformity type.");
-                }
-
                 var articleConformityType = await this.articleConformityTypesRepository
                      .AllAsNoTracking()
-                     .FirstOrDefaultAsync(x => x.ArticleId == article.Id && x.ConformityTypeId == conformityType);
+                     .FirstOrDefaultAsync(x => x.ArticleId == article.Id 
+                                            && x.ConformityTypeId == conformityType);
 
                 if (articleConformityType != null)
                 {
+                    // This conformity type is already asigned to this article
                     continue;
-                    //throw new ArgumentException($"This conformity type is already asigned to this article.");
                 }
 
                 await this.articleConformityTypesRepository.AddAsync(new ArticleConformityType
@@ -329,11 +282,6 @@
                 .All()
                 .FirstOrDefaultAsync(x => x.ArticleId == input.Id && x.ConformityTypeId == input.ConformityTypeId);
 
-            if (articleConformityTypeEntity == null)
-            {
-                throw new ArgumentException("No article with this conformity type.");
-            }
-
             this.articleConformityTypesRepository.Delete(articleConformityTypeEntity);
 
             await this.articleConformityTypesRepository.SaveChangesAsync();
@@ -350,13 +298,13 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ConformityTypeModel>> GetConformityTypesByIdAsync(string articleId, string supplierId)
+        public async Task<IEnumerable<ConformityTypeExportModel>> GetConformityTypesByIdAsync(string articleId, string supplierId)
         {
             var entities = await this.articleConformityTypesRepository
                 .AllAsNoTracking()
                 .Where(x => x.ArticleId == articleId)
                 .OrderBy(x => x.ConformityTypeId)
-                .To<ConformityTypeModel>()
+                .To<ConformityTypeExportModel>()
                 .ToListAsync();
 
             foreach (var entity in entities)

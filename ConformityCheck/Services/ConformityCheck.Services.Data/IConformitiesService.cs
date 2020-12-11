@@ -8,10 +8,10 @@
     {
         Task CreateAsync(ConformityCreateInputModel input);
 
-        Task EditAsync(ConformityEditModel input);
+        Task EditAsync(ConformityEditInputModel input);
 
         Task DeleteAsync(string id);
 
-        Task<ConformityEditModel> GetForEditAsync(ConformityEditGetModel input);
+        Task<ConformityEditInputModel> GetForEditAsync(ConformityEditGetModel input);
     }
 }

@@ -58,6 +58,14 @@
                             x.SupplierId == supplierId);
         }
 
+        public bool ArticleConformityTypeEntityIdCheck(string articleId, int conformityTypeId)
+        {
+            return this.articleConformityTypesRepository
+                .AllAsNoTracking()
+                .Any(x => x.ArticleId == articleId &&
+                            x.ConformityTypeId == conformityTypeId);
+        }
+
         public bool ConformityTypeEntityIdCheck(int id)
         {
             return this.conformityTypesRepository.AllAsNoTracking().Any(x => x.Id == id);
@@ -88,6 +96,20 @@
         public bool SupplierEntityIdCheck(string id)
         {
             return this.suppliersRepository.AllAsNoTracking().Any(x => x.Id == id);
+        }
+
+        public bool SupplierEntityNameCheck(string input)
+        {
+            return this.suppliersRepository
+                .AllAsNoTracking()
+                .Any(x => x.Name == input.Trim().ToUpper());
+        }
+
+        public bool SupplierEntityNumberCheck(string input)
+        {
+            return this.suppliersRepository
+                .AllAsNoTracking()
+                .Any(x => x.Number == input.Trim().ToUpper());
         }
     }
 }

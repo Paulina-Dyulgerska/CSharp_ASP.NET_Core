@@ -11,7 +11,7 @@
     using ConformityCheck.Services.Mapping;
     using Microsoft.AspNetCore.Http;
 
-    public class ConformityBaseModel : IMapFrom<Conformity>, IHaveCustomMappings, IValidatableObject
+    public abstract class ConformityBaseModel : IMapFrom<Conformity>, IHaveCustomMappings, IValidatableObject
     {
         [Required]
         [Display(Name = "* Conformity type:")]

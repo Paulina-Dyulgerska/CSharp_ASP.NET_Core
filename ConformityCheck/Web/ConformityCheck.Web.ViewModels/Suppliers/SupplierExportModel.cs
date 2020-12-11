@@ -5,7 +5,7 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class SupplierModel : SupplierBaseModel, IMapFrom<ArticleSupplier>, IHaveCustomMappings
+    public class SupplierExportModel : SupplierBaseModel, IMapFrom<ArticleSupplier>, IHaveCustomMappings
     {
         [SupplierEntityAttribute]
         public string Id { get; set; }
@@ -16,7 +16,7 @@
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<ArticleSupplier, SupplierModel>()
+            configuration.CreateMap<ArticleSupplier, SupplierExportModel>()
                 .ForMember(
                 x => x.Id,
                 opt => opt.MapFrom(x => x.SupplierId))

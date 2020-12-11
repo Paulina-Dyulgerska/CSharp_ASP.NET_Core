@@ -71,56 +71,19 @@
 
         public async Task<T> GetByIdAsync<T>(string id)
         {
-            var entity = await this.conformitiesRepository
+            return await this.conformitiesRepository
                 .All()
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefaultAsync();
-
-            if (entity == null)
-            {
-                throw new ArgumentException($"There is no article with this number.");
-            }
-
-            return entity;
         }
 
-        public async Task CreateAsync(ConformityCreateInputModel input)
-        {
-            if (input.ValidForSingleArticle)
-            {
-                await this.AddConformityToAnArticle(input);
-
-                await this.conformitiesRepository.SaveChangesAsync();
-
-                return;
-            }
-
-            var articleSuppliersEntities = await this.articleSuppliersRepository
-                    .All()
-                    .Where(x => x.SupplierId == input.SupplierId)
-                    .ToListAsync();
-
-            // za view componenta e towa: da se vika tq w controllera i da se prenasochva kym specialno view
-            // za editvane na conformity, a ne za createvane!!!!
-
-            foreach (var articleSupplierEntity in articleSuppliersEntities)
-            {
-                input.ArticleId = articleSupplierEntity.ArticleId;
-                await this.AddConformityToAnArticle(input);
-            }
-
-            await this.conformitiesRepository.SaveChangesAsync();
-        }
-
-        public async Task<ConformityEditModel> GetForEditAsync(ConformityEditGetModel input)
+        public async Task<ConformityEditInputModel> GetForEditAsync(ConformityEditGetModel input)
         {
             var entity = await this.conformitiesRepository
                                 .AllAsNoTracking()
-                                .Where(x => x.ArticleId == input.ArticleId
-                                   && x.SupplierId == input.SupplierId
-                                   && x.ConformityTypeId == input.ConformityTypeId)
-                                .To<ConformityEditModel>()
+                                .Where(x => x.Id == input.ConformityId)
+                                .To<ConformityEditInputModel>()
                                 .FirstOrDefaultAsync();
 
             if (entity == null)
@@ -138,7 +101,7 @@
                     .Where(x => x.Id == input.SupplierId)
                     .FirstOrDefaultAsync();
 
-                entity = new ConformityEditModel
+                entity = new ConformityEditInputModel
                 {
                     ArticleId = articleEntity.Id,
                     ArticleNumber = articleEntity.Number,
@@ -154,19 +117,84 @@
             return entity;
         }
 
-        public async Task EditAsync(ConformityEditModel input)
+        public async Task CreateAsync(ConformityCreateInputModel input)
         {
+            if (input.ValidForSingleArticle)
+            {
+                await this.AddConformityToAnArticleAsync(input);
 
+                await this.conformitiesRepository.SaveChangesAsync();
+
+                return;
+            }
+
+            var articleSuppliersEntities = await this.articleSuppliersRepository
+                    .All()
+                    .Where(x => x.SupplierId == input.SupplierId)
+                    .ToListAsync();
+
+            // za view componenta e towa: da se vika tq w controllera i da se prenasochva kym specialno view
+            // za editvane na conformity, a ne za createvane!!!!
+
+            foreach (var articleSupplierEntity in articleSuppliersEntities)
+            {
+                input.ArticleId = articleSupplierEntity.ArticleId;
+                await this.AddConformityToAnArticleAsync(input);
+            }
+
+            await this.conformitiesRepository.SaveChangesAsync();
         }
 
-
-        private async Task AddConformityToAnArticle(ConformityCreateInputModel input)
+        public async Task EditAsync(ConformityEditInputModel input)
         {
-            //ArticleConformityType sa samo zadyljitelnite da gi ima potvyrdeni!!!
-            // da rovq v Conformity i da sotavq tablicata ArticleConformityTypes samo s iskanite za artikula types, no 
-            // da ne pazi i conformities vytre, a prez conformities da stawa vryzkata i s article i sys supplier i s
-            //conformity type!!!!!! Da prerabotq DBmodels!!!! i wsichko tuk!!!
+            if (input.Id == null)
+            {
+                var newConformity = new ConformityCreateInputModel
+                {
+                    ArticleId = input.ArticleId,
+                    SupplierId = input.SupplierId,
+                    ConformityTypeId = input.ConformityTypeId,
+                    IssueDate = input.IssueDate.Date,
+                    IsAccepted = input.IsAccepted,
+                    ValidityDate = input.IsAccepted ? DateTime.UtcNow.Date.AddYears(3) : (DateTime?)null,
+                    Comments = input.Comments,
+                    FileUrl = "Az ne sym go naprawila oshte",
+                };
 
+                await this.AddConformityToAnArticleAsync(newConformity);
+                return;
+            }
+
+            // Already has such conformity:
+            var conformityEntity = await this.conformitiesRepository
+                                                .All()
+                                                .FirstOrDefaultAsync(x => x.Id == input.Id);
+
+            conformityEntity.ArticleId = input.ArticleId;
+            conformityEntity.SupplierId = input.SupplierId;
+            conformityEntity.ConformityTypeId = input.ConformityTypeId;
+            conformityEntity.IssueDate = input.IssueDate.Date;
+            conformityEntity.IsAccepted = input.IsAccepted;
+            conformityEntity.AcceptanceDate = DateTime.UtcNow.Date;
+            conformityEntity.ValidityDate = input.IsAccepted ? DateTime.UtcNow.Date.AddYears(3) : (DateTime?)null;
+            conformityEntity.Comments = input.Comments;
+            conformityEntity.FileUrl = "Az ne sym go naprawila oshte 2";
+
+            if (input.ValidityDate != null && input.IsAccepted)
+            {
+                conformityEntity.ValidityDate = input.ValidityDate;
+            }
+
+            await this.conformitiesRepository.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async Task AddConformityToAnArticleAsync(ConformityCreateInputModel input)
+        {
             var articleConformityType = this.articleConformityTypeRepository
                                     .All()
                                     .Any(x => x.ConformityTypeId == input.ConformityTypeId
@@ -216,12 +244,5 @@
 
             await this.conformitiesRepository.SaveChangesAsync();
         }
-
-        public Task DeleteAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        //Task AddConformityAsync(ArticleManageConformitiesModel input);
     }
 }

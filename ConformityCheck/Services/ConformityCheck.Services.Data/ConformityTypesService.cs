@@ -58,29 +58,15 @@
 
         public async Task<T> GetByIdAsync<T>(int id)
         {
-            var entity = await this.conformityTypesRepository
+            return await this.conformityTypesRepository
                 .All()
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefaultAsync();
-
-            if (entity == null)
-            {
-                throw new ArgumentException($"There is no such conformity type.");
-            }
-
-            return entity;
         }
 
         public async Task CreateAsync(ConformityTypeCreateInputModel input)
         {
-            // if this conformity type is already in the DB
-            if (this.conformityTypesRepository.All()
-                .FirstOrDefault(c => c.Description.ToUpper() == input.Description.ToUpper()) != null)
-            {
-                throw new ArgumentException($"Has this conformity type {nameof(input.Description)}");
-            }
-
             //var userEntity = this.usersRepository.AllAsNoTracking()
             //    .FirstOrDefault(x => x.UserName == articleInputModel.UserId);
             //take the user and record its id in the article, product, conformity, etc.
@@ -102,11 +88,6 @@
                 .All()
                 .FirstOrDefaultAsync(c => c.Id == input.Id);
 
-            if (entity == null)
-            {
-                throw new ArgumentException($"No such conformity type.");
-            }
-
             entity.Description = input.Description.ToUpper();
 
             await this.conformityTypesRepository.SaveChangesAsync();
@@ -114,17 +95,12 @@
 
         public async Task<int> DeleteAsync(int id)
         {
-            // if this conformity type is not in the DB
             var conformityTypeEntity = await this.conformityTypesRepository
                 .All()
                 .FirstOrDefaultAsync(c => c.Id == id);
 
-            if (conformityTypeEntity == null)
-            {
-                throw new ArgumentException($"No such conformity type");
-            }
-
             // if this conformity type has confirmations in the DB
+            // TODO - catch the error in Controller
             if (this.conformitiesRepository.All().Any(ac => ac.ConformityTypeId == id))
             {
                 throw new ArgumentException($"Cannot delete conformity with articles assigned to it.");

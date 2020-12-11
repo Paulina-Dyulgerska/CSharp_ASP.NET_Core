@@ -9,11 +9,11 @@
 
     public interface IArticlesService : IService<string>
     {
-        Task<Article> GetByIdAsync(string id);
+        //Task<Article> GetByIdAsync(string id); //to delete it
 
         Task CreateAsync(ArticleCreateInputModel input);
 
-        Task EditAsync(ArticleEditModel input);
+        Task EditAsync(ArticleEditInputModel input);
 
         Task<int> DeleteAsync(string id);
 
@@ -32,7 +32,7 @@
         Task<IEnumerable<T>> GetSuppliersByIdAsync<T>(string id);
 
         // TODO - remove ConformityTypeModel - put T!!!
-        Task<IEnumerable<ConformityTypeModel>> GetConformityTypesByIdAsync(
+        Task<IEnumerable<ConformityTypeExportModel>> GetConformityTypesByIdAsync(
             string articleId,
             string supplierId);
     }

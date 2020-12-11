@@ -6,7 +6,7 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class ConformityTypeBaseModel : IMapFrom<ConformityType>
+    public abstract class ConformityTypeBaseModel : IMapFrom<ConformityType>
     {
         [Required]
         [MinLength(2)]

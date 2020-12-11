@@ -1,11 +1,13 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Articles
 {
     using AutoMapper;
+    using ConformityCheck.Common.ValidationAttributes;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
     public class ArticleBySupplierModel : IMapFrom<ArticleSupplier>, IHaveCustomMappings
     {
+        [ArticleEntityAttribute]
         public string Id { get; set; }
 
         public string Number { get; set; }

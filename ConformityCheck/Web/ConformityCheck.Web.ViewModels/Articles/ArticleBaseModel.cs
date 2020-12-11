@@ -8,7 +8,7 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class ArticleBaseModel : IMapFrom<Article>, IMapTo<Article>
+    public abstract class ArticleBaseModel : IMapFrom<Article>, IMapTo<Article>
     {
         [Required]
         [MaxLength(20)]

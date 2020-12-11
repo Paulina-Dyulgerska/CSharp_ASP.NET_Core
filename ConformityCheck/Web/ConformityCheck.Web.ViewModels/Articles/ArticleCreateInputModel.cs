@@ -12,7 +12,7 @@
 
         [Required]
         [Display(Name = "* Select conformity type/s")]
-        // The validation of the Id of the choosen entities will be in the service!
+        [ConformityTypeEntityAttribute]
         public IEnumerable<int> ConformityTypes { get; set; }
 
         public IEnumerable<string> Products { get; set; }
