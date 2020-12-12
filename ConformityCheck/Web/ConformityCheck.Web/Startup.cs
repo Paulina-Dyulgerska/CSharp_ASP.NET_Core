@@ -64,6 +64,7 @@
 
             // Application services
             services.AddTransient<IArticlesSeedService, ArticlesSeedService>();
+            services.AddTransient<ISuppliersSeedService, SuppliersSeedService>();
             services.AddTransient<IConformityTypesSeedService, ConformityTypesSeedService>();
             services.AddTransient<IArticlesService, ArticlesService>();
             services.AddTransient<IConformityTypesService, ConformityTypesService>();

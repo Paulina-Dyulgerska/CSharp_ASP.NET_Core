@@ -52,6 +52,27 @@
                 // TODO: UserId = userEntity.Id -> AdminUser
             };
 
+            article.ArticleConformityTypes.Add(new ArticleConformityType
+            {
+                ConformityTypeId = this.conformityTypesRepository
+                                    .AllAsNoTracking()
+                                    .FirstOrDefault(x => x.Description.ToUpper() == "ROHS").Id,
+            });
+
+            article.ArticleConformityTypes.Add(new ArticleConformityType
+            {
+                ConformityTypeId = this.conformityTypesRepository
+                        .AllAsNoTracking()
+                        .FirstOrDefault(x => x.Description.ToUpper() == "DS_Substances").Id,
+            });
+
+            article.ArticleConformityTypes.Add(new ArticleConformityType
+            {
+                ConformityTypeId = this.conformityTypesRepository
+            .AllAsNoTracking()
+            .FirstOrDefault(x => x.Description.ToUpper() == "SVHC").Id,
+            });
+
             await this.articlesRepository.AddAsync(article);
 
             await this.articlesRepository.SaveChangesAsync();
@@ -74,7 +95,7 @@
                 throw new ArgumentException("The supplier is already asigned to this article");
             }
 
-            article.ArticleSuppliers.Add(new ArticleSupplier { Supplier = supplierEntity });
+            article.ArticleSuppliers.Add(new ArticleSupplier { Supplier = supplierEntity, IsMainSupplier = true });
 
             return await this.articlesRepository.SaveChangesAsync();
         }
@@ -90,7 +111,7 @@
                 supplierEntity = new Supplier
                 {
                     Number = articleImportDTO.SupplierNumber.Trim().ToUpper(),
-                    Name = this.PascalCaseConverter(articleImportDTO.SupplierName),
+                    Name = articleImportDTO.SupplierName.Trim().ToUpper(),
                     Email = articleImportDTO.SupplierEmail?.Trim(),
                     PhoneNumber = articleImportDTO.SupplierPhoneNumber?.Trim(),
                     ContactPersonFirstName = articleImportDTO.ContactPersonFirstName == null ? null :

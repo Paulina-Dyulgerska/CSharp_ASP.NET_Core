@@ -73,7 +73,7 @@
             var entity = new Supplier
             {
                 Number = input.Number.Trim().ToUpper(),
-                Name = this.PascalCaseConverterWords(input.Name),
+                Name = input.Name.Trim().ToUpper(),
                 Email = input.Email?.Trim(),
                 PhoneNumber = input.PhoneNumber?.Trim(),
                 ContactPersonFirstName = input.ContactPersonFirstName == null ? null :
@@ -96,7 +96,7 @@
             // var userEntity = this.usersRepository.AllAsNoTracking()
             //    .FirstOrDefault(x => x.UserName == articleInputModel.UserId);
             // take the user and record its id in the article, product, conformity, etc.
-            entity.Name = this.PascalCaseConverterWords(input.Name);
+            entity.Name = input.Name.Trim().ToUpper();
             entity.Email = input.Email?.Trim();
             entity.PhoneNumber = input.PhoneNumber?.Trim();
             entity.ContactPersonFirstName = input.ContactPersonFirstName == null ?
