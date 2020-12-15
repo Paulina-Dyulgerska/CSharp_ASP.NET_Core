@@ -1,7 +1,8 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
-    using ConformityCheck.Data.Models;
+
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.Suppliers;
@@ -32,6 +33,7 @@
         public async Task<IActionResult> ListAll()
         {
             var model = await this.articlesService.GetAllAsNoTrackingOrderedAsync<ArticleListAllModel>();
+
             return this.View(model);
         }
 
@@ -75,7 +77,19 @@
                 input.Suppliers = model.Suppliers;
                 input.Substances = model.Substances;
                 input.Products = model.Products;
-                return this.View(input);
+
+                //// not needed at the model with the current model
+                //var propertyNumber = nameof(input.Number);
+
+                //if (this.ModelState.Keys.Contains(propertyNumber)
+                //    && this.ModelState[propertyNumber].AttemptedValue.ToString() == model.Number)
+                //{
+                //    this.ModelState.Remove(propertyNumber);
+
+                //    return await this.Edit(input);
+                //}
+
+                //return this.View(input);
             }
 
             await this.articlesService.EditAsync(input);
@@ -95,7 +109,9 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(input);
+                var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersModel>(input.Id);
+
+                return this.View(model);
             }
 
             await this.articlesService.AddSupplierAsync(input);
@@ -115,7 +131,9 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(input);
+                var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersModel>(input.Id);
+
+                return this.View(model);
             }
 
             await this.articlesService.ChangeMainSupplierAsync(input);
@@ -135,7 +153,9 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(input);
+                var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersModel>(input.Id);
+
+                return this.View(model);
             }
 
             await this.articlesService.RemoveSupplierAsync(input);
@@ -155,7 +175,9 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(input);
+                var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesModel>(input.Id);
+
+                return this.View(model);
             }
 
             await this.articlesService.AddConformityTypeAsync(input);
@@ -175,7 +197,9 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(input);
+                var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesModel>(input.Id);
+
+                return this.View(model);
             }
 
             await this.articlesService.RemoveConformityTypesAsync(input);
@@ -193,7 +217,6 @@
         public async Task<IActionResult> Details(string id)
         {
             var model = await this.articlesService.GetByIdAsync<ArticleDetailsModel>(id);
-            //var model = await this.articlesService.GetByIdAsync<ArticleEditModel>(id);
 
             return this.View(model);
         }

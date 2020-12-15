@@ -66,6 +66,13 @@
                             x.ConformityTypeId == conformityTypeId);
         }
 
+        public bool ArticleEntityNumberCheck(string input)
+        {
+            return this.articlesRepository
+                .AllAsNoTracking()
+                .Any(x => x.Number == input.Trim().ToUpper());
+        }
+
         public bool ConformityTypeEntityIdCheck(int id)
         {
             return this.conformityTypesRepository.AllAsNoTracking().Any(x => x.Id == id);

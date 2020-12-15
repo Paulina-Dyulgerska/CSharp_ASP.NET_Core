@@ -22,6 +22,11 @@
                 return ValidationResult.Success;
             }
 
+            if (value == null && !this.AllowNull)
+            {
+                return new ValidationResult(this.ErrorMessage);
+            }
+
             var context = (IContentCheckService)validationContext.GetService(typeof(IContentCheckService));
             var supplierEntity = context.SupplierEntityIdCheck(value.ToString());
 

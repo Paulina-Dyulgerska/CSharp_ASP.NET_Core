@@ -1,5 +1,6 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
+    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
 
     using ConformityCheck.Services.Data;
@@ -9,6 +10,8 @@
 
     public class ConformitiesController : BaseController
     {
+        private const string SuppliersCallerViewName = "Suppliers";
+        private const string ArticlesCallerViewName = "Articles";
         private readonly IArticlesService articlesService;
         private readonly ISuppliersService supplierService;
         private readonly IProductsService productService;
@@ -42,9 +45,8 @@
         {
             if (!this.ModelState.IsValid)
             {
-                //input.ValidForSingleArticle = false;
-                //return this.RedirectToAction(nameof(this.Create));
                 input.ValidForSingleArticle = false;
+
                 return this.View(input);
             }
 
@@ -64,15 +66,17 @@
         [HttpPost]
         public async Task<IActionResult> AddToArticleConformityType(ArticleManageConformitiesInputModel input)
         {
+            var id = input.Conformity.ArticleId;
+
             if (!this.ModelState.IsValid)
             {
-                return this.View(input);
+                var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesModel>(id);
+
+                return this.View(model);
             }
 
             await this.conformitiesService.CreateAsync(input.Conformity);
-            var id = input.Conformity.ArticleId;
 
-            //return this.RedirectToAction("Edit", "Articles", new { input.Conformity.ArticleId });
             return this.RedirectToAction(nameof(ArticlesController.Edit), "Articles", new { id });
         }
 
@@ -89,13 +93,27 @@
             // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (!this.ModelState.IsValid)
             {
-                return this.View(input);
+                var getModel = new ConformityEditGetModel
+                {
+                    ArticleId = input.ArticleId,
+                    SupplierId = input.SupplierId,
+                    ConformityTypeId = input.ConformityTypeId,
+                    Id = input.Id,
+                };
+
+                var model = await this.conformitiesService.GetForEditAsync(getModel);
+
+                return this.View(model);
             }
 
             await this.conformitiesService.EditAsync(input);
-            var id = input.ArticleId;
 
-            return this.RedirectToAction(nameof(ArticlesController.Details), "Articles", new { id });
+            if (input.CallerViewName == SuppliersCallerViewName)
+            {
+                return this.RedirectToAction(nameof(SuppliersController.Details), SuppliersCallerViewName, new { id = input.SupplierId });
+            }
+
+            return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
         }
     }
 }

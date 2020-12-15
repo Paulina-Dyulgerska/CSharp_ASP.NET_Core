@@ -1,6 +1,7 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Articles
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
     using AutoMapper;
@@ -14,6 +15,8 @@
         [ArticleEntityAttribute]
         public string Id { get; set; }
 
+        // Required e here to activate the Required in the client-side validation.
+        [Required]
         public string SupplierId { get; set; }
 
         public IEnumerable<SupplierExportModel> Suppliers { get; set; }

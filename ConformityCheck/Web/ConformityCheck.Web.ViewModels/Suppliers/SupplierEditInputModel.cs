@@ -1,10 +1,41 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Suppliers
 {
-    using ConformityCheck.Common.ValidationAttributes;
+    using System.ComponentModel.DataAnnotations;
 
-    public class SupplierEditInputModel : SupplierBaseModel
+    using ConformityCheck.Common.ValidationAttributes;
+    using ConformityCheck.Data.Models;
+    using ConformityCheck.Services.Mapping;
+
+    public class SupplierEditInputModel : IMapFrom<Supplier>
     {
         [SupplierEntityAttribute]
         public string Id { get; set; }
+
+        public string Number { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9 _-]*$", ErrorMessage = "The field Name could contain only letters, digits, '-', '_' or ' '.")]
+        public string Name { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [MaxLength(20)]
+        [RegularExpression("[0-9+ -]*", ErrorMessage = "The field Phone Number could contain only digits, '-', '+' or ' '.")]
+        public string PhoneNumber { get; set; }
+
+        [MaxLength(20)]
+        [RegularExpression("^[A-Z]+[a-z]*$", ErrorMessage = "The field Contact Person first name could contain only letters.")]
+        public string ContactPersonFirstName { get; set; }
+
+        [MaxLength(20)]
+        [RegularExpression("^[A-Z]+[a-z]*$", ErrorMessage = "The field Contact Person last name could contain only letters.")]
+        public string ContactPersonLastName { get; set; }
+
+        // TODO: who is the user?
+        public string UserId { get; set; }
     }
 }

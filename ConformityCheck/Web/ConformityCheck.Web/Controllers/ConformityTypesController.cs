@@ -1,5 +1,6 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ConformityCheck.Services.Data;
@@ -65,7 +66,20 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(input);
+                var model = await this.conformityTypeService.GetByIdAsync<ConformityTypeEditInputModel>(input.Id);
+
+                // this is needed to reject the creation of conformity type with a dublicated description.
+                var propertyDescription = nameof(input.Description);
+
+                if (this.ModelState.Keys.Contains(propertyDescription)
+                    && this.ModelState[propertyDescription].AttemptedValue.ToString() == model.Description)
+                {
+                    this.ModelState.Remove(propertyDescription);
+
+                    return await this.Edit(input);
+                }
+
+                return this.View(model);
             }
 
             await this.conformityTypeService.EditAsync(input);

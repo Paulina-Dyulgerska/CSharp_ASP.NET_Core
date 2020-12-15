@@ -11,13 +11,13 @@
         [Required]
         [MaxLength(20)]
         [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9-]*$", ErrorMessage = "The field Nr. could contain only letters, digits or '-'.")]
-        //[SupplierNumberDublicatedAttribute] //to generate numbers authomatically
+        [SupplierNumberDublicatedAttribute] //to generate numbers authomatically
         public string Number { get; set; }
 
         [Required]
         [MaxLength(50)]
         [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9 _-]*$", ErrorMessage = "The field Name could contain only letters, digits, '-', '_' or ' '.")]
-        [SupplierNameDublicatedAttribute]
+        //[SupplierNameDublicatedAttribute]
         public string Name { get; set; }
 
         [Required]

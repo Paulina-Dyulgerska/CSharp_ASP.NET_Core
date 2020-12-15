@@ -9,6 +9,8 @@
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
+    using ConformityCheck.Web.ViewModels.Articles;
+    using ConformityCheck.Web.ViewModels.Conformities;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.EntityFrameworkCore;
 
@@ -62,6 +64,64 @@
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefaultAsync();
+        }
+
+        //public async Task<SupplierDetailsModel> DetailsByIdAsync(string id)
+        //{
+        //    // SELECT*
+        //    //  FROM ArticleConformityTypes AS ACONT
+        //    //  LEFT JOIN ArticleSuppliers AS ASUP ON ACONT.ArticleId = ASUP.ArticleId
+        //    //  JOIN Suppliers AS SUP ON ASUP.SupplierId = SUP.Id
+        //    //  LEFT JOIN Conformities AS CON ON ASUP.ArticleId = CON.ArticleId
+        //    //  WHERE SUP.Id = id
+        //    var model = await this.GetByIdAsync<SupplierDetailsModel>(id);
+        //    model.Articles = await this.articleConformityTypesRepository
+        //                  .AllAsNoTracking()
+        //                  .Where(ac => ac.Article.ArticleSuppliers.Any(x => x.SupplierId == id))
+        //                  .Select(ac => new ArticleConformityModel
+        //                  {
+        //                      ArticleConformityType = ac,
+        //                      ArticleConformity = ac.Article.Conformities
+        //                                                      .AsQueryable()
+        //                                                      .Where(x => x.SupplierId == id
+        //                                                      && x.ConformityTypeId == ac.ConformityTypeId)
+        //                                                      .To<ConformityExportModel>()
+        //                                                      .FirstOrDefault(),
+        //                  })
+        //                  .ToListAsync();
+        //    var a = model.Articles.Where(x => x.ArticleConformity != null).ToList();
+        //    return model;
+        //}
+
+        public async Task<SupplierDetailsModel> DetailsByIdAsync(string id)
+        {
+            // SELECT*
+            //  FROM ArticleConformityTypes AS ACONT
+            //  LEFT JOIN ArticleSuppliers AS ASUP ON ACONT.ArticleId = ASUP.ArticleId
+            //  JOIN Suppliers AS SUP ON ASUP.SupplierId = SUP.Id
+            //  LEFT JOIN Conformities AS CON ON ASUP.ArticleId = CON.ArticleId
+            //  WHERE SUP.Id = id
+            var model = await this.GetByIdAsync<SupplierDetailsModel>(id);
+            model.Articles = await this.articleConformityTypesRepository
+              .AllAsNoTracking()
+              .Where(ac => ac.Article.ArticleSuppliers.Any(x => x.SupplierId == id))
+              .Select(ac => new ArticleConformityModel
+              {
+                  ArticleId = ac.ArticleId,
+                  ArticleNumber = ac.Article.Number,
+                  ArticleDescription = ac.Article.Description,
+                  ConformityTypeId = ac.ConformityTypeId,
+                  ConformityTypeDescription = ac.ConformityType.Description,
+                  ArticleConformity = ac.Article.Conformities
+                                                  .Where(x => x.SupplierId == id
+                                                  && x.ConformityTypeId == ac.ConformityTypeId)
+                                                  .FirstOrDefault(),
+              })
+              .ToListAsync();
+
+            var a = model.Articles.Where(x => x.ArticleConformity != null).ToList();
+
+            return model;
         }
 
         public async Task CreateAsync(SupplierCreateInputModel input)
@@ -145,5 +205,6 @@
 
             return st.ToString().Trim();
         }
+
     }
 }

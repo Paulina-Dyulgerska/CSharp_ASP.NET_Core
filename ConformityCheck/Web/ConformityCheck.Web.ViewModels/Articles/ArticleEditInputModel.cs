@@ -12,12 +12,21 @@
     using ConformityCheck.Web.ViewModels.ConformityTypes;
     using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class ArticleEditInputModel : ArticleBaseModel, /*IMapFrom<Article>, */IHaveCustomMappings
+    public class ArticleEditInputModel : IMapFrom<Article>, IHaveCustomMappings
     {
         private IEnumerable<SupplierExportModel> suppliers;
 
         [ArticleEntityAttribute]
         public string Id { get; set; }
+
+        public string Number { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9 _-]*$", ErrorMessage = "The field Description could contain only letters, digits, '-', '_' or ' '.")]
+        [Display(Name = "* Article description:")]
+        //[DescriptionRegExAttribute]
+        public string Description { get; set; }
 
         public IEnumerable<SupplierExportModel> Suppliers
         {
@@ -30,18 +39,18 @@
             {
                 this.suppliers = value;
 
-                foreach (var item in this.suppliers)
+                foreach (var supplier in this.suppliers)
                 {
-                    item.HasAllConformed = true;
+                    supplier.HasAllConformed = true;
 
                     foreach (var conformityType in this.ConformityTypes)
                     {
                         var conformity = this.Conformities
                             .FirstOrDefault(x => x.ConformityType.Id == conformityType.Id
-                                            && x.Supplier.Id == item.Id);
+                                            && x.Supplier.Id == supplier.Id);
                         if (conformity == null || !conformity.IsAccepted || !conformity.IsValid)
                         {
-                            item.HasAllConformed = false;
+                            supplier.HasAllConformed = false;
                             break;
                         }
                     }

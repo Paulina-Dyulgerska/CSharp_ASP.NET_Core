@@ -15,10 +15,10 @@
         {
             var context = (IContentCheckService)validationContext.GetService(typeof(IContentCheckService));
 
-            var hasName = context
+            var hasNumber = context
                 .SupplierEntityNumberCheck(value.ToString());
 
-            if (hasName)
+            if (hasNumber)
             {
                 return new ValidationResult(this.ErrorMessage);
             }

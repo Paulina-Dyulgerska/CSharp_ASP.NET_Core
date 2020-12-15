@@ -82,7 +82,7 @@
         {
             var entity = await this.conformitiesRepository
                                 .AllAsNoTracking()
-                                .Where(x => x.Id == input.ConformityId)
+                                .Where(x => x.Id == input.Id)
                                 .To<ConformityEditInputModel>()
                                 .FirstOrDefaultAsync();
 

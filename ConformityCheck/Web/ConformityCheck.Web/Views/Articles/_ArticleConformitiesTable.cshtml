@@ -1,4 +1,7 @@
 ﻿@model ArticleEditInputModel
+{
+var t = @Model.GetType();
+}
 
 @foreach (var conformityType in this.Model.ConformityTypes)
 {
@@ -34,7 +37,8 @@
                         <a asp-controller="Conformities" asp-action="Edit" class="btn btn-primary"
                            asp-route-articleId="@Model.Id"
                            asp-route-supplierId="@supplier.Id"
-                           asp-route-conformityTypeId="@conformityType.Id">Add</a>
+                           asp-route-conformityTypeId="@conformityType.Id"
+                           asp-route-callerViewName="Articles">Add</a>
                     </td>
                     <td></td>
                 }
@@ -42,10 +46,11 @@
                 {
                     <td>
                         <a asp-controller="Conformities" asp-action="Edit" class="btn btn-primary"
-                           asp-route-conformityId="@(conformityBySupplier.Id)"
+                           asp-route-Id="@(conformityBySupplier.Id)"
                            asp-route-articleId="@Model.Id"
                            asp-route-supplierId="@supplier.Id"
-                           asp-route-conformityTypeId="@conformityType.Id">Edit</a>
+                           asp-route-conformityTypeId="@conformityType.Id"
+                           asp-route-callerViewName="Articles">Edit</a>
                     </td>
                     <td>
                         <a asp-controller="Conformities" asp-action="Delete" class="btn btn-primary"

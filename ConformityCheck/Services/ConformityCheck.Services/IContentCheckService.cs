@@ -10,6 +10,8 @@
 
         bool ArticleConformityTypeEntityIdCheck(string articleId, int conformityTypeId);
 
+        bool ArticleEntityNumberCheck(string input);
+
         bool ConformityTypeEntityIdCheck(int id);
 
         bool ConformityTypeEntityDescriptionCheck(string input);

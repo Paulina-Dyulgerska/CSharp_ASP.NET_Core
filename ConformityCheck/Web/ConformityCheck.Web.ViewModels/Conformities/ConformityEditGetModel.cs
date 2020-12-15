@@ -5,7 +5,7 @@
     public class ConformityEditGetModel
     {
         [ConformityEntityAttribute(allowNull: true)]
-        public string ConformityId { get; set; }
+        public string Id { get; set; }
 
         [ConformityTypeEntityAttribute]
         public int ConformityTypeId { get; set; }

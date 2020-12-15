@@ -14,6 +14,8 @@
         [ConformityEntityAttribute]
         public string Id { get; set; }
 
+        public ArticleExportModel Article { get; set; }
+
         public ConformityTypeExportModel ConformityType { get; set; }
 
         public SupplierExportModel Supplier { get; set; }

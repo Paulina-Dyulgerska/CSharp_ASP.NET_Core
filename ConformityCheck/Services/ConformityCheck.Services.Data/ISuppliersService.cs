@@ -12,6 +12,8 @@
 
         Task<IEnumerable<T>> GetArticlesByIdAsync<T>(string id);
 
+        Task<SupplierDetailsModel> DetailsByIdAsync(string id);
+
         //void AddArticle(int supplierId, int articleId);
 
         //void DeleteArticle(int supplierId, int articleId);

@@ -6,5 +6,7 @@
     {
         [ConformityEntityAttribute(allowNull: true)]
         public string Id { get; set; }
+
+        public string CallerViewName { get; set; }
     }
 }
