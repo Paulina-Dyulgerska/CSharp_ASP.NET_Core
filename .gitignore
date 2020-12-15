@@ -4,9 +4,9 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 appsettings*.json
-TODO.txt
+TODOs.txt
 UsageOfThisProject.txt
-Seeding/DataFiles*
+ConformityCheck/Data/ConformityCheck.Data/Seeding/DataFiles/*
 
 # User-specific files
 *.rsuser
