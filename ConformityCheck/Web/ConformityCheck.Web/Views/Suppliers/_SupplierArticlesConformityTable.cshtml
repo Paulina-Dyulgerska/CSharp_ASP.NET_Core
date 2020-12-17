@@ -2,7 +2,7 @@
 
 @foreach (var article in this.Model.Articles)
 {
-    <table class="table table-light table-responsive-md table-hover table-bordered table-sm">
+    <table id="dataTable" class="table table-light table-responsive-md table-hover table-bordered table-sm">
         <thead>
             <tr>
                 <th scope="col">Article number</th>
@@ -14,7 +14,7 @@
                 <th scope="col">Id</th>
                 <th class="col">Add / Edit</th>
                 <th class="col">Delete</th>
-                <th class="col-1">Send Request</th>
+                <th class="col">Send Request</th>
             </tr>
         </thead>
         <tr>

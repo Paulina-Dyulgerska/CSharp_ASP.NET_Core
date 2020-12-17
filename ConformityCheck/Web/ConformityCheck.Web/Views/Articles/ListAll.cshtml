@@ -11,43 +11,51 @@
 <a asp-action="Create" class="btn btn-primary">Create article</a>
 
 <div class="container-fluid">
-    <table id="table" class="table table-light table-responsive-md table-hover table-striped table-bordered table-sm">
-        <thead>
-            <tr class="d-flex">
-                <th class="col-2">
-                    Article Nr.
-                    <button onclick="sortList()">Sort</button>
-                </th>
-                <th class="col-2">Article description</th>
-                <th class="col-1">Main supplier Nr.</th>
-                <th class="col-1">Main supplier name</th>
-                <th class="col-1">Is confirmed</th>
-                <th class="col-1">Details</th>
-                <th class="col-1">Edit</th>
-                <th class="col-1">Delete</th>
-            </tr>
-        </thead>
-        @foreach (var article in this.Model)
-        {
-            <tr class="d-flex">
-                <td id="search" class="col-2">@article.Number</td>
-                <td id="search" class="col-2">@article.Description</td>
-                <td class="col-1">@article.MainSupplierNumber</td>
-                <td class="col-1">@article.MainSupplierName</td>
-                <td class="col-1">@article.IsConfirmed</td>
-                <td class="col-1">
-                    <a asp-action="Details" class="btn btn-primary" asp-route-id="@article.Id">Details</a>
-                </td>
-                <td class="col-1">
-                    @*    <a href="Edit?id=@article.Id" class="btn btn-primary" id="@article.Id">Edit</a>*@
-                    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@article.Id">Edit</a>
-                </td>
-                <td class="col-1">
-                    <a asp-action="Delete" class="btn btn-primary" asp-route-id="@article.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </table>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="dataTable" class="table table-light table-responsive-md table-hover table-striped table-bordered table-sm">
+                    <thead>
+                        <tr class="d-flex">
+                            <th class="col-2">
+                                Article Nr.
+                                <button onclick="sortList()">Sort</button>
+                            </th>
+                            <th class="col-2">Article description</th>
+                            <th class="col-1">Main supplier Nr.</th>
+                            <th class="col-1">Main supplier name</th>
+                            <th class="col-1">Is confirmed</th>
+                            <th class="col-1">Details</th>
+                            <th class="col-1">Edit</th>
+                            <th class="col-1">Delete</th>
+                        </tr>
+                    </thead>
+                    @foreach (var article in this.Model)
+                    {
+                        <tr class="d-flex">
+                            <td id="search" class="col-2">@article.Number</td>
+                            <td id="search" class="col-2">@article.Description</td>
+                            <td class="col-1">@article.MainSupplierNumber</td>
+                            <td class="col-1">@article.MainSupplierName</td>
+                            <td class="col-1">@article.IsConfirmed</td>
+                            <td class="col-1">
+                                <a asp-action="Details" class="btn btn-primary" asp-route-id="@article.Id">Details</a>
+                            </td>
+                            <td class="col-1">
+                                <a asp-action="Edit" class="btn btn-primary" asp-route-id="@article.Id">Edit</a>
+                            </td>
+                            <td class="col-1">
+                                <a asp-action="Delete" class="btn btn-primary" asp-route-id="@article.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section SideBar{

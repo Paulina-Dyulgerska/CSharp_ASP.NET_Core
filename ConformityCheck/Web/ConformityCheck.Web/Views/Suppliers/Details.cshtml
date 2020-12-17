@@ -24,12 +24,26 @@
     </div>
 
     <div class="form-group">
-            <label asp-for="Articles"></label>
-            <partial name="_SupplierArticlesConformityTable" model="Model" />
-        </div>
+        <label asp-for="Articles"></label>
+        <partial name="_SupplierArticlesConformityTable" model="Model" />
+    </div>
 
 </div>
 
 @section SideBar{
     <partial name="_SideMenuGeneral" model="Model" />
 }
+
+<!--@section Links{-->
+    <!-- Page level custom styles -->
+    <!--<link href="~/lib/datatables/DataTables-1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+}
+
+@section Scripts{-->
+    <!-- Page level plugins -->
+    <!--<script src="~/lib/datatables/DataTables-1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/DataTables-1.10.22/js/dataTables.bootstrap4.min.js"></script>-->
+
+    <!-- Page level custom scripts -->
+    <!--<script src="~/js/datatables.js"></script>
+}-->

@@ -1,7 +1,7 @@
 ﻿// sorting column in a table:
 function sortList() {
     var table, i, switching, b, shouldSwitch;
-    table = document.getElementById("table");
+    table = document.getElementById("dataTable");
     switching = true;
     /* Make a loop that will continue until
     no switching has been done: */
@@ -36,7 +36,7 @@ function sortList() {
 function filterTableByTwoColumns(event) {
     console.log(event);
     var filter = event.target.value.toUpperCase();
-    var rows = document.querySelector("#table tbody").rows;
+    var rows = document.querySelector("#dataTable tbody").rows;
     console.log(rows);
     for (var i = 0; i < rows.length; i++) {
         var firstCol = rows[i].cells[0].textContent.toUpperCase();

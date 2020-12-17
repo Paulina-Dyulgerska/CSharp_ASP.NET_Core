@@ -5,8 +5,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
+
+    <!-- Project level custom fonts -->
+    <link href="~/lib/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" asp-append-version="true">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet" asp-append-version="true">
+
+    <!-- Project level custom styles -->
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/sb-admin-2.min.css" rel="stylesheet" asp-append-version="true" />
+
+    @await this.RenderSectionAsync("Links", required: false)
 </head>
 <body>
     <header>
@@ -46,7 +56,7 @@
         <main role="main" class="pb-3">
             <div class="row">
                 <div class="col-2" style="background-color:aqua">
-                    @RenderSection("SideBar", required: false)
+                    @await RenderSectionAsync("SideBar", required: false)
                 </div>
                 <div class="col-10" style="background-color:antiquewhite;">
                     @this.RenderBody()
@@ -61,11 +71,16 @@
         </div>
     </footer>
 
+    <!-- Project level plugins -->
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+
+    <!-- Project level custom scripts -->
     <script src="~/js/site.min.js" asp-append-version="true"></script>
+    <script src="~/js/sb-admin-2.min.js" asp-append-version="true"></script>
+
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
