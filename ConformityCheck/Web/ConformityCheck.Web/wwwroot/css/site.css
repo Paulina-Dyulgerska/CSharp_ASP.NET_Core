@@ -7,11 +7,18 @@ a.navbar-brand {
     word-break: break-all;
 }
 
+/* Header styles
+-------------------------------------------------- */
+body > header > nav {
+    background-color: aqua;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
     font-size: 14px;
 }
+
 @media (min-width: 768px) {
     html {
         font-size: 16px;
@@ -21,6 +28,7 @@ html {
 .border-top {
     border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
     border-bottom: 1px solid #e5e5e5;
 }
@@ -45,6 +53,7 @@ body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
 }
+
 .footer {
     position: absolute;
     bottom: 0;
@@ -53,12 +62,15 @@ body {
     /* Set the fixed height of the footer here */
     height: 60px;
     line-height: 60px; /* Vertically center the text there */
+    background-color: aqua;
 }
 
 * {
     box-sizing: border-box;
 }
 
+/* Checkbox styles
+-------------------------------------------------- */
 input[type='checkbox'] {
     /*-webkit-appearance: none;*/
     width: 15px;

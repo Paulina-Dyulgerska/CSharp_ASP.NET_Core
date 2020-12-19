@@ -20,8 +20,6 @@
             //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-
-    
 });
 
 $('#Conformity_SupplierId').change();

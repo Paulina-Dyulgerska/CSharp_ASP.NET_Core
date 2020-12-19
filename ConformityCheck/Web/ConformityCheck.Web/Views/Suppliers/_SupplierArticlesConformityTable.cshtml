@@ -1,22 +1,23 @@
 ﻿@model SupplierDetailsModel
 
-@foreach (var article in this.Model.Articles)
-{
-    <table id="dataTable" class="table table-light table-responsive-md table-hover table-bordered table-sm">
-        <thead>
-            <tr>
-                <th scope="col">Article number</th>
-                <th scope="col">Article desc.</th>
-                <th scope="col">Conformity type</th>
-                <th scope="col">Conformity available</th>
-                <th scope="col">Is accepted?</th>
-                <th scope="col">Is valid?</th>
-                <th scope="col">Id</th>
-                <th class="col">Add / Edit</th>
-                <th class="col">Delete</th>
-                <th class="col">Send Request</th>
-            </tr>
-        </thead>
+
+<table id="dataTable" class="table table-light table-responsive-md table-hover table-bordered table-sm">
+    <thead>
+        <tr>
+            <th scope="col">Article number</th>
+            <th scope="col">Article desc.</th>
+            <th scope="col">Conformity type</th>
+            <th scope="col">Conformity available</th>
+            <th scope="col">Is accepted?</th>
+            <th scope="col">Is valid?</th>
+            <th scope="col">Id</th>
+            <th class="col">Add / Edit</th>
+            <th class="col">Delete</th>
+            <th class="col">Send Request</th>
+        </tr>
+    </thead>
+    @foreach (var article in this.Model.Articles)
+    {
         <tr>
             <td>@article.ArticleNumber </td>
             <td>@article.ArticleDescription</td>
@@ -62,5 +63,5 @@
                    asp-route-conformityTypeId="@article.ConformityTypeId">Send Request</a>
             </td>
         </tr>
-    </table>
-}
+    }
+</table>

@@ -1,23 +1,33 @@
-﻿@model IEnumerable<ArticleListAllModel>
+﻿@*@model IEnumerable<ArticleListAllModel>*@
+@model IEnumerable<ArticleDetailsModel>
 
 @{
     this.ViewData["Title"] = "Articles";
 }
 
-<h3>@this.ViewData["Title"]</h3>
-
-<input size="36" type="text" id="searchInput" placeholder="Search for article number or name...">
-
-<a asp-action="Create" class="btn btn-primary">Create article</a>
-
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            <div class="d-flex justify-content-between">
+                <h4 class="m-0 font-weight-bold text-primary ">
+                    @this.ViewData["Title"]
+                </h4>
+                <a asp-action="Create" class="btn btn-primary">Create article</a>
+            </div>
+            <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text" id="btnGroupAddon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <input size="36" type="text" id="searchInput" class="form-control" placeholder="Search for article number or name..." aria-label="Input group example" aria-describedby="btnGroupAddon">
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table id="dataTable" class="table table-light table-responsive-md table-hover table-striped table-bordered table-sm">
+                <table id="dataTable" class="table table-light table-responsive table-hover table-bordered table-sm">
                     <thead>
                         <tr class="d-flex">
                             <th class="col-2">
@@ -26,8 +36,9 @@
                             </th>
                             <th class="col-2">Article description</th>
                             <th class="col-1">Main supplier Nr.</th>
-                            <th class="col-1">Main supplier name</th>
-                            <th class="col-1">Is confirmed</th>
+                            <th class="col-2">Main supplier name</th>
+                            <th class="col-1">Is confirmed by all suppliers</th>
+                            <th class="col-1">Is confirmed by main supplier</th>
                             <th class="col-1">Details</th>
                             <th class="col-1">Edit</th>
                             <th class="col-1">Delete</th>
@@ -35,20 +46,36 @@
                     </thead>
                     @foreach (var article in this.Model)
                     {
-                        <tr class="d-flex">
+                        <tr class="d-flex" data-id="@article.Id">
                             <td id="search" class="col-2">@article.Number</td>
                             <td id="search" class="col-2">@article.Description</td>
-                            <td class="col-1">@article.MainSupplierNumber</td>
-                            <td class="col-1">@article.MainSupplierName</td>
-                            <td class="col-1">@article.IsConfirmed</td>
+                            <td class="col-1">@article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true).Number</td>
+                            <td class="col-2">@article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true).Name</td>
+                            <td class="col-1">@(article.IsConfirmed ? "Yes" : "No")</td>
+                            <td class="col-1 isConfirmed">@(article.IsConfirmedByMainSupplier ? "Yes" : "No")</td>
                             <td class="col-1">
-                                <a asp-action="Details" class="btn btn-primary" asp-route-id="@article.Id">Details</a>
+                                <a asp-action="Details" class="btn btn-sm btn-info" asp-route-id="@article.Id">
+                                    <span class="icon text-white">
+                                        <i class="fas fa-info-circle"></i>
+                                    </span>
+                                    <span class="text">Details</span>
+                                </a>
                             </td>
                             <td class="col-1">
-                                <a asp-action="Edit" class="btn btn-primary" asp-route-id="@article.Id">Edit</a>
+                                <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@article.Id">
+                                    <span class="icon text-white">
+                                        <i class="fas fa-edit"></i>
+                                    </span>
+                                    <span class="text">Edit</span>
+                                </a>
                             </td>
                             <td class="col-1">
-                                <a asp-action="Delete" class="btn btn-primary" asp-route-id="@article.Id">Delete</a>
+                                <a asp-action="Delete" class="btn btn-sm btn-danger" asp-route-id="@article.Id">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                    <span class="text">Delete</span>
+                                </a>
                             </td>
                         </tr>
                     }
@@ -62,6 +89,12 @@
     <partial name="_SideMenuGeneral" />
 }
 
+@section Links{
+    @*<link href="~/lib/datatables/dist/css/datatables.min.css" rel="stylesheet" asp-append-version="true" />*@
+    @*<link href="~/lib/datatables/DataTables-1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet" asp-append-version="true" />*@
+}
+
 @section Scripts{
     <script src="~/js/tables.js"></script>
+    @*<script src="~/lib/datatables/dist/js/datatables.min.js"></script>*@
 }

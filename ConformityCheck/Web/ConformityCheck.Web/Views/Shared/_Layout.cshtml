@@ -14,15 +14,17 @@
     <!-- Project level custom styles -->
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
-    <link href="~/css/sb-admin-2.min.css" rel="stylesheet" asp-append-version="true" />
+    @*<link href="~/css/sb-admin-2.min.css" rel="stylesheet" asp-append-version="true" />*@
 
     @await this.RenderSectionAsync("Links", required: false)
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        @*<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">*@
+        <nav class="navbar navbar-expand-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-home"></i> @GlobalConstants.SystemName</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -54,14 +56,18 @@
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
-            <div class="row">
-                <div class="col-2" style="background-color:aqua">
-                    @await RenderSectionAsync("SideBar", required: false)
-                </div>
-                <div class="col-10" style="background-color:antiquewhite;">
-                    @this.RenderBody()
+            <div class="container">
+                <!-- Content here -->
+                <div class="row">
+                    <div class="container col-2" style="background-color:aqua">
+                        @await RenderSectionAsync("SideBar", required: false)
+                    </div>
+                    <div class="container col-10 align-items-center">
+                        @this.RenderBody()
+                    </div>
                 </div>
             </div>
+
         </main>
     </div>
 
@@ -79,7 +85,7 @@
 
     <!-- Project level custom scripts -->
     <script src="~/js/site.min.js" asp-append-version="true"></script>
-    <script src="~/js/sb-admin-2.min.js" asp-append-version="true"></script>
+    @*<script src="~/js/sb-admin-2.min.js" asp-append-version="true"></script>*@
 
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>

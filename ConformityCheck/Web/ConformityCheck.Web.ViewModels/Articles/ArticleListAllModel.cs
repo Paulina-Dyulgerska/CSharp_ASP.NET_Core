@@ -1,5 +1,6 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Articles
 {
+    using System;
     using System.Linq;
 
     using AutoMapper;
@@ -28,8 +29,11 @@
                 opt => opt.MapFrom(a => a.ArticleSuppliers.FirstOrDefault(x => x.IsMainSupplier).Supplier.Number))
                 .ForMember(
                 x => x.IsConfirmed,
-                opt => opt.MapFrom(a => a.Conformities
-                .All(x => x.IsAccepted)));
+                opt => opt.MapFrom(a => a.ArticleConformityTypes
+                                            .All(ac => a.Conformities
+                                                        .Any(c => ac.ConformityTypeId == c.ConformityTypeId
+                                                                    && c.IsAccepted
+                                                                    && c.ValidityDate >= DateTime.UtcNow.Date))));
         }
     }
 }

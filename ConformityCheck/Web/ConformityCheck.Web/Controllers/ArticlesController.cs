@@ -32,7 +32,8 @@
 
         public async Task<IActionResult> ListAll()
         {
-            var model = await this.articlesService.GetAllAsNoTrackingOrderedAsync<ArticleListAllModel>();
+            //var model = await this.articlesService.GetAllAsNoTrackingOrderedAsync<ArticleListAllModel>();
+            var model = await this.articlesService.GetAllAsNoTrackingOrderedAsync<ArticleDetailsModel>();
 
             return this.View(model);
         }

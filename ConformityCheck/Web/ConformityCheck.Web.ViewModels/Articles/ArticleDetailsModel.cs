@@ -10,6 +10,8 @@
     {
         public bool IsConfirmed => this.Suppliers.Count() > 0 && this.Suppliers.All(x => x.HasAllConformed);
 
+        public bool IsConfirmedByMainSupplier => this.Suppliers.Any(x => x.IsMainSupplier && x.HasAllConformed);
+
         //gyrmi mi instanciqta za nullna Suppliers, ako ne kaja izrishno na AutoMapper-a kak da mapva ot Article kym tozi class!!!!
         //ne moga da ostavq samo ArticleEditModel da iznese mappvaneto, a trqbwa i tuk da go opisha, inache 
         //mi hvyrlq null za value na suppliers!

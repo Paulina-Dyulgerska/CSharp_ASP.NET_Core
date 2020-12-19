@@ -1,7 +1,7 @@
 ﻿// sorting column in a table:
 function sortList() {
     var table, i, switching, b, shouldSwitch;
-    table = document.getElementById("dataTable");
+    table = document.getElementById('dataTable');
     switching = true;
     /* Make a loop that will continue until
     no switching has been done: */
@@ -53,3 +53,46 @@ function filterTableByTwoColumns(event) {
 }
 
 document.querySelector('#searchInput').addEventListener('keyup', filterTableByTwoColumns, false);
+
+//$(document).ready(function () {
+//    var rows = $('#dataTable > tbody > tr');
+//    for (var i = 0; i < rows.length; i++) {
+//        if (rows[i].getElementsByClassName('isConfirmed')[0].textContent === 'True') {
+//            rows[i].classList.add('table-success');
+//        } else {
+//            rows[i].classList.add('table-danger');
+//        }   
+//    }
+//});
+
+document.querySelectorAll('#dataTable > tbody > tr').forEach(r => {
+    r.addEventListener('load', colorTheRow(r), false);
+})
+
+function colorTheRow(r) {
+    if (r.getElementsByClassName('isConfirmed')[0].textContent === 'Yes') {
+        //r.classList.add('table-success');
+        r.setAttribute('style', 'background-color: #dcfddc;');
+    } else {
+        //r.classList.add('table-danger');
+        r.setAttribute('style', 'background-color: #f7d9d9;');
+    }
+}
+
+$(document).ready(function addRowHandlers() {
+    var table = document.getElementById("dataTable");
+    var rows = table.getElementsByTagName("tr");
+    for (i = 1; i < rows.length; i++) {
+        var currentRow = table.rows[i];
+        var createClickHandler = function (row) {
+            return function () {
+                //var cell = row.getElementsByTagName("td")[0];
+                var id = row.getAttribute('data-id');
+                //console.log(row);
+                //alert("id:" + id);
+                window.location.href = '/Articles/Details/' + id;
+            };
+        };
+        currentRow.onclick = createClickHandler(currentRow);
+    }
+});
