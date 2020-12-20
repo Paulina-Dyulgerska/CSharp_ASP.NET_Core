@@ -49,12 +49,19 @@
         {
             return await this.suppliersRepository
                 .AllAsNoTracking()
-                .OrderBy(x => x.Name)
+                .OrderByDescending(x => x.ArticleSuppliers.Count())
+                .ThenBy(x => x.Name)
                 .ThenBy(x => x.Number)
                 .ThenByDescending(x => x.CreatedOn)
                 .ThenByDescending(x => x.ModifiedOn)
                 .To<T>()
                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsPagesAsync<T>(int page, int itemsPerPage = 12)
+        {
+            var suppliers = await this.GetAllAsNoTrackingOrderedAsync<T>();
+            return suppliers.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
         }
 
         public async Task<T> GetByIdAsync<T>(string id)
@@ -205,6 +212,5 @@
 
             return st.ToString().Trim();
         }
-
     }
 }

@@ -10,10 +10,6 @@
         {
             // ne moje da se iztrie ConformityType, predi
             // da se iztriqt vsichki Conformities, koito sa ot tozi type!
-
-            //conformityType
-            //    .HasIndex(ct => ct.Description)
-            //    .IsUnique();
         }
     }
 }

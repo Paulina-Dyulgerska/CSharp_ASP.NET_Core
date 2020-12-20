@@ -37,6 +37,8 @@
 
         public string ArticleDescription { get; set; }
 
+        public string ConformityFileUrl { get; set; }
+
         // vsichki dates da sa v UTC, i tuk i na servera i na DB-a!!!
         [Required]
         [DataType(DataType.Date)]
@@ -54,14 +56,10 @@
 
         public string UserId { get; set; }
 
-        // [Required]
-        // [FileExtensionAttribute(extension: "pdf")]
-        // [FileSize(size: 10 * 1024 * 1024)]
-        public IFormFile File { get; set; }
-
-        public string FileUrl { get; set; }
-
-        public string Extension { get; set; }
+        [Required]
+        [FileExtensionAttribute(extension: "pdf")]
+        [FileSizeAttribute(size: 10 * 1024 * 1024)]
+        public IFormFile InputFile { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
@@ -70,7 +68,13 @@
                 .ForMember(x => x.SupplierName, opt => opt.MapFrom(x => x.Supplier.Name))
                 .ForMember(x => x.SupplierNumber, opt => opt.MapFrom(x => x.Supplier.Number))
                 .ForMember(x => x.ArticleDescription, opt => opt.MapFrom(x => x.Article.Description))
-                .ForMember(x => x.ArticleNumber, opt => opt.MapFrom(x => x.Article.Number));
+                .ForMember(x => x.ArticleNumber, opt => opt.MapFrom(x => x.Article.Number))
+                .ForMember(x => x.ConformityFileUrl, opt =>
+                    opt.MapFrom(x =>
+                        x.ConformityFile.RemoteConformityFileUrl != null ?
+                        x.ConformityFile.RemoteConformityFileUrl :
+                        "/conformityFiles/conformities/" + x.ConformityFile.Id + "." + x.ConformityFile.Extension));
+            // /wwwroot/conformityFiles/conformities/jhdsi-343g3h453-=g34g.pdf
         }
 
         public virtual IEnumerable<ValidationResult> Validate(System.ComponentModel.DataAnnotations.ValidationContext validationContext)

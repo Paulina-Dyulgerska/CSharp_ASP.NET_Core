@@ -32,7 +32,7 @@
 
         public async Task<IActionResult> ListAll()
         {
-            var model = await this.suppliersService.GetAllAsync<SupplierFullInfoModel>();
+            var model = await this.suppliersService.GetAllAsNoTrackingOrderedAsync<SupplierFullInfoModel>();
 
             return this.View(model);
         }

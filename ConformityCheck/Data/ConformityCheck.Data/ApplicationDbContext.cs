@@ -24,9 +24,10 @@
         {
         }
 
-        // this is just an example for entity and services
+        // TODO: this is just an example for entity and services - to delete it
         public DbSet<Setting> Settings { get; set; }
 
+        // real entities
         public DbSet<Article> Articles { get; set; }
 
         public DbSet<Supplier> Suppliers { get; set; }
@@ -34,6 +35,8 @@
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Conformity> Conformities { get; set; }
+
+        public DbSet<ConformityFile> ConformityFiles { get; set; }
 
         public DbSet<ConformityType> ConformityTypes { get; set; }
 

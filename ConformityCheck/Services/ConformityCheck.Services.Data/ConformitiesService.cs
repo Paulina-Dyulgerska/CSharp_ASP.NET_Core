@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -22,6 +23,7 @@
         private readonly IDeletableEntityRepository<ConformityType> conformityTypesRepository;
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
+        private readonly IDeletableEntityRepository<ConformityFile> conformityFilesRepository;
         private readonly IRepository<ArticleConformityType> articleConformityTypeRepository;
 
         public ConformitiesService(
@@ -31,6 +33,7 @@
             IDeletableEntityRepository<ConformityType> conformityTypesRepository,
             IDeletableEntityRepository<Conformity> conformitiesRepository,
             IDeletableEntityRepository<ApplicationUser> usersRepository,
+            IDeletableEntityRepository<ConformityFile> conformityFilesRepository,
             IRepository<ArticleConformityType> articleConformityTypeRepository)
         {
             this.articlesRepository = articlesRepository;
@@ -39,6 +42,7 @@
             this.conformityTypesRepository = conformityTypesRepository;
             this.conformitiesRepository = conformitiesRepository;
             this.usersRepository = usersRepository;
+            this.conformityFilesRepository = conformityFilesRepository;
             this.articleConformityTypeRepository = articleConformityTypeRepository;
         }
 
@@ -67,6 +71,12 @@
                 .ToListAsync();
 
             return conformities;
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsPagesAsync<T>(int page, int itemsPerPage = 12)
+        {
+            var conformities = await this.GetAllAsNoTrackingOrderedAsync<T>();
+            return conformities.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
         }
 
         public async Task<T> GetByIdAsync<T>(string id)
@@ -117,14 +127,11 @@
             return entity;
         }
 
-        public async Task CreateAsync(ConformityCreateInputModel input)
+        public async Task CreateAsync(ConformityCreateInputModel input, string userId, string conformityFilePath)
         {
             if (input.ValidForSingleArticle)
             {
-                await this.AddConformityToAnArticleAsync(input);
-
-                await this.conformitiesRepository.SaveChangesAsync();
-
+                await this.AddConformityToAnArticleAsync(input, userId, conformityFilePath);
                 return;
             }
 
@@ -139,13 +146,11 @@
             foreach (var articleSupplierEntity in articleSuppliersEntities)
             {
                 input.ArticleId = articleSupplierEntity.ArticleId;
-                await this.AddConformityToAnArticleAsync(input);
+                await this.AddConformityToAnArticleAsync(input, userId, conformityFilePath);
             }
-
-            await this.conformitiesRepository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(ConformityEditInputModel input)
+        public async Task EditAsync(ConformityEditInputModel input, string userId, string conformityFilePath)
         {
             if (input.Id == null)
             {
@@ -158,10 +163,11 @@
                     IsAccepted = input.IsAccepted,
                     ValidityDate = input.IsAccepted ? DateTime.UtcNow.Date.AddYears(3) : (DateTime?)null,
                     Comments = input.Comments,
-                    FileUrl = "Az ne sym go naprawila oshte",
+                    InputFile = input.InputFile,
                 };
 
-                await this.AddConformityToAnArticleAsync(newConformity);
+                await this.AddConformityToAnArticleAsync(newConformity, userId, conformityFilePath);
+
                 return;
             }
 
@@ -178,12 +184,28 @@
             conformityEntity.AcceptanceDate = DateTime.UtcNow.Date;
             conformityEntity.ValidityDate = input.IsAccepted ? DateTime.UtcNow.Date.AddYears(3) : (DateTime?)null;
             conformityEntity.Comments = input.Comments;
-            conformityEntity.FileUrl = "Az ne sym go naprawila oshte 2";
 
             if (input.ValidityDate != null && input.IsAccepted)
             {
                 conformityEntity.ValidityDate = input.ValidityDate;
             }
+
+            // /wwwroot/files/conformities/jhdsi-343g3h453-=g34g.pdf
+            Directory.CreateDirectory($"{conformityFilePath}/conformities/");
+            var extension = Path.GetExtension(input.InputFile.FileName).TrimStart('.');
+
+            var conformityFileEntity = new ConformityFile
+            {
+                UserId = userId,
+                Extension = extension,
+            };
+
+            this.conformityFilesRepository.Delete(conformityEntity.ConformityFile);
+            conformityEntity.ConformityFile = conformityFileEntity;
+
+            var physicalPath = $"{conformityFilePath}/conformities/{conformityFileEntity.Id}.{extension}";
+            using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
+            await input.InputFile.CopyToAsync(fileStream);
 
             await this.conformitiesRepository.SaveChangesAsync();
         }
@@ -193,7 +215,10 @@
             throw new NotImplementedException();
         }
 
-        private async Task AddConformityToAnArticleAsync(ConformityCreateInputModel input)
+        private async Task AddConformityToAnArticleAsync(
+            ConformityCreateInputModel input,
+            string userId,
+            string conformityFilePath)
         {
             var articleConformityType = this.articleConformityTypeRepository
                                     .All()
@@ -232,7 +257,6 @@
                 AcceptanceDate = DateTime.UtcNow.Date,
                 ValidityDate = input.IsAccepted ? DateTime.UtcNow.Date.AddYears(3) : (DateTime?)null,
                 Comments = input.Comments,
-                FileUrl = "Az ne sym go naprawila oshte",
             };
 
             if (input.ValidityDate != null && input.IsAccepted)
@@ -240,9 +264,25 @@
                 conformityEntity.ValidityDate = input.ValidityDate;
             }
 
+            Directory.CreateDirectory($"{conformityFilePath}/conformities/");
+            var extension = Path.GetExtension(input.InputFile.FileName).ToLower().TrimStart('.');
+
+            var conformityFileEntity = new ConformityFile
+            {
+                UserId = userId,
+                Extension = extension,
+            };
+
+            conformityEntity.ConformityFile = conformityFileEntity;
+
+            var physicalPath = $"{conformityFilePath}/conformities/{conformityFileEntity.Id}.{extension}";
+            using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
+            await input.InputFile.CopyToAsync(fileStream);
+
             await this.conformitiesRepository.AddAsync(conformityEntity);
 
             await this.conformitiesRepository.SaveChangesAsync();
         }
+
     }
 }

@@ -499,14 +499,13 @@ namespace ConformityCheck.Data.Migrations
                     ConformityTypeId = table.Column<int>(nullable: false),
                     SupplierId = table.Column<string>(nullable: false),
                     ArticleId = table.Column<string>(nullable: false),
+                    ConformityFileId = table.Column<string>(nullable: true),
                     IssueDate = table.Column<DateTime>(nullable: false),
                     IsAccepted = table.Column<bool>(nullable: false),
                     AcceptanceDate = table.Column<DateTime>(nullable: true),
                     ValidityDate = table.Column<DateTime>(nullable: true),
                     Comments = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true),
-                    FileUrl = table.Column<string>(nullable: true),
-                    Extension = table.Column<string>(nullable: true)
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -531,6 +530,37 @@ namespace ConformityCheck.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Conformities_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ConformityFiles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    ConformityId = table.Column<string>(nullable: true),
+                    Extension = table.Column<string>(nullable: true),
+                    RemoteConformityFileUrl = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConformityFiles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ConformityFiles_Conformities_ConformityId",
+                        column: x => x.ConformityId,
+                        principalTable: "Conformities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ConformityFiles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -668,6 +698,23 @@ namespace ConformityCheck.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ConformityFiles_ConformityId",
+                table: "ConformityFiles",
+                column: "ConformityId",
+                unique: true,
+                filter: "[ConformityId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConformityFiles_IsDeleted",
+                table: "ConformityFiles",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConformityFiles_UserId",
+                table: "ConformityFiles",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ConformityTypes_IsDeleted",
                 table: "ConformityTypes",
                 column: "IsDeleted");
@@ -792,7 +839,7 @@ namespace ConformityCheck.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Conformities");
+                name: "ConformityFiles");
 
             migrationBuilder.DropTable(
                 name: "ProductConformityTypes");
@@ -807,13 +854,7 @@ namespace ConformityCheck.Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Articles");
-
-            migrationBuilder.DropTable(
-                name: "Suppliers");
-
-            migrationBuilder.DropTable(
-                name: "ConformityTypes");
+                name: "Conformities");
 
             migrationBuilder.DropTable(
                 name: "Products");
@@ -823,6 +864,15 @@ namespace ConformityCheck.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Substances");
+
+            migrationBuilder.DropTable(
+                name: "Articles");
+
+            migrationBuilder.DropTable(
+                name: "ConformityTypes");
+
+            migrationBuilder.DropTable(
+                name: "Suppliers");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

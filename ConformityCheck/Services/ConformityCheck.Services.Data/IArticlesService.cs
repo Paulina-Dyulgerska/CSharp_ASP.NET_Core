@@ -9,8 +9,6 @@
 
     public interface IArticlesService : IService<string>
     {
-        //Task<Article> GetByIdAsync(string id); //to delete it
-
         Task CreateAsync(ArticleCreateInputModel input);
 
         Task EditAsync(ArticleEditInputModel input);

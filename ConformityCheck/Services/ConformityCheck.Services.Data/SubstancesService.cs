@@ -50,5 +50,10 @@
         {
             throw new System.NotImplementedException();
         }
+
+        public Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsPagesAsync<T>(int page, int itemsPerPage = 12)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

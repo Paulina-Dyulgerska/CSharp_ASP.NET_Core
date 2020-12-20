@@ -59,16 +59,16 @@
             <span asp-validation-for="Conformity.ValidityDate" class="text-danger"></span>
         </div>
 
-        <div id="conformitiesContainer">
+        <div class="form-group">
             <label asp-for="Conformity.Comments"></label>
             <input asp-for="Conformity.Comments" class="form-control" placeholder="Add comments to the conformity" />
             <span asp-validation-for="Conformity.Comments" class="text-danger"></span>
         </div>
 
-        <div id="conformitiesContainer">
-            <label asp-for="Conformity.File"></label>
-            <input asp-for="Conformity.File" class="form-control" placeholder="Add file" />
-            <span asp-validation-for="Conformity.File" class="text-danger"></span>
+        <div class="form-group">
+            <label asp-for="Conformity.InputFile"></label>
+            <input asp-for="Conformity.InputFile" class="form-control" placeholder="Add file" />
+            <span asp-validation-for="Conformity.InputFile" class="text-danger"></span>
         </div>
 
         <input asp-for="Conformity.ValidForSingleArticle" value="true" checked hidden />

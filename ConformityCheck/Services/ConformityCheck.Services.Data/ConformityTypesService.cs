@@ -45,7 +45,7 @@
 
         public async Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsync<T>()
         {
-            var articles = await this.conformityTypesRepository
+            var conformityTypes = await this.conformityTypesRepository
                 .AllAsNoTracking()
                 .OrderBy(x => x.Description)
                 .ThenByDescending(x => x.CreatedOn)
@@ -53,7 +53,13 @@
                 .To<T>()
                 .ToListAsync();
 
-            return articles;
+            return conformityTypes;
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsPagesAsync<T>(int page, int itemsPerPage = 12)
+        {
+            var conformityTypes = await this.GetAllAsNoTrackingOrderedAsync<T>();
+            return conformityTypes.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
         }
 
         public async Task<T> GetByIdAsync<T>(int id)

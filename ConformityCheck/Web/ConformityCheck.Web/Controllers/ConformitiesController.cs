@@ -1,23 +1,33 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
+    using System;
     using System.Runtime.CompilerServices;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
+    using ConformityCheck.Services.Messaging;
     using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.Conformities;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class ConformitiesController : BaseController
     {
         private const string SuppliersCallerViewName = "Suppliers";
         private const string ArticlesCallerViewName = "Articles";
+        private readonly string conformityFilesDirectory;
         private readonly IArticlesService articlesService;
         private readonly ISuppliersService supplierService;
         private readonly IProductsService productService;
         private readonly IConformityTypesService conformityTypeService;
         private readonly ISubstancesService substanceService;
         private readonly IConformitiesService conformitiesService;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IWebHostEnvironment environment;
+        private readonly IEmailSender emailSender;
 
         public ConformitiesController(
             IArticlesService articlesService,
@@ -25,7 +35,10 @@
             IProductsService productsService,
             IConformityTypesService conformityTypesService,
             ISubstancesService substancesService,
-            IConformitiesService conformitiesService)
+            IConformitiesService conformitiesService,
+            UserManager<ApplicationUser> userManager,
+            IWebHostEnvironment environment,
+            IEmailSender emailSender)
         {
             this.articlesService = articlesService;
             this.supplierService = suppliersService;
@@ -33,6 +46,10 @@
             this.conformityTypeService = conformityTypesService;
             this.substanceService = substancesService;
             this.conformitiesService = conformitiesService;
+            this.userManager = userManager;
+            this.environment = environment;
+            this.emailSender = emailSender;
+            this.conformityFilesDirectory = $"{this.environment.WebRootPath}/files";
         }
 
         public IActionResult Create()
@@ -50,9 +67,15 @@
                 return this.View(input);
             }
 
-            await this.conformitiesService.CreateAsync(input);
+            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            await this.conformitiesService.CreateAsync(input, user.Id, this.conformityFilesDirectory);
+
+            this.TempData["Message"] = "Conformity added successfully.";
 
             // return this.Json(input);
+            // TODO: Redirect to conformity info page
             return this.RedirectToAction("ListAll", "Articles");
         }
 
@@ -75,7 +98,23 @@
                 return this.View(model);
             }
 
-            await this.conformitiesService.CreateAsync(input.Conformity);
+            //var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            try
+            {
+                await this.conformitiesService.CreateAsync(input.Conformity, user.Id, this.conformityFilesDirectory);
+            }
+            catch (Exception ex)
+            {
+                //da validiram s attribute i da ne prawq tezi gluposti tuk:!!!!!
+
+                this.ModelState.AddModelError(string.Empty, ex.Message);
+
+                return this.View(input);
+            }
+
+            this.TempData["Message"] = "Conformity added successfully.";
 
             return this.RedirectToAction(nameof(ArticlesController.Edit), "Articles", new { id });
         }
@@ -106,7 +145,32 @@
                 return this.View(model);
             }
 
-            await this.conformitiesService.EditAsync(input);
+            //var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            // Not needed since the validation is not in the service but in with an attribute done:
+            //try
+            //{
+            //    await this.conformitiesService.EditAsync(input, user.Id, this.conformityFilesDirectory);
+            //}
+            //catch (Exception ex)
+            //{
+            //    this.ModelState.AddModelError(string.Empty, ex.Message);
+            //    //da validiram s attribute i da ne prawq tezi gluposti tuk:!!!!!
+            //    var getModel = new ConformityEditGetModel
+            //    {
+            //        ArticleId = input.ArticleId,
+            //        SupplierId = input.SupplierId,
+            //        ConformityTypeId = input.ConformityTypeId,
+            //        Id = input.Id,
+            //    };
+            //    var model = await this.conformitiesService.GetForEditAsync(getModel);
+            //    return this.View(model);
+            //}
+
+            await this.conformitiesService.EditAsync(input, user.Id, this.conformityFilesDirectory);
+
+            this.TempData["Message"] = "Conformity added successfully.";
 
             if (input.CallerViewName == SuppliersCallerViewName)
             {

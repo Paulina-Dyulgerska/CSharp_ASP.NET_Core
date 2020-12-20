@@ -69,6 +69,12 @@
             return articles;
         }
 
+        public async Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsPagesAsync<T>(int page, int itemsPerPage)
+        {
+            var articles = await this.GetAllAsNoTrackingOrderedAsync<T>();
+            return articles.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
+        }
+
         public async Task<T> GetByIdAsync<T>(string id)
         {
             return await this.articlesRepository
@@ -257,7 +263,7 @@
             {
                 var articleConformityType = await this.articleConformityTypesRepository
                      .AllAsNoTracking()
-                     .FirstOrDefaultAsync(x => x.ArticleId == article.Id 
+                     .FirstOrDefaultAsync(x => x.ArticleId == article.Id
                                             && x.ConformityTypeId == conformityType);
 
                 if (articleConformityType != null)
@@ -371,6 +377,7 @@
 
             return st.ToString().Trim();
         }
+
 
 
 

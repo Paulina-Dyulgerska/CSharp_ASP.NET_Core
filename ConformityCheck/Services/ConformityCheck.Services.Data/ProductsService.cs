@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
@@ -47,6 +48,11 @@
         }
 
         public Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsync<T>()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsPagesAsync<T>(int page, int itemsPerPage = 12)
         {
             throw new System.NotImplementedException();
         }

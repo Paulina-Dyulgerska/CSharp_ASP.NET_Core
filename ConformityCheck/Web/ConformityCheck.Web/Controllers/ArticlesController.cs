@@ -30,10 +30,25 @@
             this.substanceService = substanceService;
         }
 
-        public async Task<IActionResult> ListAll()
+        // Articles/ListAll/{Id} - Id = page number
+        public async Task<IActionResult> ListAll(int id = 1)
         {
-            //var model = await this.articlesService.GetAllAsNoTrackingOrderedAsync<ArticleListAllModel>();
-            var model = await this.articlesService.GetAllAsNoTrackingOrderedAsync<ArticleDetailsModel>();
+            if (id <= 0)
+            {
+                return this.NotFound();
+            }
+
+            const int ItemsPerPage = 12;
+            const int IntervalOfPagesToShow = 2;
+
+            var model = new ArticlesListAllModel
+            {
+                ItemsPerPage = ItemsPerPage,
+                PageNumber = id,
+                ItemsCount = this.articlesService.GetCount(),
+                IntervalOfPagesToShow = IntervalOfPagesToShow,
+                Articles = await this.articlesService.GetAllAsNoTrackingOrderedAsPagesAsync<ArticleDetailsModel>(id, ItemsPerPage),
+            };
 
             return this.View(model);
         }

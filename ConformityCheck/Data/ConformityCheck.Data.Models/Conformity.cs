@@ -1,7 +1,6 @@
 ﻿namespace ConformityCheck.Data.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -31,6 +30,10 @@
 
         public virtual Article Article { get; set; }
 
+        public string ConformityFileId { get; set; }
+
+        public virtual ConformityFile ConformityFile { get; set; }
+
         public DateTime IssueDate { get; set; }
 
         public bool IsAccepted { get; set; }
@@ -44,9 +47,5 @@
         public string UserId { get; set; }
 
         public virtual ApplicationUser User { get; set; }
-
-        public string FileUrl { get; set; }
-
-        public string Extension { get; set; }
     }
 }

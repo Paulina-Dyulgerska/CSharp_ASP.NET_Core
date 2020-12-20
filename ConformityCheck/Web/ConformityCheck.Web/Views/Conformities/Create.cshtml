@@ -79,12 +79,17 @@
             <span asp-validation-for="Comments" class="text-danger"></span>
         </div>
 
-        <div id="conformitiesContainer">
-            <label asp-for="File"></label>
-            <input asp-for="File" class="form-control" placeholder="Add file" />
-            <span asp-validation-for="File" class="text-danger"></span>
+        <div class="form-group">
+            <label asp-for="InputFile"></label>
+            <input asp-for="InputFile" class="form-control" placeholder="Add file" />
+            <span asp-validation-for="InputFile" class="text-danger"></span>
         </div>
 
+        @*<div class="form-group">
+            <label asp-for="UserId"></label>
+            <input asp-for="UserId" class="form-control" hidden value="@this.User.Identity.Name" />
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>*@
 
         @* TODO: add the declared substances and assing the restrictions. *@
 
