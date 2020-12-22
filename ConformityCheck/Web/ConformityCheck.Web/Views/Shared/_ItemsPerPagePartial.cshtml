@@ -1,0 +1,21 @@
+﻿@model PagingViewModel
+@foreach (var item in new[] { 12, 24, 48, 96 })
+{
+    if (item == @Model.ItemsPerPage)
+    {
+        <div class="page-item active" aria-current="page">
+            <span class="page-link">
+                @item
+                <span class="sr-only">(current)</span>
+            </span>
+        </div>
+    }
+    else
+    {
+        <div class="page-item">
+            <a class="page-link" asp-action="ListAll" asp-route-id="1" asp-route-itemsPerPage="@item">
+                @item
+            </a>
+        </div>
+    }
+}

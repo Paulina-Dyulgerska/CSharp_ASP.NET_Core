@@ -61,19 +61,22 @@
         [FileSizeAttribute(size: 10 * 1024 * 1024)]
         public IFormFile InputFile { get; set; }
 
-        public void CreateMappings(IProfileExpression configuration)
+        public virtual void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Conformity, ConformityBaseModel>()
+                // TODO - tezi sa izlishni, zashtoto se namapvat atomatichno ot AutoMapper-a prez
+                // navigacionnite propertita!!!!
                 .ForMember(x => x.ConformityTypeDescription, opt => opt.MapFrom(x => x.ConformityType.Description))
                 .ForMember(x => x.SupplierName, opt => opt.MapFrom(x => x.Supplier.Name))
                 .ForMember(x => x.SupplierNumber, opt => opt.MapFrom(x => x.Supplier.Number))
                 .ForMember(x => x.ArticleDescription, opt => opt.MapFrom(x => x.Article.Description))
                 .ForMember(x => x.ArticleNumber, opt => opt.MapFrom(x => x.Article.Number))
+                // Towa e edinstveno nujno za tozi class:
                 .ForMember(x => x.ConformityFileUrl, opt =>
                     opt.MapFrom(x =>
-                        x.ConformityFile.RemoteConformityFileUrl != null ?
-                        x.ConformityFile.RemoteConformityFileUrl :
-                        "/conformityFiles/conformities/" + x.ConformityFile.Id + "." + x.ConformityFile.Extension));
+                        x.RemoteFileUrl != null ?
+                        x.RemoteFileUrl :
+                        "/files/conformities/" + x.Id + "." + x.FileExtension));
             // /wwwroot/conformityFiles/conformities/jhdsi-343g3h453-=g34g.pdf
         }
 

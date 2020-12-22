@@ -65,19 +65,19 @@ document.querySelector('#searchInput').addEventListener('keyup', filterTableByTw
 //    }
 //});
 
-document.querySelectorAll('#dataTable > tbody > tr').forEach(r => {
-    r.addEventListener('load', colorTheRow(r), false);
-})
+//document.querySelectorAll('#dataTable > tbody > tr').forEach(r => {
+//    r.addEventListener('load', colorTheRow(r), false);
+//})
 
-function colorTheRow(r) {
-    if (r.getElementsByClassName('isConfirmed')[0].textContent === 'Yes') {
-        //r.classList.add('table-success');
-        r.setAttribute('style', 'background-color: #dcfddc;');
-    } else {
-        //r.classList.add('table-danger');
-        r.setAttribute('style', 'background-color: #f7d9d9;');
-    }
-}
+//function colorTheRow(r) {
+//    if (r.getElementsByClassName('isConfirmed')[0].textContent === 'Yes') {
+//        //r.classList.add('table-success');
+//        r.setAttribute('style', 'background-color: #dcfddc;');
+//    } else {
+//        //r.classList.add('table-danger');
+//        //r.setAttribute('style', 'background-color: #f7eaea;');
+//    }
+//}
 
 $(document).ready(function addRowHandlers() {
     var table = document.getElementById("dataTable");

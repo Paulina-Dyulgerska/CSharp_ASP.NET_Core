@@ -6,73 +6,104 @@
 
 <div class="container-fluid">
     <div class="card shadow mb-4">
-        <div class="card-header py-3 ">
-            <div class="d-flex justify-content-between">
-                <h4 class="m-0 font-weight-bold text-primary ">
+        <div class="card-header py-3">
+            <div class="d-flex justify-content-between mb-auto p-2">
+                <h4 class="m-0 font-weight-bold">
                     @this.ViewData["Title"]
                 </h4>
+                <span>(total of @Model.Count() suppliers)</span>
                 <a asp-action="Create" class="btn btn-primary justify-content-end">Create supplier</a>
+            </div>
+            <div class="d-flex justify-content-between p-2 font-weight-bold">
+                <div class="btn-toolbar mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                        <input size="36" type="text" id="searchInput" placeholder="Search for supplier number or name...">
+                    </div>
+                </div>
+                <div class="btn-toolbar mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                            </div>
+                        </div>
+                        <div>
+                            @*<partial name="_ItemsPerPagePartial" model="Model" />*@
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
-                <table id="dataTable" class="table table-light table-responsive table-hover table-striped table-bordered table-sm">
-                    <thead>
-                        <tr>
-                            <th class="col-1">Supplier number</th>
-                            <th class="col-1">Supplier name</th>
-                            <th class="col-1">Contact person</th>
-                            @*<th class="col-1">E-mail</th>*@
-                            <th class="col-1">Phone number</th>
-                            <th class="col-1">UserId</th>
-                            <th class="col-1">Articles count</th>
-                            <th class="col-1">Details</th>
-                            <th class="col-1">Edit</th>
-                            <th class="col-1">Delete</th>
-                        </tr>
-                    </thead>
-                    @foreach (var supplier in this.Model)
-                    {
-                        <tr>
-                            <td class="col-1">@supplier.Number</td>
-                            <td class="col-1">@supplier.Name</td>
-                            <td class="col-1">@supplier.ContactPersonName</td>
-                            @*<td class="col-1">@supplier.Email</td>*@
-                            <td class="col-1">@supplier.PhoneNumber</td>
-                            <td class="col-1">@supplier.UserId</td>
-                            <td class="col-1">@supplier.ArticlesCount</td>
-                            <td class="col-1">
-                                <a asp-action="Details" class="btn btn-sm btn-info" asp-route-id="@supplier.Id">
-                                    <span class="icon text-white">
-                                        <i class="fas fa-info-circle"></i>
-                                    </span>
-                                    <span class="text">Details</span>
-                                </a>
-                            </td>
-                            <td class="col-1">
-                                <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@supplier.Id">
-                                    <span class="icon text-white">
-                                        <i class="fas fa-edit"></i>
-                                    </span>
-                                    <span class="text">Edit</span>
-                                </a>
-                            </td>
-                            <td class="col-1">
-                                <a asp-action="Delete" class="btn btn-sm btn-danger" asp-route-id="@supplier.Id">
-                                    <span class="icon text-white-50">
-                                        <i class="fas fa-trash"></i>
-                                    </span>
-                                    <span class="text">Delete</span>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </table>
-            </div>
+            @*<table id="dataTable" class="table table-responsive-sm table-bordered table-hover">*@
+            <table id="dataTable" class="table table-responsive-sm table-sm table-hover">
+
+                <thead>
+                    <tr class="d-flex">
+                        <th class="col-2">
+                            Supplier Nr.
+                            <button onclick="sortList()">Sort</button>
+                        </th>
+                        <th class="col-3">Name</th>
+                        @*<th class="col-3">Contact person</th>*@
+                        @*<th class="col-1">E-mail</th>*@
+                        @*<th class="col-1">Phone number</th>*@
+                        <th class="col-2">UserId</th>
+                        <th class="col-1">Articles count</th>
+                        <th class="col-1">Details</th>
+                        <th class="col-1">Edit</th>
+                        <th class="col-1">Delete</th>
+                    </tr>
+                </thead>
+                @foreach (var supplier in this.Model)
+                {
+                    <tr class="d-flex">
+                        <td id="search" class="col-2">@supplier.Number</td>
+                        <td id="search" class="col-3">@supplier.Name</td>
+                        @*<td class="col-3">@supplier.ContactPersonName</td>*@
+                        @*<td class="col-1">@supplier.Email</td>*@
+                        @*<td class="col-1">@supplier.PhoneNumber</td>*@
+                        <td class="col-2">@supplier.UserId</td>
+                        <td class="col-1">@supplier.ArticlesCount</td>
+                        <td class="col-1">
+                            <a asp-action="Details" class="btn btn-sm btn-info" asp-route-id="@supplier.Id">
+                                <span class="icon text-white">
+                                    <i class="fas fa-info-circle"></i>
+                                </span>
+                                <span class="text">Details</span>
+                            </a>
+                        </td>
+                        <td class="col-1">
+                            <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@supplier.Id">
+                                <span class="icon text-white">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                                <span class="text">Edit</span>
+                            </a>
+                        </td>
+                        <td class="col-1">
+                            <a asp-action="Delete" class="btn btn-sm btn-danger" asp-route-id="@supplier.Id">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                                <span class="text">Delete</span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
         </div>
     </div>
 </div>
 
 @section SideBar{
     <partial name="_SideMenuGeneral" />
+}
+
+@section Scripts{
+    <script src="~/js/tables.js"></script>
 }

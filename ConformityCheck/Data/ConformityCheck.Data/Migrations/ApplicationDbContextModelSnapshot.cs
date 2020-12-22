@@ -311,9 +311,6 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ConformityFileId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("ConformityTypeId")
                         .HasColumnType("int");
 
@@ -322,6 +319,9 @@ namespace ConformityCheck.Data.Migrations
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("FileExtension")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAccepted")
                         .HasColumnType("bit");
@@ -334,6 +334,9 @@ namespace ConformityCheck.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("RemoteFileUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SupplierId")
                         .IsRequired()
@@ -358,48 +361,6 @@ namespace ConformityCheck.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Conformities");
-                });
-
-            modelBuilder.Entity("ConformityCheck.Data.Models.ConformityFile", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConformityId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Extension")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RemoteConformityFileUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ConformityId")
-                        .IsUnique()
-                        .HasFilter("[ConformityId] IS NOT NULL");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ConformityFiles");
                 });
 
             modelBuilder.Entity("ConformityCheck.Data.Models.ConformityType", b =>
@@ -896,17 +857,6 @@ namespace ConformityCheck.Data.Migrations
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("ConformityCheck.Data.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("ConformityCheck.Data.Models.ConformityFile", b =>
-                {
-                    b.HasOne("ConformityCheck.Data.Models.Conformity", "Conformity")
-                        .WithOne("ConformityFile")
-                        .HasForeignKey("ConformityCheck.Data.Models.ConformityFile", "ConformityId");
 
                     b.HasOne("ConformityCheck.Data.Models.ApplicationUser", "User")
                         .WithMany()

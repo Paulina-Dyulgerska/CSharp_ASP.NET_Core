@@ -1,6 +1,7 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
     using System;
+    using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -178,6 +179,25 @@
             }
 
             return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
+        }
+
+        // TODO - delete - not used:
+        public IActionResult PdfPartial(string conformityFileUrl)
+        {
+            return this.PartialView("_PartialDocumentPreview", conformityFileUrl);
+        }
+
+        public IActionResult ShowModalDocument(string conformityFileUrl)
+        {
+            string filePath = "~" + conformityFileUrl;
+            var contentDisposition = new System.Net.Mime.ContentDisposition
+            {
+                FileName = conformityFileUrl.Split('/').LastOrDefault(),
+                Inline = true,
+            };
+
+            this.Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
+            return this.File(filePath, System.Net.Mime.MediaTypeNames.Application.Pdf);
         }
     }
 }

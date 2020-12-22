@@ -31,23 +31,44 @@
         }
 
         // Articles/ListAll/{Id} - Id = page number
-        public async Task<IActionResult> ListAll(int id = 1)
+        //public async Task<IActionResult> ListAll(int id = 1)
+        //{
+        //    if (id <= 0)
+        //    {
+        //        return this.NotFound();
+        //    }
+
+        //    const int ItemsPerPage = 12;
+        //    const int IntervalOfPagesToShow = 2;
+
+        //    var model = new ArticlesListAllModel
+        //    {
+        //        ItemsPerPage = ItemsPerPage,
+        //        PageNumber = id,
+        //        ItemsCount = this.articlesService.GetCount(),
+        //        IntervalOfPagesToShow = IntervalOfPagesToShow,
+        //        Articles = await this.articlesService.GetAllAsNoTrackingOrderedAsPagesAsync<ArticleDetailsModel>(id, ItemsPerPage),
+        //    };
+
+        //    return this.View(model);
+        //}
+
+        public async Task<IActionResult> ListAll(int id = 1, int itemsPerPage = 12)
         {
             if (id <= 0)
             {
                 return this.NotFound();
             }
 
-            const int ItemsPerPage = 12;
             const int IntervalOfPagesToShow = 2;
 
             var model = new ArticlesListAllModel
             {
-                ItemsPerPage = ItemsPerPage,
+                ItemsPerPage = itemsPerPage,
                 PageNumber = id,
                 ItemsCount = this.articlesService.GetCount(),
                 IntervalOfPagesToShow = IntervalOfPagesToShow,
-                Articles = await this.articlesService.GetAllAsNoTrackingOrderedAsPagesAsync<ArticleDetailsModel>(id, ItemsPerPage),
+                Articles = await this.articlesService.GetAllAsNoTrackingOrderedAsPagesAsync<ArticleDetailsModel>(id, itemsPerPage),
             };
 
             return this.View(model);
@@ -249,7 +270,7 @@
             string supplierId)
         {
             var model = await this.articlesService
-                .GetConformityTypesByIdAsync(articleId, supplierId);
+                .GetConformityTypesByIdAndSupplierAsync(articleId, supplierId);
 
             return this.Json(model);
         }

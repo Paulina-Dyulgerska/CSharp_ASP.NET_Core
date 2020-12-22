@@ -30,9 +30,20 @@
 
         public virtual Article Article { get; set; }
 
-        public string ConformityFileId { get; set; }
+        //[Required]
+        //[ForeignKey(nameof(ConformityFile))]
+        //public string ConformityFileId { get; set; }
 
-        public virtual ConformityFile ConformityFile { get; set; }
+        //public virtual ConformityFile ConformityFile { get; set; }
+
+        
+        // the file name is this.Id!
+        public string FileExtension { get; set; }
+
+        // The content of the files is in the file system. What about the expernal etorages?
+        // If there is a file stored in the local system, I will find it by name, but if the file
+        // is stoored on another external storage system, I will use the FileUrl as an locator.
+        public string RemoteFileUrl { get; set; }
 
         public DateTime IssueDate { get; set; }
 

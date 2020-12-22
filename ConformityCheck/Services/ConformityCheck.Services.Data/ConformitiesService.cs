@@ -23,7 +23,6 @@
         private readonly IDeletableEntityRepository<ConformityType> conformityTypesRepository;
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
-        private readonly IDeletableEntityRepository<ConformityFile> conformityFilesRepository;
         private readonly IRepository<ArticleConformityType> articleConformityTypeRepository;
 
         public ConformitiesService(
@@ -33,7 +32,6 @@
             IDeletableEntityRepository<ConformityType> conformityTypesRepository,
             IDeletableEntityRepository<Conformity> conformitiesRepository,
             IDeletableEntityRepository<ApplicationUser> usersRepository,
-            IDeletableEntityRepository<ConformityFile> conformityFilesRepository,
             IRepository<ArticleConformityType> articleConformityTypeRepository)
         {
             this.articlesRepository = articlesRepository;
@@ -42,7 +40,6 @@
             this.conformityTypesRepository = conformityTypesRepository;
             this.conformitiesRepository = conformitiesRepository;
             this.usersRepository = usersRepository;
-            this.conformityFilesRepository = conformityFilesRepository;
             this.articleConformityTypeRepository = articleConformityTypeRepository;
         }
 
@@ -91,10 +88,10 @@
         public async Task<ConformityEditInputModel> GetForEditAsync(ConformityEditGetModel input)
         {
             var entity = await this.conformitiesRepository
-                                .AllAsNoTracking()
-                                .Where(x => x.Id == input.Id)
-                                .To<ConformityEditInputModel>()
-                                .FirstOrDefaultAsync();
+                    .AllAsNoTracking()
+                    .Where(x => x.Id == input.Id)
+                    .To<ConformityEditInputModel>()
+                    .FirstOrDefaultAsync();
 
             if (entity == null)
             {
@@ -176,9 +173,9 @@
                                                 .All()
                                                 .FirstOrDefaultAsync(x => x.Id == input.Id);
 
-            conformityEntity.ArticleId = input.ArticleId;
-            conformityEntity.SupplierId = input.SupplierId;
-            conformityEntity.ConformityTypeId = input.ConformityTypeId;
+            //conformityEntity.ArticleId = input.ArticleId;
+            //conformityEntity.SupplierId = input.SupplierId;
+            //conformityEntity.ConformityTypeId = input.ConformityTypeId;
             conformityEntity.IssueDate = input.IssueDate.Date;
             conformityEntity.IsAccepted = input.IsAccepted;
             conformityEntity.AcceptanceDate = DateTime.UtcNow.Date;
@@ -190,20 +187,18 @@
                 conformityEntity.ValidityDate = input.ValidityDate;
             }
 
+            if (true)
+            {
+
+            }
+
+            await this.conformitiesRepository.AddAsync(conformityEntity);
+
             // /wwwroot/files/conformities/jhdsi-343g3h453-=g34g.pdf
             Directory.CreateDirectory($"{conformityFilePath}/conformities/");
-            var extension = Path.GetExtension(input.InputFile.FileName).TrimStart('.');
-
-            var conformityFileEntity = new ConformityFile
-            {
-                UserId = userId,
-                Extension = extension,
-            };
-
-            this.conformityFilesRepository.Delete(conformityEntity.ConformityFile);
-            conformityEntity.ConformityFile = conformityFileEntity;
-
-            var physicalPath = $"{conformityFilePath}/conformities/{conformityFileEntity.Id}.{extension}";
+            var extension = Path.GetExtension(input.InputFile.FileName).ToLower().TrimStart('.');
+            conformityEntity.FileExtension = extension;
+            var physicalPath = $"{conformityFilePath}/conformities/{conformityEntity.Id}.{extension}";
             using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
             await input.InputFile.CopyToAsync(fileStream);
 
@@ -264,25 +259,16 @@
                 conformityEntity.ValidityDate = input.ValidityDate;
             }
 
+            await this.conformitiesRepository.AddAsync(conformityEntity);
+
             Directory.CreateDirectory($"{conformityFilePath}/conformities/");
             var extension = Path.GetExtension(input.InputFile.FileName).ToLower().TrimStart('.');
-
-            var conformityFileEntity = new ConformityFile
-            {
-                UserId = userId,
-                Extension = extension,
-            };
-
-            conformityEntity.ConformityFile = conformityFileEntity;
-
-            var physicalPath = $"{conformityFilePath}/conformities/{conformityFileEntity.Id}.{extension}";
+            conformityEntity.FileExtension = extension;
+            var physicalPath = $"{conformityFilePath}/conformities/{conformityEntity.Id}.{extension}";
             using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
             await input.InputFile.CopyToAsync(fileStream);
 
-            await this.conformitiesRepository.AddAsync(conformityEntity);
-
             await this.conformitiesRepository.SaveChangesAsync();
         }
-
     }
 }

@@ -77,6 +77,23 @@
             <span asp-validation-for="IsAccepted" class="text-danger"></span>
         </div>
 
+        @* Variant 1: da probvam moga li da go naprawq s POST? *@ 
+        <a class="openPdf" asp-action="ShowModalDocument"
+           asp-route-conformityFileUrl="@Model.ConformityFileUrl"
+           target="_blank">
+            show the pdf
+        </a>
+        @* Variant 2: *@
+        @*<a href="@Url.Action("ShowModalDocument", "Conformities", new { ConformityFileUrl = @Model.ConformityFileUrl})" target="_blank">Link Text</a>*@
+        @* Variant 3: *@
+        @*<div class="modal fade" id="modalGeneric" role="dialog">
+        </div>
+        <a class="ml-1" data-toggle="tooltip" title="Predogled"
+           data-url="@Url.Action("PdfPartial", "Conformities", new { ConformityFileUrl = Model.ConformityFileUrl })"
+           onclick="showGenericModal(event);">
+            show the file
+        </a>*@
+
         @* TODO: add the declared substances and assing the restrictions. *@
 
         <div class="form-group">
@@ -87,4 +104,23 @@
 
 @section SideBar{
     <partial name="_SideMenuGeneral" />
+}
+
+@section Scripts{
+    <script src="~/js/pdfs.js"></script>
+    @*<script>
+        function showGenericModal(event) {
+            var src = event.target || event.srcElement;
+
+            // find the parent that contains proper decorations
+            var url = $(src).closest("*[data-url]").data('url');
+
+            // trigger an HTTP GET
+            $.get(url, function (data) {
+                // fill content and show modal
+                $('#modalGeneric').html(data);
+                $('#modalGeneric').modal('show');
+            });
+        }
+    </script>*@
 }

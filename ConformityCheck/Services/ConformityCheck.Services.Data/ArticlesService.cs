@@ -304,7 +304,7 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ConformityTypeExportModel>> GetConformityTypesByIdAsync(string articleId, string supplierId)
+        public async Task<IEnumerable<ConformityTypeExportModel>> GetConformityTypesByIdAndSupplierAsync(string articleId, string supplierId)
         {
             var entities = await this.articleConformityTypesRepository
                 .AllAsNoTracking()

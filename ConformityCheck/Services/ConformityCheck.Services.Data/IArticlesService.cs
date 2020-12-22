@@ -30,7 +30,7 @@
         Task<IEnumerable<T>> GetSuppliersByIdAsync<T>(string id);
 
         // TODO - remove ConformityTypeModel - put T!!!
-        Task<IEnumerable<ConformityTypeExportModel>> GetConformityTypesByIdAsync(
+        Task<IEnumerable<ConformityTypeExportModel>> GetConformityTypesByIdAndSupplierAsync(
             string articleId,
             string supplierId);
     }
