@@ -80,7 +80,7 @@ document.querySelector('#searchInput').addEventListener('keyup', filterTableByTw
 //}
 
 $(document).ready(function addRowHandlers() {
-    var table = document.getElementById("dataTable");
+    var table = document.querySelector("#articlesDataTable");
     var rows = table.getElementsByTagName("tr");
     for (i = 1; i < rows.length; i++) {
         var currentRow = table.rows[i];
@@ -91,6 +91,60 @@ $(document).ready(function addRowHandlers() {
                 //console.log(row);
                 //alert("id:" + id);
                 window.location.href = '/Articles/Details/' + id;
+            };
+        };
+        currentRow.onclick = createClickHandler(currentRow);
+    }
+});
+
+$(document).ready(function addRowHandlers() {
+    var table = document.querySelector("#suppliersDataTable");
+    var rows = table.getElementsByTagName("tr");
+    for (i = 1; i < rows.length; i++) {
+        var currentRow = table.rows[i];
+        var createClickHandler = function (row) {
+            return function () {
+                //var cell = row.getElementsByTagName("td")[0];
+                var id = row.getAttribute('data-id');
+                //console.log(row);
+                //alert("id:" + id);
+                window.location.href = '/Suppliers/Details/' + id;
+            };
+        };
+        currentRow.onclick = createClickHandler(currentRow);
+    }
+});
+
+$(document).ready(function addRowHandlers() {
+    var table = document.querySelector("#conformityTypesDataTable");
+    var rows = table.getElementsByTagName("tr");
+    for (i = 1; i < rows.length; i++) {
+        var currentRow = table.rows[i];
+        var createClickHandler = function (row) {
+            return function () {
+                //var cell = row.getElementsByTagName("td")[0];
+                var id = row.getAttribute('data-id');
+                //console.log(row);
+                //alert("id:" + id);
+                window.location.href = '/ConformityTypes/Details/' + id;
+            };
+        };
+        currentRow.onclick = createClickHandler(currentRow);
+    }
+});
+
+$(document).ready(function addRowHandlers() {
+    var table = document.querySelector("#conformitiesDataTable");
+    var rows = table.getElementsByTagName("tr");
+    for (i = 1; i < rows.length; i++) {
+        var currentRow = table.rows[i];
+        var createClickHandler = function (row) {
+            return function () {
+                //var cell = row.getElementsByTagName("td")[0];
+                var id = row.getAttribute('data-id');
+                //console.log(row);
+                //alert("id:" + id);
+                window.location.href = '/Conformities/Details/' + id;
             };
         };
         currentRow.onclick = createClickHandler(currentRow);

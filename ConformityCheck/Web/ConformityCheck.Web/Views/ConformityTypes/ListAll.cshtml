@@ -10,6 +10,12 @@
         @this.TempData["Message"]
     </div>
 }
+@if (this.TempData.ContainsKey("ErrorMessage"))
+{
+    <div class="alert alert-danger" role="alert">
+        @this.TempData["ErrorMessage"]
+    </div>
+}
 
 <div class="container-fluid">
     <div class="card shadow mb-4">
@@ -47,7 +53,7 @@
         </div>
         <div class="card-body">
             @*<table id="dataTable" class="table table-responsive-sm table-bordered table-hover">*@
-            <table id="dataTable" class="table table-responsive-sm table-sm table-hover">
+            <table id="conformityTypesDataTable" class="table table-responsive-sm table-sm table-hover dataTable">
                 <thead>
                     <tr class="d-flex">
                         <th class="col-1">Nr.</th>

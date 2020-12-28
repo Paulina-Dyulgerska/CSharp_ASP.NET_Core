@@ -53,7 +53,10 @@
                 </td>
                 <td>
                     <a asp-controller="Conformities" asp-action="Delete" class="btn btn-primary"
-                       asp-route-id="@article.ArticleConformity.Id">Delete</a>
+                       asp-route-Id="@article.ArticleConformity.Id"
+                       asp-route-articleId="@article.ArticleId"
+                       asp-route-supplierId="@Model.Id"
+                       asp-route-callerViewName="Suppliers">Delete</a>
                 </td>
             }
             <td>

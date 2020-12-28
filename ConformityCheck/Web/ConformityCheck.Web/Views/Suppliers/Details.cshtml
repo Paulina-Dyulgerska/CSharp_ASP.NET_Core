@@ -10,6 +10,13 @@
 
 <h3>@this.ViewData["Title"]</h3>
 
+@if (this.TempData.ContainsKey("Message"))
+{
+    <div class="alert alert-success" role="alert">
+        @this.TempData["Message"]
+    </div>
+}
+
 <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model.Id">Edit</a>
 
 <div>
@@ -34,16 +41,19 @@
     <partial name="_SideMenuGeneral" model="Model" />
 }
 
+@section Scripts{
+    <script src="~/js/alerts.js"></script>
+}
+
 <!--@section Links{-->
-    <!-- Page level custom styles -->
-    <!--<link href="~/lib/datatables/DataTables-1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<!-- Page level custom styles -->
+<!--<link href="~/lib/datatables/DataTables-1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 }
 
 @section Scripts{-->
-    <!-- Page level plugins -->
-    <!--<script src="~/lib/datatables/DataTables-1.10.22/js/jquery.dataTables.min.js"></script>
-    <script src="~/lib/datatables/DataTables-1.10.22/js/dataTables.bootstrap4.min.js"></script>-->
-
-    <!-- Page level custom scripts -->
-    <!--<script src="~/js/datatables.js"></script>
+<!-- Page level plugins -->
+<!--<script src="~/lib/datatables/DataTables-1.10.22/js/jquery.dataTables.min.js"></script>
+<script src="~/lib/datatables/DataTables-1.10.22/js/dataTables.bootstrap4.min.js"></script>-->
+<!-- Page level custom scripts -->
+<!--<script src="~/js/datatables.js"></script>
 }-->

@@ -43,7 +43,7 @@
             <span>MS = Main supplier</span><br />
             <span>Conf. MS = Confirmed by main supplier</span><br />
             <span>Conf. AS = Confirmed by all suppliers</span><br />
-            <table id="dataTable" class="articles table table-responsive-sm table-sm table-hover">
+            <table id="articlesDataTable" class="table table-responsive-sm table-sm table-hover dataTable">
                 <thead>
                     <tr class="d-flex">
                         <th class="col-2">
@@ -65,8 +65,8 @@
                     <tr class="d-flex" data-id="@article.Id" @if (article.IsConfirmed) { <text> style="background-color: #dcfddc;" </text> }>
                         <td id="search" class="col-2">@article.Number</td>
                         <td id="search" class="col-2">@article.Description</td>
-                        <td class="col-1">@article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true).Number</td>
-                        <td class="col-2">@article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true).Name</td>
+                        <td class="col-1">@article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Number</td>
+                        <td class="col-2">@article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Name</td>
                         <td class="col-1">@(article.IsConfirmed ? "Yes" : "No")</td>
                         <td class="col-1 isConfirmed">@(article.IsConfirmedByMainSupplier ? "Yes" : "No")</td>
                         <td class="col-1">

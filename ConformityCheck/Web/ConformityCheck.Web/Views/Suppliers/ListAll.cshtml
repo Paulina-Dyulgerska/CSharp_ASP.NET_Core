@@ -40,8 +40,7 @@
         </div>
         <div class="card-body">
             @*<table id="dataTable" class="table table-responsive-sm table-bordered table-hover">*@
-            <table id="dataTable" class="table table-responsive-sm table-sm table-hover">
-
+            <table id="suppliersDataTable" class="table table-responsive-sm table-sm table-hover dataTable">
                 <thead>
                     <tr class="d-flex">
                         <th class="col-2">
@@ -61,7 +60,7 @@
                 </thead>
                 @foreach (var supplier in this.Model)
                 {
-                    <tr class="d-flex">
+                    <tr class="d-flex" data-id="@supplier.Id">
                         <td id="search" class="col-2">@supplier.Number</td>
                         <td id="search" class="col-3">@supplier.Name</td>
                         @*<td class="col-3">@supplier.ContactPersonName</td>*@

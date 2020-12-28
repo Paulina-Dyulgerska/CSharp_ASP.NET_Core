@@ -52,6 +52,8 @@
 
             await this.conformityTypeService.CreateAsync(input);
 
+            this.TempData["Message"] = "Conformity type created successfully.";
+
             return this.RedirectToAction(nameof(this.ListAll));
         }
 
@@ -95,7 +97,7 @@
             {
                 foreach (var error in this.ModelState.Values.SelectMany(v => v.Errors))
                 {
-                    this.TempData["Message"] += error.ErrorMessage + Environment.NewLine;
+                    this.TempData["ErrorMessage"] += error.ErrorMessage + Environment.NewLine;
                 }
 
                 return this.RedirectToAction(nameof(this.ListAll));

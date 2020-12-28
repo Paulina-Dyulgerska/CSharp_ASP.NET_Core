@@ -117,7 +117,7 @@
 
             this.TempData["Message"] = "Conformity added successfully.";
 
-            return this.RedirectToAction(nameof(ArticlesController.Edit), "Articles", new { id });
+            return this.RedirectToAction(nameof(ArticlesController.Details), "Articles", new { id });
         }
 
         public async Task<IActionResult> AddToArticleSupplierConformityType(ConformityEditGetModel input)
@@ -213,11 +213,26 @@
             return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
         }
 
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(ConformityDeleteInputModel input)
         {
-            await this.conformitiesService.DeleteAsync(id);
+            if (!this.ModelState.IsValid)
+            {
+                foreach (var error in this.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    this.TempData["Message"] += error.ErrorMessage + Environment.NewLine;
+                }
+            }
 
-            return this.View();
+            await this.conformitiesService.DeleteAsync(input.Id);
+
+            this.TempData["Message"] = "Conformity deleted successfully.";
+
+            if (input.CallerViewName == SuppliersCallerViewName)
+            {
+                return this.RedirectToAction(nameof(SuppliersController.Details), SuppliersCallerViewName, new { id = input.SupplierId });
+            }
+
+            return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
         }
 
         // TODO - delete - not used:

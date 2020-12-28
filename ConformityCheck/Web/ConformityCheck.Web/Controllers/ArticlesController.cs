@@ -90,6 +90,8 @@
 
             await this.articlesService.CreateAsync(input);
 
+            this.TempData["Message"] = "Article added successfully.";
+
             // return this.Json(input);
             return this.RedirectToAction(nameof(this.ListAll));
         }
@@ -132,6 +134,8 @@
 
             await this.articlesService.EditAsync(input);
 
+            this.TempData["Message"] = "Article edited successfully.";
+
             return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
         }
 
@@ -154,7 +158,9 @@
 
             await this.articlesService.AddSupplierAsync(input);
 
-            return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
+            this.TempData["Message"] = "Article edited successfully.";
+
+            return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
         }
 
         public async Task<IActionResult> ChangeMainSupplier(string id)
@@ -176,7 +182,9 @@
 
             await this.articlesService.ChangeMainSupplierAsync(input);
 
-            return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
+            this.TempData["Message"] = "Article edited successfully.";
+
+            return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
         }
 
         public async Task<IActionResult> RemoveSupplier(string id)
@@ -198,7 +206,9 @@
 
             await this.articlesService.RemoveSupplierAsync(input);
 
-            return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
+            this.TempData["Message"] = "Article edited successfully.";
+
+            return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
         }
 
         public async Task<IActionResult> AddConformityType(string id)
@@ -220,7 +230,9 @@
 
             await this.articlesService.AddConformityTypeAsync(input);
 
-            return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
+            this.TempData["Message"] = "Article edited successfully.";
+
+            return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
         }
 
         public async Task<IActionResult> RemoveConformityType(string id)
@@ -242,7 +254,9 @@
 
             await this.articlesService.RemoveConformityTypesAsync(input);
 
-            return this.RedirectToAction(nameof(this.Edit), "Articles", new { input.Id });
+            this.TempData["Message"] = "Article edited successfully.";
+
+            return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
         }
 
         public async Task<IActionResult> Delete(string id)
