@@ -71,8 +71,14 @@
 
         public async Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsPagesAsync<T>(int page, int itemsPerPage)
         {
-            var articles = await this.GetAllAsNoTrackingOrderedAsync<T>();
-            return articles.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
+            return await this.articlesRepository
+                                .AllAsNoTracking()
+                                .OrderByDescending(x => x.CreatedOn)
+                                .ThenByDescending(x => x.ModifiedOn)
+                                .ThenBy(x => x.Number)
+                                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                .To<T>()
+                                .ToListAsync();
         }
 
         public async Task<T> GetByIdAsync<T>(string id)
