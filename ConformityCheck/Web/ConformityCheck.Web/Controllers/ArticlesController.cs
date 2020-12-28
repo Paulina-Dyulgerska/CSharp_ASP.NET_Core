@@ -68,7 +68,8 @@
                 PageNumber = id,
                 ItemsCount = this.articlesService.GetCount(),
                 IntervalOfPagesToShow = IntervalOfPagesToShow,
-                Articles = await this.articlesService.GetAllAsNoTrackingOrderedAsPagesAsync<ArticleDetailsModel>(id, itemsPerPage),
+                Articles = await this.articlesService
+                                .GetAllAsNoTrackingOrderedAsPagesAsync<ArticleDetailsModel>(id, itemsPerPage),
             };
 
             return this.View(model);

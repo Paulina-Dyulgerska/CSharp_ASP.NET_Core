@@ -20,7 +20,7 @@
 
             var hasRightSize = ((IFormFile)value).Length <= this.Size;
 
-            if (hasRightSize)
+            if (hasRightSize is true)
             {
                 return ValidationResult.Success;
             }

@@ -17,15 +17,18 @@
     public class SuppliersService : ISuppliersService
     {
         private readonly IDeletableEntityRepository<Supplier> suppliersRepository;
+        private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
         private readonly IRepository<ArticleConformityType> articleConformityTypesRepository;
         private readonly IRepository<ArticleSupplier> articleSuppliersRepository;
 
         public SuppliersService(
             IDeletableEntityRepository<Supplier> suppliersRepository,
+            IDeletableEntityRepository<Conformity> conformitiesRepository,
             IRepository<ArticleConformityType> articleConformityTypeRepository,
             IRepository<ArticleSupplier> articleSupplierRepository)
         {
             this.suppliersRepository = suppliersRepository;
+            this.conformitiesRepository = conformitiesRepository;
             this.articleConformityTypesRepository = articleConformityTypeRepository;
             this.articleSuppliersRepository = articleSupplierRepository;
         }
@@ -174,6 +177,34 @@
             await this.suppliersRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(string id)
+        {
+            var entity = await this.suppliersRepository.All().FirstOrDefaultAsync(x => x.Id == id);
+            this.suppliersRepository.Delete(entity);
+
+            var articleSuppliersEntities = await this.articleSuppliersRepository
+                                                        .All()
+                                                        .Where(x => x.SupplierId == id)
+                                                        .ToListAsync();
+
+            foreach (var articleSuppliersEntity in articleSuppliersEntities)
+            {
+                this.articleSuppliersRepository.Delete(articleSuppliersEntity);
+            }
+
+            var supplierConformitiesEntities = await this.conformitiesRepository
+                                                            .All()
+                                                            .Where(x => x.SupplierId == id)
+                                                            .ToListAsync();
+
+            foreach (var supplierConformitiesEntity in supplierConformitiesEntities)
+            {
+                this.conformitiesRepository.Delete(supplierConformitiesEntity);
+            }
+
+            await this.suppliersRepository.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<T>> GetArticlesByIdAsync<T>(string id)
         {
             var articles = await this.articleSuppliersRepository
@@ -212,5 +243,6 @@
 
             return st.ToString().Trim();
         }
+
     }
 }

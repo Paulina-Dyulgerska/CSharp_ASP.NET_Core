@@ -247,6 +247,17 @@
 
             this.articleSuppliersRepository.Delete(articleSupplierEntity);
 
+            var articleConformitiesEntities = await this.conformitiesRepository
+                                                          .All()
+                                                          .Where(x => x.ArticleId == input.Id
+                                                                   && x.SupplierId == input.SupplierId)
+                                                          .ToListAsync();
+
+            foreach (var articleConformitiesEntity in articleConformitiesEntities)
+            {
+                this.conformitiesRepository.Delete(articleConformitiesEntity);
+            }
+
             await this.articleSuppliersRepository.SaveChangesAsync();
         }
 

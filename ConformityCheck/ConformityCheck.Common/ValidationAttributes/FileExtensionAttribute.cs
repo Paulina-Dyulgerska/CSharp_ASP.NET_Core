@@ -20,7 +20,7 @@
         {
             var hasRightExtension = ((IFormFile)value).FileName.ToLower().EndsWith($".{this.Extension}");
 
-            if (hasRightExtension)
+            if (hasRightExtension == true)
             {
                 return ValidationResult.Success;
             }

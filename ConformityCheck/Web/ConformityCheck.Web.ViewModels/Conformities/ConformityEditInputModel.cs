@@ -10,7 +10,7 @@
         [ConformityEntityAttribute(allowNull: true)]
         public string Id { get; set; }
 
-        public string CallerViewName { get; set; }
+        public string ConformityFileUrl { get; set; }
 
         public override void CreateMappings(IProfileExpression configuration)
         {

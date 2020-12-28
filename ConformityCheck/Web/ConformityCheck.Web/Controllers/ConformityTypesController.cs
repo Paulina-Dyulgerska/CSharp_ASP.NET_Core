@@ -1,5 +1,6 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -88,19 +89,21 @@
             return this.RedirectToAction(nameof(this.ListAll));
         }
 
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(ConformityTypeDeleteInputModel input)
         {
-            try
+            if (!this.ModelState.IsValid)
             {
-                await this.conformityTypeService.DeleteAsync(id);
-            }
-            catch (System.Exception)
-            {
+                foreach (var error in this.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    this.TempData["Message"] += error.ErrorMessage + Environment.NewLine;
+                }
 
-                throw;
+                return this.RedirectToAction(nameof(this.ListAll));
             }
 
-            return this.RedirectToAction(nameof(this.ListAll));
+            await this.conformityTypeService.DeleteAsync(input.Id);
+
+            return this.View();
         }
     }
 }

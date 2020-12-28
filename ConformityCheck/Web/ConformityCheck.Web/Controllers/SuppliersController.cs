@@ -90,6 +90,13 @@
             return this.View(model);
         }
 
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.suppliersService.DeleteAsync(id);
+
+            return this.View();
+        }
+
         public async Task<IActionResult> GetArticlesById(string id)
         {
             var model = await this.suppliersService.GetArticlesByIdAsync<ArticleBySupplierModel>(id);

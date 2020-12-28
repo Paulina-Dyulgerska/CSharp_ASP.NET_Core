@@ -12,6 +12,8 @@
 
         Task DeleteAsync(string id);
 
+        Task<ConformityCreateInputModel> GetForCreateAsync(ConformityEditGetModel input);
+
         Task<ConformityEditInputModel> GetForEditAsync(ConformityEditGetModel input);
     }
 }

@@ -16,6 +16,8 @@
 
         bool ConformityTypeEntityDescriptionCheck(string input);
 
+        bool ConformityTypeArticlesCheck(int id);
+
         bool ProductEntityIdCheck(string id);
 
         bool SubstanceEntityIdCheck(int id);

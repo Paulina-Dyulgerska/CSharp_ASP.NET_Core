@@ -1,0 +1,15 @@
+﻿@{
+    this.ViewData["Title"] = "Delete conformity";
+}
+
+<h3>@this.ViewData["Title"]</h3>
+
+<div class="alert alert-success" role="alert">
+    Conformity is successfully deleted!
+    <hr>
+    <a asp-action="ListAll" class="btn btn-sm btn-info">Back to conformties list</a>
+</div>
+
+@section SideBar{
+    <partial name="_SideMenuGeneral" />
+}

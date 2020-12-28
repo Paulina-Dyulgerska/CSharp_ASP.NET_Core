@@ -37,8 +37,6 @@
 
         public string ArticleDescription { get; set; }
 
-        public string ConformityFileUrl { get; set; }
-
         // vsichki dates da sa v UTC, i tuk i na servera i na DB-a!!!
         [Required]
         [DataType(DataType.Date)]
@@ -56,37 +54,23 @@
 
         public string UserId { get; set; }
 
-        [Required]
-        [FileExtensionAttribute(extension: "pdf")]
-        [FileSizeAttribute(size: 10 * 1024 * 1024)]
-        public IFormFile InputFile { get; set; }
+        public string CallerViewName { get; set; }
 
         public virtual void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Conformity, ConformityBaseModel>()
+
                 // TODO - tezi sa izlishni, zashtoto se namapvat atomatichno ot AutoMapper-a prez
                 // navigacionnite propertita!!!!
                 .ForMember(x => x.ConformityTypeDescription, opt => opt.MapFrom(x => x.ConformityType.Description))
                 .ForMember(x => x.SupplierName, opt => opt.MapFrom(x => x.Supplier.Name))
                 .ForMember(x => x.SupplierNumber, opt => opt.MapFrom(x => x.Supplier.Number))
                 .ForMember(x => x.ArticleDescription, opt => opt.MapFrom(x => x.Article.Description))
-                .ForMember(x => x.ArticleNumber, opt => opt.MapFrom(x => x.Article.Number))
-                // Towa e edinstveno nujno za tozi class:
-                .ForMember(x => x.ConformityFileUrl, opt =>
-                    opt.MapFrom(x =>
-                        x.RemoteFileUrl != null ?
-                        x.RemoteFileUrl :
-                        "/files/conformities/" + x.Id + "." + x.FileExtension));
-            // /wwwroot/conformityFiles/conformities/jhdsi-343g3h453-=g34g.pdf
+                .ForMember(x => x.ArticleNumber, opt => opt.MapFrom(x => x.Article.Number));
         }
 
         public virtual IEnumerable<ValidationResult> Validate(System.ComponentModel.DataAnnotations.ValidationContext validationContext)
         {
-            if ((this.IssueDate > this.ValidityDate) && (this.ValidityDate != null))
-            {
-                yield return new ValidationResult("Issue date could not be after the validity date.");
-            }
-
             var context = (IContentCheckService)validationContext
                 .GetService(typeof(IContentCheckService));
             var articleSupplierEntity = context
@@ -95,6 +79,11 @@
             if (!articleSupplierEntity && this.ArticleId != null)
             {
                 yield return new ValidationResult("The article does not have such supplier.");
+            }
+
+            if ((this.IssueDate > this.ValidityDate) && (this.ValidityDate != null))
+            {
+                yield return new ValidationResult("Issue date could not be after the validity date.");
             }
         }
     }

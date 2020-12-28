@@ -3,8 +3,17 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using ConformityCheck.Common.ValidationAttributes;
+    using Microsoft.AspNetCore.Http;
+
     public class ConformityCreateInputModel : ConformityBaseModel
     {
+        [Required]
+        [FileExtensionAttribute(extension: "pdf")]
+        [FileSizeAttribute(size: 10 * 1024 * 1024)]
+        [Display(Name = "Conformity file:")]
+        public IFormFile InputFile { get; set; }
+
         public bool ValidForAllArticles { get; set; }
 
         public bool ValidForSingleArticle { get; set; }

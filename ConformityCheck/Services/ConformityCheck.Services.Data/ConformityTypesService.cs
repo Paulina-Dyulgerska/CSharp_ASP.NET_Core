@@ -105,12 +105,11 @@
                 .All()
                 .FirstOrDefaultAsync(c => c.Id == id);
 
-            // if this conformity type has confirmations in the DB
-            // TODO - catch the error in Controller
-            if (this.conformitiesRepository.All().Any(ac => ac.ConformityTypeId == id))
-            {
-                throw new ArgumentException($"Cannot delete conformity with articles assigned to it.");
-            }
+            // if this conformity type has confirmations in the DB, no delete is possible
+            //if (this.conformitiesRepository.All().Any(ac => ac.ConformityTypeId == id))
+            //{
+            //    throw new ArgumentException($"Cannot delete conformity type with articles assigned to it.");
+            //}
 
             this.conformityTypesRepository.Delete(conformityTypeEntity);
 

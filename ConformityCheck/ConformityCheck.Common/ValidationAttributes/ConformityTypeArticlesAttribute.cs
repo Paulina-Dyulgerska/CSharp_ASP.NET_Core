@@ -1,24 +1,24 @@
 ﻿namespace ConformityCheck.Common.ValidationAttributes
 {
+    using System.Collections;
     using System.ComponentModel.DataAnnotations;
 
     using ConformityCheck.Services;
 
-    public class ConformityTypeEntityDescriptionDublicatedAttribute : ValidationAttribute
+    public class ConformityTypeArticlesAttribute : ValidationAttribute
     {
-        public ConformityTypeEntityDescriptionDublicatedAttribute()
+        public ConformityTypeArticlesAttribute()
         {
-            this.ErrorMessage = $"There is already a conformity type with this description.";
+            this.ErrorMessage = $"Cannot delete conformity type with articles assigned to it.";
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var context = (IContentCheckService)validationContext.GetService(typeof(IContentCheckService));
 
-            var hasSuchDescription = context
-                .ConformityTypeEntityDescriptionCheck(value.ToString());
+            var hasArticles = context.ConformityTypeArticlesCheck(int.Parse(value.ToString()));
 
-            if (hasSuchDescription)
+            if (hasArticles)
             {
                 return new ValidationResult(this.ErrorMessage);
             }

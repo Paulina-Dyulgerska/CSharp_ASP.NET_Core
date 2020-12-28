@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using ConformityCheck.Web.ViewModels.Suppliers;
 
     public interface ISuppliersService : IService<string>
@@ -9,6 +10,8 @@
         Task CreateAsync(SupplierCreateInputModel supplierInputModel);
 
         Task EditAsync(SupplierEditInputModel input);
+
+        Task DeleteAsync(string id);
 
         Task<IEnumerable<T>> GetArticlesByIdAsync<T>(string id);
 

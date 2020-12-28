@@ -1,0 +1,15 @@
+﻿@{
+    this.ViewData["Title"] = "Delete supplier";
+}
+
+<h3>@this.ViewData["Title"]</h3>
+
+<div class="alert alert-success" role="alert">
+    Supplier is successfully deleted!
+    <hr>
+    <a asp-action="ListAll" class="btn btn-sm btn-info">Back to suppliers list</a>
+</div>
+
+@section SideBar{
+    <partial name="_SideMenuGeneral" />
+}

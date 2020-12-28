@@ -15,16 +15,15 @@
 
         <input asp-for="Id" hidden value="@Model.Id" />
         <input asp-for="Conformity.ArticleId" hidden value="@Model.Id" />
+        <input asp-for="Conformity.ValidForSingleArticle" value="true" checked hidden />
 
         <div>
             <label asp-for="Number"></label>
-            @*<input asp-for="Number" hidden value="@Model.Number" />*@
             <span class="text-primary ">@Model.Number</span>
         </div>
 
         <div>
             <label asp-for="Description"></label>
-            @*<input asp-for="Description" hidden value="@Model.Description" />*@
             <span class="text-primary ">@Model.Description</span>
         </div>
 
@@ -71,7 +70,6 @@
             <span asp-validation-for="Conformity.InputFile" class="text-danger"></span>
         </div>
 
-        <input asp-for="Conformity.ValidForSingleArticle" value="true" checked hidden />
         @* TODO: add the declared substances and assing the restrictions. *@
 
         <div class="form-group">

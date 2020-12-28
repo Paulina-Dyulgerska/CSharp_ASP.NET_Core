@@ -85,6 +85,13 @@
                 .Any(x => x.Description.ToUpper() == input.ToUpper());
         }
 
+        public bool ConformityTypeArticlesCheck(int id)
+        {
+            return this.articleConformityTypesRepository
+                .AllAsNoTracking()
+                .Any(x => x.ConformityTypeId == id);
+        }
+
         public bool ConformityEntityIdCheck(string id)
         {
             return this.conformitiesRepository.AllAsNoTracking().Any(x => x.Id == id);

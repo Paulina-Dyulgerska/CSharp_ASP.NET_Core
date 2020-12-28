@@ -120,6 +120,38 @@
             return this.RedirectToAction(nameof(ArticlesController.Edit), "Articles", new { id });
         }
 
+        public async Task<IActionResult> AddToArticleSupplierConformityType(ConformityEditGetModel input)
+        {
+            var model = await this.conformitiesService.GetForCreateAsync(input);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddToArticleSupplierConformityType(ConformityCreateInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                input.ValidForSingleArticle = false;
+
+                return this.View(input);
+            }
+
+            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            await this.conformitiesService.CreateAsync(input, user.Id, this.conformityFilesDirectory);
+
+            this.TempData["Message"] = "Conformity added successfully.";
+
+            if (input.CallerViewName == SuppliersCallerViewName)
+            {
+                return this.RedirectToAction(nameof(SuppliersController.Details), SuppliersCallerViewName, new { id = input.SupplierId });
+            }
+
+            return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
+        }
+
         public async Task<IActionResult> Edit(ConformityEditGetModel input)
         {
             var model = await this.conformitiesService.GetForEditAsync(input);
@@ -179,6 +211,13 @@
             }
 
             return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.conformitiesService.DeleteAsync(id);
+
+            return this.View();
         }
 
         // TODO - delete - not used:

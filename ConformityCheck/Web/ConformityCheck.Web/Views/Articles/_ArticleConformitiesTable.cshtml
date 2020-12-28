@@ -31,7 +31,7 @@
                 @if (conformityBySupplier == null)
                 {
                     <td>
-                        <a asp-controller="Conformities" asp-action="Edit" class="btn btn-primary"
+                        <a asp-controller="Conformities" asp-action="AddToArticleSupplierConformityType" class="btn btn-primary"
                            asp-route-articleId="@Model.Id"
                            asp-route-supplierId="@supplier.Id"
                            asp-route-conformityTypeId="@conformityType.Id"

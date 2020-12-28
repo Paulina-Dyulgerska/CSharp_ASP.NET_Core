@@ -12,3 +12,10 @@
     });
     return false;
 });
+
+$(function () {
+    $('a.addPdf').click(function () {
+        var divForInputFile = $('#inputFile');
+        divForInputFile.removeAttr('hidden');
+    });
+});

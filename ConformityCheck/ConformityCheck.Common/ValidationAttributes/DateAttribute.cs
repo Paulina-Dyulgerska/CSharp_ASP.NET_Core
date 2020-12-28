@@ -21,7 +21,8 @@
         {
             if (value is DateTime dateTimeValue)
             {
-                if (dateTimeValue <= this.MinDate.Date || dateTimeValue > DateTime.UtcNow.Date)
+                if (dateTimeValue.ToUniversalTime() <= this.MinDate.Date
+                    || dateTimeValue.ToUniversalTime() > DateTime.UtcNow.Date)
                 {
                     return new ValidationResult(this.ErrorMessage);
                 }
