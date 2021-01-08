@@ -81,11 +81,28 @@
             return this.View(model);
         }
 
-        public async Task<IActionResult> ListByNumberOrDescription(string input, int id = 1, int itemsPerPage = 12)
+        public async Task<IActionResult> ListByNumberOrDescription(string input, string currentInput, int id = 1, int itemsPerPage = 12)
         {
             if (id <= 0)
             {
                 return this.NotFound(); //zarejdam StatusCodeError404.cshtml!!!
+            }
+
+            if (input != null)
+            {
+                id = 1;
+            }
+            else
+            {
+                input = currentInput;
+            }
+
+            this.ViewBag.CurrentInput = input;
+
+            // if not checked, the itemsPerPage change does not function
+            if (string.IsNullOrWhiteSpace(input) && string.IsNullOrWhiteSpace(this.ViewBag.CurrentInput))
+            {
+                return this.RedirectToAction(nameof(this.ListAll));
             }
 
             const int IntervalOfPagesToShow = 2;

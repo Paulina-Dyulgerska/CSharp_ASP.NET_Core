@@ -13,7 +13,10 @@
     else
     {
         <div class="page-item">
-            <a class="page-link" asp-action="ListAll" asp-route-id="1" asp-route-itemsPerPage="@item">
+            <a class="page-link" asp-action="@Model.PagingAspAction"
+               asp-route-id="1"
+               asp-route-itemsPerPage="@item"
+               asp-route-currentInput="@ViewBag.CurrentInput">
                 @item
             </a>
         </div>

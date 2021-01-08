@@ -13,6 +13,7 @@
     {
         public IEnumerable<ArticleDetailsModel> Articles { get; set; }
 
+        [ArticleEntityAttribute]
         public string Id { get; set; }
 
         public string Input { get; set; }

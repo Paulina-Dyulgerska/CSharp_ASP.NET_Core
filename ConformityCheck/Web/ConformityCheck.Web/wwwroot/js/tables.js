@@ -124,7 +124,7 @@ $("#dataTable").click(function addRowHandlers({ target }) {
 });
 
 // search article:
-$('#suggestions').hide();
+//$('#suggestions').hide();
 $('#searchAticleInput').on('keyup', function () {
     console.log($('#searchAticleInput').val());
     if (!isNullOrWhitespace($(this).val())) {
@@ -162,7 +162,6 @@ $('#searchAticleInput').on('keyup', function () {
         });
     }
     else {
-        $('#suggestions').hide();
+        //$('#suggestions').hide();
     }
 });
-
