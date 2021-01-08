@@ -3,9 +3,11 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class ConformityTypesController : Controller
@@ -15,19 +17,22 @@
         private readonly IProductsService productService;
         private readonly IConformityTypesService conformityTypeService;
         private readonly ISubstancesService substanceService;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public ConformityTypesController(
             IArticlesService articlesService,
             ISuppliersService supplierService,
             IProductsService productService,
             IConformityTypesService conformityTypeService,
-            ISubstancesService substanceService)
+            ISubstancesService substanceService,
+            UserManager<ApplicationUser> userManager)
         {
             this.articlesService = articlesService;
             this.supplierService = supplierService;
             this.productService = productService;
             this.conformityTypeService = conformityTypeService;
             this.substanceService = substanceService;
+            this.userManager = userManager;
         }
 
         public async Task<IActionResult> ListAll()
@@ -37,11 +42,13 @@
             return this.View(model);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             return this.View();
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(ConformityTypeCreateInputModel input)
         {
@@ -50,13 +57,17 @@
                 return this.View(input);
             }
 
-            await this.conformityTypeService.CreateAsync(input);
+            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            await this.conformityTypeService.CreateAsync(input, user.Id);
 
             this.TempData["Message"] = "Conformity type created successfully.";
 
             return this.RedirectToAction(nameof(this.ListAll));
         }
 
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             var model = await this.conformityTypeService.GetByIdAsync<ConformityTypeEditInputModel>(id);
@@ -65,6 +76,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Edit(ConformityTypeEditInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -85,12 +97,16 @@
                 return this.View(model);
             }
 
-            await this.conformityTypeService.EditAsync(input);
+            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            await this.conformityTypeService.EditAsync(input, user.Id);
 
             // TODO: return this.RedirectToAction(nameof(this.Details), "ConformityTypes", new { input.Id });
             return this.RedirectToAction(nameof(this.ListAll));
         }
 
+        [Authorize]
         public async Task<IActionResult> Delete(ConformityTypeDeleteInputModel input)
         {
             if (!this.ModelState.IsValid)

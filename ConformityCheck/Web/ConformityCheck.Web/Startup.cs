@@ -54,6 +54,11 @@
                         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     }).AddRazorRuntimeCompilation();
             services.AddRazorPages();
+            services.AddDatabaseDeveloperPageExceptionFilter(); //for app.UseMigrationsEndPoint()
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF-TOKEN";
+            });
 
             services.AddSingleton(this.configuration);
 
@@ -95,7 +100,7 @@
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseDatabaseErrorPage();
+                // app.UseDatabaseErrorPage();
                 app.UseMigrationsEndPoint();
             }
             else
@@ -103,6 +108,8 @@
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            app.UseStatusCodePagesWithReExecute("/Home/StatusCodeError", "?errorCode={0}");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

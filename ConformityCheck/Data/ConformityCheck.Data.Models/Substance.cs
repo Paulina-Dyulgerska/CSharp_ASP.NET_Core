@@ -21,6 +21,10 @@
         [MaxLength(100)]
         public string Description { get; set; }
 
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+
         public virtual ICollection<SubstanceRegulationList> SubstanceRegulationLists { get; set; }
 
         public virtual ICollection<ArticleSubstance> ArticleSubstances { get; set; }

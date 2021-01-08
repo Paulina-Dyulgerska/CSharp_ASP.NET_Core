@@ -55,7 +55,7 @@
         </div>
         <div class="card-body">
             @*<table id="dataTable" class="table table-responsive-sm table-bordered table-hover">*@
-            <table id="conformityTypesDataTable" class="table table-responsive-sm table-sm table-hover dataTable">
+            <table id="dataTable" class="table table-responsive-sm table-sm table-hover">
                 <thead>
                     <tr class="d-flex">
                         <th class="col-1">Nr.</th>
@@ -74,8 +74,11 @@
                         <td class="col-1">@conformityType.Id</td>
                         <td class="col-2">@conformityType.Description</td>
                         <td class="col-2">@conformityType.UserId</td>
-                        <td class="col-2">@conformityType.CreatedOn</td>
-                        <td class="col-2">@conformityType.ModifiedOn</td>
+                        <td class="col-2">@conformityType.CreatedOn.ToShortDateString()</td>
+                        <td class="col-2">
+                            @(conformityType.ModifiedOn.HasValue ?
+                                                conformityType.ModifiedOn.Value.ToShortDateString() : "-")
+                        </td>
                         <td class="col-1">
                             <a asp-action="Details" class="btn btn-sm btn-info" asp-route-id="@conformityType.Id">
                                 <span class="icon text-white">
@@ -85,20 +88,43 @@
                             </a>
                         </td>
                         <td class="col-1">
-                            <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@conformityType.Id">
-                                <span class="icon text-white">
-                                    <i class="fas fa-edit"></i>
-                                </span>
-                                <span class="text">Edit</span>
-                            </a>
+                            @if (User.Identity.IsAuthenticated)
+                            {<a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@conformityType.Id">
+                                    <span class="icon text-white">
+                                        <i class="fas fa-edit"></i>
+                                    </span>
+                                    <span class="text">Edit</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-sm btn-secondary" asp-area="Identity" asp-page="/Account/Login">
+                                    <span class="icon text-white">
+                                        <i class="fas fa-sign-in-alt"></i>
+                                    </span>
+                                    <span class="text">Login</span>
+                                </a>
+                            }
                         </td>
                         <td class="col-1">
-                            <a asp-action="Delete" class="btn btn-sm btn-danger" asp-route-id="@conformityType.Id">
-                                <span class="icon text-white-50">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                                <span class="text">Delete</span>
-                            </a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a asp-action="Delete" class="btn btn-sm btn-danger" asp-route-id="@conformityType.Id">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                    <span class="text">Delete</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-sm btn-secondary" asp-area="Identity" asp-page="/Account/Login">
+                                    <span class="icon text-white">
+                                        <i class="fas fa-sign-in-alt"></i>
+                                    </span>
+                                    <span class="text">Login</span>
+                                </a>
+                            }
                         </td>
                     </tr>
                 }
@@ -127,6 +153,6 @@
 }
 
 @section Scripts{
-    <script src="~/js/alerts.js"></script>
-    <script src="~/js/tables.js"></script>
+    <script src="~/js/alerts.js" asp-append-version="true"></script>
+    <script src="~/js/tables.js" asp-append-version="true"></script>
 }

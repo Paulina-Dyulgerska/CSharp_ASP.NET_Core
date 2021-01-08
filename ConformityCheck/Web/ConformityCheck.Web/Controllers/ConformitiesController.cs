@@ -11,6 +11,7 @@
     using ConformityCheck.Services.Messaging;
     using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.Conformities;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -53,11 +54,13 @@
             this.conformityFilesDirectory = $"{this.environment.WebRootPath}/files";
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             return this.View();
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(ConformityCreateInputModel input)
         {
@@ -80,6 +83,7 @@
             return this.RedirectToAction("ListAll", "Articles");
         }
 
+        [Authorize]
         public async Task<IActionResult> AddToArticleConformityType(string id)
         {
             var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesModel>(id);
@@ -88,6 +92,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddToArticleConformityType(ArticleManageConformitiesInputModel input)
         {
             var id = input.Conformity.ArticleId;
@@ -120,6 +125,7 @@
             return this.RedirectToAction(nameof(ArticlesController.Details), "Articles", new { id });
         }
 
+        [Authorize]
         public async Task<IActionResult> AddToArticleSupplierConformityType(ConformityEditGetModel input)
         {
             var model = await this.conformitiesService.GetForCreateAsync(input);
@@ -128,6 +134,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddToArticleSupplierConformityType(ConformityCreateInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -152,14 +159,16 @@
             return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
         }
 
+        [Authorize]
         public async Task<IActionResult> Edit(ConformityEditGetModel input)
         {
-            var model = await this.conformitiesService.GetForEditAsync(input);
+            var model = await this.conformitiesService.GetForEditAsync<ConformityEditInputModel>(input);
 
             return this.View(model);
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Edit(ConformityEditInputModel input)
         {
             // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -173,7 +182,7 @@
                     Id = input.Id,
                 };
 
-                var model = await this.conformitiesService.GetForEditAsync(getModel);
+                var model = await this.conformitiesService.GetForEditAsync<ConformityEditInputModel>(getModel);
 
                 return this.View(model);
             }
@@ -213,6 +222,7 @@
             return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
         }
 
+        [Authorize]
         public async Task<IActionResult> Delete(ConformityDeleteInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -236,11 +246,13 @@
         }
 
         // TODO - delete - not used:
+        [Authorize]
         public IActionResult PdfPartial(string conformityFileUrl)
         {
             return this.PartialView("_PartialDocumentPreview", conformityFileUrl);
         }
 
+        [Authorize]
         public IActionResult ShowModalDocument(string conformityFileUrl)
         {
             string filePath = "~" + conformityFileUrl;

@@ -12,5 +12,9 @@
     public class ArticlesListAllModel : PagingViewModel, IMapFrom<Article>
     {
         public IEnumerable<ArticleDetailsModel> Articles { get; set; }
+
+        public string Id { get; set; }
+
+        public string Input { get; set; }
     }
 }

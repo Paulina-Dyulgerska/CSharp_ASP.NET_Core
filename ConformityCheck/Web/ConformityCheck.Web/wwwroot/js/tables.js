@@ -1,4 +1,4 @@
-﻿// sorting column in a table:
+﻿// sorting column:
 function sortList() {
     var table, i, switching, b, shouldSwitch;
     table = document.getElementById('dataTable');
@@ -33,15 +33,17 @@ function sortList() {
 }
 
 // filtering tables:
+//document.querySelector('#searchInput').addEventListener('keyup', filterTableByTwoColumns, false);
+$('#searchInput').on('keyup', filterTableByTwoColumns);
 function filterTableByTwoColumns(event) {
-    console.log(event);
+    //console.log(event);
     var filter = event.target.value.toUpperCase();
     var rows = document.querySelector("#dataTable tbody").rows;
-    console.log(rows);
+    //console.log(rows);
     for (var i = 0; i < rows.length; i++) {
         var firstCol = rows[i].cells[0].textContent.toUpperCase();
         var secondCol = rows[i].cells[1].textContent.toUpperCase();
-        console.log(firstCol.indexOf(filter));
+        //console.log(firstCol.indexOf(filter));
         if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1) {
             rows[i].style.display = "";
             rows[i].classList.add("d-flex");
@@ -52,8 +54,7 @@ function filterTableByTwoColumns(event) {
     }
 }
 
-document.querySelector('#searchInput').addEventListener('keyup', filterTableByTwoColumns, false);
-
+//// color rows:
 //$(document).ready(function () {
 //    var rows = $('#dataTable > tbody > tr');
 //    for (var i = 0; i < rows.length; i++) {
@@ -65,10 +66,10 @@ document.querySelector('#searchInput').addEventListener('keyup', filterTableByTw
 //    }
 //});
 
+//// color rows:
 //document.querySelectorAll('#dataTable > tbody > tr').forEach(r => {
 //    r.addEventListener('load', colorTheRow(r), false);
 //})
-
 //function colorTheRow(r) {
 //    if (r.getElementsByClassName('isConfirmed')[0].textContent === 'Yes') {
 //        //r.classList.add('table-success');
@@ -79,74 +80,89 @@ document.querySelector('#searchInput').addEventListener('keyup', filterTableByTw
 //    }
 //}
 
-$(document).ready(function addRowHandlers() {
-    var table = document.querySelector("#articlesDataTable");
-    var rows = table.getElementsByTagName("tr");
-    for (i = 1; i < rows.length; i++) {
-        var currentRow = table.rows[i];
-        var createClickHandler = function (row) {
-            return function () {
-                //var cell = row.getElementsByTagName("td")[0];
-                var id = row.getAttribute('data-id');
-                //console.log(row);
-                //alert("id:" + id);
-                window.location.href = '/Articles/Details/' + id;
-            };
-        };
-        currentRow.onclick = createClickHandler(currentRow);
+//// row click:
+//$(document).ready(function addRowHandlers() {
+//    var table = document.querySelector("#dataTable");
+//    table.onclick = ({ target }) => {
+//        console.log(this);
+//        if (target.parentElement.localName === "tr") {
+//            const link = target.parentElement.querySelector("a.btn-info");
+//            if (link) {
+//                link.click();
+//            }
+//        }
+//    }
+//});
+
+//// row click:
+//$(document).ready(function addRowHandlers() {
+//    var table = document.querySelector("#articlesDataTable");
+//    var rows = table.getElementsByTagName("tr");
+//    for (i = 1; i < rows.length; i++) {
+//        var currentRow = table.rows[i];
+//        var createClickHandler = function (row) {
+//            return function () {
+//                //var cell = row.getElementsByTagName("td")[0];
+//                var id = row.getAttribute('data-id');
+//                //console.log(row);
+//                //alert("id:" + id);
+//                window.location.href = '/Articles/Details/' + id;
+//            };
+//        };
+//        currentRow.onclick = createClickHandler(currentRow);
+//    }
+//});
+
+//// row click:
+$("#dataTable").click(function addRowHandlers({ target }) {
+    if (target.parentElement.localName === "tr") {
+        const link = target.parentElement.querySelector("a.btn-info");
+        if (link) {
+            link.click();
+        }
     }
 });
 
-$(document).ready(function addRowHandlers() {
-    var table = document.querySelector("#suppliersDataTable");
-    var rows = table.getElementsByTagName("tr");
-    for (i = 1; i < rows.length; i++) {
-        var currentRow = table.rows[i];
-        var createClickHandler = function (row) {
-            return function () {
-                //var cell = row.getElementsByTagName("td")[0];
-                var id = row.getAttribute('data-id');
-                //console.log(row);
-                //alert("id:" + id);
-                window.location.href = '/Suppliers/Details/' + id;
-            };
-        };
-        currentRow.onclick = createClickHandler(currentRow);
+// search article:
+$('#suggestions').hide();
+$('#searchAticleInput').on('keyup', function () {
+    console.log($('#searchAticleInput').val());
+    if (!isNullOrWhitespace($(this).val())) {
+        $.ajax({
+            method: 'GET',
+            url: '/Articles/GetByNumberOrDescription',
+            dataType: 'json',
+            data: { 'input': $(this).val() },
+            success: function (json) {
+                if (json.length < 1) {
+                    $('#suggestions').hide();
+                }
+                else {
+                    let html = '';
+                    for (i = 0; i < json.length; i++) {
+                        html += '<option class="form-control" value="' + json[i].id + '">'
+                            + json[i].number + ' - ' + json[i].description +
+                            '</option>';
+
+                        //<a asp-action="Details" class="btn btn-sm btn-info" asp-route-id="@article.Id">
+                        //    <span class="icon text-white">
+                        //        <i class="fas fa-info-circle"></i>
+                        //    </span>
+                        //    <span class="text">Details</span>
+                        //</a>
+                    }
+                    $('#suggestions').show();
+                    $('#selectSearchArticleInput').html(html);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Error by loading articles');
+                //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+    else {
+        $('#suggestions').hide();
     }
 });
 
-$(document).ready(function addRowHandlers() {
-    var table = document.querySelector("#conformityTypesDataTable");
-    var rows = table.getElementsByTagName("tr");
-    for (i = 1; i < rows.length; i++) {
-        var currentRow = table.rows[i];
-        var createClickHandler = function (row) {
-            return function () {
-                //var cell = row.getElementsByTagName("td")[0];
-                var id = row.getAttribute('data-id');
-                //console.log(row);
-                //alert("id:" + id);
-                window.location.href = '/ConformityTypes/Details/' + id;
-            };
-        };
-        currentRow.onclick = createClickHandler(currentRow);
-    }
-});
-
-$(document).ready(function addRowHandlers() {
-    var table = document.querySelector("#conformitiesDataTable");
-    var rows = table.getElementsByTagName("tr");
-    for (i = 1; i < rows.length; i++) {
-        var currentRow = table.rows[i];
-        var createClickHandler = function (row) {
-            return function () {
-                //var cell = row.getElementsByTagName("td")[0];
-                var id = row.getAttribute('data-id');
-                //console.log(row);
-                //alert("id:" + id);
-                window.location.href = '/Conformities/Details/' + id;
-            };
-        };
-        currentRow.onclick = createClickHandler(currentRow);
-    }
-});

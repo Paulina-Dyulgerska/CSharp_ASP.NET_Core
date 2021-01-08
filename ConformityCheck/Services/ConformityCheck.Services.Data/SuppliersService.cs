@@ -61,10 +61,16 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsPagesAsync<T>(int page, int itemsPerPage = 12)
+        public async Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsPagesAsync<T>(int page, int itemsPerPage)
         {
-            var suppliers = await this.GetAllAsNoTrackingOrderedAsync<T>();
-            return suppliers.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
+            return await this.suppliersRepository
+                                .AllAsNoTracking()
+                                .OrderByDescending(x => x.CreatedOn)
+                                .ThenByDescending(x => x.ModifiedOn)
+                                .ThenBy(x => x.Number)
+                                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                .To<T>()
+                                .ToListAsync();
         }
 
         public async Task<T> GetByIdAsync<T>(string id)
@@ -134,7 +140,7 @@
             return model;
         }
 
-        public async Task CreateAsync(SupplierCreateInputModel input)
+        public async Task CreateAsync(SupplierCreateInputModel input, string userId)
         {
             // TODO - to give the numbers authomaticaly!!!
             // var userEntity = this.usersRepository.AllAsNoTracking()
@@ -150,6 +156,7 @@
                              this.PascalCaseConverterWords(input.ContactPersonFirstName),
                 ContactPersonLastName = input.ContactPersonLastName == null ? null :
                              this.PascalCaseConverterWords(input.ContactPersonLastName),
+                UserId = userId,
             };
 
             await this.suppliersRepository.AddAsync(entity);
@@ -157,7 +164,7 @@
             await this.suppliersRepository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(SupplierEditInputModel input)
+        public async Task EditAsync(SupplierEditInputModel input, string userId)
         {
             var entity = await this.suppliersRepository
                 .All()
@@ -173,6 +180,7 @@
                 null : this.PascalCaseConverterWords(input.ContactPersonFirstName);
             entity.ContactPersonLastName = input.ContactPersonLastName == null ?
                 null : this.PascalCaseConverterWords(input.ContactPersonLastName);
+            entity.UserId = userId;
 
             await this.suppliersRepository.SaveChangesAsync();
         }

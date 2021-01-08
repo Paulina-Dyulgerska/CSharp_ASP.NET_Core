@@ -2,10 +2,12 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
-
+    using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.Suppliers;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class ArticlesController : BaseController
@@ -15,19 +17,22 @@
         private readonly IProductsService productService;
         private readonly IConformityTypesService conformityTypeService;
         private readonly ISubstancesService substanceService;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public ArticlesController(
             IArticlesService articlesService,
             ISuppliersService supplierService,
             IProductsService productService,
             IConformityTypesService conformityTypeService,
-            ISubstancesService substanceService)
+            ISubstancesService substanceService,
+            UserManager<ApplicationUser> userManager)
         {
             this.articlesService = articlesService;
             this.supplierService = supplierService;
             this.productService = productService;
             this.conformityTypeService = conformityTypeService;
             this.substanceService = substanceService;
+            this.userManager = userManager;
         }
 
         // Articles/ListAll/{Id} - Id = page number
@@ -57,7 +62,7 @@
         {
             if (id <= 0)
             {
-                return this.NotFound();
+                return this.NotFound(); //zarejdam StatusCodeError404.cshtml!!!
             }
 
             const int IntervalOfPagesToShow = 2;
@@ -70,17 +75,43 @@
                 IntervalOfPagesToShow = IntervalOfPagesToShow,
                 Articles = await this.articlesService
                                 .GetAllAsNoTrackingOrderedAsPagesAsync<ArticleDetailsModel>(id, itemsPerPage),
+                PagingAspAction = nameof(this.ListAll),
             };
 
             return this.View(model);
         }
 
+        public async Task<IActionResult> ListByNumberOrDescription(string input, int id = 1, int itemsPerPage = 12)
+        {
+            if (id <= 0)
+            {
+                return this.NotFound(); //zarejdam StatusCodeError404.cshtml!!!
+            }
+
+            const int IntervalOfPagesToShow = 2;
+
+            var model = new ArticlesListAllModel
+            {
+                ItemsPerPage = itemsPerPage,
+                PageNumber = id,
+                ItemsCount = this.articlesService.GetCountByNumberOrDescription(input),
+                IntervalOfPagesToShow = IntervalOfPagesToShow,
+                Articles = await this.articlesService
+                           .GetByNumberOrDescriptionOrderedAsPagesAsync<ArticleDetailsModel>(id, itemsPerPage, input),
+                PagingAspAction = nameof(this.ListByNumberOrDescription),
+            };
+
+            return this.View(nameof(this.ListAll), model);
+        }
+
+        [Authorize]
         public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(ArticleCreateInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -88,7 +119,10 @@
                 return this.View(input);
             }
 
-            await this.articlesService.CreateAsync(input);
+            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            await this.articlesService.CreateAsync(input, user.Id);
 
             this.TempData["Message"] = "Article added successfully.";
 
@@ -96,6 +130,7 @@
             return this.RedirectToAction(nameof(this.ListAll));
         }
 
+        [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
             //trqbwa li da checkwam v DB za wsqko edno id, dali go imam v bazata?
@@ -106,7 +141,8 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(ArticleEditInputModel input)
+        [Authorize]
+        public async Task<IActionResult> Edit(ArticleEditInputModel input, string userId)
         {
             // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (!this.ModelState.IsValid)
@@ -132,13 +168,17 @@
                 //return this.View(input);
             }
 
-            await this.articlesService.EditAsync(input);
+            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            await this.articlesService.EditAsync(input, user.Id);
 
             this.TempData["Message"] = "Article edited successfully.";
 
             return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
         }
 
+        [Authorize]
         public async Task<IActionResult> AddSupplier(string id)
         {
             var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersModel>(id);
@@ -147,6 +187,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddSupplier(ArticleManageSuppliersInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -163,6 +204,7 @@
             return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
         }
 
+        [Authorize]
         public async Task<IActionResult> ChangeMainSupplier(string id)
         {
             var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersModel>(id);
@@ -171,6 +213,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> ChangeMainSupplier(ArticleManageSuppliersInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -187,6 +230,7 @@
             return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
         }
 
+        [Authorize]
         public async Task<IActionResult> RemoveSupplier(string id)
         {
             var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersModel>(id);
@@ -195,6 +239,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> RemoveSupplier(ArticleManageSuppliersInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -211,6 +256,7 @@
             return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
         }
 
+        [Authorize]
         public async Task<IActionResult> AddConformityType(string id)
         {
             var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesModel>(id);
@@ -219,6 +265,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddConformityType(ArticleManageConformityTypesInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -235,6 +282,7 @@
             return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
         }
 
+        [Authorize]
         public async Task<IActionResult> RemoveConformityType(string id)
         {
             var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesModel>(id);
@@ -243,6 +291,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> RemoveConformityType(ArticleManageConformityTypesInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -259,6 +308,7 @@
             return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
         }
 
+        [Authorize]
         public async Task<IActionResult> Delete(string id)
         {
             await this.articlesService.DeleteAsync(id);
@@ -266,6 +316,7 @@
             return this.View();
         }
 
+        [Authorize]
         public async Task<IActionResult> Details(string id)
         {
             var model = await this.articlesService.GetByIdAsync<ArticleDetailsModel>(id);
@@ -273,6 +324,7 @@
             return this.View(model);
         }
 
+        //[Authorize]
         public async Task<IActionResult> GetSuppliersById(string id)
         {
             var model = await this.articlesService.GetSuppliersByIdAsync<SupplierExportModel>(id);
@@ -280,6 +332,7 @@
             return this.Json(model);
         }
 
+        //[Authorize]
         public async Task<IActionResult> GetConformityTypesByIdAndSupplier(
             string articleId,
             string supplierId)
@@ -289,5 +342,65 @@
 
             return this.Json(model);
         }
+
+        //[Authorize]
+        public async Task<IActionResult> GetByNumberOrDescription(
+            string input)
+        {
+            var model = await this.articlesService
+                .GetByNumberOrDescriptionAsync<ArticleExportModel>(input);
+
+            return this.Json(model);
+        }
+
+        // TODO - in a new controller ContentDeliveryController Api one:
+        //[ApiController]
+        //[Route("api/[controller]")]
+        //public class VotesController : BaseController
+        //{
+        //    private readonly IVotesService votesService;
+
+        //    public VotesController(IVotesService votesService)
+        //    {
+        //        this.votesService = votesService;
+        //    }
+
+        //    [HttpPost]
+        //    [Authorize]
+        //    public async Task<ActionResult<PostVoteResponseModel>> Post(PostVoteInputModel input)
+        //    {
+        //        var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //        await this.votesService.SetVoteAsync(input.RecipeId, userId, input.Value);
+        //        var averageVotes = this.votesService.GetAverageVotes(input.RecipeId);
+        //        return new PostVoteResponseModel { AverageVote = averageVotes };
+        //    }
+        //}
+        //<form method = "post" id="antiForgeryForm"></form>
+        //        @section Scripts
+        //        {
+        //    <script>
+        //        $("li[data-vote]").each(function (el) {
+        //            $(this).click(function() {
+        //                var value = $(this).attr("data-vote");
+        //                var recipeId = @Model.Id;
+        //                var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+        //                var data = { recipeId: recipeId, value: value };
+        //                $.ajax({
+        //            type: "POST",
+        //                    url: "/api/Votes",
+        //                    data: JSON.stringify(data),
+        //                    headers:
+        //                {
+        //                    'X-CSRF-TOKEN': antiForgeryToken
+        //                    },
+        //                    success: function(data) {
+        //                        $('#averageVoteValue').html(data.averageVote.toFixed(1));
+        //                },
+        //                    contentType: 'application/json',
+        //                });
+        //        })
+        //        });
+        //    </script>
+        //}
     }
 }

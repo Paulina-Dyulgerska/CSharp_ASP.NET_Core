@@ -9,9 +9,11 @@
 
     public interface IArticlesService : IService<string>
     {
-        Task CreateAsync(ArticleCreateInputModel input);
+        int GetCountByNumberOrDescription(string input);
 
-        Task EditAsync(ArticleEditInputModel input);
+        Task CreateAsync(ArticleCreateInputModel input, string userId);
+
+        Task EditAsync(ArticleEditInputModel input, string userId);
 
         Task<int> DeleteAsync(string id);
 
@@ -33,5 +35,12 @@
         Task<IEnumerable<ConformityTypeExportModel>> GetConformityTypesByIdAndSupplierAsync(
             string articleId,
             string supplierId);
+
+        Task<IEnumerable<T>> GetByNumberOrDescriptionOrderedAsPagesAsync<T>(
+            int page,
+            int itemsPerPage,
+            string input);
+
+        Task<IEnumerable<T>> GetByNumberOrDescriptionAsync<T>(string input);
     }
 }

@@ -4,7 +4,7 @@
         url: '/Articles/GetSuppliersById/' + $('#Id').val(),
         dataType: 'json',
         success: function (json) {
-            html = '<option class="form-control" value="">Select Supplier</option>';
+            let html = '<option class="form-control" value="">Select Supplier</option>';
             for (i = 0; i < json.length; i++) {
                 html += '<option class="form-control" value="' + json[i].id + '">'
                     + json[i].name + ' - ' + json[i].number;
@@ -36,11 +36,11 @@ $('#Conformity_SupplierId').change(function () {
         data: { 'articleId': $('#Id').val(), 'supplierId': $('#Conformity_SupplierId').val() },
         contentType: "application/json; charset=utf-8",
         success: function (json) {
-            html = '<option class="form-control" value="">Select conformity type</option>';
+            let html = '<option class="form-control" value="">Select conformity type</option>';
             for (i = 0; i < json.length; i++) {
                 html += '<option class="form-control" value="' + json[i].id + '">'
                     + json[i].description;
-                if (json[i].SupplierConfirmed) {
+                if (json[i].supplierConfirmed) {
                     html += ' - Confirmed by this supplier';
                 } else {
                     html += ' - Not confirmed by this supplier';

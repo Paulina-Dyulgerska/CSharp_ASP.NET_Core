@@ -6,9 +6,9 @@
 
     public interface IConformityTypesService : IService<int>
     {
-        Task CreateAsync(ConformityTypeCreateInputModel input);
+        Task CreateAsync(ConformityTypeCreateInputModel input, string userId);
 
-        Task EditAsync(ConformityTypeEditInputModel input);
+        Task EditAsync(ConformityTypeEditInputModel input, string userId);
 
         Task<int> DeleteAsync(int id);
     }

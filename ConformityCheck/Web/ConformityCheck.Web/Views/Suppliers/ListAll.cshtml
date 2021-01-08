@@ -42,7 +42,7 @@
         </div>
         <div class="card-body">
             @*<table id="dataTable" class="table table-responsive-sm table-bordered table-hover">*@
-            <table id="suppliersDataTable" class="table table-responsive-sm table-sm table-hover dataTable">
+            <table id="dataTable" class="table table-responsive-sm table-sm table-hover">
                 <thead>
                     <tr class="d-flex">
                         <th class="col-2">
@@ -69,7 +69,8 @@
                         @*<td class="col-1">@supplier.Email</td>*@
                         @*<td class="col-1">@supplier.PhoneNumber</td>*@
                         <td class="col-2">@supplier.UserId</td>
-                        <td class="col-1">@supplier.ArticlesCount</td>
+                        @*<td class="col-1">@supplier.ArticlesCount</td>*@
+                        <td class="col-1">@supplier.ArticleSuppliersCount</td>
                         <td class="col-1">
                             <a asp-action="Details" class="btn btn-sm btn-info" asp-route-id="@supplier.Id">
                                 <span class="icon text-white">
@@ -79,20 +80,42 @@
                             </a>
                         </td>
                         <td class="col-1">
-                            <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@supplier.Id">
-                                <span class="icon text-white">
-                                    <i class="fas fa-edit"></i>
-                                </span>
-                                <span class="text">Edit</span>
-                            </a>
+                            @if (User.Identity.IsAuthenticated)
+                            {<a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@supplier.Id">
+                                    <span class="icon text-white">
+                                        <i class="fas fa-edit"></i>
+                                    </span>
+                                    <span class="text">Edit</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-sm btn-secondary" asp-area="Identity" asp-page="/Account/Login">
+                                    <span class="icon text-white">
+                                        <i class="fas fa-sign-in-alt"></i>
+                                    </span>
+                                    <span class="text">Login</span>
+                                </a>
+                            }
                         </td>
                         <td class="col-1">
-                            <a asp-action="Delete" class="btn btn-sm btn-danger" asp-route-id="@supplier.Id">
-                                <span class="icon text-white-50">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                                <span class="text">Delete</span>
-                            </a>
+                            @if (User.Identity.IsAuthenticated)
+                            {<a asp-action="Delete" class="btn btn-sm btn-danger" asp-route-id="@supplier.Id">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                    <span class="text">Delete</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-sm btn-secondary" asp-area="Identity" asp-page="/Account/Login">
+                                    <span class="icon text-white">
+                                        <i class="fas fa-sign-in-alt"></i>
+                                    </span>
+                                    <span class="text">Login</span>
+                                </a>
+                            }
                         </td>
                     </tr>
                 }
@@ -106,5 +129,60 @@
 }
 
 @section Scripts{
-    <script src="~/js/tables.js"></script>
+    <script src="~/js/tables.js" asp-append-version="true"></script>
+    @* from https://forums.asp.net/t/2126434.aspx?Infinite+Scroll+best+way+to+implement
+            <script type="text/javascript">
+
+        var categoryId = @Model.CurrentCategoryID;
+        var pageSize = @Model.PagingInfo.ItemsPerPage;
+        var pageIndex = 2; // already loaded page 1 - this is next to get
+        var sortIndex = @Model.PagingInfo.SortBy;
+        var pages = @Model.PagingInfo.TotalPages;
+        var _incallback = false;
+
+        $(window).scroll(function() {
+            var hT = $('#progressmarker').offset().top,
+                hH = $('#progressmarker').outerHeight(),
+                wH = $(window).height(),
+                wS = $(window).scrollTop();
+            // don't do it if we have reached last page OR we are still grabbing items
+            if (pages >= pageIndex && ! _incallback)
+            {
+                if (wS > (hT + hH - wH)){
+                    GetData();
+                }
+            }
+        });
+
+        function GetData() {
+            _incallback = true;
+            $.ajax({
+                type: 'GET',
+                url: '/category/ListMore',
+                data: {
+                    "id": categoryId,
+                    "page": pageIndex,
+                    "sort": sortIndex
+                },
+                dataType: 'html',
+                success: function (data) {
+                    if (data != null) {
+                        $("#listmore").append(data);
+                        pageIndex++;
+                    }
+                },
+                beforeSend : function () {
+                    $("#progress").show();
+                },
+                complete : function () {
+                    $("#progress").hide();
+                    _incallback = false;
+                },
+                error: function () {
+                    //alert("Error while retrieving data!");
+                    _incallback = false;
+                }
+            });
+        }
+        </script>*@
 }

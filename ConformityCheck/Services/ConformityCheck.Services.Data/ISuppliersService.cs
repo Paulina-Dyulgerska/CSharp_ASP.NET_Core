@@ -7,9 +7,9 @@
 
     public interface ISuppliersService : IService<string>
     {
-        Task CreateAsync(SupplierCreateInputModel supplierInputModel);
+        Task CreateAsync(SupplierCreateInputModel input, string userId);
 
-        Task EditAsync(SupplierEditInputModel input);
+        Task EditAsync(SupplierEditInputModel input, string userId);
 
         Task DeleteAsync(string id);
 

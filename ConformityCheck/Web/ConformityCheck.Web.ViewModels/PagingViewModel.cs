@@ -25,5 +25,7 @@
         public int ItemsCount { get; set; }
 
         public int ItemsPerPage { get; set; }
+
+        public string PagingAspAction { get; set; }
     }
 }

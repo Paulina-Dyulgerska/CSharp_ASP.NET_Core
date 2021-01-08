@@ -6,7 +6,7 @@ $('#SupplierId').change(function () {
         url: '/Suppliers/GetArticlesById/' + $(this).val(),
         dataType: 'json',
         success: function (json) {
-            html = '<option class="form-control" value=""></option>';
+            let html = '<option class="form-control" value=""></option>';
             for (i = 0; i < json.length; i++) {
                 html += '<option class="form-control" value="' + json[i].id + '">'
                     + json[i].number + ' - ' + json[i].description +

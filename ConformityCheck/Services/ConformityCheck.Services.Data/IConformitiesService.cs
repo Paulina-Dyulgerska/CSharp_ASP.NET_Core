@@ -14,6 +14,6 @@
 
         Task<ConformityCreateInputModel> GetForCreateAsync(ConformityEditGetModel input);
 
-        Task<ConformityEditInputModel> GetForEditAsync(ConformityEditGetModel input);
+        Task<T> GetForEditAsync<T>(ConformityEditGetModel input);
     }
 }

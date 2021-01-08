@@ -115,12 +115,12 @@
             return entity;
         }
 
-        public async Task<ConformityEditInputModel> GetForEditAsync(ConformityEditGetModel input)
+        public async Task<T> GetForEditAsync<T>(ConformityEditGetModel input)
         {
             return await this.conformitiesRepository
                     .AllAsNoTracking()
                     .Where(x => x.Id == input.Id)
-                    .To<ConformityEditInputModel>()
+                    .To<T>()
                     .FirstOrDefaultAsync();
         }
 
@@ -160,6 +160,7 @@
             conformityEntity.AcceptanceDate = DateTime.UtcNow.Date;
             conformityEntity.ValidityDate = input.IsAccepted ? DateTime.UtcNow.Date.AddYears(3) : (DateTime?)null;
             conformityEntity.Comments = input.Comments;
+            conformityEntity.UserId = userId;
 
             if (input.ValidityDate != null && input.IsAccepted)
             {
@@ -206,6 +207,7 @@
                 AcceptanceDate = DateTime.UtcNow.Date,
                 ValidityDate = input.IsAccepted ? DateTime.UtcNow.Date.AddYears(3) : (DateTime?)null,
                 Comments = input.Comments,
+                UserId = userId,
             };
 
             if (input.ValidityDate != null && input.IsAccepted)

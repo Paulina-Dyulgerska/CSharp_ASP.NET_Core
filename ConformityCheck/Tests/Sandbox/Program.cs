@@ -21,10 +21,28 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
+    public class Test
+    {
+        public Test(string name, int year)
+        {
+            this.Name = name;
+            this.Year = year;
+        }
+
+        public string Name { get; }
+
+        public int Year { get; }
+    }
+
+    public record Test2(string Name, int Year);
+
     public static class Program
     {
         public static int Main(string[] args)
         {
+            var a = new Test2("Polq", 2021);
+            var b = new Test("Polq", 2021);
+
             Console.WriteLine($"{typeof(Program).Namespace} ({string.Join(" ", args)}) starts working...");
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);

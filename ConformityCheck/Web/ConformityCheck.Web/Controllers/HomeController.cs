@@ -41,6 +41,11 @@
             return this.View();
         }
 
+        public IActionResult StatusCodeError(int errorCode)
+        {
+            return this.View($"~/Views/Shared/StatusCodeError{errorCode}.cshtml");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

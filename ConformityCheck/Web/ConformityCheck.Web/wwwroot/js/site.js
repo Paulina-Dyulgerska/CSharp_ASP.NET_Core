@@ -2,3 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+function isNullOrWhitespace(input) {
+    return (typeof input === 'undefined' || input == null) || input.replace(/\s/g, '').length < 1;
+}

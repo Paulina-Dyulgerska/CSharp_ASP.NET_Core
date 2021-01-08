@@ -36,8 +36,6 @@
 
         public DbSet<Conformity> Conformities { get; set; }
 
-        //public DbSet<ConformityFile> ConformityFiles { get; set; }
-
         public DbSet<ConformityType> ConformityTypes { get; set; }
 
         public DbSet<Substance> Substances { get; set; }

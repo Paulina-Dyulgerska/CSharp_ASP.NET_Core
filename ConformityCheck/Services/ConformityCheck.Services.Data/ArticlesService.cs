@@ -46,6 +46,15 @@
             return this.articlesRepository.AllAsNoTracking().Count();
         }
 
+        public int GetCountByNumberOrDescription(string input)
+        {
+            return this.articlesRepository
+                .AllAsNoTracking()
+                .Where(x => x.Number.Contains(input.ToUpper())
+                           || x.Description.ToUpper().Contains(input.ToUpper()))
+                .Count();
+        }
+
         public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             return await this.articlesRepository.All().To<T>().ToListAsync();
@@ -81,6 +90,20 @@
                                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<T>> GetByNumberOrDescriptionOrderedAsPagesAsync<T>(int page, int itemsPerPage, string input)
+        {
+            return await this.articlesRepository
+                                .AllAsNoTracking()
+                                .Where(x => x.Number.Contains(input.ToUpper())
+                                            || x.Description.ToUpper().Contains(input.ToUpper()))
+                                .OrderByDescending(x => x.CreatedOn)
+                                .ThenByDescending(x => x.ModifiedOn)
+                                .ThenBy(x => x.Number)
+                                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                .To<T>()
+                                .ToListAsync();
+        }
+
         public async Task<T> GetByIdAsync<T>(string id)
         {
             return await this.articlesRepository
@@ -90,7 +113,7 @@
                 .FirstOrDefaultAsync();
         }
 
-        public async Task CreateAsync(ArticleCreateInputModel input)
+        public async Task CreateAsync(ArticleCreateInputModel input, string userId)
         {
             var articleEntity = await this.articlesRepository.AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Number == input.Number.Trim().ToUpper());
@@ -109,8 +132,7 @@
             {
                 Number = input.Number.Trim().ToUpper(),
                 Description = this.PascalCaseConverter(input.Description),
-
-                //UserId = userEntity.Id,
+                UserId = userId,
             };
 
             await this.articlesRepository.AddAsync(article);
@@ -134,7 +156,7 @@
             // TODO: products, substances to be added too.
         }
 
-        public async Task EditAsync(ArticleEditInputModel input)
+        public async Task EditAsync(ArticleEditInputModel input, string userId)
         {
             var articleEntity = await this.articlesRepository
                 .All()
@@ -143,6 +165,7 @@
             if (input.Description != null)
             {
                 articleEntity.Description = this.PascalCaseConverter(input.Description);
+                articleEntity.UserId = userId;
             }
 
             await this.articlesRepository.SaveChangesAsync();
@@ -347,6 +370,17 @@
             return entities;
         }
 
+        public async Task<IEnumerable<T>> GetByNumberOrDescriptionAsync<T>(string input)
+        {
+            var entities = await this.articlesRepository.AllAsNoTracking()
+                .Where(x => x.Number.Contains(input.ToUpper())
+                        || x.Description.ToUpper().Contains(input.ToUpper()))
+                .To<T>()
+                .ToListAsync();
+
+            return entities;
+        }
+
         // not in the Interface!
         public IEnumerable<T> ListArticleConformities<T>(string id)
         {
@@ -394,6 +428,7 @@
 
             return st.ToString().Trim();
         }
+
 
 
 

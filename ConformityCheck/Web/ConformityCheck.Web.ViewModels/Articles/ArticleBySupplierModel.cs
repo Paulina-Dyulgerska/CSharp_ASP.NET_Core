@@ -5,6 +5,7 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
+    // TODO - delete it and replace it with ArticleExportModel!!!!Check the mapping!!!
     public class ArticleBySupplierModel : IMapFrom<ArticleSupplier>, IHaveCustomMappings
     {
         [ArticleEntityAttribute]

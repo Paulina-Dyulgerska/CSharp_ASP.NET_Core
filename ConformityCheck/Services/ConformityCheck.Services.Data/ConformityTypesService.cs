@@ -71,7 +71,7 @@
                 .FirstOrDefaultAsync();
         }
 
-        public async Task CreateAsync(ConformityTypeCreateInputModel input)
+        public async Task CreateAsync(ConformityTypeCreateInputModel input, string userId)
         {
             //var userEntity = this.usersRepository.AllAsNoTracking()
             //    .FirstOrDefault(x => x.UserName == articleInputModel.UserId);
@@ -80,6 +80,7 @@
             var conformityType = new ConformityType
             {
                 Description = input.Description.ToUpper(),
+                UserId = userId,
             };
 
             await this.conformityTypesRepository.AddAsync(conformityType);
@@ -87,7 +88,7 @@
             await this.conformityTypesRepository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(ConformityTypeEditInputModel input)
+        public async Task EditAsync(ConformityTypeEditInputModel input, string userId)
         {
             // if this conformity type is not in the DB
             var entity = await this.conformityTypesRepository
@@ -95,6 +96,7 @@
                 .FirstOrDefaultAsync(c => c.Id == input.Id);
 
             entity.Description = input.Description.ToUpper();
+            entity.UserId = userId;
 
             await this.conformityTypesRepository.SaveChangesAsync();
         }

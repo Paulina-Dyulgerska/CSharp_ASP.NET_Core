@@ -22,6 +22,10 @@
         [Required]
         public string SourceURL { get; set; }
 
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+        
         public virtual ICollection<SubstanceRegulationList> SubstanceRegulationLists { get; set; }
     }
 }

@@ -68,6 +68,11 @@
 
         public virtual void CreateMappings(IProfileExpression configuration)
         {
+            // TODO - tova vzimane na ConformityTypes i Conformities e izlishno da go 
+            // opisvam az tuk, ako ConformityTypeExportModel i ConformityExportModel imat
+            // IMapFrom<ConformityTypes> i syotvetno IMapFrom<Conformities> - AutoMapper-a sam
+            // shte se seti da napravi tozi mappe-vane, ne trqbwa az da gi pisha, ako e izpylneno 
+            // towa!
             configuration.CreateMap<Article, ArticleEditInputModel>()
                 .ForMember(
                 x => x.Suppliers,
