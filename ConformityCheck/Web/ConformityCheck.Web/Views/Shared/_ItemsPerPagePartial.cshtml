@@ -14,9 +14,11 @@
     {
         <div class="page-item">
             <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
-               asp-route-id="1"
+               asp-route-pageNumber="1"
                asp-route-itemsPerPage="@item"
-               asp-route-currentInput="@ViewBag.CurrentInput">
+               asp-route-currentSortOrder="@Model.CurrentSortOrder"
+               asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                @* if I pass here pageNumber the table will stay on the current page, not start from 1 *@
                 @item
             </a>
         </div>

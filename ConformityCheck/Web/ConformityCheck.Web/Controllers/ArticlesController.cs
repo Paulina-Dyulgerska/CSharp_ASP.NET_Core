@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
+    using ConformityCheck.Web.ViewModels;
     using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.AspNetCore.Authorization;
@@ -59,75 +60,77 @@
         //    return this.View(model);
         //}
 
-        public async Task<IActionResult> ListAll(string sortOrder, int id = 1, int itemsPerPage = 12)
+        //public async Task<IActionResult> ListAll(string sortOrder, int id = 1, int itemsPerPage = 12)
+        public async Task<IActionResult> ListAll(PagingViewModel input)
         {
-            if (id <= 0)
+            if (input.PageNumber <= 0)
             {
                 return this.NotFound(); //zarejdam StatusCodeError404.cshtml!!!
             }
 
-            this.ViewBag.CurrentSortOrder = sortOrder;
-            this.ViewBag.CreatedOnParm = string.IsNullOrEmpty(sortOrder) ? "createdOn" : "";
-            this.ViewBag.NumberSortParm = sortOrder == "number_desc" ? "number" : "number_desc";
-            this.ViewBag.DescriptionSortParm = sortOrder == "description_desc" ? "description" : "description_desc";
-
-            const int IntervalOfPagesToShow = 2;
-
             var model = new ArticlesListAllModel
             {
-                ItemsPerPage = itemsPerPage,
-                PageNumber = id,
+                ItemsPerPage = input.ItemsPerPage,
+                PageNumber = input.PageNumber,
                 ItemsCount = this.articlesService.GetCount(),
-                IntervalOfPagesToShow = IntervalOfPagesToShow,
                 Articles = await this.articlesService
-                                .GetOrderedAsPagesAsync<ArticleDetailsModel>(id, itemsPerPage, sortOrder),
+                    .GetOrderedAsPagesAsync<ArticleDetailsModel>(
+                        input.CurrentSortOrder,
+                        input.PageNumber,
+                        input.ItemsPerPage),
                 PagingControllerActionCallName = nameof(this.ListAll),
+                CreatedOnSortParm = string.IsNullOrEmpty(input.CurrentSortOrder) ? "createdOn" : "",
+                NumberSortParm = input.CurrentSortOrder == "number_desc" ? "number" : "number_desc",
+                DescriptionSortParm = input.CurrentSortOrder == "description_desc" ? "description" : "description_desc",
+                CurrentSortOrder = input.CurrentSortOrder,
+                CurrentSearchInput = input.CurrentSearchInput,
             };
-
 
             return this.View(model);
         }
 
-        public async Task<IActionResult> ListByNumberOrDescription(string input, string sortOrder, string currentInput, int id = 1, int itemsPerPage = 12)
+        //public async Task<IActionResult> ListByNumberOrDescription(string input, string sortOrder, string currentInput, int id = 1, int itemsPerPage = 12)
+        public async Task<IActionResult> ListByNumberOrDescription(PagingViewModel input)
         {
-            if (id <= 0)
+            if (input.PageNumber <= 0)
             {
                 return this.NotFound(); //zarejdam StatusCodeError404.cshtml!!!
             }
 
-            if (input != null)
-            {
-                id = 1;
-            }
-            else
-            {
-                input = currentInput;
-            }
+            //if (input != null)
+            //{
+            //    id = 1;
+            //}
+            //else
+            //{
+            //    input = currentInput;
+            //}
 
-            this.ViewBag.CurrentInput = input;
+            //this.ViewBag.CurrentInput = input;
 
             // if not checked, the itemsPerPage change does not function
-            if (string.IsNullOrWhiteSpace(input) && string.IsNullOrWhiteSpace(this.ViewBag.CurrentInput))
+            if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
             {
                 return this.RedirectToAction(nameof(this.ListAll));
             }
 
-            this.ViewBag.CurrentSortOrder = sortOrder;
-            this.ViewBag.CreatedOnParm = string.IsNullOrEmpty(sortOrder) ? "createdOn" : "";
-            this.ViewBag.NumberSortParm = sortOrder == "number_desc" ? "number" : "number_desc";
-            this.ViewBag.DescriptionSortParm = sortOrder == "description_desc" ? "description" : "description_desc";
-
-            const int IntervalOfPagesToShow = 2;
-
             var model = new ArticlesListAllModel
             {
-                ItemsPerPage = itemsPerPage,
-                PageNumber = id,
-                ItemsCount = this.articlesService.GetCountByNumberOrDescription(input),
-                IntervalOfPagesToShow = IntervalOfPagesToShow,
+                ItemsPerPage = input.ItemsPerPage,
+                PageNumber = input.PageNumber,
+                ItemsCount = this.articlesService.GetCountByNumberOrDescription(input.CurrentSearchInput),
                 Articles = await this.articlesService
-                  .GetByNumberOrDescriptionOrderedAsPagesAsync<ArticleDetailsModel>(id, itemsPerPage, input, sortOrder),
+                                        .GetByNumberOrDescriptionOrderedAsPagesAsync<ArticleDetailsModel>(
+                                        input.CurrentSearchInput,
+                                        input.CurrentSortOrder,
+                                        input.PageNumber,
+                                        input.ItemsPerPage),
                 PagingControllerActionCallName = nameof(this.ListByNumberOrDescription),
+                CreatedOnSortParm = string.IsNullOrEmpty(input.CurrentSortOrder) ? "createdOn" : "",
+                NumberSortParm = input.CurrentSortOrder == "number_desc" ? "number" : "number_desc",
+                DescriptionSortParm = input.CurrentSortOrder == "description_desc" ? "description" : "description_desc",
+                CurrentSortOrder = input.CurrentSortOrder,
+                CurrentSearchInput = input.CurrentSearchInput,
             };
 
             return this.View(nameof(this.ListAll), model);

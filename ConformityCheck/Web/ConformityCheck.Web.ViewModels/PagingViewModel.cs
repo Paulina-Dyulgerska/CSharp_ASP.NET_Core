@@ -4,6 +4,13 @@
 
     public class PagingViewModel
     {
+        public PagingViewModel()
+        {
+            this.ItemsPerPage = 12;
+            this.IntervalOfPagesToShow = 2;
+            this.PageNumber = 1;
+        }
+
         public int PageNumber { get; set; }
 
         public bool HasPreviousPage => this.PageNumber > 1;
@@ -14,7 +21,7 @@
 
         public int NextPageNumber => this.PageNumber + 1;
 
-        public int IntervalOfPagesToShow { get; set; }
+        public int IntervalOfPagesToShow { get; private set; }
 
         public bool HasPreviousInterval => this.PageNumber - this.IntervalOfPagesToShow > 1;
 
@@ -27,5 +34,15 @@
         public int ItemsPerPage { get; set; }
 
         public string PagingControllerActionCallName { get; set; }
+
+        public string CurrentSearchInput { get; set; }
+
+        public string CreatedOnSortParm { get; set; }
+
+        public string NumberSortParm { get; set; }
+
+        public string DescriptionSortParm { get; set; }
+
+        public string CurrentSortOrder { get; set; }
     }
 }
