@@ -48,6 +48,11 @@
 
         public int GetCountByNumberOrDescription(string input)
         {
+            if (input is null)
+            {
+                return this.GetCount();
+            }
+
             return this.articlesRepository
                 .AllAsNoTracking()
                 .Where(x => x.Number.Contains(input.ToUpper())
@@ -78,30 +83,149 @@
             return articles;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsPagesAsync<T>(int page, int itemsPerPage)
+        public async Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(int page, int itemsPerPage, string sortOrder)
+        //where T : ArticleDetailsModel
         {
-            return await this.articlesRepository
-                                .AllAsNoTracking()
-                                .OrderByDescending(x => x.CreatedOn)
-                                .ThenByDescending(x => x.ModifiedOn)
-                                .ThenBy(x => x.Number)
-                                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
-                                .To<T>()
-                                .ToListAsync();
+            switch (sortOrder)
+            {
+                case "number":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .OrderBy(x => x.Number)
+                                        .ThenByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "number_desc":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.Number)
+                                        .ThenByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "description":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .OrderBy(x => x.Description)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "description_desc":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.Description)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "createdOn":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .OrderBy(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                // case "createdOn_desc": show last created first
+                default:
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+            }
+
+            //return await this.articlesRepository
+            //                    .AllAsNoTracking()
+            //                    .OrderByDescending(x => x.CreatedOn)
+            //                    .ThenByDescending(x => x.ModifiedOn)
+            //                    .ThenBy(x => x.Number)
+            //                    .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+            //                    .To<T>()
+            //                    .ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetByNumberOrDescriptionOrderedAsPagesAsync<T>(int page, int itemsPerPage, string input)
+        public async Task<IEnumerable<T>> GetByNumberOrDescriptionOrderedAsPagesAsync<T>(
+            int page,
+            int itemsPerPage,
+            string input,
+            string sortOrder)
         {
-            return await this.articlesRepository
+            switch (sortOrder)
+            {
+                case "number":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(input.ToUpper())
+                                            || x.Description.ToUpper().Contains(input.ToUpper()))
+                                        .OrderBy(x => x.Number)
+                                        .ThenByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "number_desc":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(input.ToUpper())
+                                            || x.Description.ToUpper().Contains(input.ToUpper()))
+                                        .OrderByDescending(x => x.Number)
+                                        .ThenByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "description":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(input.ToUpper())
+                                            || x.Description.ToUpper().Contains(input.ToUpper()))
+                                        .OrderBy(x => x.Description)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "description_desc":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(input.ToUpper())
+                                            || x.Description.ToUpper().Contains(input.ToUpper()))
+                                        .OrderByDescending(x => x.Description)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "createdOn":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(input.ToUpper())
+                                            || x.Description.ToUpper().Contains(input.ToUpper()))
+                                        .OrderBy(x => x.CreatedOn)
+                                        .To<T>()
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .ToListAsync();
+                // case "createdOn_desc": show last created first
+                default:
+                    return await this.articlesRepository
                                 .AllAsNoTracking()
                                 .Where(x => x.Number.Contains(input.ToUpper())
                                             || x.Description.ToUpper().Contains(input.ToUpper()))
                                 .OrderByDescending(x => x.CreatedOn)
-                                .ThenByDescending(x => x.ModifiedOn)
-                                .ThenBy(x => x.Number)
                                 .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                 .To<T>()
                                 .ToListAsync();
+            }
+
+            //return await this.articlesRepository
+            //                    .AllAsNoTracking()
+            //                    .Where(x => x.Number.Contains(input.ToUpper())
+            //                                || x.Description.ToUpper().Contains(input.ToUpper()))
+            //                    .OrderByDescending(x => x.CreatedOn)
+            //                    .ThenByDescending(x => x.ModifiedOn)
+            //                    .ThenBy(x => x.Number)
+            //                    .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+            //                    .To<T>()
+            //                    .ToListAsync();
         }
 
         public async Task<T> GetByIdAsync<T>(string id)

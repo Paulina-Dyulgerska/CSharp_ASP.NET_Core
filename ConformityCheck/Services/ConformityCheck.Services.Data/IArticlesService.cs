@@ -39,8 +39,12 @@
         Task<IEnumerable<T>> GetByNumberOrDescriptionOrderedAsPagesAsync<T>(
             int page,
             int itemsPerPage,
-            string input);
+            string input,
+            string sortOrder);
 
         Task<IEnumerable<T>> GetByNumberOrDescriptionAsync<T>(string input);
+
+        Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(int page, int itemsPerPage, string sortOrder);
+        // where T : ArticleDetailsModel;
     }
 }

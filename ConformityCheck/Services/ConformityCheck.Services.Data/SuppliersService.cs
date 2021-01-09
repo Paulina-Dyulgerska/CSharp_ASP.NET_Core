@@ -61,7 +61,7 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsPagesAsync<T>(int page, int itemsPerPage)
+        public async Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage)
         {
             return await this.suppliersRepository
                                 .AllAsNoTracking()

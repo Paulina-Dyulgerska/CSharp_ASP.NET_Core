@@ -15,6 +15,5 @@
 
         Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsync<T>();
 
-        Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsPagesAsync<T>(int page, int itemsPerPage = 12);
     }
 }

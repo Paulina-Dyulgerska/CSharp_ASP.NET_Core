@@ -1,25 +1,28 @@
 ﻿@model PagingViewModel
 <ul class="pagination justify-content-center font-weight-bold">
     <li class="page-item @if (!Model.HasPreviousPage) { <text>disabled</text> }">
-        <a class="page-link" asp-action="@Model.PagingAspAction"
+        <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
            asp-route-id="@Model.PreviousPageNumber"
            asp-route-itemsPerPage="@Model.ItemsPerPage"
+           asp-route-sortOrder="@ViewBag.CurrentSortOrder"
            asp-route-currentInput="@ViewBag.CurrentInput">
             <i class="fas fa-chevron-left"></i>
         </a>
     </li>
     <li class="page-item @if (!Model.HasPreviousPage) { <text>disabled</text> }">
-        <a class="page-link" asp-action="@Model.PagingAspAction"
+        <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
            asp-route-id="1"
            asp-route-itemsPerPage="@Model.ItemsPerPage"
+           asp-route-sortOrder="@ViewBag.CurrentSortOrder"
            asp-route-currentInput="@ViewBag.CurrentInput">
             1
         </a>
     </li>
     <li class="page-item @if (!Model.HasPreviousInterval) { <text>disabled</text> }">
-        <a class="page-link" asp-action="@Model.PagingAspAction"
+        <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
            asp-route-id="@(Model.PageNumber - Model.IntervalOfPagesToShow - 1)"
            asp-route-itemsPerPage="@Model.ItemsPerPage"
+           asp-route-sortOrder="@ViewBag.CurrentSortOrder"
            asp-route-currentInput="@ViewBag.CurrentInput">
             ...
         </a>
@@ -29,9 +32,10 @@
         if (i > 0)
         {
             <li class="page-item">
-                <a class="page-link" asp-action="@Model.PagingAspAction"
+                <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
                    asp-route-id="@i"
                    asp-route-itemsPerPage="@Model.ItemsPerPage"
+                   asp-route-sortOrder="@ViewBag.CurrentSortOrder"
                    asp-route-currentInput="@ViewBag.CurrentInput">
                     @i
                 </a>
@@ -49,9 +53,10 @@
         if (i <= Model.PagesCount)
         {
             <li class="page-item">
-                <a class="page-link" asp-action="@Model.PagingAspAction"
+                <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
                    asp-route-id="@i"
                    asp-route-itemsPerPage="@Model.ItemsPerPage"
+                   asp-route-sortOrder="@ViewBag.CurrentSortOrder"
                    asp-route-currentInput="@ViewBag.CurrentInput">
                     @i
                 </a>
@@ -60,25 +65,28 @@
     }
 
     <li class="page-item @if (!Model.HasNextInterval) { <text>disabled</text> }">
-        <a class="page-link" asp-action="@Model.PagingAspAction"
+        <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
            asp-route-id="@(Model.PageNumber + Model.IntervalOfPagesToShow + 1)"
            asp-route-itemsPerPage="@Model.ItemsPerPage"
+           asp-route-sortOrder="@ViewBag.CurrentSortOrder"
            asp-route-currentInput="@ViewBag.CurrentInput">
             ...
         </a>
     </li>
     <li class="page-item @if (!Model.HasNextPage) { <text>disabled</text> }">
-        <a class="page-link" asp-action="@Model.PagingAspAction"
+        <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
            asp-route-id="@Model.PagesCount"
            asp-route-itemsPerPage="@Model.ItemsPerPage"
+           asp-route-sortOrder="@ViewBag.CurrentSortOrder"
            asp-route-currentInput="@ViewBag.CurrentInput">
             @Model.PagesCount
         </a>
     </li>
     <li class="page-item @if (!Model.HasNextPage) { <text>disabled</text> }">
-        <a class="page-link" asp-action="@Model.PagingAspAction"
+        <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
            asp-route-id="@Model.NextPageNumber"
            asp-route-itemsPerPage="@Model.ItemsPerPage"
+           asp-route-sortOrder="@ViewBag.CurrentSortOrder"
            asp-route-currentInput="@ViewBag.CurrentInput">
             <i class="fas fa-chevron-right"></i>
         </a>

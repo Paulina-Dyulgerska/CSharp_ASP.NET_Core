@@ -70,7 +70,7 @@
             return conformities;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsNoTrackingOrderedAsPagesAsync<T>(int page, int itemsPerPage = 12)
+        public async Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage = 12)
         {
             var conformities = await this.GetAllAsNoTrackingOrderedAsync<T>();
             return conformities.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);

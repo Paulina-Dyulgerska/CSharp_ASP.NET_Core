@@ -26,6 +26,6 @@
 
         public int ItemsPerPage { get; set; }
 
-        public string PagingAspAction { get; set; }
+        public string PagingControllerActionCallName { get; set; }
     }
 }
