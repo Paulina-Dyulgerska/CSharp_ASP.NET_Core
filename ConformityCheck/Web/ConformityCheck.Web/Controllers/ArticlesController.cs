@@ -37,30 +37,6 @@
             this.userManager = userManager;
         }
 
-        // Articles/ListAll/{Id} - Id = page number
-        //public async Task<IActionResult> ListAll(int id = 1)
-        //{
-        //    if (id <= 0)
-        //    {
-        //        return this.NotFound();
-        //    }
-
-        //    const int ItemsPerPage = 12;
-        //    const int IntervalOfPagesToShow = 2;
-
-        //    var model = new ArticlesListAllModel
-        //    {
-        //        ItemsPerPage = ItemsPerPage,
-        //        PageNumber = id,
-        //        ItemsCount = this.articlesService.GetCount(),
-        //        IntervalOfPagesToShow = IntervalOfPagesToShow,
-        //        Articles = await this.articlesService.GetAllAsNoTrackingOrderedAsPagesAsync<ArticleDetailsModel>(id, ItemsPerPage),
-        //    };
-
-        //    return this.View(model);
-        //}
-
-        //public async Task<IActionResult> ListAll(string sortOrder, int id = 1, int itemsPerPage = 12)
         public async Task<IActionResult> ListAll(PagingViewModel input)
         {
             if (input.PageNumber <= 0)
@@ -72,68 +48,35 @@
             {
                 ItemsPerPage = input.ItemsPerPage,
                 PageNumber = input.PageNumber,
-                ItemsCount = this.articlesService.GetCount(),
-                Articles = await this.articlesService
-                    .GetOrderedAsPagesAsync<ArticleDetailsModel>(
-                        input.CurrentSortOrder,
-                        input.PageNumber,
-                        input.ItemsPerPage),
                 PagingControllerActionCallName = nameof(this.ListAll),
-                CreatedOnSortParm = string.IsNullOrEmpty(input.CurrentSortOrder) ? "createdOn" : "",
+                CreatedOnSortParm = string.IsNullOrEmpty(input.CurrentSortOrder) ? "createdOn" : string.Empty,
                 NumberSortParm = input.CurrentSortOrder == "number_desc" ? "number" : "number_desc",
                 DescriptionSortParm = input.CurrentSortOrder == "description_desc" ? "description" : "description_desc",
                 CurrentSortOrder = input.CurrentSortOrder,
                 CurrentSearchInput = input.CurrentSearchInput,
             };
 
-            return this.View(model);
-        }
-
-        //public async Task<IActionResult> ListByNumberOrDescription(string input, string sortOrder, string currentInput, int id = 1, int itemsPerPage = 12)
-        public async Task<IActionResult> ListByNumberOrDescription(PagingViewModel input)
-        {
-            if (input.PageNumber <= 0)
-            {
-                return this.NotFound(); //zarejdam StatusCodeError404.cshtml!!!
-            }
-
-            //if (input != null)
-            //{
-            //    id = 1;
-            //}
-            //else
-            //{
-            //    input = currentInput;
-            //}
-
-            //this.ViewBag.CurrentInput = input;
-
-            // if not checked, the itemsPerPage change does not function
             if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
             {
-                return this.RedirectToAction(nameof(this.ListAll));
+                model.ItemsCount = this.articlesService.GetCount();
+                model.Articles = await this.articlesService
+                                            .GetOrderedAsPagesAsync<ArticleDetailsModel>(
+                                                input.CurrentSortOrder,
+                                                input.PageNumber,
+                                                input.ItemsPerPage);
+            }
+            else
+            {
+                model.ItemsCount = this.articlesService.GetCountByNumberOrDescription(input.CurrentSearchInput);
+                model.Articles = await this.articlesService
+                                            .GetByNumberOrDescriptionOrderedAsPagesAsync<ArticleDetailsModel>(
+                                            input.CurrentSearchInput,
+                                            input.CurrentSortOrder,
+                                            input.PageNumber,
+                                            input.ItemsPerPage);
             }
 
-            var model = new ArticlesListAllModel
-            {
-                ItemsPerPage = input.ItemsPerPage,
-                PageNumber = input.PageNumber,
-                ItemsCount = this.articlesService.GetCountByNumberOrDescription(input.CurrentSearchInput),
-                Articles = await this.articlesService
-                                        .GetByNumberOrDescriptionOrderedAsPagesAsync<ArticleDetailsModel>(
-                                        input.CurrentSearchInput,
-                                        input.CurrentSortOrder,
-                                        input.PageNumber,
-                                        input.ItemsPerPage),
-                PagingControllerActionCallName = nameof(this.ListByNumberOrDescription),
-                CreatedOnSortParm = string.IsNullOrEmpty(input.CurrentSortOrder) ? "createdOn" : "",
-                NumberSortParm = input.CurrentSortOrder == "number_desc" ? "number" : "number_desc",
-                DescriptionSortParm = input.CurrentSortOrder == "description_desc" ? "description" : "description_desc",
-                CurrentSortOrder = input.CurrentSortOrder,
-                CurrentSearchInput = input.CurrentSearchInput,
-            };
-
-            return this.View(nameof(this.ListAll), model);
+            return this.View(model);
         }
 
         [Authorize]
