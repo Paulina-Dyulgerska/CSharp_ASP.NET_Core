@@ -46,17 +46,17 @@
             return this.articlesRepository.AllAsNoTracking().Count();
         }
 
-        public int GetCountByNumberOrDescription(string input)
+        public int GetCountByNumberOrDescription(string searchInput)
         {
-            if (input is null)
+            if (searchInput is null)
             {
                 return this.GetCount();
             }
 
             return this.articlesRepository
                 .AllAsNoTracking()
-                .Where(x => x.Number.Contains(input.ToUpper())
-                           || x.Description.ToUpper().Contains(input.ToUpper()))
+                .Where(x => x.Number.Contains(searchInput.ToUpper())
+                           || x.Description.ToUpper().Contains(searchInput.ToUpper()))
                 .Count();
         }
 
@@ -131,7 +131,9 @@
                 default:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
-                                        .OrderByDescending(x => x.CreatedOn)
+                                        //.OrderByDescending(x => x.CreatedOn)
+                                        //.OrderByDescending(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Number)
+                                        .OrderBy(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Name)
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
@@ -148,7 +150,7 @@
         }
 
         public async Task<IEnumerable<T>> GetByNumberOrDescriptionOrderedAsPagesAsync<T>(
-            string input,
+            string searchInput,
             string sortOrder,
             int page,
             int itemsPerPage)
@@ -158,8 +160,8 @@
                 case "number":
                     return await this.articlesRepository
                                         .AllAsNoTracking()
-                                        .Where(x => x.Number.Contains(input.ToUpper())
-                                            || x.Description.ToUpper().Contains(input.ToUpper()))
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
                                         .OrderBy(x => x.Number)
                                         .ThenByDescending(x => x.CreatedOn)
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
@@ -168,8 +170,8 @@
                 case "number_desc":
                     return await this.articlesRepository
                                         .AllAsNoTracking()
-                                        .Where(x => x.Number.Contains(input.ToUpper())
-                                            || x.Description.ToUpper().Contains(input.ToUpper()))
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
                                         .OrderByDescending(x => x.Number)
                                         .ThenByDescending(x => x.CreatedOn)
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
@@ -178,8 +180,8 @@
                 case "description":
                     return await this.articlesRepository
                                         .AllAsNoTracking()
-                                        .Where(x => x.Number.Contains(input.ToUpper())
-                                            || x.Description.ToUpper().Contains(input.ToUpper()))
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
                                         .OrderBy(x => x.Description)
                                         .ThenBy(x => x.Number)
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
@@ -188,8 +190,8 @@
                 case "description_desc":
                     return await this.articlesRepository
                                         .AllAsNoTracking()
-                                        .Where(x => x.Number.Contains(input.ToUpper())
-                                            || x.Description.ToUpper().Contains(input.ToUpper()))
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
                                         .OrderByDescending(x => x.Description)
                                         .ThenBy(x => x.Number)
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
@@ -198,8 +200,8 @@
                 case "createdOn":
                     return await this.articlesRepository
                                         .AllAsNoTracking()
-                                        .Where(x => x.Number.Contains(input.ToUpper())
-                                            || x.Description.ToUpper().Contains(input.ToUpper()))
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
                                         .OrderBy(x => x.CreatedOn)
                                         .To<T>()
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
@@ -208,8 +210,8 @@
                 default:
                     return await this.articlesRepository
                                 .AllAsNoTracking()
-                                .Where(x => x.Number.Contains(input.ToUpper())
-                                            || x.Description.ToUpper().Contains(input.ToUpper()))
+                                .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
                                 .OrderByDescending(x => x.CreatedOn)
                                 .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                 .To<T>()

@@ -37,12 +37,12 @@
             string supplierId);
 
         Task<IEnumerable<T>> GetByNumberOrDescriptionOrderedAsPagesAsync<T>(
-            string input,
+            string searchInput,
             string sortOrder,
             int page,
             int itemsPerPage);
 
-        Task<IEnumerable<T>> GetByNumberOrDescriptionAsync<T>(string input);
+        Task<IEnumerable<T>> GetByNumberOrDescriptionAsync<T>(string searchInput);
 
         Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage);
         // where T : ArticleDetailsModel;
