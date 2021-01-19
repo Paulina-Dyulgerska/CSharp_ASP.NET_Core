@@ -23,7 +23,7 @@
 
         <div class="form-group font-weight-bold">
             <label asp-for="ConformityTypeId"></label>
-            <select asp-for="ConformityTypeId" class="form-control">
+            <select asp-for="ConformityTypeId" class="form-control" autofocus>
                 <vc:conformity-types></vc:conformity-types>
             </select>
             <span asp-validation-for="ConformityTypeId" class="text-danger"></span>
@@ -86,15 +86,17 @@
         </div>
 
         @*<div class="form-group">
-            <label asp-for="UserId"></label>
-            <input asp-for="UserId" class="form-control" hidden value="@this.User.Identity.Name" />
-            <span asp-validation-for="UserId" class="text-danger"></span>
-        </div>*@
+                <label asp-for="UserId"></label>
+                <input asp-for="UserId" class="form-control" hidden value="@this.User.Identity.Name" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>*@
 
         @* TODO: add the declared substances and assing the restrictions. *@
 
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Create" />
+            <input type="submit" class="btn btn-info" value="Create" />
+            <input type="reset" class="btn btn-primary" value="Clear form" />
+            <a class="btn btn-secondary" value="Cancel" asp-action="ListAll">Cancel</a>
         </div>
     </form>
 </div>

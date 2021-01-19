@@ -37,6 +37,7 @@
             this.userManager = userManager;
         }
 
+        [Authorize]
         public async Task<IActionResult> ListAll(PagingViewModel input)
         {
             if (input.PageNumber <= 0)
@@ -50,8 +51,12 @@
                 PageNumber = input.PageNumber,
                 PagingControllerActionCallName = nameof(this.ListAll),
                 CreatedOnSortParm = string.IsNullOrEmpty(input.CurrentSortOrder) ? "createdOn" : string.Empty,
-                NumberSortParm = input.CurrentSortOrder == "number_desc" ? "number" : "number_desc",
-                DescriptionSortParm = input.CurrentSortOrder == "description_desc" ? "description" : "description_desc",
+                NumberSortParm = input.CurrentSortOrder == "numberDesc" ? "number" : "numberDesc",
+                DescriptionSortParm = input.CurrentSortOrder == "descriptionDesc" ? "description" : "descriptionDesc",
+                MainSupplierNameSortParm = input.CurrentSortOrder == "mainSupplierNameDesc" ? "mainSupplierName" : "mainSupplierNameDesc",
+                MainSupplierNumberSortParm = input.CurrentSortOrder == "mainSupplierNumberDesc" ? "mainSupplierNumber" : "mainSupplierNumberDesc",
+                MainSupplierAllConfirmedSortParm = input.CurrentSortOrder == "mainSupplierAllConfirmedDesc" ? "mainSupplierAllConfirmed" : "mainSupplierAllConfirmedDesc",
+                AllSuppliersAllConfirmedSortParm = input.CurrentSortOrder == "allSuppliersAllConfirmedDesc" ? "allSuppliersAllConfirmed" : "allSuppliersAllConfirmedDesc",
                 CurrentSortOrder = input.CurrentSortOrder,
                 CurrentSearchInput = input.CurrentSearchInput,
             };
@@ -67,6 +72,7 @@
             }
             else
             {
+                input.CurrentSearchInput = input.CurrentSearchInput.Trim();
                 model.ItemsCount = this.articlesService.GetCountByNumberOrDescription(input.CurrentSearchInput);
                 model.Articles = await this.articlesService
                                             .GetByNumberOrDescriptionOrderedAsPagesAsync<ArticleDetailsModel>(
@@ -78,6 +84,13 @@
 
             return this.View(model);
         }
+
+        //[Authorize]
+        //public async Task<IActionResult> ListAllUnconfirmedByMainSupplierArticles()
+        //{
+        //    var model = this.articlesService.
+        //    return this.View(nameof(ListAll), model);
+        //}
 
         [Authorize]
         public IActionResult Create()

@@ -22,7 +22,8 @@
         <nav class="navbar navbar-expand-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <i class="fas fa-home"></i> @GlobalConstants.SystemName</a>
+                    <i class="fas fa-home"></i> @GlobalConstants.SystemName
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -57,15 +58,14 @@
             <div class="container">
                 <!-- Content here -->
                 <div class="row">
-                    <div class="container col-2" style="background-color:aqua">
+                    <div class="container col-md-2 col-lg-2 left">
                         @await RenderSectionAsync("SideBar", required: false)
                     </div>
-                    <div class="container col-10 align-items-center">
+                    <div class="container col-md-10 col-lg-10 align-items-center right">
                         @this.RenderBody()
                     </div>
                 </div>
             </div>
-
         </main>
     </div>
 

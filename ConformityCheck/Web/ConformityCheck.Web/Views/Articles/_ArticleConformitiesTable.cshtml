@@ -1,65 +1,66 @@
 ﻿@model ArticleEditInputModel
 
-
-<table class="table table-responsive-sm table-sm table-hover">
-    <thead>
-        <tr>
-            <th class="col-1">Conformity type</th>
-            <th class="col-2">Supplier Nr.</th>
-            <th class="col-2">Supplier name</th>
-            <th class="col-1">Conformity available</th>
-            <th class="col-1">Is accepted?</th>
-            <th class="col-1">Is valid?</th>
-            <th class="col-2">Id</th>
-            <th class="col-1">Add / Edit</th>
-            <th class="col-1">Delete</th>
-        </tr>
-    </thead>
-    @foreach (var conformityType in this.Model.ConformityTypes)
-    {
-        @foreach (var supplier in this.Model.Suppliers)
-        {
-            var conformityBySupplier = Model.Conformities.FirstOrDefault(x => x.ConformityType.Id == conformityType.Id
-                                                  && x.Supplier.Id == supplier.Id);
+<div class="table-responsive">
+    <table class="table table-sm table-hover dataTable">
+        <thead>
             <tr>
-                <td class="col-1">@conformityType.Description</td>
-                <td class="col-2">@supplier.Number</td>
-                <td class="col-2">@supplier.Name</td>
-                <td class="col-1">@(conformityBySupplier != null ? "Yes" : "No")</td>
-                <td class="col-1">@(conformityBySupplier != null && conformityBySupplier.IsAccepted ? "Yes" : "No")</td>
-                <td class="col-1">@(conformityBySupplier != null && conformityBySupplier.IsValid ? "Yes" : "No")</td>
-                <td class="col-2">@(conformityBySupplier != null ? conformityBySupplier.Id : "-")</td>
-                @if (conformityBySupplier == null)
-                {
-                    <td class="col-1">
-                        <a asp-controller="Conformities" asp-action="AddToArticleSupplierConformityType" class="btn btn-primary"
-                           asp-route-articleId="@Model.Id"
-                           asp-route-supplierId="@supplier.Id"
-                           asp-route-conformityTypeId="@conformityType.Id"
-                           asp-route-callerViewName="Articles">Add</a>
-                    </td>
-                    <td class="col-1"></td>
-                }
-                else
-                {
-                    <td class="col-1">
-                        <a asp-controller="Conformities" asp-action="Edit" class="btn btn-primary"
-                           asp-route-Id="@(conformityBySupplier.Id)"
-                           asp-route-articleId="@Model.Id"
-                           asp-route-supplierId="@supplier.Id"
-                           asp-route-conformityTypeId="@conformityType.Id"
-                           asp-route-callerViewName="Articles">Edit</a>
-                    </td>
-                    <td class="col-1">
-                        <a asp-controller="Conformities" asp-action="Delete" class="btn btn-primary"
-                           asp-route-Id="@(conformityBySupplier.Id)"
-                           asp-route-articleId="@Model.Id"
-                           asp-route-supplierId="@supplier.Id"
-                           asp-route-callerViewName="Articles">Delete</a>
-                    </td>
-                }
+                <th class="col-1">Conformity type</th>
+                <th class="col-2">Supplier Nr.</th>
+                <th class="col-2">Supplier name</th>
+                <th class="col-1">Conformity available</th>
+                <th class="col-1">Is accepted?</th>
+                <th class="col-1">Is valid?</th>
+                <th class="col-2">Id</th>
+                <th class="col-1">Add / Edit</th>
+                <th class="col-1">Delete</th>
             </tr>
-            @*<tr>@String.Join(", ", supplier.Conformities.Select(x=>x.Id))</tr>*@
+        </thead>
+        @foreach (var conformityType in this.Model.ConformityTypes)
+        {
+            @foreach (var supplier in this.Model.Suppliers)
+            {
+                var conformityBySupplier = Model.Conformities.FirstOrDefault(x => x.ConformityType.Id == conformityType.Id
+                                                      && x.Supplier.Id == supplier.Id);
+                <tr>
+                    <td class="col-1">@conformityType.Description</td>
+                    <td class="col-2">@supplier.Number</td>
+                    <td class="col-2">@supplier.Name</td>
+                    <td class="col-1">@(conformityBySupplier != null ? "Yes" : "No")</td>
+                    <td class="col-1">@(conformityBySupplier != null && conformityBySupplier.IsAccepted ? "Yes" : "No")</td>
+                    <td class="col-1">@(conformityBySupplier != null && conformityBySupplier.IsValid ? "Yes" : "No")</td>
+                    <td class="col-2">@(conformityBySupplier != null ? conformityBySupplier.Id : "-")</td>
+                    @if (conformityBySupplier == null)
+                    {
+                        <td class="col-1">
+                            <a asp-controller="Conformities" asp-action="AddToArticleSupplierConformityType" class="btn btn-primary"
+                               asp-route-articleId="@Model.Id"
+                               asp-route-supplierId="@supplier.Id"
+                               asp-route-conformityTypeId="@conformityType.Id"
+                               asp-route-callerViewName="Articles">Add</a>
+                        </td>
+                        <td class="col-1"></td>
+                    }
+                    else
+                    {
+                        <td class="col-1">
+                            <a asp-controller="Conformities" asp-action="Edit" class="btn btn-primary"
+                               asp-route-Id="@(conformityBySupplier.Id)"
+                               asp-route-articleId="@Model.Id"
+                               asp-route-supplierId="@supplier.Id"
+                               asp-route-conformityTypeId="@conformityType.Id"
+                               asp-route-callerViewName="Articles">Edit</a>
+                        </td>
+                        <td class="col-1">
+                            <a asp-controller="Conformities" asp-action="Delete" class="btn btn-primary"
+                               asp-route-Id="@(conformityBySupplier.Id)"
+                               asp-route-articleId="@Model.Id"
+                               asp-route-supplierId="@supplier.Id"
+                               asp-route-callerViewName="Articles">Delete</a>
+                        </td>
+                    }
+                </tr>
+                @*<tr>@String.Join(", ", supplier.Conformities.Select(x=>x.Id))</tr>*@
+            }
         }
-    }
-</table>
+    </table>
+</div>

@@ -1,84 +1,73 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-:root {
-    --blue: #4e73df;
-    --indigo: #6610f2;
-    --purple: #6f42c1;
-    --pink: #e83e8c;
-    --red: #e74a3b;
-    --orange: #fd7e14;
-    --yellow: #f6c23e;
-    --green: #1cc88a;
-    --teal: #20c9a6;
-    --cyan: #36b9cc;
-    --white: #fff;
-    --gray: #666770;
-    --gray-dark: #5a5c69;
-    --primary: #4e73df;
-    --secondary: #666770;
-    --success: #1cc88a;
-    --info: #36b9cc;
-    --warning: #f6c23e;
-    --danger: #e74a3b;
-    --light: #f8f9fc;
-    --dark: #5a5c69;
-    --breakpoint-xs: 0;
-    --breakpoint-sm: 576px;
-    --breakpoint-md: 768px;
-    --breakpoint-lg: 992px;
-    --breakpoint-xl: 1200px;
-    --font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
-
-html {
-    position: relative;
-    min-height: 100%;
-    font-family: sans-serif;
-    line-height: 1.15;
-    -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+/*article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
     display: block;
-}
+}*/
 
 body {
     /* Margin bottom by footer height */
-    margin-bottom: 60px;
+    /*margin-bottom: 60px;
     font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-size: 1rem;
     font-weight: 400;
-    line-height: 1.5;
+    line-height: 1.5;*/
     color: #666770;
-    text-align: left;
-    background-color: #fff;
+    /*text-align: left;
+    background-color: #fff;*/
+    height: 100%;
+    min-height: 100vh;
+    /*flex-direction: column;*/
+    /*display: flex;*/
+}
+
+/*.left {
+    flex: 0 0 20%;
+    background-color: aqua;
+    min-height: 80vh;
+    float: left;
+}
+
+.right {
+    flex: 1;
+    min-height: 80vh;
+    float: right;
+}*/
+
+.left {
+    background-color: aqua;
+    float: left;
+    min-height: 80vh;
+    /*width: 20%;*/
+}
+
+.right {
+    /*width: 80%;*/
+    float: right;
+    min-height: 80vh;
+    overflow-y: scroll;
 }
 
 .footer {
-    position: absolute;
+    /*position: fixed;*/
+    /*position: absolute;*/
     bottom: 0;
+    left: 0;
     width: 100%;
-    white-space: nowrap;
+    /*white-space: nowrap;*/
     /* Set the fixed height of the footer here */
     height: 60px;
     line-height: 60px; /* Vertically center the text there */
     background-color: aqua;
+    text-align: center;
 }
 
-* {
-    box-sizing: border-box;
-}
-
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
     html {
         font-size: 16px;
     }
-}
-
-a.navbar-brand {
+}*/
+a .navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
@@ -86,8 +75,12 @@ a.navbar-brand {
 
 /* Header styles
 -------------------------------------------------- */
-body > header > nav {
+.navbar {
     background-color: aqua;
+}
+
+.navbar-light .navbar-brand {
+    color: #666770;
 }
 
 .border-top {
@@ -123,9 +116,22 @@ input[type='checkbox']:checked {
         background: #abd;
 }*/
 
+table {
+    /*table-layout: fixed;*/
+    word-wrap: break-word;
+}
+
+table th, table td {
+    overflow: hidden;
+}
+
 #dataTable > tbody > tr:hover td {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.075);
+}
+
+textarea{
+    resize: none;
 }
 
 .page-link {
@@ -140,13 +146,13 @@ input[type='checkbox']:checked {
     border: 1px solid #dee2e6;
 }
 
-.page-link:hover {
-    z-index: 2;
-    color: #0056b3;
-    text-decoration: none;
-    background-color: #e9ecef;
-    border-color: #dee2e6;
-}
+    .page-link:hover {
+        z-index: 2;
+        color: #0056b3;
+        text-decoration: none;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+    }
 
 .page-item.active .page-link {
     z-index: 3;

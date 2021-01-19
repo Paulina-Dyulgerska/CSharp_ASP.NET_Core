@@ -11,6 +11,8 @@
     {
         int GetCountByNumberOrDescription(string input);
 
+        //int GetCountUnconfirmedByMainSupplier();
+
         Task CreateAsync(ArticleCreateInputModel input, string userId);
 
         Task EditAsync(ArticleEditInputModel input, string userId);
@@ -45,6 +47,8 @@
         Task<IEnumerable<T>> GetByNumberOrDescriptionAsync<T>(string searchInput);
 
         Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage);
-        // where T : ArticleDetailsModel;
+         //where T : ArticleDetailsModel;
+
+        //Task<IEnumerable<T>> GetUnconfirmedByMainSupplierAsPagesAsync<T>(int page, int itemsPerPage);
     }
 }

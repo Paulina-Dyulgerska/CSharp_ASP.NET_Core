@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
 
     using ConformityCheck.Data.Common.Repositories;
+    using ConformityCheck.Common;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Articles;
@@ -60,6 +61,63 @@
                 .Count();
         }
 
+        //public int GetCountUnconfirmedByMainSupplier()
+        //{
+        //    var query = @"SELECT F.[Id]
+        //                              ,F.[CreatedOn]
+        //                              ,F.[ModifiedOn]
+        //                              ,F.[IsDeleted]
+        //                              ,F.[DeletedOn]
+        //                              ,F.[Number]
+        //                              ,F.[Description]
+        //                              ,F.[UserId]
+        //                         --,COUNT(*) AS ConformityTypesCount
+        //                         --,COUNT(F.IsValid) as IsValid
+        //                        FROM 
+        //                        ( SELECT A.[Id]
+        //                            ,A.[CreatedOn]
+        //                            ,A.[ModifiedOn]
+        //                            ,A.[IsDeleted]
+        //                            ,A.[DeletedOn]
+        //                            ,A.[Number]
+        //                            ,A.[UserId] 
+        //                            ,A.[Description]
+        //                         ,CT.[Description] AS ConfTypeDescription
+        //                         ,ASUP.SupplierId
+        //                         ,ASUP.IsMainSupplier
+        //                         ,CONF.IsAccepted
+        //                         ,CONF.ValidityDate
+        //                         ,CASE
+        //                          WHEN (IsAccepted = 1 AND ValidityDate >= GETDATE()) THEN 1
+        //                          ELSE NULL
+        //                         END AS IsValid
+        //                        FROM Articles AS A
+        //                          LEFT JOIN ArticleConformityTypes AS ACT ON A.Id = ACT.ArticleId
+        //                          LEFT JOIN ConformityTypes AS CT ON ACT.ConformityTypeId = CT.Id
+        //                          LEFT JOIN ArticleSuppliers AS ASUP ON ASUP.ArticleId = A.Id
+        //                          LEFT JOIN Conformities AS CONF ON 
+        //                            (CONF.ArticleId = A.Id AND 
+        //                            ASUP.SupplierId = CONF.SupplierId AND 
+        //                            CONF.ConformityTypeId = ACT.ConformityTypeId)
+        //                         --Include this for check if just MAIN SUPPLIER has all confirmed:
+        //                          WHERE ASUP.IsMainSupplier = 1
+        //                        ) AS F
+        //                        GROUP BY F.[Id]
+        //                              ,F.[CreatedOn]
+        //                              ,F.[ModifiedOn]
+        //                              ,F.[IsDeleted]
+        //                              ,F.[DeletedOn]
+        //                              ,F.[Number]
+        //                              ,F.[Description]
+        //                              ,F.[UserId]
+        //                        --check if supplier/s has/ve confirmed:
+        //                        HAVING COUNT(*) = COUNT(F.IsValid)
+        //                        --ORDER BY F.Number";
+
+        //    return this.articlesRepository.ExecuteCustomQuery(query).Count();
+        //}
+
+
         public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             return await this.articlesRepository.All().To<T>().ToListAsync();
@@ -83,6 +141,19 @@
             return articles;
         }
 
+        //public IQueryable<Article> GetAllFilteredBySearchInput(string searchInput = null)
+        //{
+        //    if (string.IsNullOrWhiteSpace(searchInput))
+        //    {
+        //        return this.articlesRepository.AllAsNoTracking();
+        //    }
+
+        //    return this.articlesRepository
+        //                        .AllAsNoTracking()
+        //                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+        //                            || x.Description.ToUpper().Contains(searchInput.ToUpper()));
+        //}
+
         public async Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage)
         //where T : ArticleDetailsModel
         {
@@ -96,7 +167,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "number_desc":
+                case "numberDesc":
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.Number)
@@ -112,10 +183,70 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "description_desc":
+                case "descriptionDesc":
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.Description)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "mainSupplierName":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .OrderBy(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Name)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "mainSupplierNameDesc":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Name)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "mainSupplierNumber":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .OrderBy(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Number)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "mainSupplierNumberDesc":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Number)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "mainSupplierAllConfirmed":
+                    return await this.articlesRepository.ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByMainSupplier)
+                                        .OrderByDescending(x => x.IsConfirmed)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "mainSupplierAllConfirmedDesc":
+                    return await this.articlesRepository.ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByMainSupplier)
+                                        .OrderBy(x => x.IsConfirmed)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "allSuppliersAllConfirmed":
+                    return await this.articlesRepository.ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByAllSuppliers)
+                                        .OrderByDescending(x => x.IsConfirmed)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "allSuppliersAllConfirmedDesc":
+                    return await this.articlesRepository.ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByAllSuppliers)
+                                        .OrderBy(x => x.IsConfirmed)
                                         .ThenBy(x => x.Number)
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
@@ -127,26 +258,16 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                // case "createdOn_desc": show last created first
+
+                // case "createdOnDesc": show last created first
                 default:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
-                                        //.OrderByDescending(x => x.CreatedOn)
-                                        //.OrderByDescending(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Number)
-                                        .OrderBy(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Name)
+                                        .OrderByDescending(x => x.CreatedOn)
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
             }
-
-            //return await this.articlesRepository
-            //                    .AllAsNoTracking()
-            //                    .OrderByDescending(x => x.CreatedOn)
-            //                    .ThenByDescending(x => x.ModifiedOn)
-            //                    .ThenBy(x => x.Number)
-            //                    .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
-            //                    .To<T>()
-            //                    .ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetByNumberOrDescriptionOrderedAsPagesAsync<T>(
@@ -167,7 +288,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "number_desc":
+                case "numberDesc":
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Number.Contains(searchInput.ToUpper())
@@ -187,12 +308,92 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "description_desc":
+                case "descriptionDesc":
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Number.Contains(searchInput.ToUpper())
                                             || x.Description.ToUpper().Contains(searchInput.ToUpper()))
                                         .OrderByDescending(x => x.Description)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "mainSupplierName":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Name)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "mainSupplierNameDesc":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Name)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "mainSupplierNumber":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Number)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "mainSupplierNumberDesc":
+                    return await this.articlesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Number)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "mainSupplierAllConfirmed":
+                    return await this.articlesRepository
+                                        .ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByMainSupplier)
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.IsConfirmed)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "mainSupplierAllConfirmedDesc":
+                    return await this.articlesRepository
+                                        .ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByMainSupplier)
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.IsConfirmed)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "allSuppliersAllConfirmed":
+                    return await this.articlesRepository
+                                        .ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByAllSuppliers)
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.IsConfirmed)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "allSuppliersAllConfirmedDesc":
+                    return await this.articlesRepository
+                                        .ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByAllSuppliers)
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.IsConfirmed)
                                         .ThenBy(x => x.Number)
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
@@ -203,31 +404,21 @@
                                         .Where(x => x.Number.Contains(searchInput.ToUpper())
                                             || x.Description.ToUpper().Contains(searchInput.ToUpper()))
                                         .OrderBy(x => x.CreatedOn)
-                                        .To<T>()
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
                                         .ToListAsync();
-                // case "createdOn_desc": show last created first
+
+                // case "createdOnDesc": show last created first
                 default:
                     return await this.articlesRepository
-                                .AllAsNoTracking()
-                                .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
                                             || x.Description.ToUpper().Contains(searchInput.ToUpper()))
-                                .OrderByDescending(x => x.CreatedOn)
-                                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
-                                .To<T>()
-                                .ToListAsync();
+                                        .OrderByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
             }
-
-            //return await this.articlesRepository
-            //                    .AllAsNoTracking()
-            //                    .Where(x => x.Number.Contains(input.ToUpper())
-            //                                || x.Description.ToUpper().Contains(input.ToUpper()))
-            //                    .OrderByDescending(x => x.CreatedOn)
-            //                    .ThenByDescending(x => x.ModifiedOn)
-            //                    .ThenBy(x => x.Number)
-            //                    .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
-            //                    .To<T>()
-            //                    .ToListAsync();
         }
 
         public async Task<T> GetByIdAsync<T>(string id)

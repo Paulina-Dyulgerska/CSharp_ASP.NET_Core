@@ -18,7 +18,7 @@
 
         <div class="form-group">
             <label asp-for="Number"></label>
-            <input asp-for="Number" class="form-control" placeholder="Article number" />
+            <input asp-for="Number" class="form-control" placeholder="Article number" autofocus />
             <span asp-validation-for="Number" class="text-danger"></span>
         </div>
 
@@ -66,7 +66,9 @@
         </div>
 
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Create" />
+            <input type="submit" class="btn btn-info" value="Create" />
+            <input type="reset" class="btn btn-primary" value="Clear form" />
+            <a class="btn btn-secondary" value="Cancel" asp-action="ListAll">Cancel</a>
         </div>
     </form>
 </div>

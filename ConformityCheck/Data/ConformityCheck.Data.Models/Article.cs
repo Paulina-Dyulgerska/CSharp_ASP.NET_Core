@@ -33,6 +33,8 @@
 
         public virtual ApplicationUser User { get; set; }
 
+        public bool IsConfirmed { get; set; }
+
         public virtual ICollection<ArticleProduct> ArticleProducts { get; set; }
 
         public virtual ICollection<ArticleConformityType> ArticleConformityTypes { get; set; }

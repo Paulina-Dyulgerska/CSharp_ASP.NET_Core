@@ -15,12 +15,15 @@
 
         <div class="form-group">
             <label asp-for="Description"></label>
-            <textarea rows="2" asp-for="Description" class="form-control" placeholder="Conformity type description"></textarea>
+            <textarea rows="2" asp-for="Description" class="form-control" 
+                      placeholder="Conformity type description" autofocus></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Create" />
+            <input type="submit" class="btn btn-info" value="Create" />
+            <input type="reset" class="btn btn-primary" value="Clear form" />
+            <a class="btn btn-secondary" value="Cancel" asp-action="ListAll">Cancel</a>
         </div>
     </form>
 </div>

@@ -1,18 +1,19 @@
 ﻿@model IEnumerable<ConformityTypeExportModel>
+    <div class="table-responsive">
+        <table class="table table-sm table-hover dataTable">
+            <thead>
+                <tr>
+                    <th scope="col">Conformity Id</th>
+                    <th scope="col">Conformity type</th>
+                </tr>
+            </thead>
+            @foreach (var conformityType in this.Model)
+            {
 
-<table class="table table-light table-responsive-md table-hover table-bordered table-sm">
-    <thead>
-        <tr>
-            <th scope="col">Conformity Id</th>
-            <th scope="col">Conformity type</th>
-        </tr>
-    </thead>
-    @foreach (var conformityType in this.Model)
-    {
-
-        <tr>
-            <td>@conformityType.Description</td>
-            <td>@conformityType.Id</td>
-        </tr>
-    }
-</table>
+                <tr>
+                    <td>@conformityType.Description</td>
+                    <td>@conformityType.Id</td>
+                </tr>
+            }
+        </table>
+    </div>

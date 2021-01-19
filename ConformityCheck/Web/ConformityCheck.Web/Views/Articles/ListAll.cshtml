@@ -6,6 +6,13 @@
     this.ViewData["Title"] = "Articles";
 }
 
+@if (this.TempData.ContainsKey("Message"))
+{
+    <div class="alert alert-success" role="alert">
+        @this.TempData["Message"]
+    </div>
+}
+
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -68,48 +75,7 @@
             <span>MS = Main supplier</span><br />
             <span>Conf. MS = Confirmed by main supplier</span><br />
             <span>Conf. AS = Confirmed by all suppliers</span><br />
-            <table id="dataTable" class="table table-responsive-sm table-sm table-hover dataTable">
-                <thead>
-                    <tr class="d-flex">
-                        @*<th class="col-2" id="sortableColumn">
-                                Article Nr.
-                                <button onclick="sortList()">Sort</button>
-                            </th>*@
-                        <th class="col-2">
-                            <a asp-action="@Model.PagingControllerActionCallName"
-                               asp-route-itemsPerPage="@Model.ItemsPerPage"
-                               asp-route-currentSortOrder="@Model.NumberSortParm"
-                               asp-route-currentSearchInput="@Model.CurrentSearchInput">
-                                <span class="text">Article Nr.</span>
-                                <span class="icon text-gray-300">
-                                    <i class="fas fa-arrows-alt-v"></i>
-                                </span>
-                            </a>
-                        </th>
-                        <th class="col-2">
-                            <a asp-action="@Model.PagingControllerActionCallName"
-                               asp-route-itemsPerPage="@Model.ItemsPerPage"
-                               asp-route-currentSortOrder="@Model.DescriptionSortParm"
-                               asp-route-currentSearchInput="@Model.CurrentSearchInput">
-                                <span class="text">Description</span>
-                                <span class="icon text-gray-300">
-                                    <i class="fas fa-arrows-alt-v"></i>
-                                </span>
-                            </a>
-                        </th>
-                        <th class="col-1">MS Nr.</th>
-                        <th class="col-2">MS name</th>
-                        <th class="col-1">Conf. AS</th>
-                        <th class="col-1">Conf. MS</th>
-                        <th class="col-1">Details</th>
-                        <th class="col-1">Edit</th>
-                        <th class="col-1">Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <partial name="_ArticleListAllTableBody.cshtml" model="@Model" />
-                </tbody>
-            </table>
+            <partial name="_ArticleListAllTable.cshtml" model="@Model" />
         </div>
         <div class="card-footer ">
             <partial name="_PagingPartial" model="@Model" />
@@ -128,5 +94,6 @@
 
 @section Scripts{
     <script src="~/js/tables.js" asp-append-version="true"></script>
+    <script src="~/js/alerts.js" asp-append-version="true"></script>
     @*<script src="~/lib/datatables/dist/js/datatables.min.js"></script>*@
 }

@@ -9,6 +9,74 @@
 }
 
 <h3>@this.ViewData["Title"]</h3>
+<details>
+    <summary>Some details</summary>
+    <p>More info about the details.</p>
+</details>
+<section>
+    <article>
+        <ul class="">
+            <li>
+                Article number: @Model.Number
+            </li>
+            <li>
+                Article's description: @Model.Description
+            </li>
+        </ul>
+    </article>
+    <hr />
+    <article>
+        <h5>Quick actions</h5>
+        <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@Model.Id">
+            <span class="icon text-white">
+                <i class="fas fa-edit"></i>
+            </span>
+            <span class="text">Edit article</span>
+        </a>
+        <a asp-action="......" class="btn btn-sm btn-primary" asp-route-id="@Model.Id">
+            <span class="icon text-white">
+                <i class="fas fa-edit"></i>
+            </span>
+            <span class="text">.....</span>
+        </a>
+    </article>
+    <hr />
+    <article>
+        <h5>Suppliers</h5>
+        <partial name="_ArticleSuppliersTable" model="Model.Suppliers" />
+    </article>
+    <hr />
+    <article>
+        <h5>Conformity types</h5>
+        <partial name="_ArticleConformitiesTable" model="Model" />
+    </article>
+
+    @*<th class="col-1">Missing confirmations</th>
+        <th class="col-1">Confirmations</th>
+
+        <td class="col-1">
+            @foreach (var unconfirmedConformity in article.ArticleMissingConformityTypes)
+            {
+                <span>@unconfirmedConformity</span>
+            }
+        </td>
+        <td class="col-1">
+            @foreach (var confirmedConformity in article.ArticleConformityTypes)
+            {
+                <span>@confirmedConformity</span>
+            }
+        </td>*@
+    <hr />
+    <article>
+        <h5>Products - TODO - just view</h5>
+        @*<partial name="" model="Model" />*@
+    </article>
+    <hr />
+    <article>
+        <h5>Substances - TODO - just view</h5>
+        @*<partial name="" model="Model" />*@
+    </article>
+</section>
 
 <div>
     <form method="post" class="col-md-10 mx-auto">
