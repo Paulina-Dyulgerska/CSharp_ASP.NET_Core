@@ -1,24 +1,36 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+/* fontawesome*/
+/* if do not downloaded by Libman, it is better to include it here*/
+/*@import url('https://use.fontawesome.com/releases/v5.15.2/css/all.css');*/
+
 /*article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
     display: block;
 }*/
 
+html {
+    font-size: 16px;
+}
+
 body {
     /* Margin bottom by footer height */
     /*margin-bottom: 60px;
-    font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";*/
+    font-family: "Nunito", "Calibri", "Arial", sans-serif;
     font-size: 1rem;
     font-weight: 400;
-    line-height: 1.5;*/
-    color: #666770;
+    line-height: 1.5;
+    color: #666770 !important;
     /*text-align: left;
     background-color: #fff;*/
     height: 100%;
     min-height: 100vh;
     /*flex-direction: column;*/
     /*display: flex;*/
+    max-width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /*.left {
@@ -38,11 +50,11 @@ body {
     background-color: aqua;
     float: left;
     min-height: 80vh;
-    /*width: 20%;*/
+    width: 20%;
 }
 
 .right {
-    /*width: 80%;*/
+    width: 80%;
     float: right;
     min-height: 80vh;
     overflow-y: scroll;
@@ -53,7 +65,7 @@ body {
     /*position: absolute;*/
     bottom: 0;
     left: 0;
-    width: 100%;
+    /*width: 100%;*/
     /*white-space: nowrap;*/
     /* Set the fixed height of the footer here */
     height: 60px;
@@ -67,11 +79,6 @@ body {
         font-size: 16px;
     }
 }*/
-a .navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
-}
 
 /* Header styles
 -------------------------------------------------- */
@@ -79,9 +86,23 @@ a .navbar-brand {
     background-color: aqua;
 }
 
-.navbar-light .navbar-brand {
-    color: #666770;
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
+
+a .navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+a {
+    color: inherit;
+}
+
+    a:hover {
+        color: rgba(0, 0, 0, 0.85);
+    }
 
 .border-top {
     border-top: 1px solid #e5e5e5;
@@ -119,18 +140,21 @@ input[type='checkbox']:checked {
 table {
     /*table-layout: fixed;*/
     word-wrap: break-word;
+    color: #666770 !important;
 }
 
-table th, table td {
-    overflow: hidden;
-}
+    table th, table td {
+        overflow: hidden;
+        /*        white-space: nowrap;
+        text-overflow: ellipsis;*/
+    }
 
 #dataTable > tbody > tr:hover td {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.075);
 }
 
-textarea{
+textarea {
     resize: none;
 }
 
@@ -138,17 +162,19 @@ textarea{
     position: relative;
     display: block;
     padding: 0.5rem 0.75rem;
-    margin-left: -1px;
+    margin-left: 5px;
     line-height: 1.25;
     /*color: #007bff;*/
     color: #666770;
     background-color: #fff;
     border: 1px solid #dee2e6;
+    border-radius: 5px;
 }
 
     .page-link:hover {
         z-index: 2;
-        color: #0056b3;
+        /*color: #0056b3;*/
+        color: rgba(0, 0, 0, 0.85);
         text-decoration: none;
         background-color: #e9ecef;
         border-color: #dee2e6;
@@ -167,4 +193,12 @@ textarea{
     cursor: auto;
     background-color: #fff;
     border-color: #dee2e6;
+}
+
+.card-body span {
+    font-style: normal;
+}
+
+th > a > span.icon > i {
+    font-size: 0.8em;
 }

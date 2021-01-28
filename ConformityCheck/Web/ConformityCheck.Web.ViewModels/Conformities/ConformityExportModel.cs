@@ -24,7 +24,7 @@
 
         public bool IsAccepted { get; set; }
 
-        public bool IsValid => this.IsAccepted && this.ValidityDate >= DateTime.UtcNow.Date;
+        public bool IsValid => this.IsAccepted && this.ValidityDate > DateTime.UtcNow.Date;
 
         public DateTime IssueDate { get; set; }
 

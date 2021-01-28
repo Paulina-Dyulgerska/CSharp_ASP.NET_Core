@@ -174,6 +174,7 @@
         {
             var entity = await this.conformitiesRepository.All().FirstOrDefaultAsync(x => x.Id == id);
             this.conformitiesRepository.Delete(entity);
+            //this.conformitiesRepository.HardDelete(entity); ???
             await this.conformitiesRepository.SaveChangesAsync();
         }
 

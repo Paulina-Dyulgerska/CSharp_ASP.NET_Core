@@ -15,11 +15,14 @@
     @*<link href="~/css/sb-admin-2.min.css" rel="stylesheet" asp-append-version="true" />*@
 
     @await this.RenderSectionAsync("Links", required: false)
+
+    @*<link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="~/favicon.ico" type="image/x-icon">*@
 </head>
-<body>
+<body class="page-wrapper">
     <header>
         @*<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">*@
-        <nav class="navbar navbar-expand-sm navbar-light border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <i class="fas fa-home"></i> @GlobalConstants.SystemName
@@ -32,19 +35,19 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="ListAll">Articles</a>
+                            <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="ListAll">Articles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Suppliers" asp-action="ListAll">Suppliers</a>
+                            <a class="nav-link" asp-area="" asp-controller="Suppliers" asp-action="ListAll">Suppliers</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ConformityTypes" asp-action="ListAll">Conformity types</a>
+                            <a class="nav-link" asp-area="" asp-controller="ConformityTypes" asp-action="ListAll">Conformity types</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Conformities" asp-action="ListAll">Conformities</a>
+                            <a class="nav-link" asp-area="" asp-controller="Conformities" asp-action="ListAll">Conformities</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
                 </div>
@@ -68,6 +71,16 @@
             </div>
         </main>
     </div>
+
+    @*<main>
+            <partial name="_CookieConsentPartial" />
+            <section class="left">
+                @await RenderSectionAsync("SideBar", required: false)
+            </section>
+            <section class="right">
+                @this.RenderBody()
+            </section>
+        </main>*@
 
     <footer class="border-top footer text-muted">
         <div class="container">

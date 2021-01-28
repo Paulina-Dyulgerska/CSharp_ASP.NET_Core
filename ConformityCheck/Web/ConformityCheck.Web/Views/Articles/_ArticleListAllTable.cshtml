@@ -18,7 +18,7 @@
                         </span>
                     </a>
                 </th>
-                <th class="col">
+                <th class="col-2">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.DescriptionSortParm"
@@ -83,7 +83,7 @@
             {
                 <tr class="d-flex" data-id="@article.Id" @if (article.IsConfirmed) { <text> style="background-color: #dcfddc;" </text> }>
                     <td id="search" class="col-2">@article.Number</td>
-                    <td id="search" class="col">@article.Description</td>
+                    <td id="search" class="col-2">@article.Description</td>
                     <td class="col-1">@article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Number</td>
                     <td class="col-2">@article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Name</td>
                     <td class="col-1">@(article.IsConfirmed ? "Yes" : "No")</td>

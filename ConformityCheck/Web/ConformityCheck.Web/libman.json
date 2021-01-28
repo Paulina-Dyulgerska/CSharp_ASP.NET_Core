@@ -37,7 +37,7 @@
       ]
     },
     {
-      "library": "@fortawesome/fontawesome-free@5.15.1",
+      "library": "@fortawesome/fontawesome-free@5.15.2",
       "destination": "wwwroot/lib/fontawesome/",
       "files": [
         "webfonts/fa-brands-400.eot",
