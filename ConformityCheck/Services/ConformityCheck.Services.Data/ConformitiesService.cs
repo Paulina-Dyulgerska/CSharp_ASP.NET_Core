@@ -111,7 +111,7 @@
                 SupplierName = supplierEntity.Name,
                 SupplierNumber = supplierEntity.Number,
             };
-
+           
             return entity;
         }
 
@@ -183,6 +183,15 @@
             string userId,
             string conformityFilePath)
         {
+            var currentConformity = await this.conformitiesRepository.All()
+                .Where(x => x.ArticleId == input.ArticleId && x.SupplierId == input.SupplierId && x.ConformityTypeId == input.ConformityTypeId)
+                .FirstOrDefaultAsync();
+
+            if (currentConformity != null)
+            {
+               await this.DeleteAsync(currentConformity.Id);
+            }
+
             var articleConformityType = this.articleConformityTypeRepository
                                     .All()
                                     .Any(x => x.ConformityTypeId == input.ConformityTypeId

@@ -38,6 +38,53 @@
             <span class="text-primary ">@Model.ArticleNumber - @Model.ArticleDescription</span>
         </div>
 
+        @if (@Model.ConformityFileUrl != null)
+        {
+            @* Variant 1: da probvam moga li da go naprawq s POST? *@
+            <div class="form-group">
+                <span>
+                    Conformity is available.
+                    Click the button to see the conformity file: <br />
+                </span>
+                <a class="openPdf btn btn-sm btn-info" asp-action="ShowModalDocument"
+                   asp-route-conformityFileUrl="@Model.ConformityFileUrl"
+                   target="_blank">
+                    <span class="icon text-white">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                    <span class="text">Conformity</span>
+                </a>
+                @* Variant 2: *@
+                @*<a href="@Url.Action("ShowModalDocument", "Conformities", new { ConformityFileUrl = @Model.ConformityFileUrl})" target="_blank">Link Text</a>*@
+                @* Variant 3: *@
+                @*<div class="modal fade" id="modalGeneric" role="dialog">
+                    </div>
+                    <a class="ml-1" data-toggle="tooltip" title="Predogled"
+                       data-url="@Url.Action("PdfPartial", "Conformities", new { ConformityFileUrl = Model.ConformityFileUrl })"
+                       onclick="showGenericModal(event);">
+                        show the file
+                    </a>*@
+            </div>
+            <div class="form-group">
+                <p class="font-weight-bold">
+                    Please choose the button below, if you want to replace the current conformity file with a new one.
+                    Important! The available conformity document will be deleted and new one will be created!
+                    The new file will replace the current one!
+                </p>
+                <a class="addPdf btn btn-sm btn-primary"
+                   asp-action="AddToArticleSupplierConformityType"
+                   asp-route-articleId="@Model.ArticleId"
+                   asp-route-supplierId="@Model.SupplierId"
+                   asp-route-conformityTypeId="@Model.ConformityTypeId"
+                   asp-route-callerViewName="Articles">
+                    <span class="icon text-white">
+                        <i class="fas fa-edit"></i>
+                    </span>
+                    <span class="text">Add new conformity file</span>
+                </a>
+            </div>
+        }
+
         <div class="form-group ">
             <label class="font-weight-bold" asp-for="IssueDate">Date of conformity creation:</label>
             <input asp-for="IssueDate" class="form-control" placeholder="@Model.IssueDate" />
@@ -72,58 +119,6 @@
             <span asp-validation-for="IsAccepted" class="text-danger"></span>
         </div>
 
-
-        @if (@Model.ConformityFileUrl != null)
-        {
-            @* Variant 1: da probvam moga li da go naprawq s POST? *@
-            <div class="form-group">
-                <span>
-                    Conformity is availabel.
-                    Click the button to see the conformity file: <br />
-                </span>
-                <a class="openPdf btn btn-sm btn-info" asp-action="ShowModalDocument"
-                   asp-route-conformityFileUrl="@Model.ConformityFileUrl"
-                   target="_blank">
-                    <span class="icon text-white">
-                        <i class="fas fa-eye"></i>
-                    </span>
-                    <span class="text">Conformity</span>
-                </a>
-                @* Variant 2: *@
-                @*<a href="@Url.Action("ShowModalDocument", "Conformities", new { ConformityFileUrl = @Model.ConformityFileUrl})" target="_blank">Link Text</a>*@
-                @* Variant 3: *@
-                @*<div class="modal fade" id="modalGeneric" role="dialog">
-                </div>
-                <a class="ml-1" data-toggle="tooltip" title="Predogled"
-                   data-url="@Url.Action("PdfPartial", "Conformities", new { ConformityFileUrl = Model.ConformityFileUrl })"
-                   onclick="showGenericModal(event);">
-                    show the file
-                </a>*@
-            </div>
-
-            <div class="form-group">
-                <span>
-                    If you want to replace the current conformity file with a new one, the conformity will be deleted
-                and new conformity according the new conformity file have to be created. Please choose the button below.
-                </span><br />
-                <span class="font-weight-bold">
-                    Important! The new file will replace the current one!
-                </span>
-                <br />
-                @*<a class="addPdf btn btn-sm btn-primary" asp-action="Edit"
-                asp-route-articleId="@Model.ArticleId"
-                asp-route-supplierId="@Model.SupplierId"
-                asp-route-conformityTypeId="@Model.ConformityTypeId"
-                asp-route-callerViewName="Articles">*@
-                <a class="addPdf btn btn-sm btn-primary">
-                    <span class="icon text-white">
-                        <i class="fas fa-edit"></i>
-                    </span>
-                    <span class="text">Add new conformity file</span>
-                </a>
-            </div>
-        }
-
         @* TODO: add the declared substances and assing the restrictions. *@
 
         <hr />
@@ -131,7 +126,6 @@
             <input type="submit" class="btn btn-primary" value="Save changes" />
         </div>
     </form>
-
 
 </div>
 

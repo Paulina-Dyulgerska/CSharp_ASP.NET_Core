@@ -8,8 +8,9 @@ $('#SupplierId').change(function () {
         success: function (json) {
             let html = '<option class="form-control" value=""></option>';
             for (i = 0; i < json.length; i++) {
-                html += '<option class="form-control" value="' + json[i].id + '">'
-                    + json[i].number + ' - ' + json[i].description +
+                var article = json[i];
+                html += '<option class="form-control" value="' + article.id + '">'
+                    + article.number + ' - ' + article.description +
                     '</option>';
             }
             $('#ArticleId').html(html);

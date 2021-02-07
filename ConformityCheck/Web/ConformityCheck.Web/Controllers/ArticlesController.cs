@@ -1,8 +1,7 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
-    using System;
-    using System.Linq;
     using System.Threading.Tasks;
+
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels;
@@ -42,7 +41,8 @@
         {
             if (input.PageNumber <= 0)
             {
-                return this.NotFound(); //zarejdam StatusCodeError404.cshtml!!!
+                // loads StatusCodeError404.cshtm
+                return this.NotFound();
             }
 
             var model = new ArticlesListAllModel
@@ -163,7 +163,7 @@
 
             this.TempData["Message"] = "Article edited successfully.";
 
-            return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
+            return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
 
         [Authorize]
@@ -189,7 +189,7 @@
 
             this.TempData["Message"] = "Article edited successfully.";
 
-            return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
+            return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
 
         [Authorize]
@@ -215,7 +215,7 @@
 
             this.TempData["Message"] = "Article edited successfully.";
 
-            return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
+            return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
 
         [Authorize]
@@ -241,7 +241,7 @@
 
             this.TempData["Message"] = "Article edited successfully.";
 
-            return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
+            return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
 
         [Authorize]
@@ -267,7 +267,7 @@
 
             this.TempData["Message"] = "Article edited successfully.";
 
-            return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
+            return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
 
         [Authorize]
@@ -293,7 +293,7 @@
 
             this.TempData["Message"] = "Article edited successfully.";
 
-            return this.RedirectToAction(nameof(this.Details), "Articles", new { input.Id });
+            return this.RedirectToAction(nameof(this.Details),  new { input.Id });
         }
 
         [Authorize]

@@ -140,8 +140,9 @@ $('#searchAticleInput').on('keyup', function () {
                 else {
                     let html = '';
                     for (i = 0; i < json.length; i++) {
-                        html += '<option class="form-control" value="' + json[i].id + '">'
-                            + json[i].number + ' - ' + json[i].description +
+                        var article = json[i];
+                        html += '<option class="form-control" value="' + article.id + '">'
+                            + article.number + ' - ' + article.description +
                             '</option>';
 
                         //<a asp-action="Details" class="btn btn-sm btn-info" asp-route-id="@article.Id">

@@ -10,16 +10,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConformityCheck.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201222183456_InitialCreate")]
+    [Migration("20210207065724_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.1");
 
             modelBuilder.Entity("ConformityCheck.Data.Models.ApplicationRole", b =>
                 {
@@ -43,12 +43,12 @@ namespace ConformityCheck.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -56,7 +56,7 @@ namespace ConformityCheck.Data.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
+                        .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
@@ -81,8 +81,8 @@ namespace ConformityCheck.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -100,12 +100,12 @@ namespace ConformityCheck.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -123,19 +123,19 @@ namespace ConformityCheck.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
+                        .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
+                        .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
@@ -154,8 +154,11 @@ namespace ConformityCheck.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -165,8 +168,8 @@ namespace ConformityCheck.Data.Migrations
 
                     b.Property<string>("Number")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -188,7 +191,7 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ArticleId")
                         .HasColumnType("nvarchar(450)");
@@ -216,7 +219,7 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ArticleId")
                         .HasColumnType("nvarchar(450)");
@@ -244,7 +247,7 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ArticleId")
                         .HasColumnType("nvarchar(450)");
@@ -272,7 +275,7 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ArticleId")
                         .HasColumnType("nvarchar(450)");
@@ -370,7 +373,7 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -380,8 +383,8 @@ namespace ConformityCheck.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -414,8 +417,8 @@ namespace ConformityCheck.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -425,8 +428,8 @@ namespace ConformityCheck.Data.Migrations
 
                     b.Property<string>("Number")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -448,7 +451,7 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("ConformityTypeId")
                         .HasColumnType("int");
@@ -476,7 +479,7 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -486,8 +489,8 @@ namespace ConformityCheck.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -503,12 +506,17 @@ namespace ConformityCheck.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Description")
                         .IsUnique();
 
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("RegulationLists");
                 });
@@ -518,7 +526,7 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -550,12 +558,12 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("CASNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -565,8 +573,8 @@ namespace ConformityCheck.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -574,12 +582,17 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CASNumber")
                         .IsUnique();
 
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Substances");
                 });
@@ -589,7 +602,7 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -629,12 +642,12 @@ namespace ConformityCheck.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ContactPersonFirstName")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("ContactPersonLastName")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -643,8 +656,8 @@ namespace ConformityCheck.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -654,17 +667,17 @@ namespace ConformityCheck.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Number")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -686,7 +699,7 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -710,7 +723,7 @@ namespace ConformityCheck.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -790,6 +803,8 @@ namespace ConformityCheck.Data.Migrations
                     b.HasOne("ConformityCheck.Data.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ConformityCheck.Data.Models.ArticleConformityType", b =>
@@ -803,6 +818,10 @@ namespace ConformityCheck.Data.Migrations
                         .HasForeignKey("ConformityTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("ConformityType");
                 });
 
             modelBuilder.Entity("ConformityCheck.Data.Models.ArticleProduct", b =>
@@ -814,6 +833,10 @@ namespace ConformityCheck.Data.Migrations
                     b.HasOne("ConformityCheck.Data.Models.Product", "Product")
                         .WithMany("ArticleProducts")
                         .HasForeignKey("ProductId");
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ConformityCheck.Data.Models.ArticleSubstance", b =>
@@ -827,6 +850,10 @@ namespace ConformityCheck.Data.Migrations
                         .HasForeignKey("SubstanceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Substance");
                 });
 
             modelBuilder.Entity("ConformityCheck.Data.Models.ArticleSupplier", b =>
@@ -838,6 +865,10 @@ namespace ConformityCheck.Data.Migrations
                     b.HasOne("ConformityCheck.Data.Models.Supplier", "Supplier")
                         .WithMany("ArticleSuppliers")
                         .HasForeignKey("SupplierId");
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("ConformityCheck.Data.Models.Conformity", b =>
@@ -863,6 +894,14 @@ namespace ConformityCheck.Data.Migrations
                     b.HasOne("ConformityCheck.Data.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Article");
+
+                    b.Navigation("ConformityType");
+
+                    b.Navigation("Supplier");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ConformityCheck.Data.Models.ConformityType", b =>
@@ -870,6 +909,8 @@ namespace ConformityCheck.Data.Migrations
                     b.HasOne("ConformityCheck.Data.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ConformityCheck.Data.Models.Product", b =>
@@ -877,6 +918,8 @@ namespace ConformityCheck.Data.Migrations
                     b.HasOne("ConformityCheck.Data.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ConformityCheck.Data.Models.ProductConformityType", b =>
@@ -890,6 +933,28 @@ namespace ConformityCheck.Data.Migrations
                     b.HasOne("ConformityCheck.Data.Models.Product", "Product")
                         .WithMany("ProductConformityTypes")
                         .HasForeignKey("ProductId");
+
+                    b.Navigation("ConformityType");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ConformityCheck.Data.Models.RegulationList", b =>
+                {
+                    b.HasOne("ConformityCheck.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ConformityCheck.Data.Models.Substance", b =>
+                {
+                    b.HasOne("ConformityCheck.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ConformityCheck.Data.Models.SubstanceRegulationList", b =>
@@ -905,6 +970,10 @@ namespace ConformityCheck.Data.Migrations
                         .HasForeignKey("SubstanceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("RegulationList");
+
+                    b.Navigation("Substance");
                 });
 
             modelBuilder.Entity("ConformityCheck.Data.Models.Supplier", b =>
@@ -912,6 +981,8 @@ namespace ConformityCheck.Data.Migrations
                     b.HasOne("ConformityCheck.Data.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -963,6 +1034,63 @@ namespace ConformityCheck.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ConformityCheck.Data.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Claims");
+
+                    b.Navigation("Logins");
+
+                    b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("ConformityCheck.Data.Models.Article", b =>
+                {
+                    b.Navigation("ArticleConformityTypes");
+
+                    b.Navigation("ArticleProducts");
+
+                    b.Navigation("ArticleSubstances");
+
+                    b.Navigation("ArticleSuppliers");
+
+                    b.Navigation("Conformities");
+                });
+
+            modelBuilder.Entity("ConformityCheck.Data.Models.ConformityType", b =>
+                {
+                    b.Navigation("ArticleConformityTypes");
+
+                    b.Navigation("Conformities");
+
+                    b.Navigation("ProductConformityTypes");
+                });
+
+            modelBuilder.Entity("ConformityCheck.Data.Models.Product", b =>
+                {
+                    b.Navigation("ArticleProducts");
+
+                    b.Navigation("ProductConformityTypes");
+                });
+
+            modelBuilder.Entity("ConformityCheck.Data.Models.RegulationList", b =>
+                {
+                    b.Navigation("SubstanceRegulationLists");
+                });
+
+            modelBuilder.Entity("ConformityCheck.Data.Models.Substance", b =>
+                {
+                    b.Navigation("ArticleSubstances");
+
+                    b.Navigation("SubstanceRegulationLists");
+                });
+
+            modelBuilder.Entity("ConformityCheck.Data.Models.Supplier", b =>
+                {
+                    b.Navigation("ArticleSuppliers");
+
+                    b.Navigation("Conformities");
                 });
 #pragma warning restore 612, 618
         }

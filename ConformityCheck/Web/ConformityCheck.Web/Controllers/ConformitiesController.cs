@@ -80,7 +80,7 @@
 
             // return this.Json(input);
             // TODO: Redirect to conformity info page
-            return this.RedirectToAction("ListAll", "Articles");
+            return this.RedirectToAction("ListAll", ArticlesCallerViewName);
         }
 
         [Authorize]
@@ -122,7 +122,7 @@
 
             this.TempData["Message"] = "Conformity added successfully.";
 
-            return this.RedirectToAction(nameof(ArticlesController.Details), "Articles", new { id });
+            return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id });
         }
 
         [Authorize]

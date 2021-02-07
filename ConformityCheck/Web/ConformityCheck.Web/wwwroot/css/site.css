@@ -5,10 +5,6 @@ for details on configuring this project to bundle and minify static web assets. 
 /* if do not downloaded by Libman, it is better to include it here*/
 /*@import url('https://use.fontawesome.com/releases/v5.15.2/css/all.css');*/
 
-/*article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
-    display: block;
-}*/
-
 html {
     font-size: 16px;
 }
@@ -29,10 +25,21 @@ body {
     /*flex-direction: column;*/
     /*display: flex;*/
     max-width: 1024px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 }
 
+
+/*section {
+    display: inline-block;
+}*/
+
+.btn.nav-link {
+    color: #666770;
+}
+
+    .btn.nav-link:hover {
+        color: black;
+    }
 /*.left {
     flex: 0 0 20%;
     background-color: aqua;
@@ -46,18 +53,34 @@ body {
     float: right;
 }*/
 
+/*main {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}*/
+
 .left {
+    height: 100%;
     background-color: aqua;
-    float: left;
+    /*float: left;*/
     min-height: 80vh;
     width: 20%;
+    display: inline-block;
+    /*position: absolute;*/
+    left: 0;
+    top: 0;
 }
 
 .right {
+    height: 100%;
     width: 80%;
-    float: right;
-    min-height: 80vh;
+    /*float: right;*/
+    max-height: 80vh;
     overflow-y: scroll;
+    display: inline-block;
+    /*position: absolute;*/
+    right: 0;
+    top: 0;
 }
 
 .footer {
@@ -84,6 +107,14 @@ body {
 -------------------------------------------------- */
 .navbar {
     background-color: aqua;
+}
+
+.navbar-nav {
+    display: block;
+}
+
+li.nav-item {
+    display: inline-block;
 }
 
 .navbar-toggler-icon {

@@ -6,9 +6,10 @@
         success: function (json) {
             let html = '<option class="form-control" value="">Select Supplier</option>';
             for (i = 0; i < json.length; i++) {
-                html += '<option class="form-control" value="' + json[i].id + '">'
-                    + json[i].name + ' - ' + json[i].number;
-                if (json[i].isMainSupplier) {
+                var supplier = json[i];
+                html += '<option class="form-control" value="' + supplier.id + '">'
+                    + supplier.name + ' - ' + supplier.number;
+                if (supplier.isMainSupplier) {
                     html += ' - Main Supplier';
                 }
                 html += '</option>';
@@ -38,9 +39,10 @@ $('#Conformity_SupplierId').change(function () {
         success: function (json) {
             let html = '<option class="form-control" value="">Select conformity type</option>';
             for (i = 0; i < json.length; i++) {
-                html += '<option class="form-control" value="' + json[i].id + '">'
-                    + json[i].description;
-                if (json[i].supplierConfirmed) {
+                var conformityType = json[i];
+                html += '<option class="form-control" value="' + conformityType.id + '">'
+                    + conformityType.description;
+                if (conformityType.supplierConfirmed) {
                     html += ' - Confirmed by this supplier';
                 } else {
                     html += ' - Not confirmed by this supplier';
