@@ -36,6 +36,8 @@
             this.userManager = userManager;
         }
 
+        // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         [Authorize]
         public async Task<IActionResult> ListAll(PagingViewModel input)
         {

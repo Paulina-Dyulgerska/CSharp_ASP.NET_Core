@@ -35,6 +35,8 @@
             this.userManager = userManager;
         }
 
+        // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         public async Task<IActionResult> ListAll()
         {
             var model = await this.suppliersService.GetAllAsNoTrackingOrderedAsync<SupplierFullInfoModel>();

@@ -16,10 +16,10 @@
       ,F.[UserId]
 	  ,F.ConformityTypeCount AS ConformityTypeCount
 	  -- taka hvashtam vsichki iztriti i dobaveni nanovo ConformityTypes:
-	  ,COUNT(*) AS ConformityTypesCountAll
+	  --,COUNT(*) AS ConformityTypesCountAll
 	  -- taka hvashtam unikalni ConformityTypes:
-	  ,COUNT(DISTINCT F.ConfTypeId) AS ConformityTypesCountDictinct
-	  ,COUNT(F.IsValid) as IsValid
+	  --,COUNT(DISTINCT F.ConfTypeId) AS ConformityTypesCountDictinct
+	  --,COUNT(F.IsValid) as IsValid
 	  ,CASE
 		WHEN (F.ConformityTypeCount = COUNT(F.IsValid)) THEN 1
 		ELSE NULL
@@ -81,12 +81,12 @@ GROUP BY F.[Id]
       ,F.[Number]
       ,F.[Description]
       ,F.[UserId]
-	  ,F.ConformityTypeCount AS ConformityTypeCount
+	  --,F.ConformityTypeCount AS ConformityTypeCount
 	  -- taka hvashtam vsichki iztriti i dobaveni nanovo ConformityTypes:
-	  ,COUNT(*) AS ConformityTypesCountAll
+	  --,COUNT(*) AS ConformityTypesCountAll
 	  -- taka hvashtam unikalni ConformityTypes:
-	  ,COUNT(DISTINCT F.ConfTypeId) AS ConformityTypesCountDictinct
-	  ,COUNT(F.IsValid) as IsValid
+	  --,COUNT(DISTINCT F.ConfTypeId) AS ConformityTypesCountDictinct
+	  --,COUNT(F.IsValid) as IsValid
 	  ,CASE
 		WHEN (F.ConformityTypeCount = COUNT(F.IsValid)) THEN 1
 		ELSE NULL
@@ -122,7 +122,9 @@ FROM
 				(CONF.ArticleId = A.Id AND 
 				CONF.SupplierId = ASUP.SupplierId AND 
 				CONF.ConformityTypeId = ACT.ConformityTypeId)
-	LEFT JOIN (SELECT COUNT(*)*CTCTE.ConformityTypeCount AS ConformityTypeCount, 
+	LEFT JOIN (SELECT 
+					-- COUNT(*)*CTCTE.ConformityTypeCount AS ConformityTypeCount, 
+					SUM(CTCTE.ConformityTypeCount) AS ConformityTypeCount,
 					Asup.ArticleId as ArticleId
 				FROM ArticleSuppliers AS ASup
 				JOIN (SELECT COUNT(*) AS ConformityTypeCount, 
@@ -132,8 +134,11 @@ FROM
 				GROUP BY ASup.ArticleId, CTCTE.ConformityTypeCount) AS CTN ON CTN.ArticleId = A.Id
  --Include this for check if just MAIN SUPPLIER has all confirmed:
 --WHERE A.IsDeleted = 0 -- AND ASUP.IsMainSupplier = 1
+--WHERE  ASUP.IsMainSupplier = 1
 ) AS F
-GROUP BY F.[Id]
+
+	  --where F.Number = '262201601'
+	  GROUP BY F.[Id]
       ,F.[CreatedOn]
       ,F.[ModifiedOn]
       ,F.[IsDeleted]
