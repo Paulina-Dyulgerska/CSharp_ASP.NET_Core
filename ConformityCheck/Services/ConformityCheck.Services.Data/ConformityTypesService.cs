@@ -107,7 +107,9 @@
                 .All()
                 .FirstOrDefaultAsync(c => c.Id == id);
 
-            // if this conformity type has confirmations in the DB, no delete is possible
+
+            // if this conformity type is assigned to article or product in the DB, no delete is possible - the
+            // validation attribute ConformityTypeUsageAttribute is checking this.
             //if (this.conformitiesRepository.All().Any(ac => ac.ConformityTypeId == id))
             //{
             //    throw new ArgumentException($"Cannot delete conformity type with articles assigned to it.");

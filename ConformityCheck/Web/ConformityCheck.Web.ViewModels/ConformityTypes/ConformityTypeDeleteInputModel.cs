@@ -5,7 +5,7 @@
     public class ConformityTypeDeleteInputModel
     {
         [ConformityTypeEntityAttribute]
-        [ConformityTypeArticlesAttribute]
+        [ConformityTypeUsageAttribute]
         public int Id { get; set; }
     }
 }

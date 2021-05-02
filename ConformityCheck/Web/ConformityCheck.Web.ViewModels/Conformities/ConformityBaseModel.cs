@@ -13,6 +13,8 @@
 
     public abstract class ConformityBaseModel : IMapFrom<Conformity>, IHaveCustomMappings, IValidatableObject
     {
+        private DateTime issueDate;
+
         [Required]
         [Display(Name = "* Conformity type:")]
         [ConformityTypeEntityAttribute]
@@ -42,7 +44,11 @@
         [DataType(DataType.Date)]
         [Display(Name = "* Issue date:")]
         [DateAttribute(minDate: "01/01/2000")]
-        public DateTime IssueDate { get; set; }
+        public DateTime IssueDate
+        {
+            get { return this.issueDate != DateTime.Parse("01/01/0001") ? this.issueDate : DateTime.UtcNow.Date; }
+            set { this.issueDate = value; }
+        }
 
         public bool IsAccepted { get; set; }
 

@@ -20,6 +20,9 @@
                 .HasOne(ac => ac.ConformityType)
                 .WithMany(c => c.ArticleConformityTypes)
                 .HasForeignKey(a => a.ConformityTypeId);
+
+            articleConformityType
+                .HasQueryFilter(ac => !ac.Article.IsDeleted && !ac.ConformityType.IsDeleted);
         }
     }
 }

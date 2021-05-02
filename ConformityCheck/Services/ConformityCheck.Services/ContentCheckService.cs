@@ -18,6 +18,7 @@
         private readonly IRepository<ArticleConformityType> articleConformityTypesRepository;
         private readonly IRepository<ArticleProduct> articleProductsRepository;
         private readonly IRepository<ArticleSubstance> articleSubstancesRepository;
+        private readonly IRepository<ProductConformityType> productConformityTypesRepository;
 
         public ContentCheckService(
             IDeletableEntityRepository<Article> articlesRepository,
@@ -29,7 +30,8 @@
             IRepository<ArticleSupplier> articleSuppliersRepository,
             IRepository<ArticleConformityType> articleConformityTypesRepository,
             IRepository<ArticleProduct> articleProductsRepository,
-            IRepository<ArticleSubstance> articleSubstancesRepository)
+            IRepository<ArticleSubstance> articleSubstancesRepository,
+            IRepository<ProductConformityType> productConformityTypesRepository)
         {
             this.articlesRepository = articlesRepository;
             this.suppliersRepository = suppliersRepository;
@@ -41,6 +43,7 @@
             this.articleConformityTypesRepository = articleConformityTypesRepository;
             this.articleProductsRepository = articleProductsRepository;
             this.articleSubstancesRepository = articleSubstancesRepository;
+            this.productConformityTypesRepository = productConformityTypesRepository;
         }
 
         public bool ArticleEntityIdCheck(string id)
@@ -88,6 +91,20 @@
         public bool ConformityTypeArticlesCheck(int id)
         {
             return this.articleConformityTypesRepository
+                .AllAsNoTracking()
+                .Any(x => x.ConformityTypeId == id);
+        }
+
+        public bool ConformityTypeProductsCheck(int id)
+        {
+            return this.productConformityTypesRepository
+                .AllAsNoTracking()
+                .Any(x => x.ConformityTypeId == id);
+        }
+
+        public bool ConformityTypeConformitiesCheck(int id)
+        {
+            return this.conformitiesRepository
                 .AllAsNoTracking()
                 .Any(x => x.ConformityTypeId == id);
         }

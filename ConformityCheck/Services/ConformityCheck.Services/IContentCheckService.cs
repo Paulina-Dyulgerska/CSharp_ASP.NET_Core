@@ -18,6 +18,10 @@
 
         bool ConformityTypeArticlesCheck(int id);
 
+        bool ConformityTypeProductsCheck(int id);
+
+        bool ConformityTypeConformitiesCheck(int id);
+
         bool ProductEntityIdCheck(string id);
 
         bool SubstanceEntityIdCheck(int id);

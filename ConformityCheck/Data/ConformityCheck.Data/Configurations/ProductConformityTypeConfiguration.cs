@@ -8,8 +8,7 @@
     {
         public void Configure(EntityTypeBuilder<ProductConformityType> productConformityType)
         {
-            //productConformity.HasKey(x => new { x.ProductId, x.ConformityId });
-
+            // productConformity.HasKey(x => new { x.ProductId, x.ConformityId });
             productConformityType
                 .HasOne(pc => pc.Product)
                 .WithMany(p => p.ProductConformityTypes)
@@ -19,6 +18,9 @@
                 .HasOne(pc => pc.ConformityType)
                 .WithMany(c => c.ProductConformityTypes)
                 .HasForeignKey(p => p.ConformityTypeId);
+
+            productConformityType
+                .HasQueryFilter(pc => !pc.Product.IsDeleted && !pc.ConformityType.IsDeleted);
         }
     }
 }

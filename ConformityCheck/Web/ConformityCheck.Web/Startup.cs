@@ -102,12 +102,15 @@
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                // app.UseDatabaseErrorPage();
+
+                // app.UseDatabaseErrorPage(); is obsolete
                 app.UseMigrationsEndPoint();
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+
+                // the default HSTS value is 30 days. If you need more, change it.
                 app.UseHsts();
             }
 

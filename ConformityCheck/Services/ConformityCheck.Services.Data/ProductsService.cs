@@ -56,5 +56,8 @@
         {
             throw new System.NotImplementedException();
         }
+
+        // TODO: DeleteAsync - to check all tables with relations with Product and is the raw in them needed or not
+        // to be deleted too when I delete a Product
     }
 }

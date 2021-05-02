@@ -523,9 +523,9 @@
                 this.conformitiesRepository.Delete(articleConformitiesEntity);
             }
 
+            // TODO:
             // article.Substances.Clear();
             // article.Products.Clear();
-
             return await this.articlesRepository.SaveChangesAsync();
         }
 
