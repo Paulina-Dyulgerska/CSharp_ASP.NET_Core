@@ -111,7 +111,7 @@
                 SupplierName = supplierEntity.Name,
                 SupplierNumber = supplierEntity.Number,
             };
-           
+
             return entity;
         }
 
@@ -155,7 +155,7 @@
                                                 .All()
                                                 .FirstOrDefaultAsync(x => x.Id == input.Id);
 
-            conformityEntity.IssueDate = input.IssueDate.Date;
+            conformityEntity.IssueDate = input.IssueDate.ToUniversalTime().Date;
             conformityEntity.IsAccepted = input.IsAccepted;
             conformityEntity.AcceptanceDate = DateTime.UtcNow.Date;
             conformityEntity.ValidityDate = input.IsAccepted ? DateTime.UtcNow.Date.AddYears(3) : (DateTime?)null;
@@ -164,7 +164,7 @@
 
             if (input.ValidityDate != null && input.IsAccepted)
             {
-                conformityEntity.ValidityDate = input.ValidityDate;
+                conformityEntity.ValidityDate = input.ValidityDate?.ToUniversalTime().Date;
             }
 
             await this.conformitiesRepository.SaveChangesAsync();
@@ -189,7 +189,7 @@
 
             if (currentConformity != null)
             {
-               await this.DeleteAsync(currentConformity.Id);
+                await this.DeleteAsync(currentConformity.Id);
             }
 
             var articleConformityType = this.articleConformityTypeRepository
@@ -212,7 +212,7 @@
                 ArticleId = input.ArticleId,
                 SupplierId = input.SupplierId,
                 ConformityTypeId = input.ConformityTypeId,
-                IssueDate = input.IssueDate.Date,
+                IssueDate = input.IssueDate.ToUniversalTime().Date,
                 IsAccepted = input.IsAccepted,
                 AcceptanceDate = DateTime.UtcNow.Date,
                 ValidityDate = input.IsAccepted ? DateTime.UtcNow.Date.AddYears(3) : (DateTime?)null,
@@ -222,7 +222,7 @@
 
             if (input.ValidityDate != null && input.IsAccepted)
             {
-                conformityEntity.ValidityDate = input.ValidityDate;
+                conformityEntity.ValidityDate = input.ValidityDate?.ToUniversalTime().Date;
             }
 
             await this.conformitiesRepository.AddAsync(conformityEntity);

@@ -39,7 +39,7 @@
 
         public string ArticleDescription { get; set; }
 
-        // vsichki dates da sa v UTC, i tuk i na servera i na DB-a!!!
+        // vsichki dates da sa v UTC, i tuk i na servera i na DB-a, a za usera da sa v ToLocalTime(), no vyv Viewtata samo!!
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "* Issue date:")]

@@ -60,6 +60,7 @@
             return this.View();
         }
 
+        // [AutoValidateAntiforgeryToken] - it is globaly as a service and is in the DC.
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(ConformityCreateInputModel input)

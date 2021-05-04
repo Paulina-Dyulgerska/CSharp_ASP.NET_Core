@@ -63,13 +63,13 @@
 
         <div class="form-group font-weight-bold">
             <label asp-for="IssueDate"></label>
-            <input asp-for="IssueDate" class="form-control" placeholder="Date of conformity creation" />
+            <input asp-for="IssueDate" class="form-control" />
             <span asp-validation-for="IssueDate" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="ValidityDate"></label>
-            <input asp-for="ValidityDate" class="form-control" placeholder="Date till the conformity is valid" />
+            <input asp-for="ValidityDate" class="form-control"  />
             <span asp-validation-for="ValidityDate" class="text-danger"></span>
         </div>
 
@@ -86,10 +86,10 @@
         </div>
 
         @*<div class="form-group">
-                <label asp-for="UserId"></label>
-                <input asp-for="UserId" class="form-control" hidden value="@this.User.Identity.Name" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>*@
+            <label asp-for="UserId"></label>
+            <input asp-for="UserId" class="form-control" hidden value="@this.User.Identity.Name" />
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>*@
 
         @* TODO: add the declared substances and assing the restrictions. *@
 
