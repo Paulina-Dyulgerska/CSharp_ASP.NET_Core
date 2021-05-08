@@ -132,7 +132,7 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Edit(ArticleEditInputModel input, string userId)
+        public async Task<IActionResult> Edit(ArticleEditInputModel input)
         {
             // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (!this.ModelState.IsValid)
@@ -186,6 +186,8 @@
 
                 return this.View(model);
             }
+
+            var user = await this.userManager.GetUserAsync(this.User);
 
             await this.articlesService.AddSupplierAsync(input);
 
@@ -295,13 +297,15 @@
 
             this.TempData["Message"] = "Article edited successfully.";
 
-            return this.RedirectToAction(nameof(this.Details),  new { input.Id });
+            return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
 
         [Authorize]
         public async Task<IActionResult> Delete(string id)
         {
-            await this.articlesService.DeleteAsync(id);
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            await this.articlesService.DeleteAsync(id, user.Id);
 
             return this.View();
         }

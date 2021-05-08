@@ -170,9 +170,11 @@
             await this.conformitiesRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task DeleteAsync(string id, string userId)
         {
             var entity = await this.conformitiesRepository.All().FirstOrDefaultAsync(x => x.Id == id);
+            entity.UserId = userId;
+
             this.conformitiesRepository.Delete(entity);
             // this.conformitiesRepository.HardDelete(entity); ???
             await this.conformitiesRepository.SaveChangesAsync();
@@ -189,7 +191,7 @@
 
             if (currentConformity != null)
             {
-                await this.DeleteAsync(currentConformity.Id);
+                await this.DeleteAsync(currentConformity.Id, userId);
             }
 
             var articleConformityType = this.articleConformityTypeRepository

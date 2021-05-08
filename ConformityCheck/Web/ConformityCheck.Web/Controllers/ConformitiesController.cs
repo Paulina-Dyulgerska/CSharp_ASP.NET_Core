@@ -234,7 +234,9 @@
                 }
             }
 
-            await this.conformitiesService.DeleteAsync(input.Id);
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            await this.conformitiesService.DeleteAsync(input.Id, user.Id);
 
             this.TempData["Message"] = "Conformity deleted successfully.";
 

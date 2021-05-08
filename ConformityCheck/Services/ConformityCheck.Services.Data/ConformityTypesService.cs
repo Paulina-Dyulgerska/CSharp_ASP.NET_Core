@@ -101,21 +101,21 @@
             await this.conformityTypesRepository.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(int id, string userId)
         {
-            var conformityTypeEntity = await this.conformityTypesRepository
+            var entity = await this.conformityTypesRepository
                 .All()
                 .FirstOrDefaultAsync(c => c.Id == id);
-
+            entity.UserId = userId;
 
             // if this conformity type is assigned to article or product in the DB, no delete is possible - the
             // validation attribute ConformityTypeUsageAttribute is checking this.
-            //if (this.conformitiesRepository.All().Any(ac => ac.ConformityTypeId == id))
-            //{
+            // if (this.conformitiesRepository.All().Any(ac => ac.ConformityTypeId == id))
+            // {
             //    throw new ArgumentException($"Cannot delete conformity type with articles assigned to it.");
-            //}
+            // }
 
-            this.conformityTypesRepository.Delete(conformityTypeEntity);
+            this.conformityTypesRepository.Delete(entity);
 
             return await this.conformityTypesRepository.SaveChangesAsync();
         }

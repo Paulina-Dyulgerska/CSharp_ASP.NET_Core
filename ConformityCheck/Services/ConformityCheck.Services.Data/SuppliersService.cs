@@ -185,9 +185,11 @@
             await this.suppliersRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task DeleteAsync(string id, string userId)
         {
             var entity = await this.suppliersRepository.All().FirstOrDefaultAsync(x => x.Id == id);
+            entity.UserId = userId;
+
             this.suppliersRepository.Delete(entity);
 
             var articleSuppliersEntities = await this.articleSuppliersRepository

@@ -11,7 +11,7 @@
 
         Task EditAsync(SupplierEditInputModel input, string userId);
 
-        Task DeleteAsync(string id);
+        Task DeleteAsync(string id, string userId);
 
         Task<IEnumerable<T>> GetArticlesByIdAsync<T>(string id);
 

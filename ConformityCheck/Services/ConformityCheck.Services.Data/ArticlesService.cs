@@ -117,7 +117,6 @@
         //    return this.articlesRepository.ExecuteCustomQuery(query).Count();
         //}
 
-
         public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             return await this.articlesRepository.All().To<T>().ToListAsync();
@@ -155,7 +154,7 @@
         //}
 
         public async Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage)
-        //where T : ArticleDetailsModel
+        // where T : ArticleDetailsModel
         {
             switch (sortOrder)
             {
@@ -435,10 +434,6 @@
             var articleEntity = await this.articlesRepository.AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Number == input.Number.Trim().ToUpper());
 
-            //var userEntity = this.usersRepository.AllAsNoTracking()
-            //    .FirstOrDefault(x => x.UserName == articleInputModel.UserId);
-            //take the user and record its id in the article, product, conformity, etc.
-
             // TODO: make a validation attribute for this or to generate numbers authomaticaly!!!:
             if (articleEntity != null)
             {
@@ -488,9 +483,10 @@
             await this.articlesRepository.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteAsync(string id)
+        public async Task<int> DeleteAsync(string id, string userId)
         {
             var articleEntity = await this.articlesRepository.All().FirstOrDefaultAsync(x => x.Id == id);
+            articleEntity.UserId = userId;
             this.articlesRepository.Delete(articleEntity);
 
             var articleSuppliersEntities = await this.articleSuppliersRepository

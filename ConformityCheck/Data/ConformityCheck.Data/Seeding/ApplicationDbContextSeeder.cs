@@ -31,6 +31,8 @@
                             new SuppliersSeeder(),
                             new ConformityTypesSeeder(),
                             new SettingsSeeder(),
+
+                            // ArticlesSeeder should be always the last one - needs other data
                             new ArticlesSeeder(),
                           };
 

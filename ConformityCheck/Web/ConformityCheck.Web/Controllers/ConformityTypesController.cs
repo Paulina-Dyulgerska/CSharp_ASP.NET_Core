@@ -120,7 +120,9 @@
                 return this.RedirectToAction(nameof(this.ListAll));
             }
 
-            await this.conformityTypeService.DeleteAsync(input.Id);
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            await this.conformityTypeService.DeleteAsync(input.Id, user.Id);
 
             return this.View();
         }

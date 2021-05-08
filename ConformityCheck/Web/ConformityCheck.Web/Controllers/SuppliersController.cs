@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
+
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels.Articles;
@@ -134,7 +135,9 @@
         [Authorize]
         public async Task<IActionResult> Delete(string id)
         {
-            await this.suppliersService.DeleteAsync(id);
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            await this.suppliersService.DeleteAsync(id, user.Id);
 
             return this.View();
         }

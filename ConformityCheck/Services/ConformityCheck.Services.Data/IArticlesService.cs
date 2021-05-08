@@ -17,7 +17,7 @@
 
         Task EditAsync(ArticleEditInputModel input, string userId);
 
-        Task<int> DeleteAsync(string id);
+        Task<int> DeleteAsync(string id, string userId);
 
         Task AddSupplierAsync(ArticleManageSuppliersInputModel input);
 

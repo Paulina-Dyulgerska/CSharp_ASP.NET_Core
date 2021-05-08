@@ -10,6 +10,6 @@
 
         Task EditAsync(ConformityTypeEditInputModel input, string userId);
 
-        Task<int> DeleteAsync(int id);
+        Task<int> DeleteAsync(int id, string userId);
     }
 }
