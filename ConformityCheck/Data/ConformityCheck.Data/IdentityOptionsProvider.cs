@@ -13,7 +13,7 @@
             options.Password.RequireUppercase = false;
             options.Password.RequireNonAlphanumeric = false;
             options.Password.RequiredLength = 6;
-            options.Lockout.MaxFailedAccessAttempts = 5;
+            options.Lockout.MaxFailedAccessAttempts = 15;
             options.Lockout.DefaultLockoutTimeSpan = new TimeSpan(0, 30, 0);
             options.User.RequireUniqueEmail = true;
         }

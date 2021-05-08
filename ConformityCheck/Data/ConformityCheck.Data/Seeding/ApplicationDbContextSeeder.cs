@@ -26,10 +26,11 @@
 
             var seeders = new List<ISeeder>
                           {
-                            new SuppliersSeeder(),
                             new RolesSeeder(),
-                            new SettingsSeeder(),
+                            new UsersSeeder(),
+                            new SuppliersSeeder(),
                             new ConformityTypesSeeder(),
+                            new SettingsSeeder(),
                             new ArticlesSeeder(),
                           };
 
