@@ -6,8 +6,8 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Common;
+    using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Articles;

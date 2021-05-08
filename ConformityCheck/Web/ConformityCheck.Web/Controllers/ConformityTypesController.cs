@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
@@ -57,10 +58,10 @@
                 return this.View(input);
             }
 
-            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await this.userManager.GetUserAsync(this.User);
 
-            await this.conformityTypeService.CreateAsync(input, user.Id);
+            await this.conformityTypeService.CreateAsync(input, userId);
 
             this.TempData["Message"] = "Conformity type created successfully.";
 
