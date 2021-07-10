@@ -116,7 +116,7 @@ function filterTableByTwoColumns(event) {
 //// row click:
 $("#dataTable").click(function addRowHandlers({ target }) {
     if (target.parentElement.localName === "tr") {
-        const link = target.parentElement.querySelector("a.btn-info");
+        const link = target.parentElement.querySelector("a.btn-details");
         if (link) {
             link.click();
         }

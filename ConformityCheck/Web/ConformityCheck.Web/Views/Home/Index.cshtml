@@ -4,2039 +4,279 @@
 @{
     this.ViewData["Title"] = "Home Page";
 }
+<section class="overlay-color"></section>
+<section class="home-container">
+    <article class="home-content">
+        <h1 class="text-block-content-title">Welcome to Conformity Check!</h1>
+        <p class="text-block-content-description">We have:</p>
+        <article class="text-block-content">
+            <ul class="managed-items-list">
+                <li class="list-item">
+                    <span>
+                        Articles:&emsp;
+                    </span>
+                    <span>
+                        @Model.Articles
+                    </span>
+                </li>
+                <li class="list-item">
+                    <span>
+                        Products:&emsp;
+                    </span>
+                    <span>
+                        @Model.Products
+                    </span>
+                </li>
+                <li class="list-item">
+                    <span>
+                        Suppliers:&emsp;
+                    </span>
+                    <span>
+                        @Model.Suppliers
+                    </span>
+                </li>
+                <li class="list-item">
+                    <span>
+                        ConformityTypes:&emsp;
+                    </span>
+                    <span>
+                        @Model.ConformityTypes
+                    </span>
+                </li>
+                <li class="list-item">
+                    <span>
+                        Conformities:&emsp;
+                    </span>
+                    <span>
+                        @Model.Conformities
+                    </span>
+                </li>
+                <li class="list-item">
+                    <span>
+                        Substances:&emsp;
+                    </span>
+                    <span>
+                        @Model.Substances
+                    </span>
+                </li>
+                <li class="list-item">
+                    <span>
+                        RegulationLists: &emsp;
+                    </span>
+                    <span>
+                        @Model.RegulationLists
+                    </span>
+                </li>
+            </ul>
+        </article>
+    </article>
+</section>
+<section class="search-container">
+    <article class="">
+        <h4 class="">
+           Quick links:
+        </h4>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <div class="col-md-4 offset-md-4">
-        <p>We have:</p>
-        <ul class="list-group">
-            <li class="list-group-item bg-info">Articles: @Model.Articles</li>
-            <li class="list-group-item bg-light">Products: @Model.Products</li>
-            <li class="list-group-item bg-info">Suppliers: @Model.Suppliers</li>
-            <li class="list-group-item bg-light">ConformityTypes: @Model.ConformityTypes</li>
-            <li class="list-group-item bg-info">Conformities: @Model.Conformities</li>
-            <li class="list-group-item bg-light">Substances: @Model.Substances</li>
-            <li class="list-group-item bg-info">RegulationLists: @Model.RegulationLists</li>
-        </ul>
-    </div>
-</div>
-
-<div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
-    <h4 class="m-0 font-weight-bold text-primary ">
-        @this.ViewData["Title"]
-    </h4>
-    <div class="input-group">
-        <div class="input-group-prepend">
-            <div class="input-group-text" id="btnGroupAddon">
-                <i class="fas fa-search"></i>
-            </div>
-        </div>
-        <input size="36" type="text" id="searchInput" class="form-control" placeholder="Search for article number or name..." aria-label="Input group example" aria-describedby="btnGroupAddon">
-    </div>
-</div>
-
-<div class="d-flex justify-content-between mb-3" role="toolbar">
-    <h4 class="m-0 font-weight-bold text-primary ">
-        @this.ViewData["Title"]
-    </h4>
-
-    <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <div class="input-group-text" id="btnGroupAddon">
-                    <i class="fas fa-search"></i>
+        <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text" id="btnGroupAddon">
+                        <i class="fas fa-search"></i>
+                    </div>
                 </div>
-            </div>
-            <input size="36" type="text" id="searchInput" class="form-control" placeholder="Search for article number or name..." aria-label="Input group example" aria-describedby="btnGroupAddon">
-        </div>
-    </div>
-
-    <a asp-action="Create" class="btn btn-primary justify-content-end">Create article</a>
-</div>
-@*<div id="filters-top-wrapper" class="filters-top-wrapper">
-    <div id="filters-top" class="filters-top" data-sticky_column="">
-        <div class="container-fluid">
-            <div class="border-container d-flex justify-content-between w-100">
-                <ul class="top-filter-ul flex-1 clearfix">
-                    <li class="filters-top-item filters-favourites">
-                        <a id="sort-category" href="javascript:void(0);">
-                            <span>Категории</span>
-                        </a>
-                        <div class="filter-container" style="width: 631px;">
-                            <div id="left-column-nav">
-                                <div class="filters-main-category filters-inner-scroll" rel="favourites">
-                                    <ul id="favourites-filter" class="row filters-category">
-
-                                        <li class="col">
-                                            <div class="d-inline-block">
-                                                <a href="/bg/womens-clothes?fav=1" class="favourite favorites-main-cat " title="Филтрирайте по Дамски дрехи" rel="womens-clothes">
-                                                    <span class="filter-icon"></span>
-                                                    <span class="filter-label">Дамски дрехи</span>
-                                                </a>
-                                                <ul class="filter-items favorites-sub-category-list">
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/sweatpants?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Анцузи" rel="sweatpants" data-id="12300">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Анцузи</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/tops?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Блузи" rel="tops" data-id="10200">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Блузи</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/jumpsuits?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Гащеризони" rel="jumpsuits" data-id="10400">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Гащеризони</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/jeans?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Дънки" rel="jeans" data-id="10500">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Дънки</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/leggings?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Клинове" rel="leggings" data-id="10800">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Клинове</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/leather-jackets?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Кожени якета" rel="leather-jackets" data-id="10900">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Кожени якета</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/shorts?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Къси панталони" rel="shorts" data-id="11100">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Къси панталони</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/coats?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Палта" rel="coats" data-id="11200">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Палта</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/trousers?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Панталони" rel="trousers" data-id="11300">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Панталони</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/skirts?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Поли" rel="skirts" data-id="11400">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Поли</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/sweaters?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Пуловери" rel="sweaters" data-id="12200">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Пуловери</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/dresses?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Рокли" rel="dresses" data-id="11600">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Рокли</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/sports-clothing?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Спортни дрехи" rel="sports-clothing" data-id="10100">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Спортни дрехи</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/sweatshirts?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Суичъри" rel="sweatshirts" data-id="11800">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Суичъри</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/t-shirts?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Тениски" rel="t-shirts" data-id="12000">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Тениски</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/womens-clothes/jackets?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Якета" rel="jackets" data-id="12100">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Якета</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-
-
-                                        <li class="col">
-                                            <div class="d-inline-block">
-                                                <a href="/bg/mens-clothes?fav=1" class="favourite favorites-main-cat " title="Филтрирайте по Мъжки дрехи" rel="mens-clothes">
-                                                    <span class="filter-icon"></span>
-                                                    <span class="filter-label">Мъжки дрехи</span>
-                                                </a>
-                                                <ul class="filter-items favorites-sub-category-list">
-                                                    <li>
-                                                        <a href="/bg/mens-clothes/suits?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Костюми" rel="suits" data-id="20700">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Костюми</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/mens-clothes/shorts?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Къси панталони" rel="shorts" data-id="20800">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Къси панталони</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/mens-clothes/shirts?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Ризи" rel="shirts" data-id="21100">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Ризи</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/mens-clothes/sweatshirts?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Суичъри" rel="sweatshirts" data-id="21300">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Суичъри</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/bg/mens-clothes/jackets?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Якета" rel="jackets" data-id="21500">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Якета</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-
-
-                                        <li class="col">
-                                            <div class="d-inline-block">
-                                                <a href="/bg/child-clothes?fav=1" class="favourite favorites-main-cat " title="Филтрирайте по Детски дрехи" rel="child-clothes">
-                                                    <span class="filter-icon"></span>
-                                                    <span class="filter-label">Детски дрехи</span>
-                                                </a>
-                                                <ul class="filter-items favorites-sub-category-list">
-                                                    <li>
-                                                        <a href="/bg/child-clothes/t-shirts?fav=1" class="sub-cat favorites-sub-cat " title="Филтрирайте по Тениски" rel="t-shirts" data-id="60080">
-                                                            <span class="filter-icon">&nbsp;</span>
-                                                            <span class="filter-label">Тениски</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="filters-top-item filters-tags hidden" id="list-tags" style="display: none;"></li>
-
-                    <li class="filters-top-item filters-brands">
-                        <a id="sort-brands" href="javascript:void(0);">
-                            <span>Марки</span>
-                        </a>
-                        <div class="filter-container">
-                            <div class="row no-gutters">
-                                <div class="col-md-6 brand-filter filter-content">
-                                    <div class="filter-title">Търсете марка</div>
-                                    <div class="clearfix brand-search">
-                                        <input type="text" placeholder="Въведете марка" id="brand-search" class="tt-input clear-button" autocomplete="off" spellcheck="false" dir="auto"><pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: &quot;Open Sans&quot;, sans-serif; font-size: 11px; font-style: normal; font-variant: normal; font-weight: 600; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre>
-                                    </div>
-                                    <div id="brand-search-list" class="clearfix brand-search-list"><div class="tt-dataset tt-dataset-Brands"></div></div>
-                                    <div class="clearfix top-brands">
-                                        <div class="filter-title">
-                                            Типове марки                                                            <a href="#brand-type" class="brand-type-icon cboxElement"></a>
-                                        </div>
-                                        <div class="hidden">
-                                            <div id="brand-type" class="brand-type-content">
-                                                <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="padding: 0 20px 0 0;">
-                                                                Luxury:
-                                                            </td>
-                                                            <td style="padding: 0 0 0;">Дизайнерски марки, високо ценово ниво.</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="padding: 8px 20px 0 0;">
-                                                                Mid Range:
-                                                            </td>
-                                                            <td style="padding: 8px 0 0;">Модерни марки, по-високо ценово ниво от budget.</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="padding: 8px 20px 0 0;">
-                                                                Budget:
-                                                            </td>
-                                                            <td style="padding: 8px 0 0;">Популярни марки, изгодна комбинация качество/цена.</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="filter-items">
-                                            <a href="javascript:;" id="show-all-luxury-brands" class="show-brands-group filter-hidden-input" title="Продукти от luxury марки">
-                                                <span class="filter-icon">&nbsp;</span>
-                                                <span class="filter-label">Luxury марки</span>
-                                            </a>
-                                            <input type="hidden" id="luxury" value="LUXURY" name="brand_range" disabled="" class="filter-top-brands">
-                                        </div>
-                                        <div class="filter-items">
-                                            <a href="javascript:;" id="show-all-top-brands" class="show-brands-group filter-hidden-input" title="Продукти от mid range марки">
-                                                <span class="filter-icon">&nbsp;</span>
-                                                <span class="filter-label">Mid Range марки</span>
-                                            </a>
-                                            <input type="hidden" id="top" value="MID" name="brand_range" disabled="" class="filter-top-brands">
-                                        </div>
-                                        <div class="filter-items">
-                                            <a href="javascript:;" id="show-all-budget-brands" class="show-brands-group filter-hidden-input" title="Продукти от budget марки">
-                                                <span class="filter-icon">&nbsp;</span>
-                                                <span class="filter-label">Budget марки</span>
-                                            </a>
-                                            <input type="hidden" id="budget" value="BUDGET" name="brand_range" disabled="" class="filter-top-brands">
-                                        </div>
-                                    </div>
-                                    <div id="brand-top-list">
-                                        <div class="filter-title">Най-продавани</div>
-                                        <div class="clearfix brand-top-list">
-
-                                            <div class="filter-items">
-                                                <a data-id="720" data-name="H&amp;M" title="H&amp;M">
-                                                    <span class="filter-icon"> </span>
-                                                    <span class="filter-label">H&amp;M</span>
-                                                </a>
-                                            </div>
-
-                                            <div class="filter-items">
-                                                <a data-id="804" data-name="S.Oliver" title="S.Oliver">
-                                                    <span class="filter-icon"> </span>
-                                                    <span class="filter-label">S.Oliver</span>
-                                                </a>
-                                            </div>
-
-                                            <div class="filter-items">
-                                                <a data-id="798" data-name="Zara" title="Zara">
-                                                    <span class="filter-icon"> </span>
-                                                    <span class="filter-label">Zara</span>
-                                                </a>
-                                            </div>
-
-                                            <div class="filter-items">
-                                                <a data-id="818" data-name="Esprit" title="Esprit">
-                                                    <span class="filter-icon"> </span>
-                                                    <span class="filter-label">Esprit</span>
-                                                </a>
-                                            </div>
-
-                                            <div class="filter-items">
-                                                <a data-id="21529" data-name="H&amp;M Divided" title="H&amp;M Divided">
-                                                    <span class="filter-icon"> </span>
-                                                    <span class="filter-label">H&amp;M Divided</span>
-                                                </a>
-                                            </div>
-
-                                            <div class="filter-items">
-                                                <a data-id="785" data-name="Vero Moda" title="Vero Moda">
-                                                    <span class="filter-icon"> </span>
-                                                    <span class="filter-label">Vero Moda</span>
-                                                </a>
-                                            </div>
-
-                                            <div class="filter-items">
-                                                <a data-id="881" data-name="ONLY" title="ONLY">
-                                                    <span class="filter-icon"> </span>
-                                                    <span class="filter-label">ONLY</span>
-                                                </a>
-                                            </div>
-
-                                            <div class="filter-items">
-                                                <a data-id="729" data-name="Yessica" title="Yessica">
-                                                    <span class="filter-icon"> </span>
-                                                    <span class="filter-label">Yessica</span>
-                                                </a>
-                                            </div>
-
-                                            <div class="filter-items">
-                                                <a data-id="796" data-name="Street One" title="Street One">
-                                                    <span class="filter-icon"> </span>
-                                                    <span class="filter-label">Street One</span>
-                                                </a>
-                                            </div>
-
-                                            <div class="filter-items">
-                                                <a data-id="797" data-name="Atmosphere" title="Atmosphere">
-                                                    <span class="filter-icon"> </span>
-                                                    <span class="filter-label">Atmosphere</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 brands-selected-container ">
-                                    <div class="brands-selected filter-content">
-                                        <div class="filter-title">Вашата селекция</div>
-                                        <ul class="brands-types ">
-                                            <li class="luxury-brand-li  hidden" id="brand-luxury" title="Luxury марки">
-                                                <span class="brand-name">Luxury марки</span>
-                                                <a class="delete-brand" data-hide="show-all-luxury-brands" href="javascript:;"></a>
-                                            </li>
-
-                                            <li class="top-brand-li hidden" id="brand-top" title="Mid Range марки">
-                                                <span class="brand-name">Mid Range марки</span>
-                                                <a class="delete-brand" data-hide="show-all-top-brands" href="javascript:;"></a>
-                                            </li>
-
-                                            <li class="budget-brand-li hidden" id="brand-budget" title="Budget марки">
-                                                <span class="brand-name">Budget марки</span>
-                                                <a class="delete-brand is-budget-brand" data-hide="show-all-budget-brands" href="javascript:;"></a>
-                                            </li>
-                                        </ul>
-                                        <ul id="selected-brands">
-                                        </ul>
-                                        <div id="no-brands-selected" class="">
-                                            Търсете любимите си марки или изберете от нашите топ предложения
-                                        </div>
-                                    </div>
-                                    <div class="brands-selected-clear title">
-                                        <a class="hidden" href="javascript:;" id="clear-selected-brands">
-                                            Изчистете
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-
-                    <li class="filters-top-item filters-sizes  hidden" rel="womens-clothes" style="display: none;">
-                        <a id="sort-size" href="javascript:void(0);"><span>Размер</span></a>
-
-                        <div class="filter-container clearfix">
-
-
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                XXS
-                            </a>
-                            <input type="hidden" name="size" value="XXS" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                XS
-                            </a>
-                            <input type="hidden" name="size" value="XS" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                S
-                            </a>
-                            <input type="hidden" name="size" value="S" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                M
-                            </a>
-                            <input type="hidden" name="size" value="M" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                L
-                            </a>
-                            <input type="hidden" name="size" value="L" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                XL
-                            </a>
-                            <input type="hidden" name="size" value="XL" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                XXL
-                            </a>
-                            <input type="hidden" name="size" value="XXL" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                3XL
-                            </a>
-                            <input type="hidden" name="size" value="3XL" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                4XL
-                            </a>
-                            <input type="hidden" name="size" value="4XL" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                5XL
-                            </a>
-                            <input type="hidden" name="size" value="5XL" disabled="">
-
-                        </div>
-                    </li>
-
-                    <li class="filters-top-item filters-sizes  hidden" rel="mens-clothes" style="display: none;">
-                        <a id="sort-size" href="javascript:void(0);"><span>Размер</span></a>
-
-                        <div class="filter-container clearfix">
-
-
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                XXS
-                            </a>
-                            <input type="hidden" name="size" value="XXS" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                XS
-                            </a>
-                            <input type="hidden" name="size" value="XS" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                S
-                            </a>
-                            <input type="hidden" name="size" value="S" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                M
-                            </a>
-                            <input type="hidden" name="size" value="M" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                L
-                            </a>
-                            <input type="hidden" name="size" value="L" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                XL
-                            </a>
-                            <input type="hidden" name="size" value="XL" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                XXL
-                            </a>
-                            <input type="hidden" name="size" value="XXL" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                3XL
-                            </a>
-                            <input type="hidden" name="size" value="3XL" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                4XL
-                            </a>
-                            <input type="hidden" name="size" value="4XL" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                5XL
-                            </a>
-                            <input type="hidden" name="size" value="5XL" disabled="">
-
-                        </div>
-                    </li>
-
-                    <li class="filters-top-item filters-sizes  hidden" rel="bags" style="display: none;">
-                        <a id="sort-size" href="javascript:void(0);"><span>Размер</span></a>
-
-                        <div class="filter-container clearfix">
-
-                            Избраната категория няма опция за избор на размер.
-                        </div>
-                    </li>
-                    <li class="filters-top-item filters-sizes  hidden" rel="accessories" style="display: none;">
-                        <a id="sort-size" href="javascript:void(0);"><span>Размер</span></a>
-
-                        <div class="filter-container clearfix">
-
-                            Избраната категория няма опция за избор на размер.
-                        </div>
-                    </li>
-                    <li class="filters-top-item filters-sizes  hidden" rel="shoes" style="display: none;">
-                        <a id="sort-size" href="javascript:void(0);"><span>Размер</span></a>
-
-                        <div class="filter-container clearfix">
-
-
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                15
-                            </a>
-                            <input type="hidden" name="size" value="15" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                16
-                            </a>
-                            <input type="hidden" name="size" value="16" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                17
-                            </a>
-                            <input type="hidden" name="size" value="17" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                18
-                            </a>
-                            <input type="hidden" name="size" value="18" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                19
-                            </a>
-                            <input type="hidden" name="size" value="19" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                20
-                            </a>
-                            <input type="hidden" name="size" value="20" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                21
-                            </a>
-                            <input type="hidden" name="size" value="21" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                22
-                            </a>
-                            <input type="hidden" name="size" value="22" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                23
-                            </a>
-                            <input type="hidden" name="size" value="23" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                24
-                            </a>
-                            <input type="hidden" name="size" value="24" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                25
-                            </a>
-                            <input type="hidden" name="size" value="25" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                26
-                            </a>
-                            <input type="hidden" name="size" value="26" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                27
-                            </a>
-                            <input type="hidden" name="size" value="27" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                28
-                            </a>
-                            <input type="hidden" name="size" value="28" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                29
-                            </a>
-                            <input type="hidden" name="size" value="29" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                30
-                            </a>
-                            <input type="hidden" name="size" value="30" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                31
-                            </a>
-                            <input type="hidden" name="size" value="31" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                32
-                            </a>
-                            <input type="hidden" name="size" value="32" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                33
-                            </a>
-                            <input type="hidden" name="size" value="33" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                34
-                            </a>
-                            <input type="hidden" name="size" value="34" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                35
-                            </a>
-                            <input type="hidden" name="size" value="35" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                36
-                            </a>
-                            <input type="hidden" name="size" value="36" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                37
-                            </a>
-                            <input type="hidden" name="size" value="37" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                38
-                            </a>
-                            <input type="hidden" name="size" value="38" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                39
-                            </a>
-                            <input type="hidden" name="size" value="39" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                40
-                            </a>
-                            <input type="hidden" name="size" value="40" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                41
-                            </a>
-                            <input type="hidden" name="size" value="41" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                42
-                            </a>
-                            <input type="hidden" name="size" value="42" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                43
-                            </a>
-                            <input type="hidden" name="size" value="43" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                44
-                            </a>
-                            <input type="hidden" name="size" value="44" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                45
-                            </a>
-                            <input type="hidden" name="size" value="45" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                46
-                            </a>
-                            <input type="hidden" name="size" value="46" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                47
-                            </a>
-                            <input type="hidden" name="size" value="47" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                48
-                            </a>
-                            <input type="hidden" name="size" value="48" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                49
-                            </a>
-                            <input type="hidden" name="size" value="49" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                50
-                            </a>
-                            <input type="hidden" name="size" value="50" disabled="">
-                            <a href="javascript:;" class="sizes filter-hidden-input">
-                                53
-                            </a>
-                            <input type="hidden" name="size" value="53" disabled="">
-
-                        </div>
-                    </li>
-
-                    <li class="filters-top-item filters-sizes  children-sizes hidden" rel="child-clothes" style="display: none;">
-                        <a id="sort-size" href="javascript:void(0);"><span>Размер</span></a>
-
-                        <div class="filter-container clearfix">
-
-
-
-                            <div class="filter-items">
-                                <a data-id="0-1" data-name="0-1" title="0-1 г." class="child-size ">
-                                    <span class="filter-icon"></span>
-                                    <span class="filter-label">0-1 г.</span>
-                                </a>
-
-                                <input type="hidden" name="size" value="0-1" disabled="">
-
-                                <div class="items-extend">
-                                    <div class="filter-items">
-                                        <a data-id="50" data-name="0-1" title="0-1" class="filter-hidden-input " data-parent="0-1">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">0-1 м. (50 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="50" disabled="">
-                                    </div>
-                                    <div class="filter-items">
-                                        <a data-id="50-56" data-name="1-2" title="1-2" class="filter-hidden-input " data-parent="0-1">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">1-2 м. (50-56 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="50-56" disabled="">
-                                    </div>
-                                    <div class="filter-items">
-                                        <a data-id="56-62" data-name="2-3" title="2-3" class="filter-hidden-input " data-parent="0-1">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">2-3 м. (56-62 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="56-62" disabled="">
-                                    </div>
-                                    <div class="filter-items">
-                                        <a data-id="62-68" data-name="3-6" title="3-6" class="filter-hidden-input " data-parent="0-1">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">3-6 м. (62-68 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="62-68" disabled="">
-                                    </div>
-                                    <div class="filter-items">
-                                        <a data-id="68-74" data-name="6-9" title="6-9" class="filter-hidden-input " data-parent="0-1">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">6-9 м. (68-74 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="68-74" disabled="">
-                                    </div>
-                                    <div class="filter-items">
-                                        <a data-id="74-80" data-name="9-12" title="9-12" class="filter-hidden-input " data-parent="0-1">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">9-12 м. (74-80 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="74-80" disabled="">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="filter-items">
-                                <a data-id="1-2" data-name="1-2" title="1-2 г." class="child-size ">
-                                    <span class="filter-icon"></span>
-                                    <span class="filter-label">1-2 г.</span>
-                                </a>
-
-                                <input type="hidden" name="size" value="1-2" disabled="">
-
-                                <div class="items-extend">
-                                    <div class="filter-items">
-                                        <a data-id="80-86" data-name="12-18" title="12-18" class="filter-hidden-input " data-parent="1-2">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">12-18 м. (80-86 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="80-86" disabled="">
-                                    </div>
-                                    <div class="filter-items">
-                                        <a data-id="86-98" data-name="18-24" title="18-24" class="filter-hidden-input " data-parent="1-2">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">18-24 м. (86-98 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="86-98" disabled="">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="filter-items">
-                                <a data-id="2-4" data-name="2-4" title="2-4 г." class="child-size ">
-                                    <span class="filter-icon"></span>
-                                    <span class="filter-label">2-4 г.</span>
-                                </a>
-
-                                <input type="hidden" name="size" value="2-4" disabled="">
-
-                                <div class="items-extend">
-                                    <div class="filter-items">
-                                        <a data-id="98-104" data-name="2-3" title="2-3" class="filter-hidden-input " data-parent="2-4">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">2-3 г. (98-104 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="98-104" disabled="">
-                                    </div>
-                                    <div class="filter-items">
-                                        <a data-id="104-110" data-name="3-4" title="3-4" class="filter-hidden-input " data-parent="2-4">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">3-4 г. (104-110 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="104-110" disabled="">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="filter-items">
-                                <a data-id="4-6" data-name="4-6" title="4-6 г." class="child-size ">
-                                    <span class="filter-icon"></span>
-                                    <span class="filter-label">4-6 г.</span>
-                                </a>
-
-                                <input type="hidden" name="size" value="4-6" disabled="">
-
-                                <div class="items-extend">
-                                    <div class="filter-items">
-                                        <a data-id="110-116" data-name="4-5" title="4-5" class="filter-hidden-input " data-parent="4-6">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">4-5 г. (110-116 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="110-116" disabled="">
-                                    </div>
-                                    <div class="filter-items">
-                                        <a data-id="116-122" data-name="5-6" title="5-6" class="filter-hidden-input " data-parent="4-6">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">5-6 г. (116-122 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="116-122" disabled="">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="filter-items">
-                                <a data-id="6-8" data-name="6-8" title="6-8 г." class="child-size ">
-                                    <span class="filter-icon"></span>
-                                    <span class="filter-label">6-8 г.</span>
-                                </a>
-
-                                <input type="hidden" name="size" value="6-8" disabled="">
-
-                                <div class="items-extend">
-                                    <div class="filter-items">
-                                        <a data-id="122-128" data-name="6-7" title="6-7" class="filter-hidden-input " data-parent="6-8">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">6-7 г. (122-128 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="122-128" disabled="">
-                                    </div>
-                                    <div class="filter-items">
-                                        <a data-id="128-134" data-name="7-8" title="7-8" class="filter-hidden-input " data-parent="6-8">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">7-8 г. (128-134 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="128-134" disabled="">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="filter-items">
-                                <a data-id="8-10" data-name="8-10" title="8-10 г." class="child-size ">
-                                    <span class="filter-icon"></span>
-                                    <span class="filter-label">8-10 г.</span>
-                                </a>
-
-                                <input type="hidden" name="size" value="8-10" disabled="">
-
-                                <div class="items-extend">
-                                    <div class="filter-items">
-                                        <a data-id="134-140" data-name="8-9" title="8-9" class="filter-hidden-input " data-parent="8-10">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">8-9 г. (134-140 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="134-140" disabled="">
-                                    </div>
-                                    <div class="filter-items">
-                                        <a data-id="140-146" data-name="9-10" title="9-10" class="filter-hidden-input " data-parent="8-10">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">9-10 г. (140-146 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="140-146" disabled="">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="filter-items">
-                                <a data-id="10-18" data-name="10-18" title="10-18 г." class="child-size ">
-                                    <span class="filter-icon"></span>
-                                    <span class="filter-label">10-18 г.</span>
-                                </a>
-
-                                <input type="hidden" name="size" value="10-18" disabled="">
-
-                                <div class="items-extend">
-                                    <div class="filter-items">
-                                        <a data-id="146-152" data-name="10-11" title="10-11" class="filter-hidden-input " data-parent="10-18">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">10-11 г. (146-152 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="146-152" disabled="">
-                                    </div>
-                                    <div class="filter-items">
-                                        <a data-id="152-158" data-name="11-12" title="11-12" class="filter-hidden-input " data-parent="10-18">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">11-12 г. (152-158 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="152-158" disabled="">
-                                    </div>
-                                    <div class="filter-items">
-                                        <a data-id="158-164" data-name="12-13" title="12-13" class="filter-hidden-input " data-parent="10-18">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">12-13 г. (158-164 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="158-164" disabled="">
-                                    </div>
-                                    <div class="filter-items">
-                                        <a data-id="164-168" data-name="13-14" title="13-14" class="filter-hidden-input " data-parent="10-18">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">13-14 г. (164-168 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="164-168" disabled="">
-                                    </div>
-                                    <div class="filter-items">
-                                        <a data-id="168-170" data-name="14-15" title="14-15" class="filter-hidden-input " data-parent="10-18">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">14-15 г. (168-170 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="168-170" disabled="">
-                                    </div>
-                                    <div class="filter-items">
-                                        <a data-id="170-176" data-name="15-18" title="15-18" class="filter-hidden-input " data-parent="10-18">
-                                            <span class="filter-icon"></span>
-                                            <span class="filter-label">15-18 г. (170-176 см)</span>
-                                        </a>
-                                        <input type="hidden" name="size_value" value="170-176" disabled="">
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </li>
-
-                    <li class="filters-top-item filters-sizes active" rel="none" style="display: list-item;">
-
-                        <a href="javascript:void(0);"><span>Размер</span></a>
-
-                        <div class="filter-container clearfix">
-                            Изберете категория, за да можете да филтрирате.
-                        </div>
-                    </li>
-
-                    <li class="filters-top-item filters-color">
-                        <a id="sort-color" href="javascript:void(0);">
-                            <span>
-                                Цвят
-                            </span>
-                        </a>
-                        <div class="filter-container">
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Червен">
-                                <span class="color-icon">
-                                    <span id="color_1"></span>
-                                </span>
-                                <span class="color-title">
-                                    Червен
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="1" disabled="">
-
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Оранжев">
-                                <span class="color-icon">
-                                    <span id="color_2"></span>
-                                </span>
-                                <span class="color-title">
-                                    Оранжев
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="2" disabled="">
-
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Жълт">
-                                <span class="color-icon">
-                                    <span id="color_3"></span>
-                                </span>
-                                <span class="color-title">
-                                    Жълт
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="3" disabled="">
-
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Зелен">
-                                <span class="color-icon">
-                                    <span id="color_4"></span>
-                                </span>
-                                <span class="color-title">
-                                    Зелен
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="4" disabled="">
-
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Син">
-                                <span class="color-icon">
-                                    <span id="color_5"></span>
-                                </span>
-                                <span class="color-title">
-                                    Син
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="5" disabled="">
-
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Лилав">
-                                <span class="color-icon">
-                                    <span id="color_6"></span>
-                                </span>
-                                <span class="color-title">
-                                    Лилав
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="6" disabled="">
-
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Кафяв">
-                                <span class="color-icon">
-                                    <span id="color_7"></span>
-                                </span>
-                                <span class="color-title">
-                                    Кафяв
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="7" disabled="">
-
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Сив">
-                                <span class="color-icon">
-                                    <span id="color_8"></span>
-                                </span>
-                                <span class="color-title">
-                                    Сив
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="8" disabled="">
-
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Бежов">
-                                <span class="color-icon">
-                                    <span id="color_9"></span>
-                                </span>
-                                <span class="color-title">
-                                    Бежов
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="9" disabled="">
-
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Многоцветен">
-                                <span class="color-icon">
-                                    <span id="color_10"></span>
-                                </span>
-                                <span class="color-title">
-                                    Многоцветен
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="10" disabled="">
-
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Златист">
-                                <span class="color-icon">
-                                    <span id="color_11"></span>
-                                </span>
-                                <span class="color-title">
-                                    Златист
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="11" disabled="">
-
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Сребрист">
-                                <span class="color-icon">
-                                    <span id="color_12"></span>
-                                </span>
-                                <span class="color-title">
-                                    Сребрист
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="12" disabled="">
-
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Черен">
-                                <span class="color-icon">
-                                    <span id="color_13"></span>
-                                </span>
-                                <span class="color-title">
-                                    Черен
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="13" disabled="">
-
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Бял">
-                                <span class="color-icon">
-                                    <span id="color_14"></span>
-                                </span>
-                                <span class="color-title">
-                                    Бял
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="14" disabled="">
-
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Розов">
-                                <span class="color-icon">
-                                    <span id="color_16"></span>
-                                </span>
-                                <span class="color-title">
-                                    Розов
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="16" disabled="">
-
-                            <a class="colors filter-hidden-input" href="javascript:;" title="Пепел от рози">
-                                <span class="color-icon">
-                                    <span id="color_17"></span>
-                                </span>
-                                <span class="color-title">
-                                    Пепел от рози
-                                </span>
-                            </a>
-                            <input type="hidden" name="color" value="17" disabled="">
-
-                        </div>
-                    </li>
-                    <li class="filters-top-item filters-condition">
-                        <a id="sort-condition" href="javascript:void(0);">
-                            <span>Състояние</span>
-                        </a>
-                        <div class="filter-container clearfix">
-
-
-                            <div class="filter-items">
-                                <a class="condition-new filter-hidden-input" href="javascript:;" title="Нов продукт, с етикет">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="new-label mr-1"></span>
-                                    Нов продукт
-                                </a>
-                                <input type="hidden" id="new" name="new" value="1" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="condition-new filter-hidden-input  " href="javascript:;" title="Нов, неупотребяван продукт, без етикет">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="no-label mr-1"></span>
-                                    Нов продукт, без етикет
-                                </a>
-                                <input type="hidden" id="new2" name="new" value="2" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input  " href="javascript:;" title="Без следи от употреба">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="conditions-icons-list mr-1">
-                                        <i class="star-icon-fill"></i>
-                                    </span>
-                                    Без следи от употреба
-                                </a>
-                                <input type="hidden" id="condition_5" name="condition" value="5" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input  " href="javascript:;" title="В много добро състояние">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="conditions-icons-list mr-1">
-                                        <i class="star-icon"></i>
-                                    </span>
-                                    В много добро състояние
-                                </a>
-                                <input type="hidden" id="condition_4" name="condition" value="4" disabled="">
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="filters-top-item filters-contents hidden" rel="womens-clothes" style="display: none;">
-                        <a id="sort-contents" href="javascript:void(0);">
-                            <span>Материал</span>
-                        </a>
-                        <div class="filter-container clearfix">
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Вълна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-wool" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Кашмир
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-cashmere" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Коприна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-silk" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Лен
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-linen" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Памук
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-cotton" disabled="">
-                            </div>
-                            <hr>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Естествен велур
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="suede" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Вискоза
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="viscose" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Вълна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="wool" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Еко кожа
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="eco-leather" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Еластан
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="elastane" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Естественa кожа
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="leather" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Кашмир
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="cashmere" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Коприна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="silk" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Лен
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="linen" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Лиосел
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="lyocell" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Памук
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="cotton" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Полиестер
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="polyester" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Пух и пера
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="down-feather" disabled="">
-                            </div>
-                        </div>
-                    </li>
-                    <li class="filters-top-item filters-contents hidden" rel="mens-clothes" style="display: none;">
-                        <a id="sort-contents" href="javascript:void(0);">
-                            <span>Материал</span>
-                        </a>
-                        <div class="filter-container clearfix">
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Вълна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-wool" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Кашмир
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-cashmere" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Коприна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-silk" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Лен
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-linen" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Памук
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-cotton" disabled="">
-                            </div>
-                            <hr>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Естествен велур
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="suede" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Вискоза
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="viscose" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Вълна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="wool" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Еко кожа
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="eco-leather" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Еластан
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="elastane" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Естественa кожа
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="leather" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Кашмир
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="cashmere" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Коприна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="silk" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Лен
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="linen" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Лиосел
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="lyocell" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Памук
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="cotton" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Полиестер
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="polyester" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Пух и пера
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="down-feather" disabled="">
-                            </div>
-                        </div>
-                    </li>
-                    <li class="filters-top-item filters-contents hidden" rel="bags" style="display: none;">
-                        <a id="sort-contents" href="javascript:void(0);">
-                            <span>Материал</span>
-                        </a>
-                        <div class="filter-container clearfix">
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Естествен велур
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="suede" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Еко кожа
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="eco-leather" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Естественa кожа
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="leather" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Памук
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="cotton" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Полиестер
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="polyester" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Полиуретан
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="polyurethane" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Текстил
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="textile" disabled="">
-                            </div>
-                        </div>
-                    </li>
-                    <li class="filters-top-item filters-contents hidden" rel="accessories" style="display: none;">
-                        <a id="sort-contents" href="javascript:void(0);">
-                            <span>Материал</span>
-                        </a>
-                        <div class="filter-container clearfix">
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Вълна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-wool" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Кашмир
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-cashmere" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Коприна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-silk" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Памук
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-cotton" disabled="">
-                            </div>
-                            <hr>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Акрил
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="acrylic" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Вискоза
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="viscose" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Вълна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="wool" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Еко кожа
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="eco-leather" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Естественa кожа
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="leather" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Кашмир
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="cashmere" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Коприна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="silk" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Метал
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="metal" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Памук
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="cotton" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Полиамид
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="polyamide" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Полиестер
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="polyester" disabled="">
-                            </div>
-                        </div>
-                    </li>
-                    <li class="filters-top-item filters-contents hidden" rel="shoes" style="display: none;">
-                        <a id="sort-contents" href="javascript:void(0);">
-                            <span>Материал</span>
-                        </a>
-                        <div class="filter-container clearfix">
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Естествен велур
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="suede" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Еко кожа
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="eco-leather" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Естественa кожа
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="leather" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Текстил
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="textile" disabled="">
-                            </div>
-                        </div>
-                    </li>
-                    <li class="filters-top-item filters-contents hidden" rel="child-clothes" style="display: none;">
-                        <a id="sort-contents" href="javascript:void(0);">
-                            <span>Материал</span>
-                        </a>
-                        <div class="filter-container clearfix">
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Вълна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-wool" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Кашмир
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-cashmere" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Коприна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-silk" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Лен
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-linen" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    100% Памук
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="100-cotton" disabled="">
-                            </div>
-                            <hr>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Естествен велур
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="suede" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Вискоза
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="viscose" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Вълна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="wool" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Еко кожа
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="eco-leather" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Еластан
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="elastane" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Естественa кожа
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="leather" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Кашмир
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="cashmere" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Коприна
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="silk" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Лен
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="linen" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Лиосел
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="lyocell" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Памук
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="cotton" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Полиестер
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="polyester" disabled="">
-                            </div>
-                            <div class="filter-items">
-                                <a class="filter-hidden-input " href="javascript:;" title="title">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    Пух и пера
-                                </a>
-                                <input type="hidden" name="contents" class="filter-type-contents" value="down-feather" disabled="">
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="filters-top-item filters-contents active" rel="none" style="display: list-item;">
-                        <a id="sort-contents" href="javascript:void(0);">
-                            <span>Материал</span>
-                        </a>
-                        <div class="filter-container clearfix">
-                            Изберете категория, за да можете да филтрирате.
-                        </div>
-                    </li>
-
-                    <li class="filters-top-item filters-seasons">
-                        <a id="sort-season" href="javascript:void(0);">
-                            <span>Сезон</span>
-                        </a>
-                        <div class="filter-container clearfix">
-
-
-                            <div class="filter-items">
-                                <a class="seasons filter-hidden-input" href="javascript:;" title="Лято">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="condition-img"></span>
-                                    Лято
-                                </a>
-                                <input type="hidden" id="season" name="season" value="2" disabled="">
-                            </div>
-
-                            <div class="filter-items">
-                                <a class="seasons filter-hidden-input" href="javascript:;" title="Пролет/Есен">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="condition-img"></span>
-                                    Пролет/Есен
-                                </a>
-                                <input type="hidden" id="season" name="season" value="1" disabled="">
-                            </div>
-
-                            <div class="filter-items">
-                                <a class="seasons filter-hidden-input" href="javascript:;" title="Зима">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="condition-img"></span>
-                                    Зима
-                                </a>
-                                <input type="hidden" id="season" name="season" value="4" disabled="">
-                            </div>
-
-                        </div>
-                    </li>
-                    <li class="filters-top-item filters-added">
-                        <a id="sort-added" href="javascript:;"><span>Добавено</span></a>
-                        <div class="filter-container clearfix">
-                            <div class="filter-items">
-                                <a href="javascript:;" class="filter-hidden-input" title="Филтрирайте най-нови продукти">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="filter-label">Днес</span>
-                                </a>
-                                <input type="hidden" id="last_today" value="1" name="last" disabled="" class="filter-date-added">
-                            </div>
-                            <div class="filter-items">
-                                <a href="javascript:;" class="filter-hidden-input" title="Филтрирайте най-нови продукти">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="filter-label">Последните 3 дни</span>
-                                </a>
-                                <input type="hidden" id="last_3_days" value="2" name="last" disabled="" class="filter-date-added">
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="filters-top-item filters-promotions">
-                        <a id="sort-promotions" href="javascript:;">
-                            <span>Промоции</span>
-                        </a>
-                        <div class="filter-container clearfix">
-                            <div class="filter-items">
-                                <a href="javascript:;" class="filter-hidden-input " title="От -2% до -20%">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="filter-label">От -2% до -20%</span>
-                                </a>
-                                <input type="hidden" id="promo-filter-2-20" value="2-20" name="promo" disabled="">
-                            </div><div class="filter-items">
-                                <a href="javascript:;" class="filter-hidden-input " title="От -20% до -40%">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="filter-label">От -20% до -40%</span>
-                                </a>
-                                <input type="hidden" id="promo-filter-20-40" value="20-40" name="promo" disabled="">
-                            </div><div class="filter-items">
-                                <a href="javascript:;" class="filter-hidden-input " title="От -40% до -60%">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="filter-label">От -40% до -60%</span>
-                                </a>
-                                <input type="hidden" id="promo-filter-40-60" value="40-60" name="promo" disabled="">
-                            </div><div class="filter-items">
-                                <a href="javascript:;" class="filter-hidden-input " title="От -60% до -75%">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="filter-label">От -60% до -75%</span>
-                                </a>
-                                <input type="hidden" id="promo-filter-60-75" value="60-75" name="promo" disabled="">
-                            </div><div class="filter-items">
-                                <a href="javascript:;" class="filter-hidden-input " title="-75% +">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="filter-label">-75% +</span>
-                                </a>
-                                <input type="hidden" id="promo-filter-75-100" value="75-100" name="promo" disabled="">
-                            </div>
-                        </div>
-                    </li>
-                    <li class="filters-top-item filters-price">
-                        <a id="sort-price" href="javascript:;"><span>Цена</span></a>
-                        <div class="filter-container clearfix">
-                            <div class="filter-items">
-                                <a href="javascript:;" class="filter-hidden-input" title="До 5 лв.">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="filter-label">До 5 лв.</span>
-                                </a>
-                                <input type="hidden" id="price-filter-1" value="1" name="price" disabled="" class="filter-price">
-                            </div>
-                            <div class="filter-items">
-                                <a href="javascript:;" class="filter-hidden-input" title="От 5 лв. до 10 лв.">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="filter-label">От 5 лв. до 10 лв.</span>
-                                </a>
-                                <input type="hidden" id="price-filter-2" value="2" name="price" disabled="" class="filter-price">
-                            </div>
-                            <div class="filter-items">
-                                <a href="javascript:;" class="filter-hidden-input" title="От 10 лв. до 50 лв.">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="filter-label">От 10 лв. до 50 лв.</span>
-                                </a>
-                                <input type="hidden" id="price-filter-3" value="3" name="price" disabled="" class="filter-price">
-                            </div>
-                            <div class="filter-items">
-                                <a href="javascript:;" class="filter-hidden-input" title="От 50 лв. до 100 лв.">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="filter-label">От 50 лв. до 100 лв.</span>
-                                </a>
-                                <input type="hidden" id="price-filter-4" value="4" name="price" disabled="" class="filter-price">
-                            </div>
-                            <div class="filter-items">
-                                <a href="javascript:;" class="filter-hidden-input" title="Над 100 лв.">
-                                    <span class="filter-icon">&nbsp;</span>
-                                    <span class="filter-label">Над 100 лв.</span>
-                                </a>
-                                <input type="hidden" id="price-filter-5" value="5" name="price" disabled="" class="filter-price">
-                            </div>
-                        </div>
-                    </li>
-                    <li class="filters-top-item hidden">
-                        <div class="filter-container filters-last">
-                            <input type="checkbox" id="final" name="final" value="1" class="filter-hidden-input">
-                        </div>
-                    </li>
-
-                </ul>
-                <div class="pb-1">
-                    <a href="javascript:;" id="clear-filters" class="clear-filters site-btn" title="Изчистете всички" style="display: none;">
-                        Изчистете всички
-                    </a>
-                </div>
+                <input size="36" type="text" id="searchInput" class="form-control" placeholder="Search for article number or name..." aria-label="Input group example" aria-describedby="btnGroupAddon">
             </div>
         </div>
-    </div>
-</div>*@
 
-@section SideBar{
+        <a asp-action="Create" class="btn btn-cta">Create article</a>
+    </article>
+</section>
 
-    <div>
-        <h2>My Phonebook</h2>
+@section SubMenu{
+    <!-- <div>
+         <h2>My Phonebook</h2>
 
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+         <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
 
-        <ul id="myUL">
-            <li><a href="#">Adele</a></li>
-            <li><a href="#">Agnes</a></li>
+         <ul id="myUL">
+             <li><a href="#">Adele</a></li>
+             <li><a href="#">Agnes</a></li>
 
-            <li><a href="#">Billy</a></li>
-            <li><a href="#">Bob</a></li>
+             <li><a href="#">Billy</a></li>
+             <li><a href="#">Bob</a></li>
 
-            <li><a href="#">Calvin</a></li>
-            <li><a href="#">Christina</a></li>
-            <li><a href="#">Cindy</a></li>
-        </ul>
+             <li><a href="#">Calvin</a></li>
+             <li><a href="#">Christina</a></li>
+             <li><a href="#">Cindy</a></li>
+         </ul>
 
-        <script>
-            function myFunction() {
-                var input, filter, ul, li, a, i, txtValue;
-                input = document.getElementById("myInput");
-                filter = input.value.toUpperCase();
-                ul = document.getElementById("myUL");
-                li = ul.getElementsByTagName("li");
-                for (i = 0; i < li.length; i++) {
-                    a = li[i].getElementsByTagName("a")[0];
-                    txtValue = a.textContent || a.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        li[i].style.display = "";
-                    } else {
-                        li[i].style.display = "none";
-                    }
-                }
-            }
-        </script>
-    </div>
+         <script>
+             function myFunction() {
+                 var input, filter, ul, li, a, i, txtValue;
+                 input = document.getElementById("myInput");
+                 filter = input.value.toUpperCase();
+                 ul = document.getElementById("myUL");
+                 li = ul.getElementsByTagName("li");
+                 for (i = 0; i < li.length; i++) {
+                     a = li[i].getElementsByTagName("a")[0];
+                     txtValue = a.textContent || a.innerText;
+                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                         li[i].style.display = "";
+                     } else {
+                         li[i].style.display = "none";
+                     }
+                 }
+             }
+         </script>
+     </div>
 
-    <div>
-        <h2>My Customers</h2>
+     <div>
+         <h2>My Customers</h2>
 
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+         <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
 
-        <table id="myTable">
-            <tr class="header">
-                <th style="width:60%;">Name</th>
-                <th style="width:40%;">Country</th>
-            </tr>
-            <tr>
-                <td>Alfreds Futterkiste</td>
-                <td>Germany</td>
-            </tr>
-            <tr>
-                <td>Berglunds snabbkop</td>
-                <td>Sweden</td>
-            </tr>
-            <tr>
-                <td>Island Trading</td>
-                <td>UK</td>
-            </tr>
-            <tr>
-                <td>Koniglich Essen</td>
-                <td>Germany</td>
-            </tr>
-            <tr>
-                <td>Laughing Bacchus Winecellars</td>
-                <td>Canada</td>
-            </tr>
-            <tr>
-                <td>Magazzini Alimentari Riuniti</td>
-                <td>Italy</td>
-            </tr>
-            <tr>
-                <td>North/South</td>
-                <td>UK</td>
-            </tr>
-            <tr>
-                <td>Paris specialites</td>
-                <td>France</td>
-            </tr>
-        </table>
+         <table id="myTable">
+             <tr class="header">
+                 <th style="width:60%;">Name</th>
+                 <th style="width:40%;">Country</th>
+             </tr>
+             <tr>
+                 <td>Alfreds Futterkiste</td>
+                 <td>Germany</td>
+             </tr>
+             <tr>
+                 <td>Berglunds snabbkop</td>
+                 <td>Sweden</td>
+             </tr>
+             <tr>
+                 <td>Island Trading</td>
+                 <td>UK</td>
+             </tr>
+             <tr>
+                 <td>Koniglich Essen</td>
+                 <td>Germany</td>
+             </tr>
+             <tr>
+                 <td>Laughing Bacchus Winecellars</td>
+                 <td>Canada</td>
+             </tr>
+             <tr>
+                 <td>Magazzini Alimentari Riuniti</td>
+                 <td>Italy</td>
+             </tr>
+             <tr>
+                 <td>North/South</td>
+                 <td>UK</td>
+             </tr>
+             <tr>
+                 <td>Paris specialites</td>
+                 <td>France</td>
+             </tr>
+         </table>
 
-        <script>
-            function myFunction() {
-                var input, filter, table, tr, td, i, txtValue;
-                input = document.getElementById("myInput");
-                filter = input.value.toUpperCase();
-                table = document.getElementById("myTable");
-                tr = table.getElementsByTagName("tr");
-                for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[0];
-                    if (td) {
-                        txtValue = td.textContent || td.innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = "";
-                        } else {
-                            tr[i].style.display = "none";
-                        }
-                    }
-                }
-            }
-        </script>
-    </div>
+         <script>
+             function myFunction() {
+                 var input, filter, table, tr, td, i, txtValue;
+                 input = document.getElementById("myInput");
+                 filter = input.value.toUpperCase();
+                 table = document.getElementById("myTable");
+                 tr = table.getElementsByTagName("tr");
+                 for (i = 0; i < tr.length; i++) {
+                     td = tr[i].getElementsByTagName("td")[0];
+                     if (td) {
+                         txtValue = td.textContent || td.innerText;
+                         if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                             tr[i].style.display = "";
+                         } else {
+                             tr[i].style.display = "none";
+                         }
+                     }
+                 }
+             }
+         </script>
+     </div>
 
-    <div>
+     <div>
+         <h2>Search/Filter Dropdown</h2>
+         <p>Click on the button to open the dropdown menu, and use the input field to search for a specific dropdown link.</p>
+
+         <div class="dropdown">
+             <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+             <div id="myDropdown" class="dropdown-content">
+                 <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                 <a href="#about">About</a>
+                 <a href="#base">Base</a>
+                 <a href="#blog">Blog</a>
+                 <a href="#contact">Contact</a>
+                 <a href="#custom">Custom</a>
+                 <a href="#support">Support</a>
+                 <a href="#tools">Tools</a>
+             </div>
+         </div>
+
+         <script>
+             /* When the user clicks on the button,
+             toggle between hiding and showing the dropdown content */
+             function myFunction() {
+                 document.getElementById("myDropdown").classList.toggle("show");
+             }
+
+             function filterFunction() {
+                 var input, filter, ul, li, a, i;
+                 input = document.getElementById("myInput");
+                 filter = input.value.toUpperCase();
+                 div = document.getElementById("myDropdown");
+                 a = div.getElementsByTagName("a");
+                 for (i = 0; i < a.length; i++) {
+                     txtValue = a[i].textContent || a[i].innerText;
+                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                         a[i].style.display = "";
+                     } else {
+                         a[i].style.display = "none";
+                     }
+                 }
+             }
+         </script>
+     </div>
+
+     <div>
+         <h1>Custom Radio Buttons</h1>
+         <label class="container">
+             One
+             <input type="radio" checked="checked" name="radio">
+             <span class="checkmark"></span>
+         </label>
+         <label class="container">
+             Two
+             <input type="radio" name="radio">
+             <span class="checkmark"></span>
+         </label>
+         <label class="container">
+             Three
+             <input type="radio" name="radio">
+             <span class="checkmark"></span>
+         </label>
+         <label class="container">
+             Four
+             <input type="radio" name="radio">
+             <span class="checkmark"></span>
+         </label>
+     </div>
+
+     <div class="form-group">
+         <input type="text" placeholder="Search..">
+     </div>
+
+
+     <div>-->
+    <!-- The form -->
+    <!--<form class="example" action="action_page.php">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+
+
         <h2>Search/Filter Dropdown</h2>
         <p>Click on the button to open the dropdown menu, and use the input field to search for a specific dropdown link.</p>
 
@@ -2076,92 +316,12 @@
                     }
                 }
             }
-        </script>
-    </div>
-
-    <div>
-        <h1>Custom Radio Buttons</h1>
-        <label class="container">
-            One
-            <input type="radio" checked="checked" name="radio">
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            Two
-            <input type="radio" name="radio">
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            Three
-            <input type="radio" name="radio">
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            Four
-            <input type="radio" name="radio">
-            <span class="checkmark"></span>
-        </label>
-    </div>
-
-    <div class="form-group">
-        <input type="text" placeholder="Search..">
-    </div>
-
-
-    <div>
-        <!-- The form -->
-        <form class="example" action="action_page.php">
-            <input type="text" placeholder="Search.." name="search">
-            <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
-    </div>
-
-
-    <h2>Search/Filter Dropdown</h2>
-    <p>Click on the button to open the dropdown menu, and use the input field to search for a specific dropdown link.</p>
-
-    <div class="dropdown">
-        <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-        <div id="myDropdown" class="dropdown-content">
-            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-            <a href="#about">About</a>
-            <a href="#base">Base</a>
-            <a href="#blog">Blog</a>
-            <a href="#contact">Contact</a>
-            <a href="#custom">Custom</a>
-            <a href="#support">Support</a>
-            <a href="#tools">Tools</a>
-        </div>
-    </div>
-
-    <script>
-        /* When the user clicks on the button,
-        toggle between hiding and showing the dropdown content */
-        function myFunction() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
-
-        function filterFunction() {
-            var input, filter, ul, li, a, i;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
-            div = document.getElementById("myDropdown");
-            a = div.getElementsByTagName("a");
-            for (i = 0; i < a.length; i++) {
-                txtValue = a[i].textContent || a[i].innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    a[i].style.display = "";
-                } else {
-                    a[i].style.display = "none";
-                }
-            }
-        }
-    </script>
+        </script>-->
 }
 
 @section Links{
     <!-- Page level custom styles -->
-    @*<link href="~/lib/datatables/DataTables-1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet">*@
+    <!--<link href="~/lib/datatables/DataTables-1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet">-->
 }
 
 @section Scripts{

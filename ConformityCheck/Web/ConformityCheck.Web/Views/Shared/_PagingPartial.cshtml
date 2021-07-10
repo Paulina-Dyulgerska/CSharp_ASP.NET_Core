@@ -1,5 +1,5 @@
 ﻿@model PagingViewModel
-<ul class="pagination justify-content-center font-weight-bold">
+<ul class="pagination">
     <li class="page-item @if (!Model.HasPreviousPage) { <text>disabled</text> }">
         <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
            asp-route-pageNumber="@Model.PreviousPageNumber"

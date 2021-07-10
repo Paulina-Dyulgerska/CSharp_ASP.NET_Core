@@ -8,85 +8,81 @@
 
 @if (this.TempData.ContainsKey("Message"))
 {
-    <div class="alert alert-success" role="alert">
+    <article class="alert alert-success" role="alert">
         @this.TempData["Message"]
-    </div>
+    </article>
 }
 
-<div class="container-fluid">
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <div class="d-flex justify-content-between mb-auto p-2">
-                <h4 class="m-0 font-weight-bold">
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
                     @this.ViewData["Title"]
                 </h4>
-                <span>(total of @Model.ItemsCount articles)</span>
-                <a asp-action="Create" class="btn btn-primary">
-                    <i class="fab fa-creative-commons-remix"></i> Create article
-                </a>
-            </div>
-            <div class="d-flex justify-content-between p-2 font-weight-bold">
-                <div class="btn-toolbar mb-3">
+                <span class="presented-items-info">(total of @Model.ItemsCount articles)</span>
+            </article>
+            <article class="tools-container">
+                <article class="search-container">
                     <form method="get" asp-action="ListAll">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <i class="fas fa-search"></i>
-                                </div>
-                            </div>
-                            <input type="search" asp-for="CurrentSearchInput"
+                        <article class="input-group">
+                            <article class="input-group-prepend">
+                                <span class="input-group-text">
+                                </span>
+                            </article>
+                            <input type="search" class="form-control" asp-for="CurrentSearchInput"
                                    size="36" id="searchAticleInput"
                                    placeholder="Search for article number or description..."
                                    value="@Model.CurrentSearchInput">
-                            <div class="input-group-append">
-                                <input type="submit" class="btn  btn-secondary" value="Search" />
-                            </div>
-                        </div>
+                            <article class="input-group-append">
+                                <button type="submit" class="btn btn-search">
+                                    <i class="fas fa-search"></i> Search
+                                </button>
+                            </article>
+                        </article>
                     </form>
-                </div>
-                <div class="btn-toolbar mb-3">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                Items per page
-                            </div>
-                        </div>
-                        <div class="input-group-append">
-                            <partial name="_ItemsPerPagePartial" model="Model" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-between p-2 font-weight-bold">
-                <div class="btn-toolbar mb-3" id="suggestions" style="display:none">
-                    <form method="get" asp-action="Details" asp-route-id="@Model.Id">
-                        <div class="input-group">
-                            <select asp-for="Id" id="selectSearchArticleInput"></select>
-                            <div class="input-group-append">
-                                <input type="submit" class="btn btn-secondary" value="Show article" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="d-flex justify-content-center p-2 font-weight-bold">
-                <partial name="_PagingPartial" model="@Model" />
-            </div>
-            <span>MS = Main supplier</span><br />
-            <span>Conf. MS = Confirmed by main supplier</span><br />
-            <span>Conf. AS = Confirmed by all suppliers</span><br />
-            <partial name="_ArticleListAllTable.cshtml" model="@Model" />
-        </div>
-        <div class="card-footer ">
-            <partial name="_PagingPartial" model="@Model" />
-        </div>
-    </div>
-</div>
+                </article>
+                <article class="input-group">
+                    <article class="input-group-prepend">
+                        <span class="input-group-text">
+                            Items per page
+                        </span>
+                    </article>
+                    <article class="input-group-append">
+                        <partial name="_ItemsPerPagePartial" model="Model" />
+                    </article>
+                </article>
+            </article>
+            <article class="search-results-container" id="suggestions" style="display:none">
+                <form method="get" asp-action="Details" asp-route-id="@Model.Id">
+                    <article class="input-group">
+                        <select asp-for="Id" id="selectSearchArticleInput" class="form-control"></select>
+                        <article class="input-group-append">
+                            <input type="submit" class="btn btn-secondary" value="Show article" />
+                        </article>
+                    </article>
+                </form>
+            </article>
+        </section>
 
-@section SideBar{
-    <partial name="_SideMenuGeneral" />
+        <section class="display-data-body">
+            <article class="pagination-container">
+                <partial name="_PagingPartial" model="@Model" />
+            </article>
+            <partial name="_ArticlesListAllTable.cshtml" model="@Model" />
+        </section>
+
+        <section class="display-data-footer ">
+            <article class="pagination-container">
+                <partial name="_PagingPartial" model="@Model" />
+            </article>
+        </section>
+    </section>
+</section>
+
+@section SubMenu{
+    <partial name="_SubMenuGeneral" />
 }
 
 @section Links{

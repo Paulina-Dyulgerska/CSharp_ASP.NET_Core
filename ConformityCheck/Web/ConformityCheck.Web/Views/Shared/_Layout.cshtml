@@ -8,97 +8,114 @@
 
     <!-- Project level custom fonts -->
     <link href="~/lib/fontawesome/css/all.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
     <!-- Project level custom styles -->
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+    @*<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />*@
     <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
-    @*<link href="~/css/sb-admin-2.min.css" rel="stylesheet" asp-append-version="true" />*@
 
     @await this.RenderSectionAsync("Links", required: false)
 
     @*<link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
         <link rel="icon" href="~/favicon.ico" type="image/x-icon">*@
 </head>
-<body class="page-wrapper">
-    <header>
-        @*<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">*@
-        <nav class="navbar navbar-expand-sm border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <i class="fas fa-home"></i> @GlobalConstants.SystemName
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+<body>
+    <header class="header-wrapper">
+        <section class="content-wrapper header-content">
+            <article class="site-title">
+                <article class="list-item">
+                    <a class="" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img class="logo-img" src="~/img/logo.png" alt="Logo" />
+                        <h5 class="logo-text">
+                            Conformity Check
+                        </h5>
+                    </a>
+                </article>
+            </article>
+
+            <label class="toggle-nav" for="toggle-nav">
+                <i class="fas fa-bars"></i> Menu
+            </label>
+            <input class="nav-toggler" type="checkbox" name="toggle-nav" id="toggle-nav" />
+
+            <nav class="nav" onclick=onClickNavItem>
+                <ul class="nav-list nav-left">
+                    <li class="list-item">
+                        <a class="" asp-area="" asp-controller="Articles" asp-action="ListAll">Articles</a>
+                    </li>
+                    <li class="list-item">
+                        <a class="" asp-area="" asp-controller="Suppliers" asp-action="ListAll">Suppliers</a>
+                    </li>
+                    <li class="list-item">
+                        <a class="" asp-area="" asp-controller="ConformityTypes" asp-action="ListAll">Conformity types</a>
+                    </li>
+                    <li class="list-item">
+                        <a class="" asp-area="" asp-controller="Conformities" asp-action="ListAll">Conformities</a>
+                    </li>
+                    <li class="list-item">
+                        <a class="" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+                    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                    {
+                        <li class="list-item">
+                            <a class="" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
+                        </li>
+                    }
                     <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="ListAll">Articles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Suppliers" asp-action="ListAll">Suppliers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="ConformityTypes" asp-action="ListAll">Conformity types</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Conformities" asp-action="ListAll">Conformities</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        </nav>
+                </ul>
+            </nav>
+        </section>
     </header>
 
-    <div class="container">
+    <main class="main-wrapper">
         <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            <div class="container">
-                <!-- Content here -->
-                <div class="row">
-                    <div class="container col-md-2 col-lg-2 left">
-                        @await RenderSectionAsync("SideBar", required: false)
-                    </div>
-                    <div class="container col-md-10 col-lg-10 align-items-center right">
-                        @this.RenderBody()
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    @*<main>
-            <partial name="_CookieConsentPartial" />
-            <section class="left">
-                @await RenderSectionAsync("SideBar", required: false)
+        <section class="content-wrapper">
+            <section class="submenu">
+                @await RenderSectionAsync("SubMenu", required: false)
             </section>
-            <section class="right">
-                @this.RenderBody()
-            </section>
-        </main>*@
+            @this.RenderBody()
+        </section>
+    </main>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    <footer class="footer-wrapper">
+        <section class="footer-content content-wrapper">
+            <ul class="footer-content-social">
+                <li class="list-item">
+                    <a href="https://www.linkedin.com/in/dyulgerska-paulina-28271583">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </li>
+                <li class="list-item">
+                    <a href="https://www.facebook.com/paulina.dyulgerska">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                </li>
+                <li class="list-item">
+                    <a href="https://www.twitter.com/DyulgerskaP">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </li>
+            </ul>
+            <p class="footer-made-by">
+                Made with love by
+                <a class="" asp-area="" asp-controller="Home" asp-action="Index">
+                    &nbsp;Paulina
+                </a>
+            </p>
+            <p class="footer-copyright">
+                &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - All Rights Reserved
+            </p>
+
+        </section>
     </footer>
 
     <!-- Project level plugins -->
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>*@
 
     <!-- Project level custom scripts -->
     <script src="~/js/site.min.js" asp-append-version="true"></script>

@@ -36,11 +36,10 @@
 
         //public virtual ConformityFile ConformityFile { get; set; }
 
-        
         // the file name is this.Id!
         public string FileExtension { get; set; }
 
-        // The content of the files is in the file system. What about the expernal etorages?
+        // The content of the files is in the file system. What about the expernal storages?
         // If there is a file stored in the local system, I will find it by name, but if the file
         // is stoored on another external storage system, I will use the FileUrl as an locator.
         public string RemoteFileUrl { get; set; }

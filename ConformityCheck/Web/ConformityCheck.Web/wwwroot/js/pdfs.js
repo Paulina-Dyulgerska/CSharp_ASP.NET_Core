@@ -10,7 +10,7 @@
             + ', height= ' + windowHeight
             + ', scrollbars = yes, left = ' + x + ', top = ' + y);
     });
-    return false;
+    //return false;
 });
 
 $(function () {

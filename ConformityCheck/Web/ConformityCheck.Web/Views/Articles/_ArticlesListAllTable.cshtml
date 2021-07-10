@@ -1,13 +1,18 @@
 ﻿@model ArticlesListAllModel
-<div class="table-responsive">
-    <table id="dataTable" class="table table-sm table-hover dataTable">
+<section class="table-container">
+    <article class="table-header">
+        <span>MS = Main supplier</span><br />
+        <span>Conf. MS = Confirmed by main supplier</span><br />
+        <span>Conf. AS = Confirmed by all suppliers</span><br />
+    </article>
+    <table id="dataTable" class="table">
         <thead>
-            <tr class="d-flex">
+            <tr>
                 @*<th class="col-2" id="sortableColumn">
                         Article Nr.
                         <button onclick="sortList()">Sort</button>
                     </th>*@
-                <th class="col-2">
+                <th class="col-s">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.NumberSortParm"
@@ -18,7 +23,7 @@
                         </span>
                     </a>
                 </th>
-                <th class="col-2">
+                <th class="col-l">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.DescriptionSortParm"
@@ -29,7 +34,7 @@
                         </span>
                     </a>
                 </th>
-                <th class="col-1">
+                <th class="col-xs">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.MainSupplierNumberSortParm"
@@ -40,7 +45,7 @@
                         </span>
                     </a>
                 </th>
-                <th class="col-2">
+                <th class="col-s">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.MainSupplierNameSortParm"
@@ -51,7 +56,7 @@
                         </span>
                     </a>
                 </th>
-                <th class="col-1">
+                <th class="col-s">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.AllSuppliersAllConfirmedSortParm"
@@ -62,7 +67,7 @@
                         </span>
                     </a>
                 </th>
-                <th class="col-1">
+                <th class="col-s">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.MainSupplierAllConfirmedSortParm"
@@ -73,66 +78,51 @@
                         </span>
                     </a>
                 </th>
-                <th class="col-1">Details</th>
-                <th class="col-1">Edit</th>
-                <th class="col-1">Delete</th>
+                <th class="col-s">Details</th>
+                <th class="col-s">Edit</th>
+                <th class="col-s">Delete</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var article in this.Model.Articles)
             {
-                <tr class="d-flex" data-id="@article.Id" @if (article.IsConfirmed) { <text> style="background-color: #dcfddc;" </text> }>
-                    <td id="search" class="col-2">@article.Number</td>
-                    <td id="search" class="col-2">@article.Description</td>
-                    <td class="col-1">@article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Number</td>
-                    <td class="col-2">@article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Name</td>
-                    <td class="col-1">@(article.IsConfirmed ? "Yes" : "No")</td>
-                    <td class="col-1 isConfirmed">@(article.IsConfirmedByMainSupplier ? "Yes" : "No")</td>
-                    <td class="col-1">
-                        <a asp-action="Details" class="btn btn-sm btn-info" asp-route-id="@article.Id">
-                            <span class="icon text-white">
-                                <i class="fas fa-info-circle"></i>
-                            </span>
+                <tr class="" data-id="@article.Id" @if (article.IsConfirmed) { <text> style="background-color: #dcfddc;" </text> }>
+                    <td id="search" class="col-s" data-label="@nameof(article.Number)">@article.Number</td>
+                    <td id="search" class="col-l" data-label="@nameof(article.Description)">@article.Description</td>
+                    <td class="col-xs" data-label="MS Nr.">@article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Number</td>
+                    <td class="col-s" data-label="MS Name">@article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Name</td>
+                    <td class="col-s" data-label="Conf AS">@(article.IsConfirmed ? "Yes" : "No")</td>
+                    <td class="col-s isConfirmed" data-label="Conf MS">@(article.IsConfirmedByMainSupplier ? "Yes" : "No")</td>
+                    <td class="col-s" data-label="Details">
+                        <a asp-action="Details" class="btn btn-details" asp-route-id="@article.Id">
                             <span class="text">Details</span>
                         </a>
                     </td>
-                    <td class="col-1">
+                    <td class="col-s" data-label="Edit">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@article.Id">
-                                <span class="icon text-white">
-                                    <i class="fas fa-edit"></i>
-                                </span>
+                            <a asp-action="Edit" class="btn btn-edit" asp-route-id="@article.Id">
                                 <span class="text">Edit</span>
                             </a>
                         }
                         else
                         {
-                            <a class="btn btn-sm btn-secondary" asp-area="Identity" asp-page="/Account/Login">
-                                <span class="icon text-white">
-                                    <i class="fas fa-sign-in-alt"></i>
-                                </span>
+                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login">
                                 <span class="text">Login</span>
                             </a>
                         }
                     </td>
 
-                    <td class="col-1">
+                    <td class="col-s" data-label="Delete">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <a asp-action="Delete" class="btn btn-sm btn-danger" asp-route-id="@article.Id">
-                                <span class="icon text-white-50">
-                                    <i class="fas fa-trash"></i>
-                                </span>
+                            <a asp-action="Delete" class="btn btn-delete" asp-route-id="@article.Id">
                                 <span class="text">Delete</span>
                             </a>
                         }
                         else
                         {
-                            <a class="btn btn-sm btn-secondary" asp-area="Identity" asp-page="/Account/Login">
-                                <span class="icon text-white">
-                                    <i class="fas fa-sign-in-alt"></i>
-                                </span>
+                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login">
                                 <span class="text">Login</span>
                             </a>
                         }
@@ -141,4 +131,4 @@
             }
         </tbody>
     </table>
-</div>
+</section>

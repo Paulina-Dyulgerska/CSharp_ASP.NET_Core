@@ -1,0 +1,21 @@
+﻿    <article class="btns-container">
+        @if (this.User.Identity.IsAuthenticated)
+        {
+            <a asp-controller="Articles" asp-action="Create" class="btn btn-cta">
+                @*<i class="fab fa-creative-commons-remix"></i>*@ 
+                Create article
+            </a>
+            <a asp-controller="Supplier" asp-action="Create" class="btn btn-cta">
+                @*<i class="fab fa-creative-commons-remix"></i>*@ 
+                Create supplier
+            </a>
+            <a asp-controller="ConformityTypes" asp-action="Create" class="btn btn-cta">
+                @*<i class="fab fa-creative-commons-remix"></i>*@
+                Create conformity type
+            </a>
+            <a asp-controller="Conformities" asp-action="Create" class="btn btn-cta">
+                @*<i class="fab fa-creative-commons-remix"></i>*@ 
+                Create conformity
+            </a>
+        }
+    </article>

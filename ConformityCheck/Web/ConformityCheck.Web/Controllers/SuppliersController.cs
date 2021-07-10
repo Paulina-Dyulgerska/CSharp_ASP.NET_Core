@@ -5,6 +5,7 @@
 
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
+    using ConformityCheck.Web.ViewModels;
     using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.AspNetCore.Authorization;
@@ -45,27 +46,53 @@
             return this.View(model);
         }
 
-        //public async Task<IActionResult> ListAll(int id = 1, int itemsPerPage = 12)
-        //{
-        //    if (id <= 0)
-        //    {
-        //        return this.NotFound(); //zarejdam StatusCodeError404.cshtml!!!
-        //    }
+        public async Task<IActionResult> ListAll(PagingViewModel input)
+        {
+            if (input.PageNumber <= 0)
+            {
+                // loads StatusCodeError404.cshtm
+                return this.NotFound();
+            }
 
-        //    const int IntervalOfPagesToShow = 2;
+            var model = new SuppliersListAllModel
+            {
+                ItemsPerPage = input.ItemsPerPage,
+                PageNumber = input.PageNumber,
+                PagingControllerActionCallName = nameof(this.ListAll),
+                CreatedOnSortParm = string.IsNullOrEmpty(input.CurrentSortOrder) ? "createdOn" : string.Empty,
+                NumberSortParm = input.CurrentSortOrder == "numberDesc" ? "number" : "numberDesc",
+                DescriptionSortParm = input.CurrentSortOrder == "nameDesc" ? "name" : "nameDesc",
+                MainSupplierNameSortParm = input.CurrentSortOrder == "mainSupplierNameDesc" ? "mainSupplierName" : "mainSupplierNameDesc",
+                MainSupplierNumberSortParm = input.CurrentSortOrder == "mainSupplierNumberDesc" ? "mainSupplierNumber" : "mainSupplierNumberDesc",
+                MainSupplierAllConfirmedSortParm = input.CurrentSortOrder == "mainSupplierAllConfirmedDesc" ? "mainSupplierAllConfirmed" : "mainSupplierAllConfirmedDesc",
+                AllSuppliersAllConfirmedSortParm = input.CurrentSortOrder == "allSuppliersAllConfirmedDesc" ? "allSuppliersAllConfirmed" : "allSuppliersAllConfirmedDesc",
+                CurrentSortOrder = input.CurrentSortOrder,
+                CurrentSearchInput = input.CurrentSearchInput,
+            };
 
-        //    var model = new SuppliersListAllModel
-        //    {
-        //        ItemsPerPage = itemsPerPage,
-        //        PageNumber = id,
-        //        ItemsCount = this.suppliersService.GetCount(),
-        //        IntervalOfPagesToShow = IntervalOfPagesToShow,
-        //        Suppliers = await this.suppliersService
-        //                        .GetAllAsNoTrackingOrderedAsPagesAsync<SupplierFullInfoModel>(id, itemsPerPage),
-        //    };
+            if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
+            {
+                model.ItemsCount = this.articlesService.GetCount();
+                model.Articles = await this.articlesService
+                                            .GetOrderedAsPagesAsync<ArticleDetailsModel>(
+                                                input.CurrentSortOrder,
+                                                input.PageNumber,
+                                                input.ItemsPerPage);
+            }
+            else
+            {
+                input.CurrentSearchInput = input.CurrentSearchInput.Trim();
+                model.ItemsCount = this.articlesService.GetCountByNumberOrDescription(input.CurrentSearchInput);
+                model.Articles = await this.articlesService
+                                            .GetByNumberOrDescriptionOrderedAsPagesAsync<ArticleDetailsModel>(
+                                            input.CurrentSearchInput,
+                                            input.CurrentSortOrder,
+                                            input.PageNumber,
+                                            input.ItemsPerPage);
+            }
 
-        //    return this.View(model);
-        //}
+            return this.View(model);
+        }
 
 
         [Authorize]

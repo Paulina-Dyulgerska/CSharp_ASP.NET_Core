@@ -38,7 +38,7 @@
 
         // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> ListAll(PagingViewModel input)
         {
             if (input.PageNumber <= 0)

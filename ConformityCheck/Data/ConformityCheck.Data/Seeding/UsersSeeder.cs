@@ -35,13 +35,16 @@
                     Email = adminUser.Email,
                     EmailConfirmed = adminUser.EmailConfirmed,
                 };
+
                 var resultUserAdd = await userManager.CreateAsync(user, adminUser.Password);
+
                 if (!resultUserAdd.Succeeded)
                 {
                     throw new Exception(string.Join(Environment.NewLine, resultUserAdd.Errors.Select(e => e.Description)));
                 }
 
                 var resultUserToRoleAdd = await userManager.AddToRoleAsync(user, GlobalConstants.AdministratorRoleName);
+
                 if (!resultUserToRoleAdd.Succeeded)
                 {
                     throw new Exception(string.Join(Environment.NewLine, resultUserAdd.Errors.Select(e => e.Description)));
