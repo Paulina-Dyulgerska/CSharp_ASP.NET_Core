@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ConformityTypeExportModel>
+﻿@model ConformityTypesListAllModel
 
 @{
     this.ViewData["Title"] = "Conformity types";
@@ -17,142 +17,85 @@
     </div>
 }
 
-<div class="container-fluid">
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <div class="d-flex justify-content-between mb-auto p-2">
-                <h4 class="m-0 font-weight-bold">
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
                     @this.ViewData["Title"]
                 </h4>
-                <span>(total of @Model.Count() conformity types)</span>
-                <a asp-action="Create" class="btn btn-primary justify-content-end">
-                    <i class="fab fa-creative-commons-remix"></i> Create conformity type
-                </a>
-            </div>
-            <div class="d-flex justify-content-between p-2 font-weight-bold">
-                <div class="btn-toolbar mb-3">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fas fa-search"></i>
-                            </div>
-                        </div>
-                        <input size="46" type="text" id="searchInput" placeholder="Search for conformity type Nr. or description...">
-                    </div>
-                </div>
-                <div class="btn-toolbar mb-3">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                            </div>
-                        </div>
-                        <div>
-                            @*<partial name="_ItemsPerPagePartial" model="Model" />*@
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-            @*<table id="dataTable" class="table table-responsive-sm table-bordered table-hover">*@
-            <table id="dataTable" class="table table-responsive-sm table-sm table-hover">
-                <thead>
-                    <tr class="d-flex">
-                        <th class="col-1">Nr.</th>
-                        <th class="col">Description</th>
-                        <th class="col-2">User id</th>
-                        <th class="col-2">Created on</th>
-                        <th class="col-2">Modified on</th>
-                        <th class="col-1">Details</th>
-                        <th class="col-1">Edit</th>
-                        <th class="col-1">Delete</th>
-                    </tr>
-                </thead>
-                @foreach (var conformityType in this.Model)
-                {
-                    <tr class="d-flex">
-                        <td class="col-1">@conformityType.Id</td>
-                        <td class="col">@conformityType.Description</td>
-                        <td class="col-2">@conformityType.UserId</td>
-                        <td class="col-2">@conformityType.CreatedOn.ToLocalTime().ToShortDateString()</td>
-                        <td class="col-2">
-                            @(conformityType.ModifiedOn.HasValue ?
-                                                conformityType.ModifiedOn.Value.ToLocalTime().ToShortDateString() : "-")
-                        </td>
-                        <td class="col-1">
-                            <a asp-action="Details" class="btn btn-sm btn-info" asp-route-id="@conformityType.Id">
-                                <span class="icon text-white">
-                                    <i class="fas fa-info-circle"></i>
+                <span class="presented-items-info">(total of @Model.ItemsCount conformity types)</span>
+            </article>
+            <article class="tools-container">
+                <article class="search-container">
+                    <form method="get" asp-action="ListAll">
+                        <article class="input-group">
+                            <article class="input-group-prepend">
+                                <span class="input-group-text">
                                 </span>
-                                <span class="text">Details</span>
-                            </a>
-                        </td>
-                        <td class="col-1">
-                            @if (User.Identity.IsAuthenticated)
-                            {<a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@conformityType.Id">
-                                    <span class="icon text-white">
-                                        <i class="fas fa-edit"></i>
-                                    </span>
-                                    <span class="text">Edit</span>
-                                </a>
-                            }
-                            else
-                            {
-                                <a class="btn btn-sm btn-secondary" asp-area="Identity" asp-page="/Account/Login">
-                                    <span class="icon text-white">
-                                        <i class="fas fa-sign-in-alt"></i>
-                                    </span>
-                                    <span class="text">Login</span>
-                                </a>
-                            }
-                        </td>
-                        <td class="col-1">
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                <a asp-action="Delete" class="btn btn-sm btn-danger" asp-route-id="@conformityType.Id">
-                                    <span class="icon text-white-50">
-                                        <i class="fas fa-trash"></i>
-                                    </span>
-                                    <span class="text">Delete</span>
-                                </a>
-                            }
-                            else
-                            {
-                                <a class="btn btn-sm btn-secondary" asp-area="Identity" asp-page="/Account/Login">
-                                    <span class="icon text-white">
-                                        <i class="fas fa-sign-in-alt"></i>
-                                    </span>
-                                    <span class="text">Login</span>
-                                </a>
-                            }
-                        </td>
-                    </tr>
-                }
-            </table>
-            @*<thead>
-                    <tr class="d-flex">
-                        <th class="col-2">
-                            Supplier Nr.
-                            <button onclick="sortList()">Sort</button>
-                        </th>
-                        <th class="col-3">Name</th>
-                        <th class="col-2">UserId</th>
-                        <th class="col-1">Articles count</th>
-                        <th class="col-1">Details</th>
-                        <th class="col-1">Edit</th>
-                        <th class="col-1">Delete</th>
-                    </tr>
-                </thead>*@
+                            </article>
+                            <input type="search" class="form-control" asp-for="CurrentSearchInput"
+                                   size="36" id="searchConformityTypeInput"
+                                   placeholder="Search for conformity type Nr. or description..."
+                                   value="@Model.CurrentSearchInput">
+                            <article class="input-group-append">
+                                <button type="submit" class="btn btn-search">
+                                    <i class="fas fa-search"></i> Search
+                                </button>
+                            </article>
+                        </article>
+                    </form>
+                </article>
+                <article class="input-group">
+                    <article class="input-group-prepend">
+                        <span class="input-group-text">
+                            Items per page
+                        </span>
+                    </article>
+                    <article class="input-group-append">
+                        <partial name="_ItemsPerPagePartial" model="Model" />
+                    </article>
+                </article>
+            </article>
+            <article class="search-results-container" id="suggestions" style="display:none">
+                <form method="get" asp-action="Details" asp-route-id="@Model.Id">
+                    <article class="input-group">
+                        <select asp-for="Id" id="selectSearchConformityTypeInput" class="form-control"></select>
+                        <article class="input-group-append">
+                            <input type="submit" class="btn btn-secondary" value="Show conformity type" />
+                        </article>
+                    </article>
+                </form>
+            </article>
+        </section>
 
-        </div>
-    </div>
-</div>
+        <section class="display-data-body">
+            <article class="pagination-container">
+                <partial name="_PagingPartial" model="@Model" />
+            </article>
+            <partial name="_ConformityTypesListAllTable.cshtml" model="@Model" />
+        </section>
+
+        <section class="display-data-footer ">
+            <article class="pagination-container">
+                <partial name="_PagingPartial" model="@Model" />
+            </article>
+        </section>
+    </section>
+</section>
 
 @section SubMenu{
     <partial name="_SubMenuGeneral" />
 }
 
+@section Links{
+    @*<link href="~/lib/datatables/dist/css/datatables.min.css" rel="stylesheet" asp-append-version="true" />
+        @*<link href="~/lib/datatables/DataTables-1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet" asp-append-version="true" />*@
+}
+
 @section Scripts{
-    <script src="~/js/alerts.js" asp-append-version="true"></script>
     <script src="~/js/tables.js" asp-append-version="true"></script>
+    <script src="~/js/alerts.js" asp-append-version="true"></script>
+    @*<script src="~/lib/datatables/dist/js/datatables.min.js"></script>*@
 }

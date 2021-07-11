@@ -12,5 +12,13 @@
 
         [SupplierEntityAttribute]
         public string Id { get; set; }
+
+        public string NumberSortParm { get; set; }
+
+        public string NameSortParm { get; set; }
+
+        public string ArticlesCountSortParm { get; set; }
+
+        public string UserEmailSortParm { get; set; }
     }
 }

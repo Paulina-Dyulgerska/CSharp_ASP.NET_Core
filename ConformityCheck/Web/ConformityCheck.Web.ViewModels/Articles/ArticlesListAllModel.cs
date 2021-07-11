@@ -12,5 +12,17 @@
 
         [ArticleEntityAttribute]
         public string Id { get; set; }
+
+        public string NumberSortParm { get; set; }
+
+        public string DescriptionSortParm { get; set; }
+
+        public string MainSupplierNumberSortParm { get; set; }
+
+        public string MainSupplierNameSortParm { get; set; }
+
+        public string MainSupplierAllConfirmedSortParm { get; set; }
+
+        public string AllSuppliersAllConfirmedSortParm { get; set; }
     }
 }

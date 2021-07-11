@@ -39,12 +39,12 @@
 
         // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        public async Task<IActionResult> ListAll()
-        {
-            var model = await this.suppliersService.GetAllAsNoTrackingOrderedAsync<SupplierFullInfoModel>();
+        //public async Task<IActionResult> ListAll()
+        //{
+        //    var model = await this.suppliersService.GetAllAsNoTrackingOrderedAsync<SupplierFullInfoModel>();
 
-            return this.View(model);
-        }
+        //    return this.View(model);
+        //}
 
         public async Task<IActionResult> ListAll(PagingViewModel input)
         {
@@ -61,20 +61,18 @@
                 PagingControllerActionCallName = nameof(this.ListAll),
                 CreatedOnSortParm = string.IsNullOrEmpty(input.CurrentSortOrder) ? "createdOn" : string.Empty,
                 NumberSortParm = input.CurrentSortOrder == "numberDesc" ? "number" : "numberDesc",
-                DescriptionSortParm = input.CurrentSortOrder == "nameDesc" ? "name" : "nameDesc",
-                MainSupplierNameSortParm = input.CurrentSortOrder == "mainSupplierNameDesc" ? "mainSupplierName" : "mainSupplierNameDesc",
-                MainSupplierNumberSortParm = input.CurrentSortOrder == "mainSupplierNumberDesc" ? "mainSupplierNumber" : "mainSupplierNumberDesc",
-                MainSupplierAllConfirmedSortParm = input.CurrentSortOrder == "mainSupplierAllConfirmedDesc" ? "mainSupplierAllConfirmed" : "mainSupplierAllConfirmedDesc",
-                AllSuppliersAllConfirmedSortParm = input.CurrentSortOrder == "allSuppliersAllConfirmedDesc" ? "allSuppliersAllConfirmed" : "allSuppliersAllConfirmedDesc",
+                NameSortParm = input.CurrentSortOrder == "nameDesc" ? "name" : "nameDesc",
+                ArticlesCountSortParm = input.CurrentSortOrder == "articleCountDesc" ? "articleCount" : "articleCountDesc",
+                UserEmailSortParm = input.CurrentSortOrder == "userEmailDesc" ? "userEmail" : "userEmailDesc",
                 CurrentSortOrder = input.CurrentSortOrder,
                 CurrentSearchInput = input.CurrentSearchInput,
             };
 
             if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
             {
-                model.ItemsCount = this.articlesService.GetCount();
-                model.Articles = await this.articlesService
-                                            .GetOrderedAsPagesAsync<ArticleDetailsModel>(
+                model.ItemsCount = this.suppliersService.GetCount();
+                model.Suppliers = await this.suppliersService
+                                            .GetOrderedAsPagesAsync<SupplierFullInfoModel>(
                                                 input.CurrentSortOrder,
                                                 input.PageNumber,
                                                 input.ItemsPerPage);
@@ -82,9 +80,9 @@
             else
             {
                 input.CurrentSearchInput = input.CurrentSearchInput.Trim();
-                model.ItemsCount = this.articlesService.GetCountByNumberOrDescription(input.CurrentSearchInput);
-                model.Articles = await this.articlesService
-                                            .GetByNumberOrDescriptionOrderedAsPagesAsync<ArticleDetailsModel>(
+                model.ItemsCount = this.suppliersService.GetCountBySearchInput(input.CurrentSearchInput);
+                model.Suppliers = await this.suppliersService
+                                            .GetByNumberOrNameOrderedAsPagesAsync<SupplierFullInfoModel>(
                                             input.CurrentSearchInput,
                                             input.CurrentSortOrder,
                                             input.PageNumber,
@@ -93,7 +91,6 @@
 
             return this.View(model);
         }
-
 
         [Authorize]
         public IActionResult Create()
@@ -173,6 +170,16 @@
         public async Task<IActionResult> GetArticlesById(string id)
         {
             var model = await this.suppliersService.GetArticlesByIdAsync<ArticleBySupplierModel>(id);
+
+            return this.Json(model);
+        }
+
+        //[Authorize]
+        public async Task<IActionResult> GetByNumberOrName(
+            string input)
+        {
+            var model = await this.suppliersService
+                .GetByNumberOrNameAsync<SupplierExportModel>(input);
 
             return this.Json(model);
         }

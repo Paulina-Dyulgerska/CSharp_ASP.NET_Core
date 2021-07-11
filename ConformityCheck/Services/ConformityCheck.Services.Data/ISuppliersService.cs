@@ -7,6 +7,8 @@
 
     public interface ISuppliersService : IService<string>
     {
+        int GetCountBySearchInput(string searchInput);
+
         Task CreateAsync(SupplierCreateInputModel input, string userId);
 
         Task EditAsync(SupplierEditInputModel input, string userId);
@@ -16,6 +18,16 @@
         Task<IEnumerable<T>> GetArticlesByIdAsync<T>(string id);
 
         Task<SupplierDetailsModel> DetailsByIdAsync(string id);
+
+        Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage);
+
+        Task<IEnumerable<T>> GetByNumberOrNameOrderedAsPagesAsync<T>(
+                                                                                string searchInput,
+                                                                                string sortOrder,
+                                                                                int page,
+                                                                                int itemsPerPage);
+
+        Task<IEnumerable<T>> GetByNumberOrNameAsync<T>(string searchInput);
 
         //void AddArticle(int supplierId, int articleId);
 

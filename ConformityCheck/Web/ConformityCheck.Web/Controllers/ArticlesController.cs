@@ -6,6 +6,7 @@
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels;
     using ConformityCheck.Web.ViewModels.Articles;
+    using ConformityCheck.Web.ViewModels.ConformityTypes;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -75,7 +76,7 @@
             else
             {
                 input.CurrentSearchInput = input.CurrentSearchInput.Trim();
-                model.ItemsCount = this.articlesService.GetCountByNumberOrDescription(input.CurrentSearchInput);
+                model.ItemsCount = this.articlesService.GetCountBySearchInput(input.CurrentSearchInput);
                 model.Articles = await this.articlesService
                                             .GetByNumberOrDescriptionOrderedAsPagesAsync<ArticleDetailsModel>(
                                             input.CurrentSearchInput,

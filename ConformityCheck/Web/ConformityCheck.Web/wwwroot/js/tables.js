@@ -144,13 +144,6 @@ $('#searchAticleInput').on('keyup', function () {
                         html += '<option class="form-control" value="' + article.id + '">'
                             + article.number + ' - ' + article.description +
                             '</option>';
-
-                        //<a asp-action="Details" class="btn btn-sm btn-info" asp-route-id="@article.Id">
-                        //    <span class="icon text-white">
-                        //        <i class="fas fa-info-circle"></i>
-                        //    </span>
-                        //    <span class="text">Details</span>
-                        //</a>
                     }
                     $('#suggestions').show();
                     $('#selectSearchArticleInput').html(html);
@@ -158,6 +151,80 @@ $('#searchAticleInput').on('keyup', function () {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert('Error by loading articles');
+                //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+    else {
+        //$('#suggestions').hide();
+    }
+});
+
+
+// search supplier:
+//$('#suggestions').hide();
+$('#searchSupplierInput').on('keyup', function () {
+    console.log($('#searchSupplierInput').val());
+    if (!isNullOrWhitespace($(this).val())) {
+        $.ajax({
+            method: 'GET',
+            url: '/Suppliers/GetByNumberOrName',
+            dataType: 'json',
+            data: { 'input': $(this).val() },
+            success: function (json) {
+                if (json.length < 1) {
+                    $('#suggestions').hide();
+                }
+                else {
+                    let html = '';
+                    for (i = 0; i < json.length; i++) {
+                        var supplier = json[i];
+                        html += '<option class="form-control" value="' + supplier.id + '">'
+                            + supplier.number + ' - ' + supplier.name +
+                            '</option>';
+                    }
+                    $('#suggestions').show();
+                    $('#selectSearchSupplierInput').html(html);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Error by loading suppliers');
+                //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+    else {
+        //$('#suggestions').hide();
+    }
+});
+
+// search conformity types:
+//$('#suggestions').hide();
+$('#searchConformityTypeInput').on('keyup', function () {
+    console.log($('#searchConformityTypeInput').val());
+    if (!isNullOrWhitespace($(this).val())) {
+        $.ajax({
+            method: 'GET',
+            url: '/ConformityTypes/GetByIdOrDescription',
+            dataType: 'json',
+            data: { 'input': $(this).val() },
+            success: function (json) {
+                if (json.length < 1) {
+                    $('#suggestions').hide();
+                }
+                else {
+                    let html = '';
+                    for (i = 0; i < json.length; i++) {
+                        var conformityType = json[i];
+                        html += '<option class="form-control" value="' + conformityType.id + '">'
+                            + conformityType.description + '</option>';
+                    }
+                    $('#suggestions').show();
+                    $('#selectSearchConformityTypeInput').html(html);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Error by loading suppliers');
                 //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

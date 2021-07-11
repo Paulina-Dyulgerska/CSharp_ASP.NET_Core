@@ -1,11 +1,8 @@
 ﻿namespace ConformityCheck.Services.Data
 {
-    using System.Threading.Tasks;
-
     using ConformityCheck.Services.Data.Models;
 
-    public interface IArticlesSeedService
+    public interface IArticlesSeedService : ISeedService<ArticleImportDTO>
     {
-        Task CreateAsync(ArticleImportDTO articleImportDTO);
     }
 }

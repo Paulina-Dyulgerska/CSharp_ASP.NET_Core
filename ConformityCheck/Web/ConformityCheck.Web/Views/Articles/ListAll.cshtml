@@ -8,9 +8,16 @@
 
 @if (this.TempData.ContainsKey("Message"))
 {
-    <article class="alert alert-success" role="alert">
+    <div class="alert alert-success" role="alert">
         @this.TempData["Message"]
-    </article>
+    </div>
+}
+
+@if (this.TempData.ContainsKey("ErrorMessage"))
+{
+    <div class="alert alert-danger" role="alert">
+        @this.TempData["ErrorMessage"]
+    </div>
 }
 
 <section class="display-data-wrapper">

@@ -4,8 +4,10 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
+    using ConformityCheck.Web.ViewModels;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -36,9 +38,55 @@
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> ListAll()
+        //public async Task<IActionResult> ListAll()
+        //{
+        //    var model = await this.conformityTypeService.GetAllAsNoTrackingOrderedAsync<ConformityTypeExportModel>();
+
+        //    return this.View(model);
+        //}
+
+        public async Task<IActionResult> ListAll(PagingViewModel input)
         {
-            var model = await this.conformityTypeService.GetAllAsNoTrackingOrderedAsync<ConformityTypeExportModel>();
+            if (input.PageNumber <= 0)
+            {
+                // loads StatusCodeError404.cshtm
+                return this.NotFound();
+            }
+
+            var model = new ConformityTypesListAllModel
+            {
+                ItemsPerPage = input.ItemsPerPage,
+                PageNumber = input.PageNumber,
+                PagingControllerActionCallName = nameof(this.ListAll),
+                CreatedOnSortParm = string.IsNullOrEmpty(input.CurrentSortOrder) ? "createdOn" : string.Empty,
+                IdSortParm = input.CurrentSortOrder == "idDesc" ? "id" : "idDesc",
+                DescriptionSortParm = input.CurrentSortOrder == "descriptionDesc" ? "description" : "descriptionDesc",
+                UserEmailSortParm = input.CurrentSortOrder == "userEmailDesc" ? "userEmail" : "userEmailDesc",
+                ModifiedOnSortParm = input.CurrentSortOrder == "modifiedOnDesc" ? "modifiedOn" : "modifiedOnDesc",
+                CurrentSortOrder = input.CurrentSortOrder,
+                CurrentSearchInput = input.CurrentSearchInput,
+            };
+
+            if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
+            {
+                model.ItemsCount = this.conformityTypeService.GetCount();
+                model.ConformityTypes = await this.conformityTypeService
+                                            .GetOrderedAsPagesAsync<ConformityTypeExportModel>(
+                                                input.CurrentSortOrder,
+                                                input.PageNumber,
+                                                input.ItemsPerPage);
+            }
+            else
+            {
+                input.CurrentSearchInput = input.CurrentSearchInput.Trim();
+                model.ItemsCount = this.conformityTypeService.GetCountBySearchInput(input.CurrentSearchInput);
+                model.ConformityTypes = await this.conformityTypeService
+                                            .GetByIdOrDescriptionOrderedAsPagesAsync<ConformityTypeExportModel>(
+                                            input.CurrentSearchInput,
+                                            input.CurrentSortOrder,
+                                            input.PageNumber,
+                                            input.ItemsPerPage);
+            }
 
             return this.View(model);
         }
@@ -125,6 +173,14 @@
             await this.conformityTypeService.DeleteAsync(input.Id, user.Id);
 
             return this.View();
+        }
+
+        //[Authorize]
+        public async Task<IActionResult> GetByIdOrDescription(string input)
+        {
+            var model = await this.conformityTypeService.GetByIdOrDescriptionAsync<ConformityTypeExportModel>(input);
+
+            return this.Json(model);
         }
     }
 }

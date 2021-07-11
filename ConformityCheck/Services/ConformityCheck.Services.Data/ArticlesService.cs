@@ -47,7 +47,7 @@
             return this.articlesRepository.AllAsNoTracking().Count();
         }
 
-        public int GetCountByNumberOrDescription(string searchInput)
+        public int GetCountBySearchInput(string searchInput)
         {
             if (searchInput is null)
             {
@@ -657,7 +657,8 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ConformityTypeExportModel>> GetConformityTypesByIdAndSupplierAsync(string articleId, string supplierId)
+        public async Task<IEnumerable<ConformityTypeExportModel>>
+            GetConformityTypesByIdAndSupplierAsync(string articleId, string supplierId)
         {
             var entities = await this.articleConformityTypesRepository
                 .AllAsNoTracking()
@@ -683,11 +684,11 @@
             return entities;
         }
 
-        public async Task<IEnumerable<T>> GetByNumberOrDescriptionAsync<T>(string input)
+        public async Task<IEnumerable<T>> GetByNumberOrDescriptionAsync<T>(string searchInput)
         {
             var entities = await this.articlesRepository.AllAsNoTracking()
-                .Where(x => x.Number.Contains(input.ToUpper())
-                        || x.Description.ToUpper().Contains(input.ToUpper()))
+                .Where(x => x.Number.Contains(searchInput.ToUpper())
+                        || x.Description.ToUpper().Contains(searchInput.ToUpper()))
                 .To<T>()
                 .ToListAsync();
 

@@ -89,8 +89,14 @@
                 <tr class="" data-id="@article.Id" @if (article.IsConfirmed) { <text> style="background-color: #dcfddc;" </text> }>
                     <td id="search" class="col-s" data-label="@nameof(article.Number)">@article.Number</td>
                     <td id="search" class="col-l" data-label="@nameof(article.Description)">@article.Description</td>
-                    <td class="col-xs" data-label="MS Nr.">@article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Number</td>
-                    <td class="col-s" data-label="MS Name">@article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Name</td>
+                    <td class="col-xs" data-label="MS Nr.">
+                        @(article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Number != null?
+                             article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Number : "-")
+                    </td>
+                    <td class="col-s" data-label="MS Name">
+                        @(article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Name != null ?
+                        article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Name : "-")
+                    </td>
                     <td class="col-s" data-label="Conf AS">@(article.IsConfirmed ? "Yes" : "No")</td>
                     <td class="col-s isConfirmed" data-label="Conf MS">@(article.IsConfirmedByMainSupplier ? "Yes" : "No")</td>
                     <td class="col-s" data-label="Details">

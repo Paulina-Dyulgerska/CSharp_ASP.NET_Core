@@ -33,6 +33,20 @@
             return this.conformityTypesRepository.AllAsNoTracking().Count();
         }
 
+        public int GetCountBySearchInput(string searchInput)
+        {
+            if (searchInput is null)
+            {
+                return this.GetCount();
+            }
+
+            return this.conformityTypesRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
+                           || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                .Count();
+        }
+
         public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             return await this.conformityTypesRepository.All().To<T>().ToListAsync();
@@ -58,8 +72,93 @@
 
         public async Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage = 12)
         {
-            var conformityTypes = await this.GetAllAsNoTrackingOrderedAsync<T>();
-            return conformityTypes.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
+            //var conformityTypes = await this.GetAllAsNoTrackingOrderedAsync<T>();
+            //return conformityTypes.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
+
+            switch (sortOrder)
+            {
+                case "id":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .OrderBy(x => x.Id)
+                                        .ThenByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "idDesc":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.Id)
+                                        .ThenByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "description":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .OrderBy(x => x.Description)
+                                        .ThenBy(x => x.Id)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "descriptionDesc":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.Description)
+                                        .ThenBy(x => x.Id)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "userEmail":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .OrderBy(x => x.User.Email)
+                                        .ThenBy(x => x.Id)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "userEmailDesc":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.User.Email)
+                                        .ThenBy(x => x.Id)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "modifiedOn":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .OrderBy(x => x.ModifiedOn)
+                                        .ThenBy(x => x.Id)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "modifiedOnDesc":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.ModifiedOn)
+                                        .ThenBy(x => x.Id)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+
+                case "createdOn":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .OrderBy(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+
+                // case "createdOnDesc": show last created first
+                default:
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+            }
         }
 
         public async Task<T> GetByIdAsync<T>(int id)
@@ -69,6 +168,130 @@
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetByIdOrDescriptionAsync<T>(string searchInput)
+        {
+            var entities = await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
+                                                    || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .To<T>()
+                                        .ToListAsync();
+
+            return entities;
+        }
+
+        public async Task<IEnumerable<T>> GetByIdOrDescriptionOrderedAsPagesAsync<T>(
+            string searchInput,
+            string sortOrder,
+            int page,
+            int itemsPerPage)
+        {
+            switch (sortOrder)
+            {
+                case "id":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
+                                                    || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.Id)
+                                        .ThenByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "idDesc":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
+                                                    || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.Id)
+                                        .ThenByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "description":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
+                                                    || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.Description)
+                                        .ThenBy(x => x.Id)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "descriptionDesc":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
+                                                    || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.Description)
+                                        .ThenBy(x => x.Id)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "userEmail":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
+                                                    || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.User.Email)
+                                        .ThenBy(x => x.Id)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "userEmailDesc":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
+                                                    || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.User.Email)
+                                        .ThenBy(x => x.Id)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "modifiedOn":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
+                                                    || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.ModifiedOn)
+                                        .ThenBy(x => x.Id)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "modifiedOnDesc":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
+                                                    || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.ModifiedOn)
+                                        .ThenBy(x => x.Id)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+
+                case "createdOn":
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
+                                                    || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+
+                // case "createdOnDesc": show last created first
+                default:
+                    return await this.conformityTypesRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.CreatedOn)
+                                        .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
+                                                    || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+            }
         }
 
         public async Task CreateAsync(ConformityTypeCreateInputModel input, string userId)

@@ -38,6 +38,20 @@
             return this.suppliersRepository.AllAsNoTracking().Count();
         }
 
+        public int GetCountBySearchInput(string searchInput)
+        {
+            if (searchInput is null)
+            {
+                return this.GetCount();
+            }
+
+            return this.suppliersRepository
+                .AllAsNoTracking()
+                .Where(x => x.Number.Contains(searchInput.ToUpper())
+                           || x.Name.ToUpper().Contains(searchInput.ToUpper()))
+                .Count();
+        }
+
         public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             return await this.suppliersRepository.All().To<T>().ToListAsync();
@@ -61,16 +75,214 @@
                 .ToListAsync();
         }
 
+        //public async Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage)
+        //{
+        //    return await this.suppliersRepository
+        //                        .AllAsNoTracking()
+        //                        .OrderByDescending(x => x.CreatedOn)
+        //                        .ThenByDescending(x => x.ModifiedOn)
+        //                        .ThenBy(x => x.Number)
+        //                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+        //                        .To<T>()
+        //                        .ToListAsync();
+        //}
+
         public async Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage)
         {
-            return await this.suppliersRepository
-                                .AllAsNoTracking()
-                                .OrderByDescending(x => x.CreatedOn)
-                                .ThenByDescending(x => x.ModifiedOn)
-                                .ThenBy(x => x.Number)
-                                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
-                                .To<T>()
-                                .ToListAsync();
+            switch (sortOrder)
+            {
+                case "number":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .OrderBy(x => x.Number)
+                                        .ThenByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "numberDesc":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.Number)
+                                        .ThenByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "name":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .OrderBy(x => x.Name)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "nameDesc":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.Name)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "articleCount":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .OrderBy(x => x.ArticleSuppliers.Count())
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "articleCountDesc":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.ArticleSuppliers.Count())
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "userEmail":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .OrderBy(x => x.User.Email)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "userEmailDesc":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.User.Email)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "createdOn":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .OrderBy(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+
+                // case "createdOnDesc": show last created first
+                default:
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .OrderByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+            }
+        }
+
+        public async Task<IEnumerable<T>> GetByNumberOrNameOrderedAsPagesAsync<T>(
+            string searchInput,
+            string sortOrder,
+            int page,
+            int itemsPerPage)
+        {
+            switch (sortOrder)
+            {
+                case "number":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Name.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.Number)
+                                        .ThenByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "numberDesc":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Name.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.Number)
+                                        .ThenByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "name":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Name.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.Name)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "nameDesc":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Name.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.Name)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "articleCount":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Name.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.ArticleSuppliers.Count())
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "articleCountDesc":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Name.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.ArticleSuppliers.Count())
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "userEmail":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Name.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.User.Email)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "userEmailDesc":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Name.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.User.Email)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case "createdOn":
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Name.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+
+                // case "createdOnDesc": show last created first
+                default:
+                    return await this.suppliersRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Name.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+            }
         }
 
         public async Task<T> GetByIdAsync<T>(string id)
@@ -108,6 +320,36 @@
         //    var a = model.Articles.Where(x => x.ArticleConformity != null).ToList();
         //    return model;
         //}
+
+        public async Task<IEnumerable<T>> GetArticlesByIdAsync<T>(string id)
+        {
+            var articles = await this.articleSuppliersRepository
+                .AllAsNoTracking()
+                .Where(x => x.SupplierId == id)
+                .OrderBy(x => x.Article.Number)
+
+                // .Select(x => new Article
+                // {
+                //    Id = x.ArticleId,
+                //    Number = x.Article.Number,
+                //    Description = x.Article.Description,
+                // })
+                .To<T>()
+                .ToListAsync();
+
+            return articles;
+        }
+
+        public async Task<IEnumerable<T>> GetByNumberOrNameAsync<T>(string searchInput)
+        {
+            var entities = await this.suppliersRepository.AllAsNoTracking()
+                .Where(x => x.Number.Contains(searchInput.ToUpper())
+                        || x.Name.ToUpper().Contains(searchInput.ToUpper()))
+                .To<T>()
+                .ToListAsync();
+
+            return entities;
+        }
 
         public async Task<SupplierDetailsModel> DetailsByIdAsync(string id)
         {
@@ -213,25 +455,6 @@
             }
 
             await this.suppliersRepository.SaveChangesAsync();
-        }
-
-        public async Task<IEnumerable<T>> GetArticlesByIdAsync<T>(string id)
-        {
-            var articles = await this.articleSuppliersRepository
-                .AllAsNoTracking()
-                .Where(x => x.SupplierId == id)
-                .OrderBy(x => x.Article.Number)
-
-                // .Select(x => new Article
-                // {
-                //    Id = x.ArticleId,
-                //    Number = x.Article.Number,
-                //    Description = x.Article.Description,
-                // })
-                .To<T>()
-                .ToListAsync();
-
-            return articles;
         }
 
         private string PascalCaseConverterWords(string stringToFix)

@@ -1,39 +1,32 @@
-﻿@model SuppliersListAllModel
+﻿@model ConformityTypesListAllModel
 
 <section class="table-container">
     <article class="table-header"></article>
     <table id="dataTable" class="table">
         <thead>
             <tr>
-                @*<th class="col-2">
-                        Supplier Nr.
-                        <button onclick="sortList()">Sort</button>
-                    </th>*@
-                <th class="col-s">
+                <th class="col-xs">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
-                       asp-route-currentSortOrder="@Model.NumberSortParm"
+                       asp-route-currentSortOrder="@Model.IdSortParm"
                        asp-route-currentSearchInput="@Model.CurrentSearchInput">
-                        <span class="text">Supplier Nr.</span>
+                        <span class="text">Conf. Type Nr.</span>
                         <span class="icon text-gray-300">
                             <i class="fas fa-arrows-alt-v"></i>
                         </span>
                     </a>
                 </th>
-                <th class="col-l">
+                <th class="col-m">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
-                       asp-route-currentSortOrder="@Model.NameSortParm"
+                       asp-route-currentSortOrder="@Model.DescriptionSortParm"
                        asp-route-currentSearchInput="@Model.CurrentSearchInput">
-                        <span class="text">Name</span>
+                        <span class="text">Description</span>
                         <span class="icon text-gray-300">
                             <i class="fas fa-arrows-alt-v"></i>
                         </span>
                     </a>
                 </th>
-                @*<th class="col-l">Contact person</th>*@
-                @*<th class="col-l">E-mail</th>*@
-                @*<th class="col-m">Phone number</th>*@
                 <th class="col-l">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
@@ -48,9 +41,20 @@
                 <th class="col-s">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
-                       asp-route-currentSortOrder="@Model.ArticlesCountSortParm"
+                       asp-route-currentSortOrder="@Model.CreatedOnSortParm"
                        asp-route-currentSearchInput="@Model.CurrentSearchInput">
-                        <span class="text">Articles count</span>
+                        <span class="text">Created</span>
+                        <span class="icon text-gray-300">
+                            <i class="fas fa-arrows-alt-v"></i>
+                        </span>
+                    </a>
+                </th>
+                <th class="col-m">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.ModifiedOnSortParm"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                        <span class="text">Modified</span>
                         <span class="icon text-gray-300">
                             <i class="fas fa-arrows-alt-v"></i>
                         </span>
@@ -62,26 +66,26 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var supplier in this.Model.Suppliers)
+            @foreach (var conformityType in this.Model.ConformityTypes)
             {
-                <tr class="" data-id="@supplier.Id">
-                    <td id="search" class="col-s" data-label="Supplier Nr.">@supplier.Number</td>
-                    <td id="search" class="col-l" data-label="Name">@supplier.Name</td>
-                    @*<td class="col-3">@supplier.ContactPersonName</td>*@
-                    @*<td class="col-1">@supplier.Email</td>*@
-                    @*<td class="col-1">@supplier.PhoneNumber</td>*@
-                    <td class="col-l" data-label="User">@supplier.UserId</td>
-                    @*<td class="col-1">@supplier.ArticlesCount</td>*@
-                    <td class="col-s" data-label="Articles count">@supplier.ArticleSuppliersCount</td>
+                <tr class="" data-id="@conformityType.Id">
+                    <td id="search" class="col-xs" data-label="Conf. Type Nr.">@conformityType.Id</td>
+                    <td id="search" class="col-m" data-label="Description">@conformityType.Description</td>
+                    <td class="col-l" data-label="User">@conformityType.UserId</td>
+                    <td class="col-s" data-label="Created">@conformityType.CreatedOn.ToLocalTime().ToShortDateString()</td>
+                    <td class="col-m" data-label="Modified">
+                        @(conformityType.ModifiedOn.HasValue ?
+                           conformityType.ModifiedOn.Value.ToLocalTime().ToShortDateString() : "-")
+                    </td>
                     <td class="col-s" data-label="Details">
-                        <a asp-action="Details" class="btn btn-details" asp-route-id="@supplier.Id">
+                        <a asp-action="Details" class="btn btn-details" asp-route-id="@conformityType.Id">
                             <span class="text">Details</span>
                         </a>
                     </td>
                     <td class="col-s" data-label="Edit">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <a asp-action="Edit" class="btn btn-edit" asp-route-id="@supplier.Id">
+                            <a asp-action="Edit" class="btn btn-edit" asp-route-id="@conformityType.Id">
                                 <span class="text">Edit</span>
                             </a>
                         }
@@ -96,7 +100,7 @@
                     <td class="col-s" data-label="Delete">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <a asp-action="Delete" class="btn btn-delete" asp-route-id="@supplier.Id">
+                            <a asp-action="Delete" class="btn btn-delete" asp-route-id="@conformityType.Id">
                                 <span class="text">Delete</span>
                             </a>
                         }

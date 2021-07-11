@@ -1,11 +1,8 @@
 ﻿namespace ConformityCheck.Services.Data
 {
-    using System.Threading.Tasks;
-
     using ConformityCheck.Services.Data.Models;
 
-    public interface IConformityTypesSeedService
+    public interface IConformityTypesSeedService : ISeedService<ConformityTypeDTO>
     {
-        Task CreateAsync(ConformityTypeDTO conformityTypeImputDTO);
     }
 }

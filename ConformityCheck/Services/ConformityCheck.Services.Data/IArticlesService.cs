@@ -9,9 +9,8 @@
 
     public interface IArticlesService : IService<string>
     {
-        int GetCountByNumberOrDescription(string input);
-
-        //int GetCountUnconfirmedByMainSupplier();
+        // TODO - add this method: int GetCountUnconfirmedByMainSupplier();
+        int GetCountBySearchInput(string searchInput);
 
         Task CreateAsync(ArticleCreateInputModel input, string userId);
 
@@ -33,10 +32,11 @@
 
         Task<IEnumerable<T>> GetSuppliersByIdAsync<T>(string id);
 
-        // TODO - remove ConformityTypeModel - put T!!!
         Task<IEnumerable<ConformityTypeExportModel>> GetConformityTypesByIdAndSupplierAsync(
             string articleId,
             string supplierId);
+
+        Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage);
 
         Task<IEnumerable<T>> GetByNumberOrDescriptionOrderedAsPagesAsync<T>(
             string searchInput,
@@ -44,11 +44,8 @@
             int page,
             int itemsPerPage);
 
-        Task<IEnumerable<T>> GetByNumberOrDescriptionAsync<T>(string searchInput);
+        Task<IEnumerable<T>> GetByNumberOrDescriptionAsync<T>(string searchInput); // where T : ArticleDetailsModel;
 
-        Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage);
-         //where T : ArticleDetailsModel;
-
-        //Task<IEnumerable<T>> GetUnconfirmedByMainSupplierAsPagesAsync<T>(int page, int itemsPerPage);
+        // TODO: add this method: Task<IEnumerable<T>> GetUnconfirmedByMainSupplierAsPagesAsync<T>(int page, int itemsPerPage);
     }
 }
