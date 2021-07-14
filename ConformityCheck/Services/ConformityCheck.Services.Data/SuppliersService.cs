@@ -52,6 +52,15 @@
                 .Count();
         }
 
+        public async Task<T> GetByIdAsync<T>(string id)
+        {
+            return await this.suppliersRepository
+                .All()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             return await this.suppliersRepository.All().To<T>().ToListAsync();
@@ -75,19 +84,18 @@
                 .ToListAsync();
         }
 
-        //public async Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage)
-        //{
-        //    return await this.suppliersRepository
-        //                        .AllAsNoTracking()
-        //                        .OrderByDescending(x => x.CreatedOn)
-        //                        .ThenByDescending(x => x.ModifiedOn)
-        //                        .ThenBy(x => x.Number)
-        //                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
-        //                        .To<T>()
-        //                        .ToListAsync();
-        //}
-
-        public async Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage)
+        // public async Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage)
+        //  {
+        //      return await this.suppliersRepository
+        //                          .AllAsNoTracking()
+        //                          .OrderByDescending(x => x.CreatedOn)
+        //                          .ThenByDescending(x => x.ModifiedOn)
+        //                          .ThenBy(x => x.Number)
+        //                          .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+        //                          .To<T>()
+        //                          .ToListAsync();
+        //  }
+        public async Task<IEnumerable<T>> GetAllOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage)
         {
             switch (sortOrder)
             {
@@ -174,7 +182,18 @@
             }
         }
 
-        public async Task<IEnumerable<T>> GetByNumberOrNameOrderedAsPagesAsync<T>(
+        public async Task<IEnumerable<T>> GetAllBySearchInputAsync<T>(string searchInput)
+        {
+            var entities = await this.suppliersRepository.AllAsNoTracking()
+                .Where(x => x.Number.Contains(searchInput.ToUpper())
+                        || x.Name.ToUpper().Contains(searchInput.ToUpper()))
+                .To<T>()
+                .ToListAsync();
+
+            return entities;
+        }
+
+        public async Task<IEnumerable<T>> GetAllBySearchInputOrderedAsPagesAsync<T>(
             string searchInput,
             string sortOrder,
             int page,
@@ -285,42 +304,32 @@
             }
         }
 
-        public async Task<T> GetByIdAsync<T>(string id)
-        {
-            return await this.suppliersRepository
-                .All()
-                .Where(x => x.Id == id)
-                .To<T>()
-                .FirstOrDefaultAsync();
-        }
-
-        //public async Task<SupplierDetailsModel> DetailsByIdAsync(string id)
-        //{
-        //    // SELECT*
-        //    //  FROM ArticleConformityTypes AS ACONT
-        //    //  LEFT JOIN ArticleSuppliers AS ASUP ON ACONT.ArticleId = ASUP.ArticleId
-        //    //  JOIN Suppliers AS SUP ON ASUP.SupplierId = SUP.Id
-        //    //  LEFT JOIN Conformities AS CON ON ASUP.ArticleId = CON.ArticleId
-        //    //  WHERE SUP.Id = id
-        //    var model = await this.GetByIdAsync<SupplierDetailsModel>(id);
-        //    model.Articles = await this.articleConformityTypesRepository
-        //                  .AllAsNoTracking()
-        //                  .Where(ac => ac.Article.ArticleSuppliers.Any(x => x.SupplierId == id))
-        //                  .Select(ac => new ArticleConformityModel
-        //                  {
-        //                      ArticleConformityType = ac,
-        //                      ArticleConformity = ac.Article.Conformities
-        //                                                      .AsQueryable()
-        //                                                      .Where(x => x.SupplierId == id
-        //                                                      && x.ConformityTypeId == ac.ConformityTypeId)
-        //                                                      .To<ConformityExportModel>()
-        //                                                      .FirstOrDefault(),
-        //                  })
-        //                  .ToListAsync();
-        //    var a = model.Articles.Where(x => x.ArticleConformity != null).ToList();
-        //    return model;
-        //}
-
+        // public async Task<SupplierDetailsModel> DetailsByIdAsync(string id)
+        // {
+        //     // SELECT*
+        //     //  FROM ArticleConformityTypes AS ACONT
+        //     //  LEFT JOIN ArticleSuppliers AS ASUP ON ACONT.ArticleId = ASUP.ArticleId
+        //     //  JOIN Suppliers AS SUP ON ASUP.SupplierId = SUP.Id
+        //     //  LEFT JOIN Conformities AS CON ON ASUP.ArticleId = CON.ArticleId
+        //     //  WHERE SUP.Id = id
+        //     var model = await this.GetByIdAsync<SupplierDetailsModel>(id);
+        //     model.Articles = await this.articleConformityTypesRepository
+        //                   .AllAsNoTracking()
+        //                   .Where(ac => ac.Article.ArticleSuppliers.Any(x => x.SupplierId == id))
+        //                   .Select(ac => new ArticleConformityModel
+        //                   {
+        //                       ArticleConformityType = ac,
+        //                       ArticleConformity = ac.Article.Conformities
+        //                                                       .AsQueryable()
+        //                                                       .Where(x => x.SupplierId == id
+        //                                                       && x.ConformityTypeId == ac.ConformityTypeId)
+        //                                                       .To<ConformityExportModel>()
+        //                                                       .FirstOrDefault(),
+        //                   })
+        //                   .ToListAsync();
+        //     var a = model.Articles.Where(x => x.ArticleConformity != null).ToList();
+        //     return model;
+        // }
         public async Task<IEnumerable<T>> GetArticlesByIdAsync<T>(string id)
         {
             var articles = await this.articleSuppliersRepository
@@ -338,17 +347,6 @@
                 .ToListAsync();
 
             return articles;
-        }
-
-        public async Task<IEnumerable<T>> GetByNumberOrNameAsync<T>(string searchInput)
-        {
-            var entities = await this.suppliersRepository.AllAsNoTracking()
-                .Where(x => x.Number.Contains(searchInput.ToUpper())
-                        || x.Name.ToUpper().Contains(searchInput.ToUpper()))
-                .To<T>()
-                .ToListAsync();
-
-            return entities;
         }
 
         public async Task<SupplierDetailsModel> DetailsByIdAsync(string id)
@@ -427,7 +425,7 @@
             await this.suppliersRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(string id, string userId)
+        public async Task<int> DeleteAsync(string id, string userId)
         {
             var entity = await this.suppliersRepository.All().FirstOrDefaultAsync(x => x.Id == id);
             entity.UserId = userId;
@@ -454,7 +452,7 @@
                 this.conformitiesRepository.Delete(supplierConformitiesEntity);
             }
 
-            await this.suppliersRepository.SaveChangesAsync();
+            return await this.suppliersRepository.SaveChangesAsync();
         }
 
         private string PascalCaseConverterWords(string stringToFix)
@@ -476,6 +474,5 @@
 
             return st.ToString().Trim();
         }
-
     }
 }

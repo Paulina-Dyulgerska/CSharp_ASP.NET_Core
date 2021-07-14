@@ -123,7 +123,7 @@ $("#dataTable").click(function addRowHandlers({ target }) {
     }
 });
 
-// search article:
+// search articles:
 //$('#suggestions').hide();
 $('#searchAticleInput').on('keyup', function () {
     console.log($('#searchAticleInput').val());
@@ -161,7 +161,7 @@ $('#searchAticleInput').on('keyup', function () {
 });
 
 
-// search supplier:
+// search suppliers:
 //$('#suggestions').hide();
 $('#searchSupplierInput').on('keyup', function () {
     console.log($('#searchSupplierInput').val());
@@ -224,7 +224,7 @@ $('#searchConformityTypeInput').on('keyup', function () {
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                alert('Error by loading suppliers');
+                alert('Error by loading conformity types');
                 //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -232,4 +232,44 @@ $('#searchConformityTypeInput').on('keyup', function () {
     else {
         //$('#suggestions').hide();
     }
+});
+
+// search conformities:
+//$('#suggestions').hide();
+$('#searchConformityInput').on('keyup', function () {
+    console.log($('#searchConformityInput').val());
+    if (!isNullOrWhitespace($(this).val())) {
+        $.ajax({
+            method: 'GET',
+            url: '/Conformities/GetByArticleOrSupplierOrConformityType',
+            dataType: 'json',
+            data: { 'input': $(this).val() },
+            success: function (json) {
+                if (json.length < 1) {
+                    $('#suggestions').hide();
+                }
+                else {
+                    let html = '';
+                    for (i = 0; i < json.length; i++) {
+                        var conformity = json[i];
+                        html += '<option class="form-control" value="' + conformity.article.number + '">'
+                            + conformity.supplier.number + '</option>';
+                    }
+                    $('#suggestions').show();
+                    $('#selectSearchConformityInput').html(html);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Error by loading conformities');
+                //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+    else {
+        //$('#suggestions').hide();
+    }
+});
+
+$(".icon").click(function () {
+    $(this).toggleClass("rotate");
 });

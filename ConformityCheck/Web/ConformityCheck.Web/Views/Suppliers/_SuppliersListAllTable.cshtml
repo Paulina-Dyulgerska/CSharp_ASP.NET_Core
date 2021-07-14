@@ -6,17 +6,18 @@
         <thead>
             <tr>
                 @*<th class="col-2">
-                        Supplier Nr.
-                        <button onclick="sortList()">Sort</button>
-                    </th>*@
+            Supplier Nr.
+            <button onclick="sortList()">Sort</button>
+        </th>*@
                 <th class="col-s">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.NumberSortParm"
-                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
                         <span class="text">Supplier Nr.</span>
-                        <span class="icon text-gray-300">
-                            <i class="fas fa-arrows-alt-v"></i>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
                         </span>
                     </a>
                 </th>
@@ -24,35 +25,38 @@
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.NameSortParm"
-                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
                         <span class="text">Name</span>
-                        <span class="icon text-gray-300">
-                            <i class="fas fa-arrows-alt-v"></i>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
                         </span>
                     </a>
                 </th>
                 @*<th class="col-l">Contact person</th>*@
                 @*<th class="col-l">E-mail</th>*@
                 @*<th class="col-m">Phone number</th>*@
-                <th class="col-l">
-                    <a asp-action="@Model.PagingControllerActionCallName"
-                       asp-route-itemsPerPage="@Model.ItemsPerPage"
-                       asp-route-currentSortOrder="@Model.UserEmailSortParm"
-                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
-                        <span class="text">User</span>
-                        <span class="icon text-gray-300">
-                            <i class="fas fa-arrows-alt-v"></i>
-                        </span>
-                    </a>
-                </th>
                 <th class="col-s">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.ArticlesCountSortParm"
-                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
                         <span class="text">Articles count</span>
-                        <span class="icon text-gray-300">
-                            <i class="fas fa-arrows-alt-v"></i>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-l">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.UserEmailSortParm"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">User</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
                         </span>
                     </a>
                 </th>
@@ -70,9 +74,9 @@
                     @*<td class="col-3">@supplier.ContactPersonName</td>*@
                     @*<td class="col-1">@supplier.Email</td>*@
                     @*<td class="col-1">@supplier.PhoneNumber</td>*@
-                    <td class="col-l" data-label="User">@supplier.UserId</td>
                     @*<td class="col-1">@supplier.ArticlesCount</td>*@
                     <td class="col-s" data-label="Articles count">@supplier.ArticleSuppliersCount</td>
+                    <td class="col-l" data-label="User">@supplier.UserId</td>
                     <td class="col-s" data-label="Details">
                         <a asp-action="Details" class="btn btn-details" asp-route-id="@supplier.Id">
                             <span class="text">Details</span>

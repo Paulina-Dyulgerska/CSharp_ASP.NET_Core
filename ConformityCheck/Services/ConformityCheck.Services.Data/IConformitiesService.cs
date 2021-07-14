@@ -10,10 +10,6 @@
 
         Task EditAsync(ConformityEditInputModel input, string userId, string conformityFilePath);
 
-        Task DeleteAsync(string id, string userId);
-
         Task<ConformityCreateInputModel> GetForCreateAsync(ConformityEditGetModel input);
-
-        Task<T> GetForEditAsync<T>(ConformityEditGetModel input);
     }
 }

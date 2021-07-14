@@ -9,10 +9,11 @@
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.IdSortParm"
-                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
                         <span class="text">Conf. Type Nr.</span>
-                        <span class="icon text-gray-300">
-                            <i class="fas fa-arrows-alt-v"></i>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
                         </span>
                     </a>
                 </th>
@@ -20,21 +21,11 @@
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.DescriptionSortParm"
-                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
                         <span class="text">Description</span>
-                        <span class="icon text-gray-300">
-                            <i class="fas fa-arrows-alt-v"></i>
-                        </span>
-                    </a>
-                </th>
-                <th class="col-l">
-                    <a asp-action="@Model.PagingControllerActionCallName"
-                       asp-route-itemsPerPage="@Model.ItemsPerPage"
-                       asp-route-currentSortOrder="@Model.UserEmailSortParm"
-                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
-                        <span class="text">User</span>
-                        <span class="icon text-gray-300">
-                            <i class="fas fa-arrows-alt-v"></i>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
                         </span>
                     </a>
                 </th>
@@ -42,10 +33,11 @@
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.CreatedOnSortParm"
-                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
                         <span class="text">Created</span>
-                        <span class="icon text-gray-300">
-                            <i class="fas fa-arrows-alt-v"></i>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
                         </span>
                     </a>
                 </th>
@@ -53,10 +45,23 @@
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.ModifiedOnSortParm"
-                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
                         <span class="text">Modified</span>
-                        <span class="icon text-gray-300">
-                            <i class="fas fa-arrows-alt-v"></i>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-l">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.UserEmailSortParm"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">User</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
                         </span>
                     </a>
                 </th>
@@ -68,50 +73,49 @@
         <tbody>
             @foreach (var conformityType in this.Model.ConformityTypes)
             {
-                <tr class="" data-id="@conformityType.Id">
-                    <td id="search" class="col-xs" data-label="Conf. Type Nr.">@conformityType.Id</td>
-                    <td id="search" class="col-m" data-label="Description">@conformityType.Description</td>
-                    <td class="col-l" data-label="User">@conformityType.UserId</td>
-                    <td class="col-s" data-label="Created">@conformityType.CreatedOn.ToLocalTime().ToShortDateString()</td>
-                    <td class="col-m" data-label="Modified">
-                        @(conformityType.ModifiedOn.HasValue ?
+            <tr class="" data-id="@conformityType.Id">
+                <td id="search" class="col-xs" data-label="Conf. Type Nr.">@conformityType.Id</td>
+                <td id="search" class="col-m" data-label="Description">@conformityType.Description</td>
+                <td class="col-s" data-label="Created">@conformityType.CreatedOn.ToLocalTime().ToShortDateString()</td>
+                <td class="col-m" data-label="Modified">
+                    @(conformityType.ModifiedOn.HasValue ?
                            conformityType.ModifiedOn.Value.ToLocalTime().ToShortDateString() : "-")
-                    </td>
-                    <td class="col-s" data-label="Details">
-                        <a asp-action="Details" class="btn btn-details" asp-route-id="@conformityType.Id">
-                            <span class="text">Details</span>
+                </td>
+                <td class="col-l" data-label="User">@conformityType.UserId</td>
+                <td class="col-s" data-label="Details">
+                    <a asp-action="Details" class="btn btn-details" asp-route-id="@conformityType.Id">
+                        <span class="text">Details</span>
+                    </a>
+                </td>
+                <td class="col-s" data-label="Edit">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Edit" class="btn btn-edit" asp-route-id="@conformityType.Id">
+                            <span class="text">Edit</span>
                         </a>
-                    </td>
-                    <td class="col-s" data-label="Edit">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <a asp-action="Edit" class="btn btn-edit" asp-route-id="@conformityType.Id">
-                                <span class="text">Edit</span>
-                            </a>
-                        }
-                        else
-                        {
-                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login">
-                                <span class="text">Login</span>
-                            </a>
-                        }
-                    </td>
-
-                    <td class="col-s" data-label="Delete">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <a asp-action="Delete" class="btn btn-delete" asp-route-id="@conformityType.Id">
-                                <span class="text">Delete</span>
-                            </a>
-                        }
-                        else
-                        {
-                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login">
-                                <span class="text">Login</span>
-                            </a>
-                        }
-                    </td>
-                </tr>
+                    }
+                    else
+                    {
+                        <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login">
+                            <span class="text">Login</span>
+                        </a>
+                    }
+                </td>
+                <td class="col-s" data-label="Delete">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Delete" class="btn btn-delete" asp-route-id="@conformityType.Id">
+                            <span class="text">Delete</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login">
+                            <span class="text">Login</span>
+                        </a>
+                    }
+                </td>
+            </tr>
             }
         </tbody>
     </table>

@@ -6,20 +6,6 @@
     this.ViewData["Title"] = "Suppliers";
 }
 
-@if (this.TempData.ContainsKey("Message"))
-{
-    <div class="alert alert-success" role="alert">
-        @this.TempData["Message"]
-    </div>
-}
-
-@if (this.TempData.ContainsKey("ErrorMessage"))
-{
-    <div class="alert alert-danger" role="alert">
-        @this.TempData["ErrorMessage"]
-    </div>
-}
-
 <section class="display-data-wrapper">
     <section class="display-data-container">
 
@@ -39,7 +25,7 @@
                                 </span>
                             </article>
                             <input type="search" class="form-control" asp-for="CurrentSearchInput"
-                                   size="36" id="searchSupplierInput"
+                                   size="46" id="searchSupplierInput"
                                    placeholder="Search for supplier number or name..."
                                    value="@Model.CurrentSearchInput">
                             <article class="input-group-append">

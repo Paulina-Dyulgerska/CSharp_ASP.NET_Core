@@ -2,9 +2,28 @@
 {
     public static class GlobalConstants
     {
-        public const string SystemName = "ConformityCheck";
+        public const string SystemName = "Conformity Check";
 
         public const string AdministratorRoleName = "Administrator";
+
+        public const string TempDataMessagePropertyName = "Message";
+        public const string TempDataErrorMessagePropertyName = "ErrorMessage";
+
+        public const string ArticleCreatedSuccessfullyMessage = "Article is successfully created.";
+        public const string ArticleEditedsuccessfullyMessage = "Article is successfully edited.";
+        public const string ArticleDeletedsuccessfullyMessage = "Article is successfully deleted.";
+
+        public const string SupplierCreatedSuccessfullyMessage = "Supplier is successfully created.";
+        public const string SupplierEditedsuccessfullyMessage = "Supplier is successfully edited.";
+        public const string SupplierDeletedsuccessfullyMessage = "Supplier is successfully deleted.";
+
+        public const string ConformityTypeCreatedSuccessfullyMessage = "Conformity type is successfully created.";
+        public const string ConformityTypeEditedsuccessfullyMessage = "Conformity type is successfully edited.";
+        public const string ConformityTypeDeletedsuccessfullyMessage = "Conformity type is successfully deleted.";
+
+        public const string ConformityCreatedSuccessfullyMessage = "Conformity is successfully created.";
+        public const string ConformityEditedsuccessfullyMessage = "Conformity is successfully edited.";
+        public const string ConformityDeletedsuccessfullyMessage = "Conformity is successfully deleted.";
 
         public const string QueryArticlesOrderedByConfirmedByMainSupplier = @"SELECT F.[Id]
       ,F.[CreatedOn]

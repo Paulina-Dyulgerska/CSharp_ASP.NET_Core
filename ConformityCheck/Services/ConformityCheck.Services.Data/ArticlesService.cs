@@ -61,8 +61,17 @@
                 .Count();
         }
 
-        //public int GetCountUnconfirmedByMainSupplier()
-        //{
+        public async Task<T> GetByIdAsync<T>(string id)
+        {
+            return await this.articlesRepository
+                .All()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
+        }
+
+        // public int GetCountUnconfirmedByMainSupplier()
+        // {
         //    var query = @"SELECT F.[Id]
         //                              ,F.[CreatedOn]
         //                              ,F.[ModifiedOn]
@@ -73,14 +82,14 @@
         //                              ,F.[UserId]
         //                         --,COUNT(*) AS ConformityTypesCount
         //                         --,COUNT(F.IsValid) as IsValid
-        //                        FROM 
+        //                        FROM
         //                        ( SELECT A.[Id]
         //                            ,A.[CreatedOn]
         //                            ,A.[ModifiedOn]
         //                            ,A.[IsDeleted]
         //                            ,A.[DeletedOn]
         //                            ,A.[Number]
-        //                            ,A.[UserId] 
+        //                            ,A.[UserId]
         //                            ,A.[Description]
         //                         ,CT.[Description] AS ConfTypeDescription
         //                         ,ASUP.SupplierId
@@ -95,9 +104,9 @@
         //                          LEFT JOIN ArticleConformityTypes AS ACT ON A.Id = ACT.ArticleId
         //                          LEFT JOIN ConformityTypes AS CT ON ACT.ConformityTypeId = CT.Id
         //                          LEFT JOIN ArticleSuppliers AS ASUP ON ASUP.ArticleId = A.Id
-        //                          LEFT JOIN Conformities AS CONF ON 
-        //                            (CONF.ArticleId = A.Id AND 
-        //                            ASUP.SupplierId = CONF.SupplierId AND 
+        //                          LEFT JOIN Conformities AS CONF ON
+        //                            (CONF.ArticleId = A.Id AND
+        //                            ASUP.SupplierId = CONF.SupplierId AND
         //                            CONF.ConformityTypeId = ACT.ConformityTypeId)
         //                         --Include this for check if just MAIN SUPPLIER has all confirmed:
         //                          WHERE ASUP.IsMainSupplier = 1
@@ -113,10 +122,8 @@
         //                        --check if supplier/s has/ve confirmed:
         //                        HAVING COUNT(*) = COUNT(F.IsValid)
         //                        --ORDER BY F.Number";
-
-        //    return this.articlesRepository.ExecuteCustomQuery(query).Count();
-        //}
-
+        //  return this.articlesRepository.ExecuteCustomQuery(query).Count();
+        // }
         public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             return await this.articlesRepository.All().To<T>().ToListAsync();
@@ -140,21 +147,7 @@
             return articles;
         }
 
-        //public IQueryable<Article> GetAllFilteredBySearchInput(string searchInput = null)
-        //{
-        //    if (string.IsNullOrWhiteSpace(searchInput))
-        //    {
-        //        return this.articlesRepository.AllAsNoTracking();
-        //    }
-
-        //    return this.articlesRepository
-        //                        .AllAsNoTracking()
-        //                        .Where(x => x.Number.Contains(searchInput.ToUpper())
-        //                            || x.Description.ToUpper().Contains(searchInput.ToUpper()));
-        //}
-
-        public async Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage)
-        // where T : ArticleDetailsModel
+        public async Task<IEnumerable<T>> GetAllOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage) // where T : ArticleDetailsModel
         {
             switch (sortOrder)
             {
@@ -269,7 +262,18 @@
             }
         }
 
-        public async Task<IEnumerable<T>> GetByNumberOrDescriptionOrderedAsPagesAsync<T>(
+        public async Task<IEnumerable<T>> GetAllBySearchInputAsync<T>(string searchInput)
+        {
+            var entities = await this.articlesRepository.AllAsNoTracking()
+                .Where(x => x.Number.Contains(searchInput.ToUpper())
+                        || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                .To<T>()
+                .ToListAsync();
+
+            return entities;
+        }
+
+        public async Task<IEnumerable<T>> GetAllBySearchInputOrderedAsPagesAsync<T>(
             string searchInput,
             string sortOrder,
             int page,
@@ -418,15 +422,6 @@
                                         .To<T>()
                                         .ToListAsync();
             }
-        }
-
-        public async Task<T> GetByIdAsync<T>(string id)
-        {
-            return await this.articlesRepository
-                .All()
-                .Where(x => x.Id == id)
-                .To<T>()
-                .FirstOrDefaultAsync();
         }
 
         public async Task CreateAsync(ArticleCreateInputModel input, string userId)
@@ -684,17 +679,6 @@
             return entities;
         }
 
-        public async Task<IEnumerable<T>> GetByNumberOrDescriptionAsync<T>(string searchInput)
-        {
-            var entities = await this.articlesRepository.AllAsNoTracking()
-                .Where(x => x.Number.Contains(searchInput.ToUpper())
-                        || x.Description.ToUpper().Contains(searchInput.ToUpper()))
-                .To<T>()
-                .ToListAsync();
-
-            return entities;
-        }
-
         // not in the Interface!
         public IEnumerable<T> ListArticleConformities<T>(string id)
         {
@@ -743,31 +727,27 @@
             return st.ToString().Trim();
         }
 
-
-
-
-
         // for delete:
-        //public IEnumerable<string> GetSuppliersIdsList(string articleId)
-        //{
-        //    return this.articlesRepository.All()
-        //        .Where(x => x.Id == articleId).Select(x => x.ArticleSuppliers.Select(s => s.Supplier.Id)).FirstOrDefault();
-        //}
-        //public int GetSuppliersCount(string articleId)
-        //{
-        //    return this.articlesRepository.All()
-        //        .Where(x => x.Id == articleId).Select(x => x.ArticleSuppliers).FirstOrDefault().Count;
-        //}
-        //public bool IsArticleFullyConfirmed(string articleId)
-        //{
-        //    return this.articlesRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == articleId)
-        //    .ArticleConformityTypes.All(x => x.Conformity.IsAccepted);
-        //}
-        //public IEnumerable<string> GetSuppliersNumbersList(string articleId)
-        //{
-        //    return this.articlesRepository.All()
-        //        .Where(x => x.Id == articleId).Select(x => x.ArticleSuppliers.Select(s => s.Supplier.Number)).FirstOrDefault();
-        //}
+        // public IEnumerable<string> GetSuppliersIdsList(string articleId)
+        // {
+        //     return this.articlesRepository.All()
+        //         .Where(x => x.Id == articleId).Select(x => x.ArticleSuppliers.Select(s => s.Supplier.Id)).FirstOrDefault();
+        // }
+        // public int GetSuppliersCount(string articleId)
+        // {
+        //     return this.articlesRepository.All()
+        //         .Where(x => x.Id == articleId).Select(x => x.ArticleSuppliers).FirstOrDefault().Count;
+        // }
+        // public bool IsArticleFullyConfirmed(string articleId)
+        // {
+        //     return this.articlesRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == articleId)
+        //     .ArticleConformityTypes.All(x => x.Conformity.IsAccepted);
+        // }
+        // public IEnumerable<string> GetSuppliersNumbersList(string articleId)
+        // {
+        //     return this.articlesRepository.All()
+        //         .Where(x => x.Id == articleId).Select(x => x.ArticleSuppliers.Select(s => s.Supplier.Number)).FirstOrDefault();
+        // }
         // private string FormatInputString(string stringToFormat) //it is 25% slower than the PascalCaseConverter
         // {
         //    return $"{stringToFormat.ToUpper()[0]}{stringToFormat.Substring(1).ToLower()}".Trim();

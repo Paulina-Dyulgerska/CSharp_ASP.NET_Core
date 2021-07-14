@@ -30,11 +30,11 @@
 
         public virtual Article Article { get; set; }
 
-        //[Required]
-        //[ForeignKey(nameof(ConformityFile))]
-        //public string ConformityFileId { get; set; }
+        // [Required]
+        // [ForeignKey(nameof(ConformityFile))]
+        // public string ConformityFileId { get; set; }
 
-        //public virtual ConformityFile ConformityFile { get; set; }
+        // public virtual ConformityFile ConformityFile { get; set; }
 
         // the file name is this.Id!
         public string FileExtension { get; set; }

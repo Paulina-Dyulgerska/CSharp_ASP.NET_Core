@@ -4,19 +4,6 @@
     this.ViewData["Title"] = "Conformity types";
 }
 
-@if (this.TempData.ContainsKey("Message"))
-{
-    <div class="alert alert-success" role="alert">
-        @this.TempData["Message"]
-    </div>
-}
-@if (this.TempData.ContainsKey("ErrorMessage"))
-{
-    <div class="alert alert-danger" role="alert">
-        @this.TempData["ErrorMessage"]
-    </div>
-}
-
 <section class="display-data-wrapper">
     <section class="display-data-container">
 
@@ -36,7 +23,7 @@
                                 </span>
                             </article>
                             <input type="search" class="form-control" asp-for="CurrentSearchInput"
-                                   size="36" id="searchConformityTypeInput"
+                                   size="46" id="searchConformityTypeInput"
                                    placeholder="Search for conformity type Nr. or description..."
                                    value="@Model.CurrentSearchInput">
                             <article class="input-group-append">

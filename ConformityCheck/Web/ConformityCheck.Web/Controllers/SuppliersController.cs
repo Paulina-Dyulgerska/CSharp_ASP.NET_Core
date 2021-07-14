@@ -2,7 +2,7 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
-
+    using ConformityCheck.Common;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels;
@@ -39,13 +39,11 @@
 
         // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        //public async Task<IActionResult> ListAll()
-        //{
-        //    var model = await this.suppliersService.GetAllAsNoTrackingOrderedAsync<SupplierFullInfoModel>();
-
-        //    return this.View(model);
-        //}
-
+        // public async Task<IActionResult> ListAll()
+        // {
+        //     var model = await this.suppliersService.GetAllAsNoTrackingOrderedAsync<SupplierFullInfoModel>();
+        //     return this.View(model);
+        // }
         public async Task<IActionResult> ListAll(PagingViewModel input)
         {
             if (input.PageNumber <= 0)
@@ -66,13 +64,14 @@
                 UserEmailSortParm = input.CurrentSortOrder == "userEmailDesc" ? "userEmail" : "userEmailDesc",
                 CurrentSortOrder = input.CurrentSortOrder,
                 CurrentSearchInput = input.CurrentSearchInput,
+                CurrentSortDirection = input.CurrentSortDirection == "sortDesc" ? "sortAsc" : "sortDesc",
             };
 
             if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
             {
                 model.ItemsCount = this.suppliersService.GetCount();
                 model.Suppliers = await this.suppliersService
-                                            .GetOrderedAsPagesAsync<SupplierFullInfoModel>(
+                                            .GetAllOrderedAsPagesAsync<SupplierFullInfoModel>(
                                                 input.CurrentSortOrder,
                                                 input.PageNumber,
                                                 input.ItemsPerPage);
@@ -82,7 +81,7 @@
                 input.CurrentSearchInput = input.CurrentSearchInput.Trim();
                 model.ItemsCount = this.suppliersService.GetCountBySearchInput(input.CurrentSearchInput);
                 model.Suppliers = await this.suppliersService
-                                            .GetByNumberOrNameOrderedAsPagesAsync<SupplierFullInfoModel>(
+                                            .GetAllBySearchInputOrderedAsPagesAsync<SupplierFullInfoModel>(
                                             input.CurrentSearchInput,
                                             input.CurrentSortOrder,
                                             input.PageNumber,
@@ -117,6 +116,9 @@
 
             await this.suppliersService.CreateAsync(input, user.Id);
 
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.SupplierCreatedSuccessfullyMessage;
+
             return this.RedirectToAction(nameof(this.ListAll));
         }
 
@@ -143,6 +145,9 @@
 
             await this.suppliersService.EditAsync(input, user.Id);
 
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.SupplierEditedsuccessfullyMessage;
+
             // TODO: return this.RedirectToAction(nameof(this.Details), "Suppliers", new { input.Id });
             return this.RedirectToAction(nameof(this.ListAll));
         }
@@ -150,7 +155,7 @@
         [Authorize]
         public async Task<IActionResult> Details(string id)
         {
-            //var model = await this.suppliersService.GetByIdAsync<SupplierDetailsModel>(id);
+            // var model = await this.suppliersService.GetByIdAsync<SupplierDetailsModel>(id);
             var model = await this.suppliersService.DetailsByIdAsync(id);
 
             return this.View(model);
@@ -163,10 +168,13 @@
 
             await this.suppliersService.DeleteAsync(id, user.Id);
 
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.SupplierDeletedsuccessfullyMessage;
+
             return this.View();
         }
 
-        //[Authorize]
+        // [Authorize]
         public async Task<IActionResult> GetArticlesById(string id)
         {
             var model = await this.suppliersService.GetArticlesByIdAsync<ArticleBySupplierModel>(id);
@@ -174,12 +182,11 @@
             return this.Json(model);
         }
 
-        //[Authorize]
+        // [Authorize]
         public async Task<IActionResult> GetByNumberOrName(
             string input)
         {
-            var model = await this.suppliersService
-                .GetByNumberOrNameAsync<SupplierExportModel>(input);
+            var model = await this.suppliersService.GetAllBySearchInputAsync<SupplierExportModel>(input);
 
             return this.Json(model);
         }

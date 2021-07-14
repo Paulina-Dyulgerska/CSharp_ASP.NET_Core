@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
@@ -31,6 +32,11 @@
             return this.substancesRepository.AllAsNoTracking().To<T>().ToList();
         }
 
+        public int GetCountBySearchInput(string searchInput)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Task<T> GetByIdAsync<T>(int id)
         {
             throw new System.NotImplementedException();
@@ -51,7 +57,22 @@
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage = 12)
+        public Task<IEnumerable<T>> GetAllOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<T>> GetAllBySearchInputAsync<T>(string searchInput)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<T>> GetAllBySearchInputOrderedAsPagesAsync<T>(string searchInput, string sortOrder, int page, int itemsPerPage)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<int> DeleteAsync(int id, string userId)
         {
             throw new System.NotImplementedException();
         }

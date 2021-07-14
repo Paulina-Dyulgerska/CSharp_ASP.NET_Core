@@ -10,13 +10,9 @@
     public interface IArticlesService : IService<string>
     {
         // TODO - add this method: int GetCountUnconfirmedByMainSupplier();
-        int GetCountBySearchInput(string searchInput);
-
         Task CreateAsync(ArticleCreateInputModel input, string userId);
 
         Task EditAsync(ArticleEditInputModel input, string userId);
-
-        Task<int> DeleteAsync(string id, string userId);
 
         Task AddSupplierAsync(ArticleManageSuppliersInputModel input);
 
@@ -35,16 +31,6 @@
         Task<IEnumerable<ConformityTypeExportModel>> GetConformityTypesByIdAndSupplierAsync(
             string articleId,
             string supplierId);
-
-        Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage);
-
-        Task<IEnumerable<T>> GetByNumberOrDescriptionOrderedAsPagesAsync<T>(
-            string searchInput,
-            string sortOrder,
-            int page,
-            int itemsPerPage);
-
-        Task<IEnumerable<T>> GetByNumberOrDescriptionAsync<T>(string searchInput); // where T : ArticleDetailsModel;
 
         // TODO: add this method: Task<IEnumerable<T>> GetUnconfirmedByMainSupplierAsPagesAsync<T>(int page, int itemsPerPage);
     }

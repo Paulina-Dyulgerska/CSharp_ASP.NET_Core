@@ -47,6 +47,15 @@
                 .Count();
         }
 
+        public async Task<T> GetByIdAsync<T>(int id)
+        {
+            return await this.conformityTypesRepository
+                .All()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             return await this.conformityTypesRepository.All().To<T>().ToListAsync();
@@ -70,11 +79,13 @@
             return conformityTypes;
         }
 
-        public async Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage = 12)
+        public async Task<IEnumerable<T>> GetAllOrderedAsPagesAsync<T>(
+            string sortOrder,
+            int page,
+            int itemsPerPage = 12)
         {
-            //var conformityTypes = await this.GetAllAsNoTrackingOrderedAsync<T>();
-            //return conformityTypes.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
-
+            // var conformityTypes = await this.GetAllAsNoTrackingOrderedAsync<T>();
+            // return conformityTypes.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
             switch (sortOrder)
             {
                 case "id":
@@ -161,16 +172,7 @@
             }
         }
 
-        public async Task<T> GetByIdAsync<T>(int id)
-        {
-            return await this.conformityTypesRepository
-                .All()
-                .Where(x => x.Id == id)
-                .To<T>()
-                .FirstOrDefaultAsync();
-        }
-
-        public async Task<IEnumerable<T>> GetByIdOrDescriptionAsync<T>(string searchInput)
+        public async Task<IEnumerable<T>> GetAllBySearchInputAsync<T>(string searchInput)
         {
             var entities = await this.conformityTypesRepository
                                         .AllAsNoTracking()
@@ -182,7 +184,7 @@
             return entities;
         }
 
-        public async Task<IEnumerable<T>> GetByIdOrDescriptionOrderedAsPagesAsync<T>(
+        public async Task<IEnumerable<T>> GetAllBySearchInputOrderedAsPagesAsync<T>(
             string searchInput,
             string sortOrder,
             int page,
@@ -296,10 +298,9 @@
 
         public async Task CreateAsync(ConformityTypeCreateInputModel input, string userId)
         {
-            //var userEntity = this.usersRepository.AllAsNoTracking()
+            // var userEntity = this.usersRepository.AllAsNoTracking()
             //    .FirstOrDefault(x => x.UserName == articleInputModel.UserId);
-            //take the user and record its id in the article, product, conformity, etc.
-
+            // take the user and record its id in the article, product, conformity, etc.
             var conformityType = new ConformityType
             {
                 Description = input.Description.ToUpper(),
@@ -337,7 +338,6 @@
             // {
             //    throw new ArgumentException($"Cannot delete conformity type with articles assigned to it.");
             // }
-
             this.conformityTypesRepository.Delete(entity);
 
             return await this.conformityTypesRepository.SaveChangesAsync();

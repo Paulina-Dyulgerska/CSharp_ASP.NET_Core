@@ -9,7 +9,7 @@
     using ConformityCheck.Web.ViewModels.ConformityTypes;
     using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class ConformityExportModel : IMapFrom<Conformity>
+    public class ConformityExportModel : IMapFrom<Conformity>, IMapFrom<ConformityExportModel>
     {
         [ConformityEntityAttribute]
         public string Id { get; set; }
@@ -34,10 +34,14 @@
 
         public string Comments { get; set; }
 
-        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
 
         public string FileUrl { get; set; }
 
         public string Extension { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
     }
 }

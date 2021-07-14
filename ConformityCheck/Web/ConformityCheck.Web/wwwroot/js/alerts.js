@@ -1,3 +1,3 @@
 ﻿setTimeout(function () {
     $('.alert').toggle();
-}, 3000);
+}, 8000);

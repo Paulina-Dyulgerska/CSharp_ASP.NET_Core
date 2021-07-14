@@ -153,7 +153,7 @@ blockquote {
 
 .content-wrapper {
     /* position: relative; */
-    max-width: 1240px;
+    max-width: 1440px;
     margin: 0 auto;
     display: flex;
     flex-direction: row;
@@ -184,6 +184,28 @@ blockquote {
 
 textarea {
     resize: none;
+}
+
+/*Alert bar styles --------------------------------------------------------------------------------------------*/
+.alert {
+    position: relative;
+    width: 100%;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
 }
 
 /*Navigation bar styles ---------------------------------------------------------------------------------------*/
@@ -921,29 +943,52 @@ input[type='checkbox']:checked {
         max-width: 100%;
     }
 
-.col-xs {
-    -ms-flex: 0 0 7%;
-    flex: 0 0 7%;
-    max-width: 7%;
-}
+    .table .col-xs {
+        -ms-flex: 0 0 7%;
+        flex: 0 0 7%;
+        max-width: 7%;
+    }
 
-.col-s {
-    -ms-flex: 0 0 10%;
-    flex: 0 0 10%;
-    max-width: 10%;
-}
+    .table .col-s {
+        -ms-flex: 0 0 10%;
+        flex: 0 0 10%;
+        max-width: 10%;
+    }
 
-.col-m {
-    -ms-flex: 0 0 15%;
-    flex: 0 0 15%;
-    max-width: 15%;
-}
+    .table .col-m {
+        -ms-flex: 0 0 15%;
+        flex: 0 0 15%;
+        max-width: 15%;
+    }
 
-.col-l {
-    -ms-flex: 0 0 25%;
-    flex: 0 0 25%;
-    max-width: 25%;
-}
+    .table .col-l {
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    .table .icon {
+        position: relative;
+    }
+
+        .table .icon:after {
+            font-family: "Font Awesome 5 Free";
+            content: "\f30c";
+            font-weight: 900;
+            font-style: normal;
+            position: absolute;
+            color: inherit;
+            right: -0.7rem;
+            -webkit-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+        }
+
+        .table .icon.sortDesc:after {
+            -ms-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
 
 @media screen and (max-width: 1050px) {
     .table td .text {
@@ -1002,10 +1047,10 @@ input[type='checkbox']:checked {
             font-weight: bold;
         }
 
-    .col-xs,
-    .col-s,
-    .col-m,
-    .col-l {
+    .table .col-xs,
+    .table .col-s,
+    .table .col-m,
+    .table .col-l {
         max-width: unset;
     }
 }

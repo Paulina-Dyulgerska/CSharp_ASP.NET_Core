@@ -1,0 +1,13 @@
+﻿@if (this.TempData.ContainsKey("Message"))
+{
+    <div class="alert alert-success" role="alert">
+        @this.TempData["Message"]
+    </div>
+}
+
+@if (this.TempData.ContainsKey("ErrorMessage"))
+{
+    <div class="alert alert-danger" role="alert">
+        @this.TempData["ErrorMessage"]
+    </div>
+}

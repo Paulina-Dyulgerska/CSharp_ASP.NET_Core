@@ -6,7 +6,6 @@
 
     public class SupplierEntityAttribute : ValidationAttribute
     {
-
         public SupplierEntityAttribute(bool allowNull = false)
         {
             this.ErrorMessage = $"No such supplier.";

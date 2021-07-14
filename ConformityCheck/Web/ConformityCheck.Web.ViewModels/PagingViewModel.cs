@@ -40,5 +40,7 @@
         public string CurrentSortOrder { get; set; }
 
         public string CreatedOnSortParm { get; set; }
+
+        public string CurrentSortDirection { get; set; }
     }
 }

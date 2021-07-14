@@ -1,9 +1,7 @@
-﻿@*@model IEnumerable<ArticleListAllModel>*@
-@*@model IEnumerable<ArticleDetailsModel>*@
-@model ArticlesListAllModel
+﻿@model ConformitiesListAllModel
 
 @{
-    this.ViewData["Title"] = "Articles";
+    this.ViewData["Title"] = "Conformity types";
 }
 
 <section class="display-data-wrapper">
@@ -14,7 +12,7 @@
                 <h4 class="title">
                     @this.ViewData["Title"]
                 </h4>
-                <span class="presented-items-info">(total of @Model.ItemsCount articles)</span>
+                <span class="presented-items-info">(total of @Model.ItemsCount conformities)</span>
             </article>
             <article class="tools-container">
                 <article class="search-container">
@@ -25,8 +23,8 @@
                                 </span>
                             </article>
                             <input type="search" class="form-control" asp-for="CurrentSearchInput"
-                                   size="46" id="searchAticleInput"
-                                   placeholder="Search for article number or description..."
+                                   size="46" id="searchConformityInput"
+                                   placeholder="Search for article, supplier or conformity description..."
                                    value="@Model.CurrentSearchInput">
                             <article class="input-group-append">
                                 <button type="submit" class="btn btn-search">
@@ -50,9 +48,9 @@
             <article class="search-results-container" id="suggestions" style="display:none">
                 <form method="get" asp-action="Details" asp-route-id="@Model.Id">
                     <article class="input-group">
-                        <select asp-for="Id" id="selectSearchArticleInput" class="form-control"></select>
+                        <select asp-for="Id" id="selectSearchConformityInput" class="form-control"></select>
                         <article class="input-group-append">
-                            <input type="submit" class="btn btn-secondary" value="Show article" />
+                            <input type="submit" class="btn btn-secondary" value="Show conformity type" />
                         </article>
                     </article>
                 </form>
@@ -63,7 +61,7 @@
             <article class="pagination-container">
                 <partial name="_PagingPartial" model="@Model" />
             </article>
-            <partial name="_ArticlesListAllTable.cshtml" model="@Model" />
+            <partial name="_ConformitiesListAllTable.cshtml" model="@Model" />
         </section>
 
         <section class="display-data-footer ">

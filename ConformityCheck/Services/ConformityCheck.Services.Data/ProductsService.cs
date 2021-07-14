@@ -32,6 +32,11 @@
             return this.productsRepository.AllAsNoTracking().To<T>().ToList();
         }
 
+        public int GetCountBySearchInput(string searchInput)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Task<T> GetByIdAsync<T>(string id)
         {
             throw new System.NotImplementedException();
@@ -52,7 +57,22 @@
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage = 12)
+        public Task<IEnumerable<T>> GetAllOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<T>> GetAllBySearchInputAsync<T>(string searchInput)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<T>> GetAllBySearchInputOrderedAsPagesAsync<T>(string searchInput, string sortOrder, int page, int itemsPerPage)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<int> DeleteAsync(string id, string userId)
         {
             throw new System.NotImplementedException();
         }

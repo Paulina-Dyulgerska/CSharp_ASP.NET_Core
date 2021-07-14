@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-
+    using ConformityCheck.Common;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels;
@@ -65,13 +65,14 @@
                 ModifiedOnSortParm = input.CurrentSortOrder == "modifiedOnDesc" ? "modifiedOn" : "modifiedOnDesc",
                 CurrentSortOrder = input.CurrentSortOrder,
                 CurrentSearchInput = input.CurrentSearchInput,
+                CurrentSortDirection = input.CurrentSortDirection == "sortDesc" ? "sortAsc" : "sortDesc",
             };
 
             if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
             {
                 model.ItemsCount = this.conformityTypeService.GetCount();
                 model.ConformityTypes = await this.conformityTypeService
-                                            .GetOrderedAsPagesAsync<ConformityTypeExportModel>(
+                                            .GetAllOrderedAsPagesAsync<ConformityTypeExportModel>(
                                                 input.CurrentSortOrder,
                                                 input.PageNumber,
                                                 input.ItemsPerPage);
@@ -81,7 +82,7 @@
                 input.CurrentSearchInput = input.CurrentSearchInput.Trim();
                 model.ItemsCount = this.conformityTypeService.GetCountBySearchInput(input.CurrentSearchInput);
                 model.ConformityTypes = await this.conformityTypeService
-                                            .GetByIdOrDescriptionOrderedAsPagesAsync<ConformityTypeExportModel>(
+                                            .GetAllBySearchInputOrderedAsPagesAsync<ConformityTypeExportModel>(
                                             input.CurrentSearchInput,
                                             input.CurrentSortOrder,
                                             input.PageNumber,
@@ -111,7 +112,8 @@
 
             await this.conformityTypeService.CreateAsync(input, userId);
 
-            this.TempData["Message"] = "Conformity type created successfully.";
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ConformityTypeCreatedSuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.ListAll));
         }
@@ -151,6 +153,9 @@
 
             await this.conformityTypeService.EditAsync(input, user.Id);
 
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ConformityTypeEditedsuccessfullyMessage;
+
             // TODO: return this.RedirectToAction(nameof(this.Details), "ConformityTypes", new { input.Id });
             return this.RedirectToAction(nameof(this.ListAll));
         }
@@ -172,13 +177,16 @@
 
             await this.conformityTypeService.DeleteAsync(input.Id, user.Id);
 
-            return this.View();
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ConformityTypeDeletedsuccessfullyMessage;
+
+            return this.RedirectToAction(nameof(this.ListAll));
         }
 
-        //[Authorize]
+        // [Authorize]
         public async Task<IActionResult> GetByIdOrDescription(string input)
         {
-            var model = await this.conformityTypeService.GetByIdOrDescriptionAsync<ConformityTypeExportModel>(input);
+            var model = await this.conformityTypeService.GetAllBySearchInputAsync<ConformityTypeExportModel>(input);
 
             return this.Json(model);
         }

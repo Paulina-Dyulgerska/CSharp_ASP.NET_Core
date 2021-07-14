@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using ConformityCheck.Common;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels;
@@ -62,13 +63,14 @@
                 AllSuppliersAllConfirmedSortParm = input.CurrentSortOrder == "allSuppliersAllConfirmedDesc" ? "allSuppliersAllConfirmed" : "allSuppliersAllConfirmedDesc",
                 CurrentSortOrder = input.CurrentSortOrder,
                 CurrentSearchInput = input.CurrentSearchInput,
+                CurrentSortDirection = input.CurrentSortDirection == "sortDesc" ? "sortAsc" : "sortDesc",
             };
 
             if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
             {
                 model.ItemsCount = this.articlesService.GetCount();
                 model.Articles = await this.articlesService
-                                            .GetOrderedAsPagesAsync<ArticleDetailsModel>(
+                                            .GetAllOrderedAsPagesAsync<ArticleDetailsModel>(
                                                 input.CurrentSortOrder,
                                                 input.PageNumber,
                                                 input.ItemsPerPage);
@@ -78,7 +80,7 @@
                 input.CurrentSearchInput = input.CurrentSearchInput.Trim();
                 model.ItemsCount = this.articlesService.GetCountBySearchInput(input.CurrentSearchInput);
                 model.Articles = await this.articlesService
-                                            .GetByNumberOrDescriptionOrderedAsPagesAsync<ArticleDetailsModel>(
+                                            .GetAllBySearchInputOrderedAsPagesAsync<ArticleDetailsModel>(
                                             input.CurrentSearchInput,
                                             input.CurrentSortOrder,
                                             input.PageNumber,
@@ -115,7 +117,8 @@
 
             await this.articlesService.CreateAsync(input, user.Id);
 
-            this.TempData["Message"] = "Article added successfully.";
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ArticleCreatedSuccessfullyMessage;
 
             // return this.Json(input);
             return this.RedirectToAction(nameof(this.ListAll));
@@ -164,7 +167,8 @@
 
             await this.articlesService.EditAsync(input, user.Id);
 
-            this.TempData["Message"] = "Article edited successfully.";
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ArticleEditedsuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
@@ -192,7 +196,8 @@
 
             await this.articlesService.AddSupplierAsync(input);
 
-            this.TempData["Message"] = "Article edited successfully.";
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ArticleEditedsuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
@@ -218,7 +223,8 @@
 
             await this.articlesService.ChangeMainSupplierAsync(input);
 
-            this.TempData["Message"] = "Article edited successfully.";
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ArticleEditedsuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
@@ -244,7 +250,9 @@
 
             await this.articlesService.RemoveSupplierAsync(input);
 
-            this.TempData["Message"] = "Article edited successfully.";
+
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ArticleEditedsuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
@@ -270,7 +278,9 @@
 
             await this.articlesService.AddConformityTypeAsync(input);
 
-            this.TempData["Message"] = "Article edited successfully.";
+
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ArticleEditedsuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
@@ -296,7 +306,9 @@
 
             await this.articlesService.RemoveConformityTypesAsync(input);
 
-            this.TempData["Message"] = "Article edited successfully.";
+
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ArticleEditedsuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
@@ -307,6 +319,9 @@
             var user = await this.userManager.GetUserAsync(this.User);
 
             await this.articlesService.DeleteAsync(id, user.Id);
+
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ArticleDeletedsuccessfullyMessage;
 
             return this.View();
         }
@@ -339,11 +354,9 @@
         }
 
         //[Authorize]
-        public async Task<IActionResult> GetByNumberOrDescription(
-            string input)
+        public async Task<IActionResult> GetByNumberOrDescription(string input)
         {
-            var model = await this.articlesService
-                .GetByNumberOrDescriptionAsync<ArticleExportModel>(input);
+            var model = await this.articlesService.GetAllBySearchInputAsync<ArticleExportModel>(input);
 
             return this.Json(model);
         }

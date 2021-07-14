@@ -5,10 +5,11 @@
     using System.Runtime.CompilerServices;
     using System.Security.Claims;
     using System.Threading.Tasks;
-
+    using ConformityCheck.Common;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Services.Messaging;
+    using ConformityCheck.Web.ViewModels;
     using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.Conformities;
     using Microsoft.AspNetCore.Authorization;
@@ -54,6 +55,58 @@
             this.conformityFilesDirectory = $"{this.environment.WebRootPath}/files";
         }
 
+        public async Task<IActionResult> ListAll(PagingViewModel input)
+        {
+            if (input.PageNumber <= 0)
+            {
+                // loads StatusCodeError404.cshtm
+                return this.NotFound();
+            }
+
+            var model = new ConformitiesListAllModel
+            {
+                ItemsPerPage = input.ItemsPerPage,
+                PageNumber = input.PageNumber,
+                PagingControllerActionCallName = nameof(this.ListAll),
+                CreatedOnSortParm = string.IsNullOrEmpty(input.CurrentSortOrder) ? "createdOn" : string.Empty,
+                ArticleNumberSortParam = input.CurrentSortOrder == "articleNumberDesc" ? "articleNumber" : "articleNumberDesc",
+                ArticleDescriptionSortParam = input.CurrentSortOrder == "articleDescriptionDesc" ? "articleDescription" : "articleDescriptionDesc",
+                SupplierNumberSortParam = input.CurrentSortOrder == "supplierNumberDesc" ? "supplierNumber" : "articsupplierNumberDescleCountDesc",
+                SupplierNameSortParam = input.CurrentSortOrder == "supplierNameDesc" ? "supplierName" : "supplierNameDesc",
+                ConformityTypeDescriptionSortParam = input.CurrentSortOrder == "conformityTypeDescriptionSortParamDesc" ?
+                                                         "conformityTypeDescriptionSortParam" : "conformityTypeDescriptionSortParamDesc",
+                IsAcceptedSortParam = input.CurrentSortOrder == "isAsseptedDesc" ? "isAssepted" : "isAsseptedDesc",
+                IsValidSortParam = input.CurrentSortOrder == "isValidDesc" ? "isValid" : "isValidDesc",
+                UserEmailSortParm = input.CurrentSortOrder == "userEmailDesc" ? "userEmail" : "userEmailDesc",
+                CurrentSortOrder = input.CurrentSortOrder,
+                CurrentSearchInput = input.CurrentSearchInput,
+                CurrentSortDirection = input.CurrentSortDirection == "sortDesc" ? "sortAsc" : "sortDesc",
+            };
+
+            if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
+            {
+                model.ItemsCount = this.conformitiesService.GetCount();
+                model.Conformities = await this.conformitiesService
+                                            .GetAllOrderedAsPagesAsync<ConformityExportModel>(
+                                                input.CurrentSortOrder,
+                                                input.PageNumber,
+                                                input.ItemsPerPage);
+            }
+            else
+            {
+                input.CurrentSearchInput = input.CurrentSearchInput.Trim();
+                model.ItemsCount = this.conformitiesService.GetCountBySearchInput(input.CurrentSearchInput);
+                model.Conformities = await this.conformitiesService
+                                            .GetAllBySearchInputOrderedAsPagesAsync<ConformityExportModel>(
+                                            input.CurrentSearchInput,
+                                            input.CurrentSortOrder,
+                                            input.PageNumber,
+                                            input.ItemsPerPage);
+            }
+
+            return this.View(model);
+        }
+
         [Authorize]
         public IActionResult Create()
         {
@@ -77,7 +130,8 @@
 
             await this.conformitiesService.CreateAsync(input, user.Id, this.conformityFilesDirectory);
 
-            this.TempData["Message"] = "Conformity added successfully.";
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ConformityCreatedSuccessfullyMessage;
 
             // return this.Json(input);
             // TODO: Redirect to conformity info page
@@ -105,7 +159,7 @@
                 return this.View(model);
             }
 
-            //var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await this.userManager.GetUserAsync(this.User);
 
             try
@@ -114,14 +168,14 @@
             }
             catch (Exception ex)
             {
-                //da validiram s attribute i da ne prawq tezi gluposti tuk:!!!!!
-
+                // da validiram s attribute i da ne prawq tezi gluposti tuk:!!!!!
                 this.ModelState.AddModelError(string.Empty, ex.Message);
 
                 return this.View(input);
             }
 
-            this.TempData["Message"] = "Conformity added successfully.";
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ConformityEditedsuccessfullyMessage;
 
             return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id });
         }
@@ -150,7 +204,8 @@
 
             await this.conformitiesService.CreateAsync(input, user.Id, this.conformityFilesDirectory);
 
-            this.TempData["Message"] = "Conformity added successfully.";
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ConformityEditedsuccessfullyMessage;
 
             if (input.CallerViewName == SuppliersCallerViewName)
             {
@@ -163,7 +218,7 @@
         [Authorize]
         public async Task<IActionResult> Edit(ConformityEditGetModel input)
         {
-            var model = await this.conformitiesService.GetForEditAsync<ConformityEditInputModel>(input);
+            var model = await this.conformitiesService.GetByIdAsync<ConformityEditInputModel>(input.Id);
 
             return this.View(model);
         }
@@ -175,45 +230,37 @@
             // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (!this.ModelState.IsValid)
             {
-                var getModel = new ConformityEditGetModel
-                {
-                    ArticleId = input.ArticleId,
-                    SupplierId = input.SupplierId,
-                    ConformityTypeId = input.ConformityTypeId,
-                    Id = input.Id,
-                };
-
-                var model = await this.conformitiesService.GetForEditAsync<ConformityEditInputModel>(getModel);
+                var model = await this.conformitiesService.GetByIdAsync<ConformityEditInputModel>(input.Id);
 
                 return this.View(model);
             }
 
-            //var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await this.userManager.GetUserAsync(this.User);
 
             // Not needed since the validation is not in the service but in with an attribute done:
-            //try
-            //{
-            //    await this.conformitiesService.EditAsync(input, user.Id, this.conformityFilesDirectory);
-            //}
-            //catch (Exception ex)
-            //{
-            //    this.ModelState.AddModelError(string.Empty, ex.Message);
-            //    //da validiram s attribute i da ne prawq tezi gluposti tuk:!!!!!
-            //    var getModel = new ConformityEditGetModel
-            //    {
-            //        ArticleId = input.ArticleId,
-            //        SupplierId = input.SupplierId,
-            //        ConformityTypeId = input.ConformityTypeId,
-            //        Id = input.Id,
-            //    };
-            //    var model = await this.conformitiesService.GetForEditAsync(getModel);
-            //    return this.View(model);
-            //}
-
+            // try
+            // {
+            //     await this.conformitiesService.EditAsync(input, user.Id, this.conformityFilesDirectory);
+            // }
+            // catch (Exception ex)
+            // {
+            //     this.ModelState.AddModelError(string.Empty, ex.Message);
+            //     //da validiram s attribute i da ne prawq tezi gluposti tuk:!!!!!
+            //     var getModel = new ConformityEditGetModel
+            //     {
+            //         ArticleId = input.ArticleId,
+            //         SupplierId = input.SupplierId,
+            //         ConformityTypeId = input.ConformityTypeId,
+            //         Id = input.Id,
+            //     };
+            //     var model = await this.conformitiesService.GetForEditAsync(getModel);
+            //     return this.View(model);
+            // }
             await this.conformitiesService.EditAsync(input, user.Id, this.conformityFilesDirectory);
 
-            this.TempData["Message"] = "Conformity added successfully.";
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ConformityEditedsuccessfullyMessage;
 
             if (input.CallerViewName == SuppliersCallerViewName)
             {
@@ -238,7 +285,8 @@
 
             await this.conformitiesService.DeleteAsync(input.Id, user.Id);
 
-            this.TempData["Message"] = "Conformity deleted successfully.";
+            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
+                GlobalConstants.ConformityDeletedsuccessfullyMessage;
 
             if (input.CallerViewName == SuppliersCallerViewName)
             {
@@ -267,6 +315,13 @@
 
             this.Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
             return this.File(filePath, System.Net.Mime.MediaTypeNames.Application.Pdf);
+        }
+
+        public async Task<IActionResult> GetByArticleOrSupplierOrConformityType(string searchInput)
+        {
+            var model = await this.conformitiesService.GetAllBySearchInputAsync<ConformityExportModel>(searchInput);
+
+            return this.Json(model);
         }
     }
 }

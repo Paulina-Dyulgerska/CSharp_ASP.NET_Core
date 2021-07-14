@@ -16,10 +16,11 @@
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.NumberSortParm"
-                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
                         <span class="text">Article Nr.</span>
-                        <span class="icon text-gray-300">
-                            <i class="fas fa-arrows-alt-v"></i>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
                         </span>
                     </a>
                 </th>
@@ -27,10 +28,11 @@
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.DescriptionSortParm"
-                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
                         <span class="text">Description</span>
-                        <span class="icon text-gray-300">
-                            <i class="fas fa-arrows-alt-v"></i>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
                         </span>
                     </a>
                 </th>
@@ -38,10 +40,11 @@
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.MainSupplierNumberSortParm"
-                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
                         <span class="text">MS Nr.</span>
-                        <span class="icon text-gray-300">
-                            <i class="fas fa-arrows-alt-v"></i>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
                         </span>
                     </a>
                 </th>
@@ -49,10 +52,11 @@
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.MainSupplierNameSortParm"
-                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
                         <span class="text">MS Name</span>
-                        <span class="icon text-gray-300">
-                            <i class="fas fa-arrows-alt-v"></i>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
                         </span>
                     </a>
                 </th>
@@ -60,10 +64,11 @@
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.AllSuppliersAllConfirmedSortParm"
-                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
                         <span class="text">Conf. AS</span>
-                        <span class="icon text-gray-300">
-                            <i class="fas fa-arrows-alt-v"></i>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
                         </span>
                     </a>
                 </th>
@@ -71,10 +76,11 @@
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.MainSupplierAllConfirmedSortParm"
-                       asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
                         <span class="text">Conf. MS</span>
-                        <span class="icon text-gray-300">
-                            <i class="fas fa-arrows-alt-v"></i>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
                         </span>
                     </a>
                 </th>

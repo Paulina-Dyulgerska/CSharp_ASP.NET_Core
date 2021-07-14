@@ -63,8 +63,8 @@
                             <a class="" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
                         </li>
                     }
-                    <partial name="_LoginPartial" />
                 </ul>
+                <partial name="_LoginPartial" />
             </nav>
         </section>
     </header>
@@ -75,6 +75,7 @@
             <section class="submenu">
                 @await RenderSectionAsync("SubMenu", required: false)
             </section>
+            <partial name="_MessageViewPartial" />
             @this.RenderBody()
         </section>
     </main>
