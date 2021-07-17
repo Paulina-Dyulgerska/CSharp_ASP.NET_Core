@@ -208,7 +208,7 @@ textarea {
     border-color: #c3e6cb;
 }
 
-/*Navigation bar styles ---------------------------------------------------------------------------------------*/
+/*Header navigation bar styles ---------------------------------------------------------------------------------------*/
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
@@ -364,6 +364,10 @@ textarea {
     }
 
 @media screen and (max-width: 600px) {
+    .header-wrapper {
+        position: relative;
+    }
+
     .header-content {
         flex-direction: column;
         flex-wrap: wrap;
@@ -438,6 +442,77 @@ textarea {
     }
 }
 
+/* Submenu navigation bar styles -------------------------------------------------------------------------------*/
+.submenu .nav {
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    flex-basis: 80%;
+    flex-grow: 1;
+}
+
+.submenu .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+    .submenu .nav-list .list-item {
+        position: relative;
+        background: #e5effd;
+        border-radius: 4px;
+        padding: 5px 5px;
+        margin: 5px;
+    }
+
+.submenu .quick-nav-submenu {
+    display: none;
+    position: absolute;
+    z-index: 99999;
+    background: #e5effd;
+    border-radius: 4px;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.25);
+}
+
+    .submenu .quick-nav-submenu:after {
+        z-index: -1;
+        content: " ";
+        display: block;
+        top: -1rem;
+        left: 2rem;
+        position: absolute;
+        width: 2rem;
+        height: 2rem;
+        transform: rotate(-45deg);
+        background: inherit;
+        box-shadow: 1px 0 0 0 rgba(0, 0, 0, 0.25);
+    }
+
+.submenu .nav-list .icon-down {
+    position: relative;
+}
+
+    .submenu .nav-list .icon-down:after {
+        content: "\f078";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        font-style: normal;
+        position: relative;
+        color: inherit;
+        right: -0.3rem;
+        top: 0.1rem;
+    }
+
+@media screen and (max-width: 600px) {
+    .submenu {
+        flex-basis: 95%;
+        padding: 0 10px;
+    }
+
+        .submenu .nav-list {
+            flex-direction: column;
+        }
+}
 
 /* Footer styles -----------------------------------------------------------------------------------------------*/
 .footer-wrapper {
@@ -669,7 +744,6 @@ input[type='checkbox']:checked {
     /* color: #2b495d; */
     background: #64F4AC;
     /* background: #0e2979; */
-    margin-top: 10px;
     cursor: pointer;
     opacity: 1;
     transition: all .3s linear;
@@ -740,6 +814,7 @@ input[type='checkbox']:checked {
         background-color: #e5effd;
     }
 
+.btn-add,
 .btn-details,
 .btn-edit,
 .btn-delete,
@@ -749,6 +824,7 @@ input[type='checkbox']:checked {
     color: #E6F4F1;
 }
 
+    .btn-add:before,
     .btn-details:before,
     .btn-edit:before,
     .btn-delete:before,
@@ -759,6 +835,14 @@ input[type='checkbox']:checked {
         position: absolute;
         color: inherit;
         left: 0.3rem;
+    }
+
+.btn-add {
+    background-color: #149ea9;
+}
+
+    .btn-add:before {
+        content: '\f067';
     }
 
 .btn-details {
@@ -793,11 +877,6 @@ input[type='checkbox']:checked {
     .btn-login:before {
         content: '\f2f6';
     }
-
-.btns-container {
-    display: flex;
-    justify-content: center;
-}
 
 /*Dispay data styles -----------------------------------------------------------------------------------*/
 .display-data-wrapper {
@@ -869,11 +948,17 @@ input[type='checkbox']:checked {
     /*display: flex;*/
 }
 
-/* Item group styles -------------------------------------------------------------------------------------*/
+/* Form input item group styles -------------------------------------------------------------------------------------*/
 .input-group {
     display: flex;
     align-items: center;
     margin: 10px;
+}
+
+.form-data-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .input-group-append {
@@ -882,6 +967,8 @@ input[type='checkbox']:checked {
 
 .form-control {
     align-self: stretch;
+    display: flex;
+    align-items: center;
     border-radius: 4px;
     border: 0px solid #ededed;
     padding: .5rem .75rem;
@@ -927,6 +1014,7 @@ input[type='checkbox']:checked {
 
     .table tr {
         display: flex;
+        align-items: stretch;
     }
 
     .table tbody tr:hover {
@@ -944,9 +1032,9 @@ input[type='checkbox']:checked {
     }
 
     .table .col-xs {
-        -ms-flex: 0 0 7%;
-        flex: 0 0 7%;
-        max-width: 7%;
+        -ms-flex: 0 0 5%;
+        flex: 0 0 5%;
+        max-width: 5%;
     }
 
     .table .col-s {

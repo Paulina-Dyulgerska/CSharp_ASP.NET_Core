@@ -138,6 +138,12 @@
             return this.RedirectToAction("ListAll", ArticlesCallerViewName);
         }
 
+        //[Authorize]
+        //public async Task<IActionResult> Details(string id)
+        //{
+        //    return this.View();
+        //}
+
         [Authorize]
         public async Task<IActionResult> AddToArticleConformityType(string id)
         {

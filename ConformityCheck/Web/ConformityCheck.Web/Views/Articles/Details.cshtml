@@ -9,14 +9,12 @@
     //var substances = Model.SubstancesAvailable.Select(x => new SelectListItem($"{x.CASNumber} - {x.Description}", x.Id.ToString()));
 }
 
+
+
+
+
 <h3>@this.ViewData["Title"]</h3>
 
-@if (this.TempData.ContainsKey("Message"))
-{
-    <div class="alert alert-success" role="alert">
-        @this.TempData["Message"]
-    </div>
-}
 <details>
     <summary>Some details</summary>
     <p>More info about the details.</p>

@@ -10,7 +10,8 @@
 <h3>@this.ViewData["Title"]</h3>
 
 <div>
-    <form method="post" asp-controller="Conformities" asp-action="AddToArticleConformityType" class="col-md-6 mx-auto" enctype="multipart/form-data">
+    <form method="post" asp-controller="Conformities" asp-action="AddToArticleConformityType" 
+          class="col-md-6 mx-auto" enctype="multipart/form-data">
         <div asp-validation-summary="All" class="text-danger"></div>
 
         <input asp-for="Id" hidden value="@Model.Id" />

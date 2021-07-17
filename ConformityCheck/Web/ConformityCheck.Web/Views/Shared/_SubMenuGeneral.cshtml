@@ -1,21 +1,31 @@
-﻿    <article class="btns-container">
+﻿<nav>
+    <ul class="btns-container nav-list">
         @if (this.User.Identity.IsAuthenticated)
         {
-            <a asp-controller="Articles" asp-action="Create" class="btn btn-cta">
-                @*<i class="fab fa-creative-commons-remix"></i>*@ 
-                Create article
-            </a>
-            <a asp-controller="Suppliers" asp-action="Create" class="btn btn-cta">
-                @*<i class="fab fa-creative-commons-remix"></i>*@ 
-                Create supplier
-            </a>
-            <a asp-controller="ConformityTypes" asp-action="Create" class="btn btn-cta">
-                @*<i class="fab fa-creative-commons-remix"></i>*@
-                Create conformity type
-            </a>
-            <a asp-controller="Conformities" asp-action="Create" class="btn btn-cta">
-                @*<i class="fab fa-creative-commons-remix"></i>*@ 
-                Create conformity
-            </a>
+            <li>
+                <a asp-controller="Articles" asp-action="Create" class="btn btn-cta">
+                    @*<i class="fab fa-creative-commons-remix"></i>*@
+                    Create article
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Suppliers" asp-action="Create" class="btn btn-cta">
+                    @*<i class="fab fa-creative-commons-remix"></i>*@
+                    Create supplier
+                </a>
+            </li>
+            <li>
+                <a asp-controller="ConformityTypes" asp-action="Create" class="btn btn-cta">
+                    @*<i class="fab fa-creative-commons-remix"></i>*@
+                    Create conformity type
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Conformities" asp-action="Create" class="btn btn-cta">
+                    @*<i class="fab fa-creative-commons-remix"></i>*@
+                    Create conformity
+                </a>
+            </li>
         }
-    </article>
+    </ul>
+</nav>

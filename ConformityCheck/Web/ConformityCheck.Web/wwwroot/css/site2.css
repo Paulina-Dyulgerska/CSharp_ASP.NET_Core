@@ -180,7 +180,7 @@ table {
         text-overflow: ellipsis;*/
     }
 
-#dataTable > tbody > tr:hover td {
+.dataTable > tbody > tr:hover td {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.075);
 }

@@ -38,7 +38,7 @@ $('#searchInput').on('keyup', filterTableByTwoColumns);
 function filterTableByTwoColumns(event) {
     //console.log(event);
     var filter = event.target.value.toUpperCase();
-    var rows = document.querySelector("#dataTable tbody").rows;
+    var rows = document.querySelector(".dataTable tbody").rows;
     //console.log(rows);
     for (var i = 0; i < rows.length; i++) {
         var firstCol = rows[i].cells[0].textContent.toUpperCase();
@@ -56,7 +56,7 @@ function filterTableByTwoColumns(event) {
 
 //// color rows:
 //$(document).ready(function () {
-//    var rows = $('#dataTable > tbody > tr');
+//    var rows = $('.dataTable > tbody > tr');
 //    for (var i = 0; i < rows.length; i++) {
 //        if (rows[i].getElementsByClassName('isConfirmed')[0].textContent === 'True') {
 //            rows[i].classList.add('table-success');
@@ -67,7 +67,7 @@ function filterTableByTwoColumns(event) {
 //});
 
 //// color rows:
-//document.querySelectorAll('#dataTable > tbody > tr').forEach(r => {
+//document.querySelectorAll('.dataTable > tbody > tr').forEach(r => {
 //    r.addEventListener('load', colorTheRow(r), false);
 //})
 //function colorTheRow(r) {
@@ -82,7 +82,7 @@ function filterTableByTwoColumns(event) {
 
 //// row click:
 //$(document).ready(function addRowHandlers() {
-//    var table = document.querySelector("#dataTable");
+//    var table = document.querySelector(".dataTable");
 //    table.onclick = ({ target }) => {
 //        console.log(this);
 //        if (target.parentElement.localName === "tr") {
@@ -114,9 +114,11 @@ function filterTableByTwoColumns(event) {
 //});
 
 //// row click:
-$("#dataTable").click(function addRowHandlers({ target }) {
+$(".dataTable").click(function addRowHandlers({ target }) {
+    console.log("hi")
     if (target.parentElement.localName === "tr") {
         const link = target.parentElement.querySelector("a.btn-details");
+        console.log(link);
         if (link) {
             link.click();
         }
