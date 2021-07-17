@@ -70,7 +70,7 @@
             {
                 model.ItemsCount = this.articlesService.GetCount();
                 model.Articles = await this.articlesService
-                                            .GetAllOrderedAsPagesAsync<ArticleDetailsModel>(
+                                            .GetAllOrderedAsPagesAsync<ArticleDetailsExportModel>(
                                                 input.CurrentSortOrder,
                                                 input.PageNumber,
                                                 input.ItemsPerPage);
@@ -80,7 +80,7 @@
                 input.CurrentSearchInput = input.CurrentSearchInput.Trim();
                 model.ItemsCount = this.articlesService.GetCountBySearchInput(input.CurrentSearchInput);
                 model.Articles = await this.articlesService
-                                            .GetAllBySearchInputOrderedAsPagesAsync<ArticleDetailsModel>(
+                                            .GetAllBySearchInputOrderedAsPagesAsync<ArticleDetailsExportModel>(
                                             input.CurrentSearchInput,
                                             input.CurrentSortOrder,
                                             input.PageNumber,
@@ -129,7 +129,7 @@
         {
             //trqbwa li da checkwam v DB za wsqko edno id, dali go imam v bazata?
 
-            var model = await this.articlesService.GetByIdAsync<ArticleEditInputModel>(id);
+            var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(id);
 
             return this.View(model);
         }
@@ -141,25 +141,19 @@
             // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (!this.ModelState.IsValid)
             {
-                var model = await this.articlesService.GetByIdAsync<ArticleEditInputModel>(input.Id);
-                input.ConformityTypes = model.ConformityTypes;
-                input.Conformities = model.Conformities;
-                input.Suppliers = model.Suppliers;
-                input.Substances = model.Substances;
-                input.Products = model.Products;
+                var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(input.Id);
+
+                return this.View(model);
 
                 //// not needed at the model with the current model
-                //var propertyNumber = nameof(input.Number);
-
-                //if (this.ModelState.Keys.Contains(propertyNumber)
+                // var propertyNumber = nameof(input.Number);
+                // if (this.ModelState.Keys.Contains(propertyNumber)
                 //    && this.ModelState[propertyNumber].AttemptedValue.ToString() == model.Number)
-                //{
+                // {
                 //    this.ModelState.Remove(propertyNumber);
-
                 //    return await this.Edit(input);
-                //}
-
-                //return this.View(input);
+                // }
+                // return this.View(input);
             }
 
             // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -250,7 +244,6 @@
 
             await this.articlesService.RemoveSupplierAsync(input);
 
-
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
                 GlobalConstants.ArticleEditedsuccessfullyMessage;
 
@@ -277,7 +270,6 @@
             }
 
             await this.articlesService.AddConformityTypeAsync(input);
-
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
                 GlobalConstants.ArticleEditedsuccessfullyMessage;
@@ -306,7 +298,6 @@
 
             await this.articlesService.RemoveConformityTypesAsync(input);
 
-
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
                 GlobalConstants.ArticleEditedsuccessfullyMessage;
 
@@ -329,12 +320,12 @@
         [Authorize]
         public async Task<IActionResult> Details(string id)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleDetailsModel>(id);
+            var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(id);
 
             return this.View(model);
         }
 
-        //[Authorize]
+        // [Authorize]
         public async Task<IActionResult> GetSuppliersById(string id)
         {
             var model = await this.articlesService.GetSuppliersByIdAsync<SupplierExportModel>(id);
@@ -342,7 +333,7 @@
             return this.Json(model);
         }
 
-        //[Authorize]
+        // [Authorize]
         public async Task<IActionResult> GetConformityTypesByIdAndSupplier(
             string articleId,
             string supplierId)
@@ -353,7 +344,7 @@
             return this.Json(model);
         }
 
-        //[Authorize]
+        // [Authorize]
         public async Task<IActionResult> GetByNumberOrDescription(string input)
         {
             var model = await this.articlesService.GetAllBySearchInputAsync<ArticleExportModel>(input);

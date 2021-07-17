@@ -147,7 +147,7 @@
             return articles;
         }
 
-        public async Task<IEnumerable<T>> GetAllOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage) // where T : ArticleDetailsModel
+        public async Task<IEnumerable<T>> GetAllOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage) // where T : ArticleDetailsExportModel
         {
             switch (sortOrder)
             {

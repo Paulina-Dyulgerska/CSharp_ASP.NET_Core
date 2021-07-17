@@ -1,5 +1,5 @@
 ﻿@using ConformityCheck.Web.ViewModels.Articles
-@model ArticleEditInputModel
+@model ArticleDetailsExportModel
 @{
     this.ViewData["Title"] = "Edit article";
     //var suppliers = Model.SuppliersAvailable.Select(x => new SelectListItem(x.NumberAndName, x.Id));
@@ -24,19 +24,13 @@
                 <details>
                     <summary>Article details</summary>
                     <p>
-                        Article number: @Model.Number
+                        Article's creation date: @Model.CreatedOn
                     </p>
                     <p>
-                        Article's description: @Model.Description
+                        Article's last modify date: @Model.ModifiedOn
                     </p>
                     <p>
-                        Article's creation date: TODO
-                    </p>
-                    <p>
-                        Article's last modify date: TODO
-                    </p>
-                    <p>
-                        Article's creator name: TODO
+                        Article's creator name: @Model.UserEmail
                     </p>
                 </details>
             </article>
@@ -44,22 +38,34 @@
 
         <section class="display-data-body">
             <article class="form-data-container">
-                <p>
-                    Article number: @Model.Number
-                </p>
-                <p>
-                    Article's description: @Model.Description
-                </p>
+                <article>
+                    <p>
+                        Article number:
+                        <strong>@Model.Number</strong>
+                    </p>
+                    <p>
+                        Article's description: 
+                        <strong>@Model.Description</strong>
+                    </p>
+                    <p>
+                        Article confirmed by main supplier:
+                        <strong>@(Model.IsConfirmedByMainSupplier ? "Yes" : "No")</strong>
+                    </p>
+                    <p>
+                        Article confirmed by all suppliers: 
+                        <strong>@(Model.IsConfirmed ? "Yes" : "No")</strong>
+                    </p>
+                </article>
                 <form method="post" class="input-group">
                     @*enctype is multipart/form-data if uploading a file, do not forget to change it*@
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <input asp-for="Id" hidden value="@Model.Id" />
-                    <div class="form-control">
+                    <div class="form-field-container">
                         <label asp-for="Description">Change article's description:</label>
-                        <textarea rows="1" asp-for="Description" class="form-control" value="@Model.Description"></textarea>
+                        <input asp-for="Description" class="form-control" value="@Model.Description" />
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
-                    <div class="form-control">
+                    <div class="form-field-container">
                         <input type="submit" class="btn btn-primary" value="Save changes" />
                     </div>
                 </form>

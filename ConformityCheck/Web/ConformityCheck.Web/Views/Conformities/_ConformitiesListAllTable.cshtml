@@ -145,7 +145,7 @@
                             @(conformity.ModifiedOn.HasValue ?
                                    conformity.ModifiedOn.Value.ToLocalTime().ToShortDateString() : "-")
                         </td>*@
-                    <td class="col-xs" data-label="User">@conformity.User.Email</td>
+                    <td class="col-xs" data-label="User">@conformity.UserEmail</td>
                     <td class="col-s" data-label="Details">
                         <a asp-action="Details" class="btn btn-details" asp-route-id="@conformity.Id">
                             <span class="text">Details</span>

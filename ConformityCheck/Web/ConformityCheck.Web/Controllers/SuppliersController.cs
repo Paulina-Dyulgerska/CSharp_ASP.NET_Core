@@ -177,7 +177,7 @@
         // [Authorize]
         public async Task<IActionResult> GetArticlesById(string id)
         {
-            var model = await this.suppliersService.GetArticlesByIdAsync<ArticleBySupplierModel>(id);
+            var model = await this.suppliersService.GetArticlesByIdAsync<ArticleExportModel>(id);
 
             return this.Json(model);
         }

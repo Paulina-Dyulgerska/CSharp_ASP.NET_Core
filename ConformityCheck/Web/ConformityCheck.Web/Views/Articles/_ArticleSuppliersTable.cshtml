@@ -18,13 +18,13 @@
             {
                 <tr>
 
-                    <td class="col-l">
+                    <td class="col-l" data-label="Supplier name">
                         @supplier.Name                
                         <a asp-controller="Suppliers" asp-action="Details" class="btn btn-details" asp-route-id="@supplier.Id"></a>
                     </td>
-                    <td class="col-l">@supplier.Number</td>
-                    <td class="col-l">@(supplier.IsMainSupplier ? "Yes" : "No")</td>
-                    <td class="col-l">@(supplier.HasAllConformed ? "Yes" : "No")</td>
+                    <td class="col-l" data-label="Supplier Nr.">@supplier.Number</td>
+                    <td class="col-l" data-label="Main supplier">@(supplier.IsMainSupplier ? "Yes" : "No")</td>
+                    <td class="col-l" data-label="All articles confirmed">@(supplier.HasAllConformed ? "Yes" : "No")</td>
                 </tr>
             }
         </tbody>
