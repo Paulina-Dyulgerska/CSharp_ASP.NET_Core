@@ -11,7 +11,7 @@
     public class SupplierDetailsModel : SupplierEditInputModel
     {
         [Display(Name = "Articles:")]
-        public IEnumerable<ArticleConformityModel> Articles { get; set; }
+        public IEnumerable<ArticleConformityExportModel> Articles { get; set; }
 
         //public void CreateMappings(IProfileExpression configuration)
         //{
@@ -20,7 +20,7 @@
         //        x => x.Articles,
         //        opt => opt.MapFrom(s => s.ArticleSuppliers
         //                                .SelectMany(x => x.Article.ArticleConformityTypes
-        //                                                         .Select(ac => new ArticleConformityModel
+        //                                                         .Select(ac => new ArticleConformityExportModel
         //                                                         {
         //                                                             ArticleConformityType = ac,
         //                                                             ArticleConformity = x.Article

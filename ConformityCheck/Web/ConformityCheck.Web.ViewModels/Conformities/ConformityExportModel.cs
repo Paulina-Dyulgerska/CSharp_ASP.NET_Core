@@ -34,7 +34,7 @@
 
         public string Comments { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public string UserEmail { get; set; }
 
         public string FileUrl { get; set; }
 

@@ -8,8 +8,9 @@
 
     public class ArticlesListAllModel : PagingViewModel, IMapFrom<Article>
     {
-        public IEnumerable<ArticleDetailsModel> Articles { get; set; }
+        public IEnumerable<ArticleDetailsExportModel> Articles { get; set; }
 
+        // the choosen article Id:
         [ArticleEntityAttribute]
         public string Id { get; set; }
 
