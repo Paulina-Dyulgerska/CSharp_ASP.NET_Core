@@ -649,6 +649,14 @@ textarea {
     z-index: 0;
 }
 
+.flex-column {
+    flex-direction: column;
+}
+
+.border-radius {
+    border-radius: 4px;
+}
+
 
 /* Home page styles -----------------------------------------------------------------------------------------*/
 .home-container {
@@ -991,7 +999,6 @@ textarea {
 
 .form-data-container {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-evenly;
@@ -1062,8 +1069,8 @@ input[type=checkbox] {
 
 .custom-file-upload {
     position: absolute;*/
-    /*z-index: 1;*/
-    /*left: .8rem;
+/*z-index: 1;*/
+/*left: .8rem;
     top: 2rem;
     max-width: 100px;
     font-size: 0.85rem;

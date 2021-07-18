@@ -101,7 +101,12 @@
                     @* TODO: add the declared substances and assing the restrictions. *@
                     <div class="btns-container">
                         <div class="form-field-container">
-                            <a asp-action="Edit" class="btn btn-back btn-align-end" asp-route-id="@Model.Id">Return back</a>
+                            <a class="btn btn-back btn-align-end"
+                               asp-controller="Articles"
+                               asp-action="Edit"
+                               asp-route-id="@Model.Id">
+                                Return back
+                            </a>
                         </div>
                         <div class="form-field-container">
                             <input type="submit" class="btn btn-align-end" value="Create" />

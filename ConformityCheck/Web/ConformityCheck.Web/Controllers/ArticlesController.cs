@@ -319,6 +319,14 @@
         }
 
         [Authorize]
+        public async Task<IActionResult> RemoveConformity(string id)
+        {
+            var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(id);
+
+            return this.View(model);
+        }
+
+        [Authorize]
         public async Task<IActionResult> Delete(string id)
         {
             var user = await this.userManager.GetUserAsync(this.User);

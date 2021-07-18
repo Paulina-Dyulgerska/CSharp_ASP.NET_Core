@@ -283,7 +283,8 @@
             {
                 foreach (var error in this.ModelState.Values.SelectMany(v => v.Errors))
                 {
-                    this.TempData["Message"] += error.ErrorMessage + Environment.NewLine;
+                    this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] +=
+                        error.ErrorMessage + Environment.NewLine;
                 }
             }
 
@@ -296,10 +297,10 @@
 
             if (input.CallerViewName == SuppliersCallerViewName)
             {
-                return this.RedirectToAction(nameof(SuppliersController.Details), SuppliersCallerViewName, new { id = input.SupplierId });
+                return this.RedirectToAction(nameof(SuppliersController.Edit), SuppliersCallerViewName, new { id = input.SupplierId });
             }
 
-            return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
+            return this.RedirectToAction(nameof(ArticlesController.Edit), ArticlesCallerViewName, new { id = input.ArticleId });
         }
 
         // TODO - delete - not used:

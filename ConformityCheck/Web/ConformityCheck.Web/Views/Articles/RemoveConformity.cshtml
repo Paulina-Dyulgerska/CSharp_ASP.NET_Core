@@ -1,0 +1,70 @@
+﻿@using ConformityCheck.Web.ViewModels.Articles
+@model ArticleDetailsExportModel
+@{
+    this.ViewData["Title"] = "Remove conformity";
+}
+
+@section SubMenu{
+    <partial name="_SubMenuEdit" model="Model" />
+}
+
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+                @*<span class="presented-items-info"></span>*@
+                <details>
+                    <summary>Article details</summary>
+                    <p>
+                        Article's creation date: @Model.CreatedOn
+                    </p>
+                    <p>
+                        Article's last modify date: @Model.ModifiedOn
+                    </p>
+                    <p>
+                        Article's creator name: @Model.UserEmail
+                    </p>
+                </details>
+            </article>
+        </section>
+
+        <section class="display-data-body">
+            <article class="form-data-container">
+                <article class="data-container article-edit">
+                    <ul>
+                        <li>
+                            Article number:
+                            <strong>@Model.Number</strong>
+                        </li>
+                        <li>
+                            Article's description:
+                            <strong>@Model.Description</strong>
+                        </li>
+                        <li>
+                            Article confirmed by main supplier:
+                            <strong>@(Model.IsConfirmedByMainSupplier ? "Yes" : "No")</strong>
+                        </li>
+                        <li>
+                            Article confirmed by all suppliers:
+                            <strong>@(Model.IsConfirmed ? "Yes" : "No")</strong>
+                        </li>
+                    </ul>
+                </article>
+            </article>
+            <article>
+                <partial name="_ArticleConformitiesTable" model="Model" />
+            </article>
+        </section>
+
+        <section class="display-data-footer ">
+        </section>
+    </section>
+</section>
+
+@section Scripts{
+    <script src="~/js/tables.js" asp-append-version="true"></script>
+}
