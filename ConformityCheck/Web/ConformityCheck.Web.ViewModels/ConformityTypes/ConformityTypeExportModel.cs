@@ -7,8 +7,9 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class ConformityTypeExportModel : IMapFrom<ConformityType>, IMapFrom<ArticleConformityType>, IHaveCustomMappings
+    public class ConformityTypeExportModel : IMapFrom<Article>, IMapFrom<ConformityType>, IMapFrom<ArticleConformityType>, IHaveCustomMappings
     {
+        // TODO : remove attribute
         [ConformityTypeEntityAttribute]
         public int Id { get; set; }
 
@@ -26,7 +27,8 @@
         {
             configuration.CreateMap<ArticleConformityType, ConformityTypeExportModel>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => x.ConformityTypeId))
-                .ForMember(x => x.Description, opt => opt.MapFrom(x => x.ConformityType.Description));
+                .ForMember(x => x.Description, opt => opt.MapFrom(x => x.ConformityType.Description))
+                ;
         }
     }
 }

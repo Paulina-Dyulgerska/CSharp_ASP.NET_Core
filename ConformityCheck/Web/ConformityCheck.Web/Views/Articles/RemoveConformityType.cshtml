@@ -1,60 +1,98 @@
-﻿@model ArticleManageConformityTypesModel
+﻿@model ArticleManageConformityTypesExportModel
 @{
-    this.ViewData["Title"] = "Remove conformity type from the article";
+    this.ViewData["Title"] = "Remove article's conformity type";
 }
-
-<h3>@this.ViewData["Title"]</h3>
-
-<div>
-    <form method="post" class="col-md-6 mx-auto">
-
-        <div asp-validation-summary="All" class="text-danger"></div>
-
-        <input asp-for="Id" hidden value="@Model.Id" />
-
-        <div>
-            <label asp-for="Number"></label>
-            <span class="text-primary ">@Model.Number</span>
-        </div>
-
-        <div>
-            <label asp-for="Description"></label>
-            <span class="text-primary ">@Model.Description</span>
-        </div>
-
-        <div>
-            <label asp-for="ConformityTypes"></label>
-            <table class="table table-light table-responsive-md table-hover table-bordered table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col">Conformity type</th>
-                        @*<th scope="col">Conformity available</th>
-                        <th scope="col">Is accepted?</th>*@
-                        <th scope="col">Id</th>
-                        <th scope="col">Remove conformity type?</th>
-                    </tr>
-                </thead>
-                @foreach (var conformityType in this.Model.ConformityTypes)
-                {
-                    <tr>
-                        <td>@conformityType.Description</td>
-                        @*<td>@conformityType.ConformityId</td>
-                        <td>@(conformityType.ConformityIsAccepted ? "Yes" : "No")</td>*@
-                        <td>@conformityType.Id</td>
-                        <td>
-                            <input asp-for="ConformityTypeId" type="radio" value="@conformityType.Id" />
-                        </td>
-                    </tr>
-                }
-            </table>
-        </div>
-
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Ready" />
-        </div>
-    </form>
-</div>
 
 @section SubMenu{
     <partial name="_SubMenuEdit" model="Model" />
+}
+
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+            </article>
+        </section>
+
+        <section class="display-data-body">
+            <article class="form-data-container">
+                <article class="data-container article-edit">
+                    <ul>
+                        <li>
+                            Article number:
+                            <strong>@Model.Number</strong>
+                        </li>
+                        <li>
+                            Article's description:
+                            <strong>@Model.Description</strong>
+                        </li>
+                    </ul>
+                </article>
+
+                <form method="post" class="input-group">
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <input asp-for="Id" hidden value="@Model.Id" />
+
+                    <div class="form-field-container">
+                        <label asp-for="ConformityTypeId">
+                            <strong>
+                                You can remove conformity type from the article by selecting it from the table below.
+                            </strong>
+                        </label>
+                        <article class="table-container">
+                            <table class="table no-curson-rows-table">
+                                <thead>
+                                    <tr>
+                                        <th class="col-s">Conformity Nr.</th>
+                                        <th class="col-xl">Conformity type</th>
+                                        <th class="col-m">Conformity available</th>
+                                        <th class="col-l">Remove conformity type</th>
+                                    </tr>
+                                </thead>
+                                @foreach (var conformityType in this.Model.ConformityTypes)
+                                {
+                                    <tr>
+                                        <td class="col-s" data-label="Conformity Nr.">@conformityType.Id</td>
+                                        <td class="col-xl" data-label="Conformity type">@conformityType.Description</td>
+                                        <td class="col-m" data-label="Conformity available">
+                                            @(conformityType.SupplierConfirmed ? "Yes" : "No")
+                                        </td>
+                                        <td class="col-l" data-label="Remove conformity type">
+                                            <input asp-for="ConformityTypeId" type="radio" value="@conformityType.Id" />
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </article>
+                    </div>
+
+                    <div class="btns-container">
+                        <div class="form-field-container">
+                            <a asp-action="Edit" class="btn btn-back btn-align-end" asp-route-id="@Model.Id">Return back</a>
+                        </div>
+                        <div class="form-field-container">
+                            <input type="submit" class="btn btn-align-end" value="Save changes" />
+                        </div>
+                    </div>
+                </form>
+            </article>
+
+            <article>
+                <partial name="_ArticleConformityTypesTable" model="Model.ConformityTypes" />
+            </article>
+        </section>
+
+        <section class="display-data-footer ">
+        </section>
+    </section>
+</section>
+
+@section Scripts{
+    <script src="~/js/tables.js" asp-append-version="true"></script>
 }

@@ -29,7 +29,7 @@
                     <a class="" asp-area="" asp-controller="Home" asp-action="Index">
                         <img class="logo-img" src="~/img/logo.png" alt="Logo" />
                         <h5 class="logo-text">
-                            @GlobalConstants.SystemName;
+                            @GlobalConstants.SystemName
                         </h5>
                     </a>
                 </article>
@@ -59,9 +59,9 @@
                     </li>
                     @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                     {
-                        <li class="list-item">
-                            <a class="" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
-                        </li>
+                    <li class="list-item">
+                        <a class="" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
+                    </li>
                     }
                 </ul>
                 <partial name="_LoginPartial" />
@@ -120,6 +120,7 @@
 
     <!-- Project level custom scripts -->
     <script src="~/js/site.min.js" asp-append-version="true"></script>
+    <script src="~/js/alerts.js" asp-append-version="true"></script>
     @*<script src="~/js/sb-admin-2.min.js" asp-append-version="true"></script>*@
 
     @await this.RenderSectionAsync("Scripts", required: false)

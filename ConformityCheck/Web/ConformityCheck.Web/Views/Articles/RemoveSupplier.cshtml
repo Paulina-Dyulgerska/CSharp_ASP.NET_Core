@@ -1,57 +1,98 @@
 ﻿@model ArticleManageSuppliersExportModel
 @{
-    this.ViewData["Title"] = "Remove a supplier from article";
+    this.ViewData["Title"] = "Remove article's supplier";
 }
-
-<h3>@this.ViewData["Title"]</h3>
-
-<div>
-    <form method="post" class="col-md-6 mx-auto">
-        <div asp-validation-summary="All" class="text-danger"></div>
-
-        <input asp-for="Id" hidden value="@Model.Id" />
-
-        <div>
-            <label asp-for="Number"></label>
-            <span class="text-primary ">@Model.Number</span>
-        </div>
-
-        <div>
-            <label asp-for="Description"></label>
-            <span class="text-primary ">@Model.Description</span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Suppliers"></label>
-            <table class="table table-light table-responsive-md table-hover table-bordered table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col">Supplier name</th>
-                        <th scope="col">Supplier Nr.</th>
-                        <th scope="col">Is Article Main Supplier</th>
-                        <th scope="col">Remove supplier?</th>
-                    </tr>
-                </thead>
-                @foreach (var supplier in this.Model.Suppliers)
-                {
-                    <tr>
-                        <td>@supplier.Name</td>
-                        <td>@supplier.Number</td>
-                        <td>@(supplier.IsMainSupplier ? "Yes" : "No")</td>
-                        <td>
-                            <input asp-for="SupplierId" type="radio" value="@supplier.Id" />
-                        </td>
-                    </tr>
-                }
-            </table>
-        </div>
-
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Ready" />
-        </div>
-    </form>
-</div>
 
 @section SubMenu{
     <partial name="_SubMenuEdit" model="Model" />
+}
+
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+            </article>
+        </section>
+
+        <section class="display-data-body">
+            <article class="form-data-container">
+                <article class="data-container article-edit">
+                    <ul>
+                        <li>
+                            Article number:
+                            <strong>@Model.Number</strong>
+                        </li>
+                        <li>
+                            Article's description:
+                            <strong>@Model.Description</strong>
+                        </li>
+                    </ul>
+                </article>
+                <form method="post" class="input-group">
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <input asp-for="Id" hidden value="@Model.Id" />
+
+                    <div class="form-field-container">
+                        <label asp-for="Suppliers">
+                            <strong>
+                                You can remove supplier from the article by selecting it from the table below.
+                            </strong>
+                        </label>
+                        <article class="table-container">
+                            <table class="table no-curson-rows-table">
+                                <thead>
+                                    <tr>
+                                        <th class="col-l">Supplier name</th>
+                                        <th class="col-l">Supplier Nr.</th>
+                                        <th class="col-l">Article main supplier</th>
+                                        <th class="col-l">Remove supplier</th>
+                                    </tr>
+                                </thead>
+                                @foreach (var supplier in this.Model.Suppliers)
+                                {
+                                <tr>
+                                    <td class="col-l" data-label="Supplier name">@supplier.Name</td>
+                                    <td class="col-l" data-label="Supplier Nr.">@supplier.Number</td>
+                                    <td class="col-l" data-label="Article main supplier">
+                                        @(supplier.IsMainSupplier ? "Yes" : "No")
+                                    </td>
+                                    <td class="col-l" data-label="Remove supplier">
+                                        <input asp-for="SupplierId" type="radio" value="@supplier.Id" />
+                                    </td>
+                                </tr>
+                                }
+                            </table>
+                            <span asp-validation-for="SupplierId" class="text-danger"></span>
+                        </article>
+                    </div>
+
+                    <div class="btns-container">
+                        <div class="form-field-container">
+                            <a asp-action="Edit" class="btn btn-back btn-align-end" asp-route-id="@Model.Id">Return back</a>
+                        </div>
+                        <div class="form-field-container">
+                            <input type="submit" class="btn btn-align-end" value="Save changes" />
+                        </div>
+                    </div>
+                </form>
+            </article>
+
+            <article>
+                <partial name="_ArticleSuppliersTable" model="Model.Suppliers" />
+            </article>
+        </section>
+
+        <section class="display-data-footer ">
+        </section>
+    </section>
+</section>
+
+@section Scripts{
+    <script src="~/js/tables.js" asp-append-version="true"></script>
 }

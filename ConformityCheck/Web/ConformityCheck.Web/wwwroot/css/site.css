@@ -1030,6 +1030,7 @@ input[type='checkbox']:checked {
 input.form-control,
 select.form-control {
     padding: .5rem .75rem;
+    min-width: 350px;
 }
 
 .form-field-container {
@@ -1073,6 +1074,11 @@ input[type=radio] {
     .table-container .table-header {
         font-size: .7rem;
     }
+
+.table-container-half-size {
+    max-width: 50%;
+    margin:0 auto;
+}
 
 .table {
     width: 100%;
@@ -1139,6 +1145,12 @@ input[type=radio] {
         -ms-flex: 0 0 25%;
         flex: 0 0 25%;
         max-width: 25%;
+    }
+    
+    .table .col-xl {
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
     }
 
     .table .icon {
@@ -1224,7 +1236,8 @@ input[type=radio] {
     .table .col-xs,
     .table .col-s,
     .table .col-m,
-    .table .col-l {
+    .table .col-l,
+    .table .col-xl{
         max-width: unset;
     }
 }

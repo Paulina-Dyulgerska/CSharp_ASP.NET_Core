@@ -38,7 +38,7 @@
                 return this.suppliers;
             }
 
-            set
+            private set
             {
                 this.suppliers = value;
 

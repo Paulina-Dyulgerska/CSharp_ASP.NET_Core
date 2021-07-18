@@ -267,7 +267,7 @@
         [Authorize]
         public async Task<IActionResult> AddConformityType(string id)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesModel>(id);
+            var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesExportModel>(id);
 
             return this.View(model);
         }
@@ -278,7 +278,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesModel>(input.Id);
+                var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesExportModel>(input.Id);
 
                 return this.View(model);
             }
@@ -294,7 +294,7 @@
         [Authorize]
         public async Task<IActionResult> RemoveConformityType(string id)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesModel>(id);
+            var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesExportModel>(id);
 
             return this.View(model);
         }
@@ -305,7 +305,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesModel>(input.Id);
+                var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesExportModel>(input.Id);
 
                 return this.View(model);
             }
