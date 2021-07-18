@@ -1,13 +1,23 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Suppliers
 {
-    using AutoMapper;
-
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class SupplierFullInfoModel : SupplierBaseModel/*, IHaveCustomMappings*/
+    public class SupplierFullInfoModel : IMapFrom<Supplier> /*: IHaveCustomMappings*/
     {
         public string Id { get; set; }
+
+        public string Number { get; set; }
+
+        public string Name { get; set; }
+
+        public string Email { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string ContactPersonFirstName { get; set; }
+
+        public string ContactPersonLastName { get; set; }
 
         public string ContactPersonName => this.ContactPersonFirstName + " " + this.ContactPersonLastName;
 
@@ -15,6 +25,9 @@
         // direktno tuk, bez da pravq custom mapping!!! Ako spazwam conventiona za imenata na 
         // propertytata, toj shte se opravi s neshta kato Count, Min, Max i t.n.
         public int ArticleSuppliersCount { get; set; }
+
+        public string UserEmail { get; set; }
+
         //public int ArticlesCount { get; set; }
 
         //public int ArticlesConfirmed{ get; set; }
