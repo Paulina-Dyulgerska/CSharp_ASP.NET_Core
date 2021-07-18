@@ -995,6 +995,7 @@ textarea {
     display: flex;
     flex-direction: column;
     margin: 2rem auto;
+    /*align-items: center;*/
 }
 
 .form-data-container {
@@ -1026,7 +1027,8 @@ textarea {
 input.form-control,
 select.form-control {
     padding: .5rem .75rem;
-    min-width: 350px;
+/*    min-width: 350px;
+    max-width: 90%;*/
 }
 
 .form-field-container {

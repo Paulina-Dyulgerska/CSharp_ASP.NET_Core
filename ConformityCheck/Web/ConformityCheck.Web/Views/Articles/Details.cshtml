@@ -36,11 +36,11 @@
                     </li>
                     <li>
                         Main supplier name:
-                        <strong>@Model.Suppliers.Where(s => s.IsMainSupplier).FirstOrDefault().Name</strong>
+                        <strong>@Model.Suppliers.Where(s => s.IsMainSupplier).FirstOrDefault()?.Name</strong>
                     </li>
                     <li>
                         Main supplier Nr.: 
-                        <strong>@Model.Suppliers.Where(s => s.IsMainSupplier).FirstOrDefault().Number</strong>
+                        <strong>@Model.Suppliers.Where(s => s.IsMainSupplier).FirstOrDefault()?.Number</strong>
                     </li>
                     <li>
                         Article confirmed by main supplier:
