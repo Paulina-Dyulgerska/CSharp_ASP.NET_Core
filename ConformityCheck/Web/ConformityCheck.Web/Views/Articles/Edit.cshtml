@@ -60,13 +60,17 @@
                 </article>
                 <form method="post" class="input-group">
                     @*enctype is multipart/form-data if uploading a file, do not forget to change it*@
+
                     <div asp-validation-summary="All" class="text-danger"></div>
+                    
                     <input asp-for="Id" hidden value="@Model.Id" />
+                    
                     <div class="form-field-container">
                         <label asp-for="Description">Change article's description:</label>
                         <input asp-for="Description" class="form-control" value="@Model.Description" />
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
+                    
                     <div class="form-field-container">
                         <input type="submit" class="btn btn-align-end" value="Save changes" />
                     </div>

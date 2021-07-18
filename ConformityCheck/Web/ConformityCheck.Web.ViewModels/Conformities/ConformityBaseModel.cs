@@ -39,7 +39,8 @@
 
         public string ArticleDescription { get; set; }
 
-        // vsichki dates da sa v UTC, i tuk i na servera i na DB-a, a za usera da sa v ToLocalTime(), no vyv Viewtata samo!!
+        // TODO - All dates are in UTC on the BE - i tuk i na servera i na DB-a,
+        // a za FE i user - da sa v ToLocalTime(), no vyv Viewtata samo!!
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "* Issue date:")]
@@ -66,8 +67,9 @@
         {
             configuration.CreateMap<Conformity, ConformityBaseModel>()
 
-                // TODO - tezi sa izlishni, zashtoto se namapvat atomatichno ot AutoMapper-a prez
-                // navigacionnite propertita!!!!
+                // It is not needed to explicitly map them here, because AutoMapper maps them
+                // automatically through the navigation property of the Conformity class object!
+                // They are kept because I am learning how to code now and to not forget this!
                 .ForMember(x => x.ConformityTypeDescription, opt => opt.MapFrom(x => x.ConformityType.Description))
                 .ForMember(x => x.SupplierName, opt => opt.MapFrom(x => x.Supplier.Name))
                 .ForMember(x => x.SupplierNumber, opt => opt.MapFrom(x => x.Supplier.Number))

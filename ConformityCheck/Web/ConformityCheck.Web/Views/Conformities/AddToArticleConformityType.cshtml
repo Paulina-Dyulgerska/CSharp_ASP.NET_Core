@@ -1,87 +1,120 @@
-﻿@model ArticleManageConformitiesModel 
+﻿@model ArticleManageConformitiesExportModel
 @{
-    this.ViewData["Title"] = "Add a conformity to the article";
+    this.ViewData["Title"] = "Add conformity to article";
     //var suppliers = Model.SuppliersAvailable.Select(x => new SelectListItem(x.NumberAndName, x.Id));
     //var conformityTypes = Model.ConformityTypesAvailable.Select(x => new SelectListItem(x.Description, x.Id.ToString()));
     //var products = Model.ProductsAvailable.Select(x => new SelectListItem(x.Number, x.Id));
     //var substances = Model.SubstancesAvailable.Select(x => new SelectListItem($"{x.CASNumber} - {x.Description}", x.Id.ToString()));
 }
 
-<h3>@this.ViewData["Title"]</h3>
-
-<div>
-    <form method="post" asp-controller="Conformities" asp-action="AddToArticleConformityType" 
-          class="col-md-6 mx-auto" enctype="multipart/form-data">
-        <div asp-validation-summary="All" class="text-danger"></div>
-
-        <input asp-for="Id" hidden value="@Model.Id" />
-        <input asp-for="Conformity.ArticleId" hidden value="@Model.Id" />
-        <input asp-for="Conformity.ValidForSingleArticle" value="true" checked hidden />
-
-        <div>
-            <label asp-for="Number"></label>
-            <span class="text-primary ">@Model.Number</span>
-        </div>
-
-        <div>
-            <label asp-for="Description"></label>
-            <span class="text-primary ">@Model.Description</span>
-        </div>
-
-        <div class="SupplierId font-weight-bold">
-            <label asp-for="Conformity.SupplierId">Select supplier:</label>
-            <select asp-for="Conformity.SupplierId" class="form-control"></select>
-            <span asp-validation-for="Conformity.SupplierId" class="text-danger"></span>
-        </div>
-
-        <div class="ConformityTypeId font-weight-bold">
-            <label asp-for="Conformity.ConformityTypeId">Select conformity type:</label>
-            <select asp-for="Conformity.ConformityTypeId" class="form-control"></select>
-            <span asp-validation-for="Conformity.ConformityTypeId" class="text-danger"></span>
-        </div>
-
-        <div class="form-group font-weight-bold">
-            <label asp-for="Conformity.IsAccepted">If the conformity is accepted, please check the box:</label>
-            <br />
-            <input asp-for="Conformity.IsAccepted" type="checkbox" />
-            <span asp-validation-for="Conformity.IsAccepted" class="text-danger"></span>
-        </div>
-
-        <div class="form-group font-weight-bold">
-            <label asp-for="Conformity.IssueDate"></label>
-            <input asp-for="Conformity.IssueDate" class="form-control" placeholder="Date of conformity creation" />
-            <span asp-validation-for="Conformity.IssueDate" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Conformity.ValidityDate"></label>
-            <input asp-for="Conformity.ValidityDate" class="form-control" placeholder="Date till the conformity is valid" />
-            <span asp-validation-for="Conformity.ValidityDate" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Conformity.Comments"></label>
-            <input asp-for="Conformity.Comments" class="form-control" placeholder="Add comments to the conformity" />
-            <span asp-validation-for="Conformity.Comments" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Conformity.InputFile"></label>
-            <input asp-for="Conformity.InputFile" class="form-control-file border" placeholder="Add file" />
-            <span asp-validation-for="Conformity.InputFile" class="text-danger"></span>
-        </div>
-
-        @* TODO: add the declared substances and assing the restrictions. *@
-
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Create" />
-        </div>
-    </form>
-</div>
 
 @section SubMenu{
     <partial name="_SubMenuEdit" model="Model" />
 }
+
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+            </article>
+        </section>
+
+        <section class="display-data-body">
+            <article class="form-data-container">
+                <article class="data-container article-edit">
+                    <ul>
+                        <li>
+                            Article number:
+                            <strong>@Model.Number</strong>
+                        </li>
+                        <li>
+                            Article's description:
+                            <strong>@Model.Description</strong>
+                        </li>
+                    </ul>
+                </article>
+
+                <form method="post" class="input-group" asp-controller="Conformities" asp-action="AddToArticleConformityType"
+                      enctype="multipart/form-data">
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <input asp-for="Id" hidden value="@Model.Id" />
+                    <input asp-for="Conformity.ArticleId" hidden value="@Model.Id" />
+                    <input asp-for="Conformity.ValidForSingleArticle" value="true" checked hidden />
+
+                    <div class="SupplierId form-field-container large-margin-vertical">
+                        <label asp-for="Conformity.SupplierId">
+                            Select supplier
+                        </label>
+                        <select asp-for="Conformity.SupplierId" class="form-control"></select>
+                        <span asp-validation-for="Conformity.SupplierId" class="text-danger"></span>
+                    </div>
+
+                    <div class="ConformityTypeId form-field-container large-margin-vertical">
+                        <label asp-for="Conformity.ConformityTypeId">
+                            Select conformity type
+                        </label>
+                        <select asp-for="Conformity.ConformityTypeId" class="form-control"></select>
+                        <span asp-validation-for="Conformity.ConformityTypeId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="Conformity.IsAccepted">
+                            If the conformity is accepted, please check this box:
+                        </label>
+                        @*<br />*@
+                        <input asp-for="Conformity.IsAccepted" type="checkbox" />
+                        <span asp-validation-for="Conformity.IsAccepted" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="Conformity.IssueDate"></label>
+                        <input asp-for="Conformity.IssueDate" class="form-control" placeholder="Date of conformity creation" />
+                        <span asp-validation-for="Conformity.IssueDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="Conformity.ValidityDate"></label>
+                        <input asp-for="Conformity.ValidityDate" class="form-control" placeholder="Date till the conformity is valid" />
+                        <span asp-validation-for="Conformity.ValidityDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="Conformity.Comments"></label>
+                        <input asp-for="Conformity.Comments" class="form-control" placeholder="Add comments to the conformity" />
+                        <span asp-validation-for="Conformity.Comments" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical custom-file-upload-container">
+                        <label asp-for="Conformity.InputFile" class="custom-file-upload form-control">
+                            <i class="fas fa-file-upload"></i> Choose conformity file
+                        </label>
+                        <input asp-for="Conformity.InputFile" class="form-control" placeholder="Add file" />
+                        <span asp-validation-for="Conformity.InputFile" class="text-danger"></span>
+                    </div>
+
+                    @* TODO: add the declared substances and assing the restrictions. *@
+                    <div class="btns-container">
+                        <div class="form-field-container">
+                            <a asp-action="Edit" class="btn btn-back btn-align-end" asp-route-id="@Model.Id">Return back</a>
+                        </div>
+                        <div class="form-field-container">
+                            <input type="submit" class="btn btn-align-end" value="Create" />
+                        </div>
+                    </div>
+                </form>
+            </article>
+        </section>
+
+        <section class="display-data-footer ">
+        </section>
+    </section>
+</section>
 
 @section Scripts{
     <script src="~/js/suppliersByArticle.js" asp-append-version="true"></script>

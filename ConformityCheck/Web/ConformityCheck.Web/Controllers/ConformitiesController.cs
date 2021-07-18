@@ -147,7 +147,7 @@
         [Authorize]
         public async Task<IActionResult> AddToArticleConformityType(string id)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesModel>(id);
+            var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesExportModel>(id);
 
             return this.View(model);
         }
@@ -160,7 +160,7 @@
 
             if (!this.ModelState.IsValid)
             {
-                var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesModel>(id);
+                var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesExportModel>(id);
 
                 return this.View(model);
             }

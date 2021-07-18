@@ -22,9 +22,6 @@
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Articles\Hekp.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="wwwroot\js\datatables.js" />
   </ItemGroup>
 

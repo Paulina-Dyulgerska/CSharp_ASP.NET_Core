@@ -200,6 +200,11 @@ textarea {
     display: block;
 }
 
+.large-margin-vertical {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
 /*Alert bar styles --------------------------------------------------------------------------------------------*/
 .alert {
     position: relative;
@@ -616,23 +621,6 @@ textarea {
     transform: scale(1.2);
 }
 
-/* Checkbox styles -------------------------------------------------------------------------------------------- */
-input[type='checkbox'] {
-    /*-webkit-appearance: none;*/
-    width: 15px;
-    height: 15px;
-    background: white;
-    border-radius: 5px;
-    /*border: 2px solid #555;*/
-}
-
-/*
-input[type='checkbox']:checked {
-        background: #abd;
-}*/
-
-
-
 /* Main page layout styles -------------------------------------------------------------------------------*/
 .main-wrapper {
     position: relative;
@@ -774,6 +762,7 @@ input[type='checkbox']:checked {
 
     .btn:hover {
         color: #0e2979;
+        box-shadow: 0px 0px 6px 1px #6da4ff;
     }
 
 .btn-cta {
@@ -1038,9 +1027,48 @@ select.form-control {
     flex-direction: column;
 }
 
+    .form-field-container > label {
+        font-weight: bold;
+    }
+
 input[type=radio] {
     cursor: pointer;
 }
+
+input[type=file] {
+    padding: .5rem .75rem;
+    cursor: pointer;
+    background: white;
+}
+
+input[type=checkbox] {
+    margin: .5rem;
+    width: 1.3rem;
+    height: 1.3rem;
+    background: white;
+    border-radius: 4px;
+    /*border: 2px solid #6da4ff;*/
+    box-shadow: inset 0px 0px 2px 3px #6da4ff;
+    align-self: center;
+}
+
+    input[type=checkbox]:checked {
+        background: #6da4ff;
+    }
+
+/*.custom-file-upload-container {
+    position: relative;
+}
+
+.custom-file-upload {
+    position: absolute;*/
+    /*z-index: 1;*/
+    /*left: .8rem;
+    top: 2rem;
+    max-width: 100px;
+    font-size: 0.85rem;
+    background: white;
+}*/
 
 /* Tools container styles ---------------------------------------------------------------------------------*/
 .tools-container {
@@ -1077,7 +1105,7 @@ input[type=radio] {
 
 .table-container-half-size {
     max-width: 50%;
-    margin:0 auto;
+    margin: 0 auto;
 }
 
 .table {
@@ -1146,7 +1174,7 @@ input[type=radio] {
         flex: 0 0 25%;
         max-width: 25%;
     }
-    
+
     .table .col-xl {
         -ms-flex: 0 0 50%;
         flex: 0 0 50%;
@@ -1237,7 +1265,7 @@ input[type=radio] {
     .table .col-s,
     .table .col-m,
     .table .col-l,
-    .table .col-xl{
+    .table .col-xl {
         max-width: unset;
     }
 }

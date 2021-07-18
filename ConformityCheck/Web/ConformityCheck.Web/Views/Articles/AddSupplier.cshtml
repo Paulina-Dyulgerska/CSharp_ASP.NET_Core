@@ -43,12 +43,9 @@
                     <input asp-for="Id" hidden value="@Model.Id" />
 
                     <div class="form-field-container">
-                        <p>
-                            <strong>
-                                You can add a supplier to the article by selecting one from the list below.
-                            </strong>
-                        </p>
-                        <label asp-for="SupplierId"><strong>Supplier:</strong></label>
+                        <label asp-for="SupplierId">
+                            If you want to add a supplier to the article, please select one from the list:
+                        </label>
                         <select asp-for="SupplierId" class="form-control">
                             <vc:suppliers></vc:suppliers>
                         </select>
