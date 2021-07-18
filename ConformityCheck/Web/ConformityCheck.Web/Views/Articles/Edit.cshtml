@@ -38,23 +38,25 @@
 
         <section class="display-data-body">
             <article class="form-data-container">
-                <article>
-                    <p>
-                        Article number:
-                        <strong>@Model.Number</strong>
-                    </p>
-                    <p>
-                        Article's description: 
-                        <strong>@Model.Description</strong>
-                    </p>
-                    <p>
-                        Article confirmed by main supplier:
-                        <strong>@(Model.IsConfirmedByMainSupplier ? "Yes" : "No")</strong>
-                    </p>
-                    <p>
-                        Article confirmed by all suppliers: 
-                        <strong>@(Model.IsConfirmed ? "Yes" : "No")</strong>
-                    </p>
+                <article class="data-container article-edit">
+                    <ul>
+                        <li>
+                            Article number:
+                            <strong>@Model.Number</strong>
+                        </li>
+                        <li>
+                            Article's description:
+                            <strong>@Model.Description</strong>
+                        </li>
+                        <li>
+                            Article confirmed by main supplier:
+                            <strong>@(Model.IsConfirmedByMainSupplier ? "Yes" : "No")</strong>
+                        </li>
+                        <li>
+                            Article confirmed by all suppliers:
+                            <strong>@(Model.IsConfirmed ? "Yes" : "No")</strong>
+                        </li>
+                    </ul>
                 </article>
                 <form method="post" class="input-group">
                     @*enctype is multipart/form-data if uploading a file, do not forget to change it*@
@@ -66,7 +68,7 @@
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                     <div class="form-field-container">
-                        <input type="submit" class="btn btn-primary" value="Save changes" />
+                        <input type="submit" class="btn btn-align-end" value="Save changes" />
                     </div>
                 </form>
             </article>

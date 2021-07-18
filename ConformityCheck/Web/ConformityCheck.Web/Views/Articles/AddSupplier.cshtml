@@ -1,55 +1,83 @@
-﻿@model ArticleManageSuppliersModel
+﻿@model ArticleManageSuppliersExportModel
 @{
-    this.ViewData["Title"] = "Add a supplier to the article";
+    this.ViewData["Title"] = "Add supplier to article";
     //var suppliers = Model.SuppliersAvailable.Select(x => new SelectListItem(x.NumberAndName, x.Id));
     //var conformityTypes = Model.ConformityTypesAvailable.Select(x => new SelectListItem(x.Description, x.Id.ToString()));
     //var products = Model.ProductsAvailable.Select(x => new SelectListItem(x.Number, x.Id));
     //var substances = Model.SubstancesAvailable.Select(x => new SelectListItem($"{x.CASNumber} - {x.Description}", x.Id.ToString()));
 }
 
-<h3>@this.ViewData["Title"]</h3>
-
-<div>
-    <form method="post" class="col-md-6 mx-auto">
-
-        <div asp-validation-summary="All" class="text-danger"></div>
-
-        <input asp-for="Id" hidden value="@Model.Id" />
-
-        <div>
-            <label asp-for="Number"></label>
-            <span class="text-primary ">@Model.Number</span>
-        </div>
-
-        <div>
-            <label asp-for="Description"></label>
-            <span class="text-primary ">@Model.Description</span>
-        </div>
-
-        <div>
-            <label asp-for="Suppliers"></label>
-            <partial name="_ArticleSuppliersTable" model="Model.Suppliers" />
-        </div>
-
-        <div class="form-group">
-            <p>If you want to add a supplier to the article, please select one from the list:</p>
-            <label asp-for="SupplierId"></label>
-            <select asp-for="SupplierId" class="form-control">
-                <vc:suppliers></vc:suppliers>
-            </select>
-            <span asp-validation-for="SupplierId" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Ready" />
-        </div>
-
-        <div class="form-group">
-            <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model.Id">Back</a>
-        </div>
-    </form>
-</div>
-
 @section SubMenu{
     <partial name="_SubMenuEdit" model="Model" />
+}
+
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+            </article>
+        </section>
+
+        <section class="display-data-body">
+            <article class="form-data-container">
+                <article class="data-container article-edit">
+                    <ul>
+                        <li>
+                            Article number:
+                            <strong>@Model.Number</strong>
+                        </li>
+                        <li>
+                            Article's description:
+                            <strong>@Model.Description</strong>
+                        </li>
+                    </ul>
+                </article>
+                <form method="post" class="input-group">
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <input asp-for="Id" hidden value="@Model.Id" />
+
+                    <div class="form-field-container">
+                        <p>
+                            <strong>
+                                You can add a supplier to the article by selecting one from the list below.
+                            </strong>
+                        </p>
+                        <label asp-for="SupplierId"><strong>Supplier:</strong></label>
+                        <select asp-for="SupplierId" class="form-control">
+                            <vc:suppliers></vc:suppliers>
+                        </select>
+                        <span asp-validation-for="SupplierId" class="text-danger"></span>
+                    </div>
+
+                    <div class="btns-container">
+                        <div class="form-field-container">
+                            <a asp-action="Edit" class="btn btn-back btn-align-end" asp-route-id="@Model.Id">Return back</a>
+                        </div>
+                        <div class="form-field-container">
+                            <input type="submit" class="btn btn-align-end" value="Save changes" />
+                        </div>
+                    </div>
+                </form>
+            </article>
+
+            <article>
+                <partial name="_ArticleSuppliersTable" model="Model.Suppliers" />
+            </article>
+
+        </section>
+
+        <section class="display-data-footer ">
+        </section>
+    </section>
+</section>
+
+@section Scripts{
+    <script src="~/js/tables.js" asp-append-version="true"></script>
+    <script src="~/js/alerts.js" asp-append-version="true"></script>
 }

@@ -742,6 +742,11 @@ input[type='checkbox']:checked {
 
 
 /* Buttons styles ---------------------------------------------------------------------------------*/
+.btns-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
 
 .btn {
     position: relative;
@@ -828,6 +833,18 @@ input[type='checkbox']:checked {
         background-color: #e5effd;
     }
 
+.btn-back {
+    background: #839ec4;
+    color: #E6F4F1;
+}
+
+
+.btn-align-end {
+    align-self: flex-end;
+    margin-left: 0;
+    margin-right: 0;
+}
+
 .btn-add,
 .btn-details,
 .btn-edit,
@@ -892,6 +909,8 @@ input[type='checkbox']:checked {
         content: '\f2f6';
     }
 
+
+
 /*Dispay data styles -----------------------------------------------------------------------------------*/
 .display-data-wrapper {
     width: 100%;
@@ -900,6 +919,15 @@ input[type='checkbox']:checked {
 .display-data-header {
     display: flex;
     flex-direction: column;
+}
+
+.display-data-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.display-data-footer {
+    text-align: center;
 }
 
 /* Title container styles ---------------------------------------------------------------------------------*/
@@ -955,16 +983,27 @@ input[type='checkbox']:checked {
     /*display: flex;*/
 }
 
+/* Data container styles --------------------------------------------------------------------------------------------*/
+.data-container {
+    background: linear-gradient( 1.14deg,#f4f7fc 0%,#fff 100%);
+    max-width: 50%;
+    border-radius: 4px;
+    box-shadow: 1px 0px 20px 1px #6da4ff;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
 /* Form input item group styles -------------------------------------------------------------------------------------*/
 .input-group {
     display: flex;
     flex-direction: column;
-    margin: 10px;
+    margin: 2rem auto;
 }
 
 .form-data-container {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-evenly;
 }
@@ -977,7 +1016,7 @@ input[type='checkbox']:checked {
 
 .form-control {
     /*align-self: stretch;*/
-/*    display: flex;
+    /*    display: flex;
     flex-direction: column;
     align-items: stretch;*/
     border-radius: 4px;
@@ -988,19 +1027,18 @@ input[type='checkbox']:checked {
         outline-color: #6da4ff;
     }
 
-    input.form-control {
-        padding: .5rem .75rem;
-    }
-
-.form-field-container{
-    display:flex;
-    flex-direction:column;
+input.form-control,
+select.form-control {
+    padding: .5rem .75rem;
 }
 
-input[type=submit] {
-    align-self: flex-end;
-    margin-left: 0;
-    margin-right: 0;
+.form-field-container {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type=radio] {
+    cursor: pointer;
 }
 
 /* Tools container styles ---------------------------------------------------------------------------------*/
@@ -1009,9 +1047,11 @@ input[type=submit] {
     align-items: center;
     justify-content: space-between;
 }
+
     .tools-container .input-group {
         flex-direction: row;
         align-items: center;
+        margin: .7rem;
     }
 
 @media screen and (max-width: 600px) {
@@ -1067,6 +1107,10 @@ input[type=submit] {
     .table > tbody > tr:hover td {
         cursor: pointer;
         background-color: rgba(0, 0, 0, 0.075);
+    }
+
+    .table.no-curson-rows-table > tbody > tr:hover td {
+        cursor: unset;
     }
 
     .table td a {

@@ -170,7 +170,16 @@
         [Authorize]
         public async Task<IActionResult> AddSupplier(string id)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersModel>(id);
+            var model = new ArticleManageSuppliersExportModel();
+            try
+            {
+                model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(id);
+
+            }
+            catch (System.Exception)
+            {
+
+            }
 
             return this.View(model);
         }
@@ -181,8 +190,13 @@
         {
             if (!this.ModelState.IsValid)
             {
-                var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersModel>(input.Id);
+                var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(input.Id);
 
+                // if false article id is sent:
+                // if (model == null)
+                // {
+                //     return this.RedirectToAction("Index", "Home");
+                // }
                 return this.View(model);
             }
 
@@ -193,13 +207,13 @@
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
                 GlobalConstants.ArticleEditedsuccessfullyMessage;
 
-            return this.RedirectToAction(nameof(this.Details), new { input.Id });
+            return this.RedirectToAction(nameof(this.Edit), new { input.Id });
         }
 
         [Authorize]
         public async Task<IActionResult> ChangeMainSupplier(string id)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersModel>(id);
+            var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(id);
 
             return this.View(model);
         }
@@ -210,7 +224,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersModel>(input.Id);
+                var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(input.Id);
 
                 return this.View(model);
             }
@@ -226,7 +240,7 @@
         [Authorize]
         public async Task<IActionResult> RemoveSupplier(string id)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersModel>(id);
+            var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(id);
 
             return this.View(model);
         }
@@ -237,7 +251,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersModel>(input.Id);
+                var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(input.Id);
 
                 return this.View(model);
             }
