@@ -59,8 +59,6 @@
 
         public string Comments { get; set; }
 
-        public string UserId { get; set; }
-
         public string CallerViewName { get; set; }
 
         public virtual void CreateMappings(IProfileExpression configuration)

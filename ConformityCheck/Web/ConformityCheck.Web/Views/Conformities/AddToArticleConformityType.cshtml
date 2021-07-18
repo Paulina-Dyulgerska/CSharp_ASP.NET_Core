@@ -64,15 +64,6 @@
                     </div>
 
                     <div class="form-field-container large-margin-vertical">
-                        <label asp-for="Conformity.IsAccepted">
-                            If the conformity is accepted, please check this box:
-                        </label>
-                        @*<br />*@
-                        <input asp-for="Conformity.IsAccepted" type="checkbox" />
-                        <span asp-validation-for="Conformity.IsAccepted" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-field-container large-margin-vertical">
                         <label asp-for="Conformity.IssueDate"></label>
                         <input asp-for="Conformity.IssueDate" class="form-control" placeholder="Date of conformity creation" />
                         <span asp-validation-for="Conformity.IssueDate" class="text-danger"></span>
@@ -96,6 +87,14 @@
                         </label>
                         <input asp-for="Conformity.InputFile" class="form-control" placeholder="Add file" />
                         <span asp-validation-for="Conformity.InputFile" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="Conformity.IsAccepted">
+                            If the conformity is accepted, please check this box:
+                        </label>
+                        <input asp-for="Conformity.IsAccepted" type="checkbox" />
+                        <span asp-validation-for="Conformity.IsAccepted" class="text-danger"></span>
                     </div>
 
                     @* TODO: add the declared substances and assing the restrictions. *@
