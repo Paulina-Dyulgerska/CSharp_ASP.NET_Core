@@ -70,7 +70,7 @@
         public IEnumerable<string> Substances { get; set; }
 
         // gyrmi mi instanciqta za nullna Suppliers, ako ne kaja izrishno na AutoMapper-a kak da mapva ot Article kym tozi class!!!!
-        // ne moga da ostavq samo ArticleEditModel da iznese mappvaneto, a trqbwa i tuk da go opisha, inache 
+        // ne moga da ostavq samo ArticleEditModel da iznese mappvaneto, a trqbwa i tuk da go opisha, inache
         // mi hvyrlq null za value na suppliers!
         public virtual void CreateMappings(IProfileExpression configuration)
         {

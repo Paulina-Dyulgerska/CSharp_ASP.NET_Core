@@ -205,6 +205,11 @@ textarea {
     margin-bottom: 1rem;
 }
 
+.large-margin-horizontal {
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+
 /*Alert bar styles --------------------------------------------------------------------------------------------*/
 .alert {
     position: relative;

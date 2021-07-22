@@ -4,9 +4,6 @@
     this.ViewData["Title"] = "Supplier details";
 }
 
-<a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model.Id">Edit</a>
-
-
 @section SubMenu{
     <partial name="_SubMenuGeneral" model="Model" />
 }
@@ -19,7 +16,7 @@
                 <h4 class="title">
                     @this.ViewData["Title"] for supplier: @Model.Name
                 </h4>
-                <span class="presented-items-info">(total of @Model.ItemsCount articles)</span>
+                <span class="presented-items-info">(total of @Model.ItemsCount conformity records)</span>
             </article>
             <article class="tools-container">
                 <article class="data-container supplier-details">
@@ -49,6 +46,11 @@
                             <strong>@Model.UserEmail</strong>
                         </li>
                     </ul>
+                    <article class="large-margin-horizontal large-margin-vertical">
+                        <a asp-action="Edit" class="btn btn-edit" asp-route-id="@Model.Id">
+                            <span class="text">Edit supplier's data</span>
+                        </a>
+                    </article>
                 </article>
                 <article class="input-group">
                     <article class="input-group-prepend">
