@@ -68,19 +68,10 @@
                 ItemsPerPage = input.ItemsPerPage,
                 PageNumber = input.PageNumber,
                 PagingControllerActionCallName = nameof(this.ListAll),
-                CreatedOnSortParm = string.IsNullOrEmpty(input.CurrentSortOrder) ? "createdOn" : string.Empty,
-                ArticleNumberSortParam = input.CurrentSortOrder == "articleNumberDesc" ? "articleNumber" : "articleNumberDesc",
-                ArticleDescriptionSortParam = input.CurrentSortOrder == "articleDescriptionDesc" ? "articleDescription" : "articleDescriptionDesc",
-                SupplierNumberSortParam = input.CurrentSortOrder == "supplierNumberDesc" ? "supplierNumber" : "articsupplierNumberDescleCountDesc",
-                SupplierNameSortParam = input.CurrentSortOrder == "supplierNameDesc" ? "supplierName" : "supplierNameDesc",
-                ConformityTypeDescriptionSortParam = input.CurrentSortOrder == "conformityTypeDescriptionSortParamDesc" ?
-                                                         "conformityTypeDescriptionSortParam" : "conformityTypeDescriptionSortParamDesc",
-                IsAcceptedSortParam = input.CurrentSortOrder == "isAsseptedDesc" ? "isAssepted" : "isAsseptedDesc",
-                IsValidSortParam = input.CurrentSortOrder == "isValidDesc" ? "isValid" : "isValidDesc",
-                UserEmailSortParm = input.CurrentSortOrder == "userEmailDesc" ? "userEmail" : "userEmailDesc",
                 CurrentSortOrder = input.CurrentSortOrder,
                 CurrentSearchInput = input.CurrentSearchInput,
-                CurrentSortDirection = input.CurrentSortDirection == "sortDesc" ? "sortAsc" : "sortDesc",
+                CurrentSortDirection = input.CurrentSortDirection == GlobalConstants.CurrentSortDirectionDesc ?
+                                    GlobalConstants.CurrentSortDirectionAsc : GlobalConstants.CurrentSortDirectionDesc,
             };
 
             if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))

@@ -1,5 +1,6 @@
 ﻿namespace ConformityCheck.Web.ViewModels
 {
+    using ConformityCheck.Common;
     using System;
 
     public class PagingViewModel
@@ -39,7 +40,8 @@
 
         public string CurrentSortOrder { get; set; }
 
-        public string CreatedOnSortParm { get; set; }
+        public string CreatedOnSortParam => string.IsNullOrEmpty(this.CurrentSortOrder) ?
+            GlobalConstants.CreatedOnSortParam : string.Empty;
 
         public string CurrentSortDirection { get; set; }
     }

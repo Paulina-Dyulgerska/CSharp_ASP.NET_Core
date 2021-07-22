@@ -92,7 +92,7 @@
                 <th class="col-s">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
-                       asp-route-currentSortOrder="@Model.CreatedOnSortParm"
+                       asp-route-currentSortOrder="@Model.CreatedOnSortParam"
                        asp-route-currentSearchInput="@Model.CurrentSearchInput"
                        asp-route-currentSortDirection="@Model.CurrentSortDirection">
                         <span class="text">Created</span>
@@ -104,7 +104,7 @@
                 @*<th class="col-s">
                         <a asp-action="@Model.PagingControllerActionCallName"
                            asp-route-itemsPerPage="@Model.ItemsPerPage"
-                           asp-route-currentSortOrder="@Model.ModifiedOnSortParm"
+                           asp-route-currentSortOrder="@Model.ModifiedOnSortParam"
                            asp-route-currentSearchInput="@Model.CurrentSearchInput">
                             <span class="text">Modified</span>
                             <span class="icon">
@@ -115,7 +115,7 @@
                 <th class="col-xs">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
-                       asp-route-currentSortOrder="@Model.UserEmailSortParm"
+                       asp-route-currentSortOrder="@Model.UserEmailSortParam"
                        asp-route-currentSearchInput="@Model.CurrentSearchInput"
                        asp-route-currentSortDirection="@Model.CurrentSortDirection">
                         <span class="text">User</span>

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
 
+    using ConformityCheck.Common;
     using ConformityCheck.Common.ValidationAttributes;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
@@ -13,12 +14,16 @@
         [ConformityEntityAttribute]
         public string Id { get; set; }
 
-        public string IdSortParm { get; set; }
+        public string IdSortParam => this.CurrentSortOrder == GlobalConstants.IdSortParamDesc ?
+             GlobalConstants.IdSortParam : GlobalConstants.IdSortParamDesc;
 
-        public string DescriptionSortParm { get; set; }
+        public string DescriptionSortParam => this.CurrentSortOrder == GlobalConstants.DescriptionSortParamDesc ?
+             GlobalConstants.DescriptionSortParam : GlobalConstants.DescriptionSortParamDesc;
 
-        public string UserEmailSortParm { get; set; }
+        public string UserEmailSortParam => this.CurrentSortOrder == GlobalConstants.UserEmailSortParamDesc ?
+             GlobalConstants.UserEmailSortParam : GlobalConstants.UserEmailSortParamDesc;
 
-        public string ModifiedOnSortParm { get; set; }
+        public string ModifiedOnSortParam => this.CurrentSortOrder == GlobalConstants.ModifiedOnSortParamDesc ?
+             GlobalConstants.ModifiedOnSortParam : GlobalConstants.ModifiedOnSortParamDesc;
     }
 }

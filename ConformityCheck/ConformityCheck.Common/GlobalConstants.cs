@@ -25,6 +25,56 @@
         public const string ConformityEditedsuccessfullyMessage = "Conformity is successfully edited.";
         public const string ConformityDeletedsuccessfullyMessage = "Conformity is successfully deleted.";
 
+        public const string IdSortParam = "id";
+        public const string IdSortParamDesc = "idDesc";
+        public const string NumberSortParam = "number";
+        public const string NumberSortParamDesc = "numberDesc";
+        public const string NameSortParam = "name";
+        public const string NameSortParamDesc = "nameDesc";
+        public const string DescriptionSortParam = "description";
+        public const string DescriptionSortParamDesc = "descriptionDesc";
+        public const string ConformityTypeSortParam = "conformityType";
+        public const string ConformityTypeSortParamDesc = "conformityTypeDesc";
+        public const string HasConformitySortParam = "hasConformity";
+        public const string HasConformitySortParamDesc = "hasConformityDesc";
+        public const string AcceptedConformitySortParam = "acceptedConformity";
+        public const string AcceptedConformitySortParamDesc = "acceptedConformityDesc";
+        public const string ValidConformitySortParam = "validConformity";
+        public const string ValidConformitySortParamDesc = "validConformityDesc";
+        public const string CreatedOnSortParam = "createdOn";
+        public const string CreatedOnSortParamDesc = "createdOnDesc";
+        public const string ModifiedOnSortParam = "modifiedOn";
+        public const string ModifiedOnSortParamDesc = "modifiedOnDesc";
+        public const string ArticlesCountSortParam = "articleCount";
+        public const string ArticlesCountSortParamDesc = "articleCountDesc";
+        public const string UserEmailSortParam = "userEmail";
+        public const string UserEmailSortParamDesc = "userEmailDesc";
+        public const string ArticleNumberSortParam = "articleNumber";
+        public const string ArticleNumberSortParamDesc = "articleNumberDesc";
+        public const string ArticleDescriptionSortParam = "articleDescription";
+        public const string ArticleDescriptionSortParamDesc = "articleDescriptionDesc";
+        public const string SupplierNumberSortParam = "supplierNumber";
+        public const string SupplierNumberSortParamDesc = "supplierNumberDesc";
+        public const string SupplierNameSortParam = "supplierName";
+        public const string SupplierNameSortParamDesc = "supplierNameDesc";
+        public const string ConformityTypeDescriptionSortParam = "conformityTypeDescriptionSortParam";
+        public const string ConformityTypeDescriptionSortParamDesc = "conformityTypeDescriptionSortParamDesc";
+        public const string IsAcceptedSortParam = "isAssepted";
+        public const string IsAcceptedSortParamDesc = "isAsseptedDesc";
+        public const string IsValidSortParam = "isValid";
+        public const string IsValidSortParamDesc = "isValidDesc";
+        public const string MainSupplierNameSortParam = "mainSupplierName";
+        public const string MainSupplierNameSortParamDesc = "mainSupplierNameDesc";
+        public const string MainSupplierNumberSortParam = "mainSupplierNumber";
+        public const string MainSupplierNumberSortParamDesc = "mainSupplierNumberDesc";
+        public const string MainSupplierAllConfirmedSortParam = "mainSupplierAllConfirmed";
+        public const string MainSupplierAllConfirmedSortParamDesc = "mainSupplierAllConfirmedDesc";
+        public const string AllSuppliersAllConfirmedSortParam = "allSuppliersAllConfirmed";
+        public const string AllSuppliersAllConfirmedSortParamDesc = "allSuppliersAllConfirmedDesc";
+
+        public const string CurrentSortDirectionAsc = "sortAsc";
+        public const string CurrentSortDirectionDesc = "sortDesc";
+
         public const string QueryArticlesOrderedByConfirmedByMainSupplier = @"SELECT F.[Id]
       ,F.[CreatedOn]
       ,F.[ModifiedOn]

@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
+    using ConformityCheck.Common;
     using ConformityCheck.Common.ValidationAttributes;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
@@ -16,16 +18,22 @@
         [ArticleEntityAttribute]
         public string Id { get; set; }
 
-        public string NumberSortParm { get; set; }
+        public string NumberSortParam => this.CurrentSortOrder == GlobalConstants.NumberSortParamDesc ?
+            GlobalConstants.NumberSortParam : GlobalConstants.NumberSortParamDesc;
 
-        public string DescriptionSortParm { get; set; }
+        public string DescriptionSortParam => this.CurrentSortOrder == GlobalConstants.DescriptionSortParamDesc ?
+            GlobalConstants.DescriptionSortParam : GlobalConstants.DescriptionSortParamDesc;
 
-        public string MainSupplierNumberSortParm { get; set; }
+        public string MainSupplierNumberSortParam => this.CurrentSortOrder == GlobalConstants.MainSupplierNumberSortParamDesc ?
+            GlobalConstants.MainSupplierNumberSortParam : GlobalConstants.MainSupplierNumberSortParamDesc;
 
-        public string MainSupplierNameSortParm { get; set; }
+        public string MainSupplierNameSortParam => this.CurrentSortOrder == GlobalConstants.MainSupplierNameSortParamDesc ?
+            GlobalConstants.MainSupplierNameSortParam : GlobalConstants.MainSupplierNameSortParamDesc;
 
-        public string MainSupplierAllConfirmedSortParm { get; set; }
+        public string MainSupplierAllConfirmedSortParam => this.CurrentSortOrder == GlobalConstants.MainSupplierAllConfirmedSortParamDesc ?
+            GlobalConstants.MainSupplierAllConfirmedSortParam : GlobalConstants.MainSupplierAllConfirmedSortParamDesc;
 
-        public string AllSuppliersAllConfirmedSortParm { get; set; }
+        public string AllSuppliersAllConfirmedSortParam => this.CurrentSortOrder == GlobalConstants.AllSuppliersAllConfirmedSortParamDesc ?
+            GlobalConstants.AllSuppliersAllConfirmedSortParam : GlobalConstants.AllSuppliersAllConfirmedSortParamDesc;
     }
 }

@@ -151,7 +151,7 @@
         {
             switch (sortOrder)
             {
-                case "number":
+                case GlobalConstants.NumberSortParam:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.Number)
@@ -159,7 +159,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "numberDesc":
+                case GlobalConstants.NumberSortParamDesc:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.Number)
@@ -167,7 +167,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "description":
+                case GlobalConstants.DescriptionSortParam:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.Description)
@@ -175,7 +175,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "descriptionDesc":
+                case GlobalConstants.DescriptionSortParamDesc:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.Description)
@@ -183,7 +183,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "mainSupplierName":
+                case GlobalConstants.MainSupplierNameSortParam:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Name)
@@ -191,7 +191,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "mainSupplierNameDesc":
+                case GlobalConstants.MainSupplierNameSortParamDesc:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Name)
@@ -199,7 +199,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "mainSupplierNumber":
+                case GlobalConstants.MainSupplierNumberSortParam:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Number)
@@ -207,7 +207,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "mainSupplierNumberDesc":
+                case GlobalConstants.MainSupplierNumberSortParamDesc:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.ArticleSuppliers.FirstOrDefault().Supplier.Number)
@@ -215,35 +215,35 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "mainSupplierAllConfirmed":
-                    return await this.articlesRepository.ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByMainSupplier)
-                                        .OrderByDescending(x => x.IsConfirmed)
-                                        .ThenBy(x => x.Number)
-                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
-                                        .To<T>()
-                                        .ToListAsync();
-                case "mainSupplierAllConfirmedDesc":
+                case GlobalConstants.MainSupplierAllConfirmedSortParam:
                     return await this.articlesRepository.ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByMainSupplier)
                                         .OrderBy(x => x.IsConfirmed)
                                         .ThenBy(x => x.Number)
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "allSuppliersAllConfirmed":
-                    return await this.articlesRepository.ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByAllSuppliers)
+                case GlobalConstants.MainSupplierAllConfirmedSortParamDesc:
+                    return await this.articlesRepository.ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByMainSupplier)
                                         .OrderByDescending(x => x.IsConfirmed)
                                         .ThenBy(x => x.Number)
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "allSuppliersAllConfirmedDesc":
+                case GlobalConstants.AllSuppliersAllConfirmedSortParam:
                     return await this.articlesRepository.ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByAllSuppliers)
                                         .OrderBy(x => x.IsConfirmed)
                                         .ThenBy(x => x.Number)
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "createdOn":
+                case GlobalConstants.AllSuppliersAllConfirmedSortParamDesc:
+                    return await this.articlesRepository.ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByAllSuppliers)
+                                        .OrderByDescending(x => x.IsConfirmed)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case GlobalConstants.CreatedOnSortParam:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.CreatedOn)
@@ -281,7 +281,7 @@
         {
             switch (sortOrder)
             {
-                case "number":
+                case GlobalConstants.NumberSortParam:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Number.Contains(searchInput.ToUpper())
@@ -291,7 +291,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "numberDesc":
+                case GlobalConstants.NumberSortParamDesc:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Number.Contains(searchInput.ToUpper())
@@ -301,7 +301,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "description":
+                case GlobalConstants.DescriptionSortParam:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Number.Contains(searchInput.ToUpper())
@@ -311,7 +311,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "descriptionDesc":
+                case GlobalConstants.DescriptionSortParamDesc:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Number.Contains(searchInput.ToUpper())
@@ -321,7 +321,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "mainSupplierName":
+                case GlobalConstants.MainSupplierNameSortParam:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Number.Contains(searchInput.ToUpper())
@@ -331,7 +331,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "mainSupplierNameDesc":
+                case GlobalConstants.MainSupplierNameSortParamDesc:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Number.Contains(searchInput.ToUpper())
@@ -341,7 +341,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "mainSupplierNumber":
+                case GlobalConstants.MainSupplierNumberSortParam:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Number.Contains(searchInput.ToUpper())
@@ -351,7 +351,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "mainSupplierNumberDesc":
+                case GlobalConstants.MainSupplierNumberSortParamDesc:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Number.Contains(searchInput.ToUpper())
@@ -361,17 +361,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "mainSupplierAllConfirmed":
-                    return await this.articlesRepository
-                                        .ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByMainSupplier)
-                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
-                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
-                                        .OrderByDescending(x => x.IsConfirmed)
-                                        .ThenBy(x => x.Number)
-                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
-                                        .To<T>()
-                                        .ToListAsync();
-                case "mainSupplierAllConfirmedDesc":
+                case GlobalConstants.MainSupplierAllConfirmedSortParam:
                     return await this.articlesRepository
                                         .ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByMainSupplier)
                                         .Where(x => x.Number.Contains(searchInput.ToUpper())
@@ -381,9 +371,9 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "allSuppliersAllConfirmed":
+                case GlobalConstants.MainSupplierAllConfirmedSortParamDesc:
                     return await this.articlesRepository
-                                        .ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByAllSuppliers)
+                                        .ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByMainSupplier)
                                         .Where(x => x.Number.Contains(searchInput.ToUpper())
                                             || x.Description.ToUpper().Contains(searchInput.ToUpper()))
                                         .OrderByDescending(x => x.IsConfirmed)
@@ -391,7 +381,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "allSuppliersAllConfirmedDesc":
+                case GlobalConstants.AllSuppliersAllConfirmedSortParam:
                     return await this.articlesRepository
                                         .ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByAllSuppliers)
                                         .Where(x => x.Number.Contains(searchInput.ToUpper())
@@ -401,7 +391,17 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "createdOn":
+                case GlobalConstants.AllSuppliersAllConfirmedSortParamDesc:
+                    return await this.articlesRepository
+                                        .ExecuteCustomQuery(GlobalConstants.QueryArticlesOrderedByConfirmedByAllSuppliers)
+                                        .Where(x => x.Number.Contains(searchInput.ToUpper())
+                                            || x.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.IsConfirmed)
+                                        .ThenBy(x => x.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case GlobalConstants.CreatedOnSortParam:
                     return await this.articlesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Number.Contains(searchInput.ToUpper())

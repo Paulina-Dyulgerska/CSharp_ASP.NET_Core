@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+
     using ConformityCheck.Common;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
@@ -38,13 +39,11 @@
             this.userManager = userManager;
         }
 
-        //public async Task<IActionResult> ListAll()
-        //{
-        //    var model = await this.conformityTypeService.GetAllAsNoTrackingOrderedAsync<ConformityTypeExportModel>();
-
-        //    return this.View(model);
-        //}
-
+        // public async Task<IActionResult> ListAll()
+        // {
+        //     var model = await this.conformityTypeService.GetAllAsNoTrackingOrderedAsync<ConformityTypeExportModel>();
+        //     return this.View(model);
+        // }
         public async Task<IActionResult> ListAll(PagingViewModel input)
         {
             if (input.PageNumber <= 0)
@@ -58,14 +57,10 @@
                 ItemsPerPage = input.ItemsPerPage,
                 PageNumber = input.PageNumber,
                 PagingControllerActionCallName = nameof(this.ListAll),
-                CreatedOnSortParm = string.IsNullOrEmpty(input.CurrentSortOrder) ? "createdOn" : string.Empty,
-                IdSortParm = input.CurrentSortOrder == "idDesc" ? "id" : "idDesc",
-                DescriptionSortParm = input.CurrentSortOrder == "descriptionDesc" ? "description" : "descriptionDesc",
-                UserEmailSortParm = input.CurrentSortOrder == "userEmailDesc" ? "userEmail" : "userEmailDesc",
-                ModifiedOnSortParm = input.CurrentSortOrder == "modifiedOnDesc" ? "modifiedOn" : "modifiedOnDesc",
                 CurrentSortOrder = input.CurrentSortOrder,
                 CurrentSearchInput = input.CurrentSearchInput,
-                CurrentSortDirection = input.CurrentSortDirection == "sortDesc" ? "sortAsc" : "sortDesc",
+                CurrentSortDirection = input.CurrentSortDirection == GlobalConstants.CurrentSortDirectionDesc ?
+                                    GlobalConstants.CurrentSortDirectionAsc : GlobalConstants.CurrentSortDirectionDesc,
             };
 
             if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
