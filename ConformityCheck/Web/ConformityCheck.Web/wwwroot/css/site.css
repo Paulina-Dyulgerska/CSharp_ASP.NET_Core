@@ -846,7 +846,8 @@ textarea {
 .btn-details,
 .btn-edit,
 .btn-delete,
-.btn-login {
+.btn-login,
+.btn-request {
     margin: 0;
     padding: 0 0.3rem 0 1.5rem;
     color: #E6F4F1;
@@ -856,7 +857,8 @@ textarea {
     .btn-details:before,
     .btn-edit:before,
     .btn-delete:before,
-    .btn-login:before {
+    .btn-login:before,
+    .btn-request:before {
         font-family: "Font Awesome 5 Free";
         font-weight: 900;
         font-style: normal;
@@ -906,7 +908,13 @@ textarea {
         content: '\f2f6';
     }
 
+.btn-request {
+    background-color: #7CB3F3;
+}
 
+    .btn-request:before {
+        content: '\f0e0';
+    }
 
 /*Dispay data styles -----------------------------------------------------------------------------------*/
 .display-data-wrapper {
@@ -1027,7 +1035,7 @@ textarea {
 input.form-control,
 select.form-control {
     padding: .5rem .75rem;
-/*    min-width: 350px;
+    /*    min-width: 350px;
     max-width: 90%;*/
 }
 

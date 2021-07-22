@@ -1,70 +1,145 @@
-﻿@model SupplierDetailsModel
+﻿@model SupplierArticlesDetailsExportModel
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Article number</th>
-            <th scope="col">Article desc.</th>
-            <th scope="col">Conformity type</th>
-            <th scope="col">Conformity available</th>
-            <th scope="col">Is accepted?</th>
-            <th scope="col">Is valid?</th>
-            <th scope="col">Id</th>
-            <th class="col">Add / Edit</th>
-            <th class="col">Delete</th>
-            <th class="col">Send Request</th>
-        </tr>
-    </thead>
-    @foreach (var article in this.Model.Articles)
-    {
-        <tr>
-            <td>@article.ArticleNumber </td>
-            <td>@article.ArticleDescription</td>
-            <td>@article.ConformityTypeDescription</td>
-            @if (article.ArticleConformity == null)
-            {
-                <td>No</td>
-                <td>No</td>
-                <td>No</td>
-                <td>-</td>
-                <td>
-                    <a asp-controller="Conformities" asp-action="AddToArticleSupplierConformityType" class="btn btn-primary"
+<section class="table-container">
+
+    <article class="table-header">
+    </article>
+
+    <table class="table dataTable">
+        <thead>
+            <tr>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.NumberSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Article Nr.</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                        </span>
+                    </a>
+                </th>
+                <th class="col-m">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.DescriptionSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Description</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.ConformityTypeSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Conf. type</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.HasConformitySortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Has conf.</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.AcceptedConformitySortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Accepted</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.ValidConformitySortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Valid</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">Add / Edit</th>
+                <th class="col-s">Delete</th>
+                <th class="col-s">Send request</th>
+            </tr>
+        </thead>
+        @foreach (var article in this.Model.Articles)
+        {
+            <tr>
+                <td class="col-s" data-label="Article Nr.">@article.ArticleNumber </td>
+                <td class="col-m" data-label="Description">@article.ArticleDescription</td>
+                <td class="col-s" data-label="Conf. type">@article.ConformityTypeDescription</td>
+                @if (article.ArticleConformity == null)
+                {
+                    <td class="col-s" data-label="Has conf.">No</td>
+                    <td class="col-s" data-label="Accepted">No</td>
+                    <td class="col-s" data-label="Valid">No</td>
+                    <td class="col-s" data-label="Add / Edit">
+                        <a asp-controller="Conformities" asp-action="AddToArticleSupplierConformityType" class="btn btn-add"
+                           asp-route-articleId="@article.ArticleId"
+                           asp-route-supplierId="@Model.Id"
+                           asp-route-conformityTypeId="@article.ConformityTypeId"
+                           asp-route-callerViewName="Suppliers">
+                            Add
+                        </a>
+                    </td>
+                    <td class="col-s" data-label="Delete">-</td>
+                }
+                else
+                {
+                    <td class="col-s" data-label="Has conf.">Yes</td>
+                    <td class="col-s" data-label="Accepted">@(article.ArticleConformity.IsAccepted ? "Yes" : "No")</td>
+                    <td class="col-s" data-label="Valid">
+                        @((article.ArticleConformity.IsAccepted && article.ArticleConformity.ValidityDate >= DateTime.UtcNow.Date)
+                    ? "Yes" : "No")
+                    </td>
+                    <td class="col-s" data-label="Add / Edit">
+                        <a asp-controller="Conformities" asp-action="Edit" class="btn btn-edit"
+                           asp-route-Id="@article.ArticleConformity.Id"
+                           asp-route-articleId="@article.ArticleId"
+                           asp-route-supplierId="@Model.Id"
+                           asp-route-conformityTypeId="@article.ConformityTypeId"
+                           asp-route-callerViewName="Suppliers">
+                            Edit
+                        </a>
+                    </td>
+                    <td class="col-s" data-label="Delete">
+                        <a asp-controller="Conformities" asp-action="Delete" class="btn btn-delete"
+                           asp-route-Id="@article.ArticleConformity.Id"
+                           asp-route-articleId="@article.ArticleId"
+                           asp-route-supplierId="@Model.Id"
+                           asp-route-callerViewName="Suppliers">
+                            Delete
+                        </a>
+                    </td>
+                }
+                <td class="col-s" data-label="Send request">
+                    <a asp-controller="Conformities" asp-action="SendRequest" class="btn btn-request"
                        asp-route-articleId="@article.ArticleId"
                        asp-route-supplierId="@Model.Id"
                        asp-route-conformityTypeId="@article.ConformityTypeId"
-                       asp-route-callerViewName="Suppliers">Add</a>
+                       asp-route-callerViewName="Suppliers">
+                        Request
+                    </a>
                 </td>
-                <td>-</td>
-            }
-            else
-            {
-                <td>Yes</td>
-                <td>@(article.ArticleConformity.IsAccepted ? "Yes" : "No")</td>
-                <td>@((article.ArticleConformity.IsAccepted && article.ArticleConformity.ValidityDate >= DateTime.UtcNow.Date) ? "Yes" : "No")</td>
-                <td>@article.ArticleConformity.Id</td>
-                <td>
-                    <a asp-controller="Conformities" asp-action="Edit" class="btn btn-primary"
-                       asp-route-Id="@article.ArticleConformity.Id"
-                       asp-route-articleId="@article.ArticleId"
-                       asp-route-supplierId="@Model.Id"
-                       asp-route-conformityTypeId="@article.ConformityTypeId"
-                       asp-route-callerViewName="Suppliers">Edit</a>
-                </td>
-                <td>
-                    <a asp-controller="Conformities" asp-action="Delete" class="btn btn-primary"
-                       asp-route-Id="@article.ArticleConformity.Id"
-                       asp-route-articleId="@article.ArticleId"
-                       asp-route-supplierId="@Model.Id"
-                       asp-route-callerViewName="Suppliers">Delete</a>
-                </td>
-            }
-            <td>
-                <a asp-controller="Conformities" asp-action="Request" class="btn btn-primary"
-                   asp-route-articleId="@article.ArticleId"
-                   asp-route-supplierId="@Model.Id"
-                   asp-route-conformityTypeId="@article.ConformityTypeId">Send Request</a>
-            </td>
-        </tr>
-    }
-</table>
+            </tr>
+        }
+    </table>
+</section>

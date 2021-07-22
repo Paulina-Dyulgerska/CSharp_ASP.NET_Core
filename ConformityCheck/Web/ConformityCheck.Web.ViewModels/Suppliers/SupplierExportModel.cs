@@ -21,6 +21,15 @@
 
         public string ContactPersonLastName { get; set; }
 
+        public string ContactPersonName => this.ContactPersonFirstName + " " + this.ContactPersonLastName;
+
+        // AutoMapper-a moje da vzeme ot Supplier.ArticleSuppliers.Count() i da mi go dade
+        // direktno tuk, bez da pravq custom mapping!!! Ako spazwam conventiona za imenata na 
+        // propertytata, toj shte se opravi s neshta kato Count, Min, Max i t.n.
+        public int ArticleSuppliersCount { get; set; }
+
+        public string UserEmail { get; set; }
+
         public bool IsMainSupplier { get; set; }
 
         public bool HasAllConformed { get; set; }
@@ -52,6 +61,9 @@
                 .ForMember(
                 x => x.IsMainSupplier,
                 opt => opt.MapFrom(x => x.IsMainSupplier));
+
+            // configuration.CreateMap<Supplier, SupplierExportModel>()
+            //        .ForMember(x => x.ArticleSuppliersCount, opt => opt.MapFrom(s => s.ArticleSuppliers.Count));
         }
     }
 }

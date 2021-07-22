@@ -1,24 +1,32 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Suppliers
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
+    using ConformityCheck.Common;
     using ConformityCheck.Common.ValidationAttributes;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
     public class SuppliersListAllModel : PagingViewModel, IMapFrom<Supplier>
     {
-        public IEnumerable<SupplierFullInfoModel> Suppliers { get; set; }
+        public IEnumerable<SupplierExportModel> Suppliers { get; set; }
 
+        // this is the choosen supplier id
+        [Required]
         [SupplierEntityAttribute]
         public string Id { get; set; }
 
-        public string NumberSortParm { get; set; }
+        public string NumberSortParam => this.CurrentSortOrder == GlobalConstants.NumberSortParamDesc ?
+           GlobalConstants.NumberSortParam : GlobalConstants.NumberSortParamDesc;
 
-        public string NameSortParm { get; set; }
+        public string NameSortParam => this.CurrentSortOrder == GlobalConstants.NameSortParamDesc ?
+           GlobalConstants.NameSortParam : GlobalConstants.NameSortParamDesc;
 
-        public string ArticlesCountSortParm { get; set; }
+        public string ArticlesCountSortParam => this.CurrentSortOrder == GlobalConstants.ArticlesCountSortParamDesc ?
+           GlobalConstants.ArticlesCountSortParam : GlobalConstants.ArticlesCountSortParamDesc;
 
-        public string UserEmailSortParm { get; set; }
+        public string UserEmailSortParam => this.CurrentSortOrder == GlobalConstants.UserEmailSortParamDesc ?
+           GlobalConstants.UserEmailSortParam : GlobalConstants.UserEmailSortParamDesc;
     }
 }

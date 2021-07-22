@@ -41,7 +41,7 @@
 
         // public async Task<IActionResult> ListAll()
         // {
-        //     var model = await this.suppliersService.GetAllAsNoTrackingOrderedAsync<SupplierFullInfoModel>();
+        //     var model = await this.suppliersService.GetAllAsNoTrackingOrderedAsync<SupplierExportModel>();
         //     return this.View(model);
         // }
         public async Task<IActionResult> ListAll(PagingViewModel input)
@@ -57,21 +57,17 @@
                 ItemsPerPage = input.ItemsPerPage,
                 PageNumber = input.PageNumber,
                 PagingControllerActionCallName = nameof(this.ListAll),
-                CreatedOnSortParm = string.IsNullOrEmpty(input.CurrentSortOrder) ? "createdOn" : string.Empty,
-                NumberSortParm = input.CurrentSortOrder == "numberDesc" ? "number" : "numberDesc",
-                NameSortParm = input.CurrentSortOrder == "nameDesc" ? "name" : "nameDesc",
-                ArticlesCountSortParm = input.CurrentSortOrder == "articleCountDesc" ? "articleCount" : "articleCountDesc",
-                UserEmailSortParm = input.CurrentSortOrder == "userEmailDesc" ? "userEmail" : "userEmailDesc",
                 CurrentSortOrder = input.CurrentSortOrder,
                 CurrentSearchInput = input.CurrentSearchInput,
-                CurrentSortDirection = input.CurrentSortDirection == "sortDesc" ? "sortAsc" : "sortDesc",
+                CurrentSortDirection = input.CurrentSortDirection == GlobalConstants.CurrentSortDirectionDesc ?
+                                    GlobalConstants.CurrentSortDirectionAsc : GlobalConstants.CurrentSortDirectionDesc,
             };
 
             if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
             {
                 model.ItemsCount = this.suppliersService.GetCount();
                 model.Suppliers = await this.suppliersService
-                                            .GetAllOrderedAsPagesAsync<SupplierFullInfoModel>(
+                                            .GetAllOrderedAsPagesAsync<SupplierExportModel>(
                                                 input.CurrentSortOrder,
                                                 input.PageNumber,
                                                 input.ItemsPerPage);
@@ -81,7 +77,7 @@
                 input.CurrentSearchInput = input.CurrentSearchInput.Trim();
                 model.ItemsCount = this.suppliersService.GetCountBySearchInput(input.CurrentSearchInput);
                 model.Suppliers = await this.suppliersService
-                                            .GetAllBySearchInputOrderedAsPagesAsync<SupplierFullInfoModel>(
+                                            .GetAllBySearchInputOrderedAsPagesAsync<SupplierExportModel>(
                                             input.CurrentSearchInput,
                                             input.CurrentSortOrder,
                                             input.PageNumber,
@@ -153,10 +149,28 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(SupplierArticlesDetailsInputModel input)
         {
-            // var model = await this.suppliersService.GetByIdAsync<SupplierDetailsModel>(id);
-            var model = await this.suppliersService.DetailsByIdAsync(id);
+            // var model = await this.suppliersService.DetailsByIdAsync(id);
+            if (input.PageNumber <= 0)
+            {
+                // loads StatusCodeError404.cshtm
+                return this.NotFound();
+            }
+
+            // var model = await this.suppliersService.DetailsBySupplierAsync(input);
+            var model = await this.suppliersService.GetByIdWIthArticlesAndConformityOrderedAsPageAsync(
+                                            input.Id,
+                                            input.CurrentSortOrder,
+                                            input.PageNumber,
+                                            input.ItemsPerPage);
+            model.ItemsPerPage = input.ItemsPerPage;
+            model.PageNumber = input.PageNumber;
+            model.PagingControllerActionCallName = nameof(this.Details);
+            model.CurrentSortOrder = input.CurrentSortOrder;
+            model.CurrentSearchInput = input.CurrentSearchInput;
+            model.CurrentSortDirection = input.CurrentSortDirection == GlobalConstants.CurrentSortDirectionDesc ?
+                                    GlobalConstants.CurrentSortDirectionAsc : GlobalConstants.CurrentSortDirectionDesc;
 
             return this.View(model);
         }
@@ -175,18 +189,18 @@
         }
 
         // [Authorize]
-        public async Task<IActionResult> GetArticlesById(string id)
+        public async Task<IActionResult> GetByNumberOrName(
+            string input)
         {
-            var model = await this.suppliersService.GetArticlesByIdAsync<ArticleExportModel>(id);
+            var model = await this.suppliersService.GetAllBySearchInputAsync<SupplierExportModel>(input);
 
             return this.Json(model);
         }
 
         // [Authorize]
-        public async Task<IActionResult> GetByNumberOrName(
-            string input)
+        public async Task<IActionResult> GetArticlesById(string id)
         {
-            var model = await this.suppliersService.GetAllBySearchInputAsync<SupplierExportModel>(input);
+            var model = await this.suppliersService.GetArticlesByIdAsync<ArticleExportModel>(id);
 
             return this.Json(model);
         }

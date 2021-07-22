@@ -5,12 +5,14 @@
     using ConformityCheck.Common.ValidationAttributes;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public class SupplierEditInputModel : IMapFrom<Supplier>
     {
         [SupplierEntityAttribute]
         public string Id { get; set; }
 
+        [BindNever]
         public string Number { get; set; }
 
         [Required]
@@ -35,7 +37,6 @@
         [RegularExpression("^[A-Z]+[a-z]*$", ErrorMessage = "The field Contact Person last name could contain only letters.")]
         public string ContactPersonLastName { get; set; }
 
-        // TODO: who is the user?
-        public string UserId { get; set; }
+        public string UserEmail { get; set; }
     }
 }
