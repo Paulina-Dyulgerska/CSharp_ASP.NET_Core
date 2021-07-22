@@ -72,8 +72,13 @@
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
 
-                    <div class="form-field-container">
-                        <input type="submit" class="btn btn-align-end" value="Save changes" />
+                    <div class="btns-container">
+                        <div class="form-field-container">
+                            <a asp-action="ListAll" class="btn btn-back btn-align-end">Return back</a>
+                        </div>
+                        <div class="form-field-container">
+                            <input type="submit" class="btn btn-align-end" value="Save changes" />
+                        </div>
                     </div>
                 </form>
             </article>
