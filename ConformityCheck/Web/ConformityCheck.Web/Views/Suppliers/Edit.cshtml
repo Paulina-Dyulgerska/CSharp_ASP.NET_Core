@@ -8,64 +8,90 @@
     //var substances = Model.SubstancesAvailable.Select(x => new SelectListItem($"{x.CASNumber} - {x.Description}", x.Id.ToString()));
 }
 
-<h3>@this.ViewData["Title"]</h3>
-
-<div>
-    <form method="post" class="col-md-6 mx-auto">
-        @* za file mi trqbwa multipart/form-data, ako nqma da kachwam file, da go smenq!!!!! *@
-
-        <div asp-validation-summary="All" class="text-danger"></div>
-
-        <input asp-for="Id" hidden value="@Model.Id" />
-
-        <div>
-            <label asp-for="Number">Supplier's number:</label>
-            <input asp-for="Number" hidden />
-            <span class="text-primary ">@Model.Number</span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Name">Change supplier's name:</label>
-            <input asp-for="Name" class="form-control" value="@Model.Name" />
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
-
-        <div>
-            <label asp-for="Email"></label>
-            <input asp-for="Email" class="form-control" value="@Model.Email" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-
-        <div>
-            <label asp-for="PhoneNumber"></label>
-            <input asp-for="PhoneNumber" class="form-control" value="@Model.PhoneNumber" />
-            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-        </div>
-
-        <div>
-            <label asp-for="ContactPersonFirstName"></label>
-            <input asp-for="ContactPersonFirstName" class="form-control" value="@Model.ContactPersonFirstName" />
-            <span asp-validation-for="ContactPersonFirstName" class="text-danger"></span>
-        </div>
-
-        <div>
-            <label asp-for="ContactPersonLastName"></label>
-            <input asp-for="ContactPersonLastName" class="form-control" value="@Model.ContactPersonLastName" />
-            <span asp-validation-for="ContactPersonLastName" class="text-danger"></span>
-        </div>
-
-        <div>
-            <label asp-for="UserEmail"></label>
-            <input asp-for="UserEmail" class="form-control" value="@Model.UserEmail" />
-            <span asp-validation-for="UserEmail" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Ready" />
-        </div>
-    </form>
-</div>
-
 @section SubMenu{
-    @*<partial name="_SubMenuEdit" model="Model" />*@
+    <partial name="_SubMenuGeneral" model="Model" />
 }
+
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+            </article>
+        </section>
+
+        <section class="display-data-body">
+            <article class="form-data-container">
+                <article class="data-container supplier-edit">
+                    <ul>
+                        <li>
+                            Supplier number:
+                            <strong>@Model.Number</strong>
+                        </li>
+                        <li>
+                            Supplier name:
+                            <strong>@Model.Name</strong>
+                        </li>
+                        <li>
+                            Creator username:
+                            <strong>@Model.UserEmail</strong>
+                        </li>
+                    </ul>
+                </article>
+
+                <form method="post" class="input-group">
+                    @*enctype is multipart/form-data if uploading a file, do not forget to change it*@
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <input asp-for="Id" hidden value="@Model.Id" />
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control" value="@Model.Name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" value="@Model.Email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="PhoneNumber"></label>
+                        <input asp-for="PhoneNumber" class="form-control" value="@Model.PhoneNumber" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="ContactPersonFirstName"></label>
+                        <input asp-for="ContactPersonFirstName" class="form-control" value="@Model.ContactPersonFirstName" />
+                        <span asp-validation-for="ContactPersonFirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="ContactPersonLastName"></label>
+                        <input asp-for="ContactPersonLastName" class="form-control" value="@Model.ContactPersonLastName" />
+                        <span asp-validation-for="ContactPersonLastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="btns-container">
+                        <div class="form-field-container">
+                            <a asp-action="ListAll" class="btn btn-back btn-align-end">Return back</a>
+                        </div>
+                        <div class="form-field-container">
+                            <input type="submit" class="btn btn-align-end" value="Save changes" />
+                        </div>
+                    </div>
+                </form>
+            </article>
+        </section>
+
+        <section class="display-data-footer ">
+        </section>
+    </section>
+</section>

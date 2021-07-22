@@ -185,7 +185,7 @@
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
                 GlobalConstants.SupplierDeletedsuccessfullyMessage;
 
-            return this.View();
+            return this.RedirectToAction(nameof(this.ListAll));
         }
 
         // [Authorize]

@@ -184,6 +184,7 @@ blockquote {
 
 textarea {
     resize: none;
+    padding: 0.4rem;
 }
 
 .text-danger {
@@ -840,6 +841,10 @@ textarea {
     color: #E6F4F1;
 }
 
+.btn-clear {
+    background: #d9dee5;
+    color: #39bea2;
+}
 
 .btn-align-end {
     align-self: flex-end;
@@ -1008,6 +1013,7 @@ textarea {
     display: flex;
     flex-direction: column;
     margin: 2rem auto;
+    flex-basis: 40%;
     /*align-items: center;*/
 }
 

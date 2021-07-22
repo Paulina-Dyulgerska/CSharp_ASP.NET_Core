@@ -4,54 +4,80 @@
     this.ViewData["Title"] = "Create new supplier";
 }
 
-<form method="post" class="col-md-6 mx-auto">
-    <h1>@this.ViewData["Title"]</h1>
-
-    <div asp-validation-summary="All" class="text-danger"></div>
-
-    <div class="form-group">
-        <label asp-for="Number"></label>
-        <input asp-for="Number" class="form-control" placeholder="Supplier number" autofocus/>
-        <span asp-validation-for="Number" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <textarea asp-for="Name" class="form-control" placeholder="Supplier name"></textarea>
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <textarea asp-for="Email" class="form-control" placeholder="Supplier e-mail"></textarea>
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="PhoneNumber"></label>
-        <textarea asp-for="PhoneNumber" class="form-control" placeholder="Supplier phoneNumber"></textarea>
-        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="ContactPersonFirstName"></label>
-        <textarea asp-for="ContactPersonFirstName" class="form-control" placeholder="Contact person first name"></textarea>
-        <span asp-validation-for="ContactPersonFirstName" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="ContactPersonLastName"></label>
-        <textarea asp-for="ContactPersonLastName" class="form-control" placeholder="Contact person last name"></textarea>
-        <span asp-validation-for="ContactPersonLastName" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <input type="submit" class="btn btn-info" value="Create" />
-        <input type="reset" class="btn btn-primary" value="Clear form" />
-        <a class="btn btn-secondary" value="Cancel" asp-action="ListAll">Cancel</a>
-    </div>
-</form>
-
 @section SubMenu{
-    <partial name="_SubMenuGeneral" />
+    <partial name="_SubMenuGeneral" model="Model" />
 }
+
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+            </article>
+        </section>
+
+        <section class="display-data-body">
+            <article class="form-data-container">
+                    <form method="post" class="input-group">
+                        @*enctype is multipart/form-data if uploading a file, do not forget to change it*@
+
+                        <div asp-validation-summary="All" class="text-danger"></div>
+
+                        <div class="form-field-container large-margin-vertical">
+                            <label asp-for="Number"></label>
+                            <input asp-for="Number" class="form-control" placeholder="Supplier number" autofocus />
+                            <span asp-validation-for="Number" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-field-container large-margin-vertical">
+                            <label asp-for="Name"></label>
+                            <input asp-for="Name" class="form-control" placeholder="Supplier name"/>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-field-container large-margin-vertical">
+                            <label asp-for="Email"></label>
+                            <input asp-for="Email" class="form-control" placeholder="Supplier e-mail"/>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-field-container large-margin-vertical">
+                            <label asp-for="PhoneNumber"></label>
+                            <input asp-for="PhoneNumber" class="form-control" placeholder="Supplier phoneNumber"/>
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-field-container large-margin-vertical">
+                            <label asp-for="ContactPersonFirstName"></label>
+                            <input asp-for="ContactPersonFirstName" class="form-control" placeholder="Contact person first name" />
+                            <span asp-validation-for="ContactPersonFirstName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-field-container large-margin-vertical">
+                            <label asp-for="ContactPersonLastName"></label>
+                            <input asp-for="ContactPersonLastName" class="form-control" placeholder="Contact person last name" />
+                            <span asp-validation-for="ContactPersonLastName" class="text-danger"></span>
+                        </div>
+
+                        <div class="btns-container">
+                            <div class="form-field-container">
+                                <a asp-action="ListAll" class="btn btn-back btn-align-end">Return back</a>
+                            </div>
+                            <div class="form-field-container">
+                                <input type="reset" class="btn btn-clear btn-align-end" value="Clear form" />
+                            </div>
+                            <div class="form-field-container">
+                                <input type="submit" class="btn btn-align-end" value="Create" />
+                            </div>
+                        </div>
+                    </form>
+            </article>
+        </section>
+
+        <section class="display-data-footer ">
+        </section>
+    </section>
+</section>

@@ -24,13 +24,13 @@
                 <details>
                     <summary>Article details</summary>
                     <p>
-                        Article's creation date: @Model.CreatedOn
+                        Article creation date: @Model.CreatedOn
                     </p>
                     <p>
-                        Article's last modify date: @Model.ModifiedOn
+                        Article last modify date: @Model.ModifiedOn
                     </p>
                     <p>
-                        Article's creator name: @Model.UserEmail
+                        Article creator name: @Model.UserEmail
                     </p>
                 </details>
             </article>
@@ -45,7 +45,7 @@
                             <strong>@Model.Number</strong>
                         </li>
                         <li>
-                            Article's description:
+                            Article description:
                             <strong>@Model.Description</strong>
                         </li>
                         <li>
@@ -67,7 +67,7 @@
                     <input asp-for="Id" hidden value="@Model.Id" />
 
                     <div class="form-field-container">
-                        <label asp-for="Description">Change article's description:</label>
+                        <label asp-for="Description">Change article description:</label>
                         <textarea asp-for="Description" rows="3" class="form-control" value="@Model.Description"></textarea>
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>

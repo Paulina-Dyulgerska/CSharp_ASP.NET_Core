@@ -330,7 +330,7 @@
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
                 GlobalConstants.ArticleDeletedsuccessfullyMessage;
 
-            return this.View();
+            return this.RedirectToAction(nameof(this.ListAll));
         }
 
         [Authorize]

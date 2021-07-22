@@ -72,7 +72,7 @@
         public bool ArticleEntityNumberCheck(string input)
         {
             return this.articlesRepository
-                .AllAsNoTracking()
+                .AllAsNoTrackingWithDeleted()
                 .Any(x => x.Number == input.Trim().ToUpper());
         }
 
@@ -139,7 +139,7 @@
         public bool SupplierEntityNumberCheck(string input)
         {
             return this.suppliersRepository
-                .AllAsNoTracking()
+                .AllAsNoTrackingWithDeleted()
                 .Any(x => x.Number == input.Trim().ToUpper());
         }
     }
