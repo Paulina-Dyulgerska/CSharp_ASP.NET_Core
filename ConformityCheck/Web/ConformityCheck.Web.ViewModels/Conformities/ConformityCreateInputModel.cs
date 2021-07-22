@@ -11,7 +11,7 @@
         [Required]
         [FileExtensionAttribute(extension: "pdf")]
         [FileSizeAttribute(size: 10 * 1024 * 1024)]
-        [Display(Name = "Conformity file:")]
+        [Display(Name = "* Conformity file:")]
         public IFormFile InputFile { get; set; }
 
         public bool ValidForAllArticles { get; set; }

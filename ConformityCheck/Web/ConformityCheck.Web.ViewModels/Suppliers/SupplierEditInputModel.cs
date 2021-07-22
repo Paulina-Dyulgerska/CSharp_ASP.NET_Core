@@ -18,6 +18,7 @@
         [Required]
         [MaxLength(50)]
         [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9 _-]*$", ErrorMessage = "The field Name could contain only letters, digits, '-', '_' or ' '.")]
+        [Display(Name = "* Supplier name")]
         public string Name { get; set; }
 
         [Required]
@@ -26,6 +27,7 @@
         [RegularExpression(
             "^(?:[a-zA-Z0-9][a-zA-Z0-9_.-]+@(?:[a-zA-Z0-9-_]{2,}[.][a-zA-Z0-9-_]{2,}))(?:.[a-zA-Z0-9-_]{2,})?$",
             ErrorMessage = "The Email field is not a valid e-mail address.")]
+        [Display(Name = "* Supplier email")]
         public string Email { get; set; }
 
         [MaxLength(20)]

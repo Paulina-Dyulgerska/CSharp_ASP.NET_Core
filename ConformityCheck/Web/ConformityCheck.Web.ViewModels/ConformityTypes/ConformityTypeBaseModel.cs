@@ -8,12 +8,13 @@
 
     public abstract class ConformityTypeBaseModel : IMapFrom<ConformityType>
     {
+        // [DescriptionRegExAttribute]
         [Required]
         [MinLength(2)]
         [MaxLength(50)]
         [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9 _-]*$", ErrorMessage = "The field Description could contain only letters, digits, '-', '_' or ' '.")]
-        //[DescriptionRegExAttribute]
         [ConformityTypeEntityDescriptionDublicatedAttribute]
+        [Display(Name = "* Description")]
         public virtual string Description { get; set; }
     }
 }
