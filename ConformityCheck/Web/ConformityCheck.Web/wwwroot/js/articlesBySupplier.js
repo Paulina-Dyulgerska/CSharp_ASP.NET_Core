@@ -1,5 +1,14 @@
-﻿$('#SupplierId').change();
+﻿$(document).ready(function () {
+    //$('#ValidForSingleArticle').removeAttr('checked')
+    $('#ValidForSingleArticle').prop('checked', false);
+    $('#ValidForAllArticles').prop('checked', false);
+    $('.articles-container').hide();
+});
+
+
 $('#SupplierId').change(function () {
+    $('.articles-container').hide();
+    $('#ArticleId').html(null);
     console.log($("#SupplierId").val());
     $.ajax({
         //url: '/Suppliers/GetArticlesById/' + $("#SupplierId").val(),
@@ -7,29 +16,26 @@ $('#SupplierId').change(function () {
         dataType: 'json',
         success: function (json) {
             let html = '<option class="form-control" value=""></option>';
-            for (i = 0; i < json.length; i++) {
-                var article = json[i];
-                html += '<option class="form-control" value="' + article.id + '">'
-                    + article.number + ' - ' + article.description +
-                    '</option>';
+            if (json.length >= 1) {
+                for (i = 0; i < json.length; i++) {
+                    var article = json[i];
+                    html += '<option class="form-control" value="' + article.id + '">'
+                        + article.number + ' - ' + article.description +
+                        '</option>';
+                }
+                $('#ArticleId').html(html);
             }
-            $('#ArticleId').html(html);
         },
         error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr);
+            console.log(ajaxOptions);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             alert('Error by loading the supplier articles');
             //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$(document).ready(function () {
-    //$('#ValidForSingleArticle').removeAttr('checked')
-    $('#ValidForSingleArticle').prop('checked', false);
-    $('#ValidForAllArticles').prop('checked', false);
-    $('.ArticleId').hide();
-});
-
-$('#ValidForAllArticles').change();
 $(document).ready(function () {
     $('#ValidForAllArticles').change(function () {
         if ($('#ValidForAllArticles').prop('checked')) {
@@ -40,14 +46,13 @@ $(document).ready(function () {
     });
 });
 
-$('#ValidForSingleArticle').change();
 $(document).ready(function () {
     $('#ValidForSingleArticle').change(function () {
         if ($('#ValidForSingleArticle').prop('checked')) {
-            $('.ArticleId').show();
+            $('.articles-container').show();
             $('#ValidForAllArticles').prop('disabled', true);
         } else {
-            $('.ArticleId').hide();
+            $('.articles-container').hide();
             $('#ValidForAllArticles').prop('disabled', false);
         }
     });

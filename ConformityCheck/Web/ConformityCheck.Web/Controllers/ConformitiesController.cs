@@ -113,8 +113,10 @@
             {
                 input.ValidForSingleArticle = false;
 
-                return this.View(input);
+                return this.View();
             }
+
+            // TODO - add just supplier's conformity - not connected with articles but egeneral one.
 
             // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await this.userManager.GetUserAsync(this.User);

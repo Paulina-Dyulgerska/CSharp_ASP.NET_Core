@@ -200,9 +200,17 @@
         // [Authorize]
         public async Task<IActionResult> GetArticlesById(string id)
         {
-            var model = await this.suppliersService.GetArticlesByIdAsync<ArticleExportModel>(id);
+            try
+            {
+                var model = await this.suppliersService.GetArticlesByIdAsync<ArticleExportModel>(id);
+                return this.Json(model);
+            }
 
-            return this.Json(model);
+            // TODO : ILogger!
+            catch (System.Exception ex)
+            {
+                throw new System.Exception(ex.Message);
+            }
         }
     }
 }

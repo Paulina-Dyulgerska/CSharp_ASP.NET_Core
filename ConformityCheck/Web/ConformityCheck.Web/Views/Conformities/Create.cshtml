@@ -7,103 +7,130 @@
     //var substances = Model.SubstancesAvailable.Select(x => new SelectListItem($"{x.CASNumber} - {x.Description}", x.Id.ToString()));
 }
 
-<h3>@this.ViewData["Title"]</h3>
-
-<div>
-    <form method="post" class="col-md-6 mx-auto" enctype="multipart/form-data">
-        <div asp-validation-summary="All" class="text-danger"></div>
-
-        <br />
-        <div class="form-group font-weight-bold">
-            <label asp-for="IsAccepted">If the conformity is accepted, please check the box:</label>
-            <br />
-            <input asp-for="IsAccepted" type="checkbox" />
-            <span asp-validation-for="IsAccepted" class="text-danger"></span>
-        </div>
-
-        <div class="form-group font-weight-bold">
-            <label asp-for="ConformityTypeId"></label>
-            <select asp-for="ConformityTypeId" class="form-control" autofocus>
-                <vc:conformity-types></vc:conformity-types>
-            </select>
-            <span asp-validation-for="ConformityTypeId" class="text-danger"></span>
-        </div>
-
-        <div class="form-group font-weight-bold">
-            <label asp-for="SupplierId"></label>
-            <select asp-for="SupplierId" class="form-control">
-                <vc:suppliers></vc:suppliers>
-            </select>
-            <span asp-validation-for="SupplierId" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <p>
-                * Please select one the options below. The choosen conformity type will be assigned to the article/s
-                if missing. Available opitions are:
-            </p>
-            <div class="form-group">
-                <label class="font-weight-bold" asp-for="ValidForAllArticles">Conformity for all suppliers' articles:</label>
-                <input asp-for="ValidForAllArticles" type="checkbox"> <br />
-                <label class="font-weight-bold" asp-for="ValidForSingleArticle">Conformity for a single article.</label>
-                <input asp-for="ValidForSingleArticle" type="checkbox"> <br />
-                <p>
-                    (Articles list will be generated if a single article's confirmation is choosen)
-                </p>
-            </div>
-
-            <div class="ArticleId font-weight-bold" style="display:none">
-                <label asp-for="ArticleId"></label>
-                <select asp-for="ArticleId" class="form-control" autofocus>
-                    <option>Select Supplier First</option>
-                </select>
-                <span asp-validation-for="ArticleId" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="form-group font-weight-bold">
-            <label asp-for="IssueDate"></label>
-            <input asp-for="IssueDate" class="form-control" />
-            <span asp-validation-for="IssueDate" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="ValidityDate"></label>
-            <input asp-for="ValidityDate" class="form-control"  />
-            <span asp-validation-for="ValidityDate" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Comments"></label>
-            <input asp-for="Comments" class="form-control" placeholder="Add comments to the conformity" />
-            <span asp-validation-for="Comments" class="text-danger"></span>
-        </div>
-
-        <div class="form-group weight-bold">
-            <label asp-for="InputFile"></label>
-            <input asp-for="InputFile" class="form-control-file border" placeholder="Add file" />
-            <span asp-validation-for="InputFile" class="text-danger"></span>
-        </div>
-
-        @*<div class="form-group">
-            <label asp-for="UserId"></label>
-            <input asp-for="UserId" class="form-control" hidden value="@this.User.Identity.Name" />
-            <span asp-validation-for="UserId" class="text-danger"></span>
-        </div>*@
-
-        @* TODO: add the declared substances and assing the restrictions. *@
-
-        <div class="form-group">
-            <input type="submit" class="btn btn-info" value="Create" />
-            <input type="reset" class="btn btn-primary" value="Clear form" />
-            <a class="btn btn-secondary" value="Cancel" asp-action="ListAll">Cancel</a>
-        </div>
-    </form>
-</div>
-
 @section SubMenu{
-    <partial name="_SubMenuGeneral" />
+    <partial name="_SubMenuGeneral" model="Model" />
 }
+
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+            </article>
+        </section>
+
+        <section class="display-data-body">
+            <article class="form-data-container">
+                <form method="post" class="input-group" enctype="multipart/form-data">
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="SupplierId">
+                            * Select supplier
+                        </label>
+                        <select asp-for="SupplierId" class="form-control">
+                            <vc:suppliers></vc:suppliers>
+                        </select>
+                        <span asp-validation-for="SupplierId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="ConformityTypeId">
+                            * Select conformity type
+                        </label>
+                        <select asp-for="ConformityTypeId" class="form-control" autofocus>
+                            <vc:conformity-types></vc:conformity-types>
+                        </select>
+                        <span asp-validation-for="ConformityTypeId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <p>
+                            <strong>
+                                * Please select one the options below. The choosen conformity type will be assigned to the article/s
+                                if missing. Available opitions are:
+                            </strong>
+                        </p>
+                        <div class="form-field-container">
+                            <article class="form-field-container">
+                                <label asp-for="ValidForAllArticles">Conformity for all suppliers' articles:</label>
+                                <input asp-for="ValidForAllArticles" type="checkbox">
+                            </article>
+                            <article class="form-field-container">
+                                <label asp-for="ValidForSingleArticle">Conformity for a single article.</label>
+                                <input asp-for="ValidForSingleArticle" type="checkbox">
+                            </article>
+                            <p>
+                                (Articles list will be generated if a single article's confirmation is choosen)
+                            </p>
+                        </div>
+
+                        <div class="articles-container form-field-container" style="display:none">
+                            <label asp-for="ArticleId"></label>
+                            <select asp-for="ArticleId" class="form-control" autofocus>
+                                <option>Select supplier with articles first</option>
+                            </select>
+                            <span asp-validation-for="ArticleId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="IssueDate"></label>
+                        <input asp-for="IssueDate" class="form-control" placeholder="Date of conformity creation" />
+                        <span asp-validation-for="IssueDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="ValidityDate"></label>
+                        <input asp-for="ValidityDate" class="form-control" placeholder="Date till the conformity is valid" />
+                        <span asp-validation-for="ValidityDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="Comments"></label>
+                        <input asp-for="Comments" class="form-control" placeholder="Add comments to the conformity" />
+                        <span asp-validation-for="Comments" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical custom-file-upload-container">
+                        <label asp-for="InputFile" class="custom-file-upload form-control">
+                            * <i class="fas fa-file-upload"></i> Choose conformity file
+                        </label>
+                        <input asp-for="InputFile" class="form-control" placeholder="Add file" />
+                        <span asp-validation-for="InputFile" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="IsAccepted">
+                            If the conformity is accepted, please check this box:
+                        </label>
+                        <input asp-for="IsAccepted" type="checkbox" />
+                        <span asp-validation-for="IsAccepted" class="text-danger"></span>
+                    </div>
+
+                    <div class="btns-container">
+                        <div class="form-field-container">
+                            <a asp-action="ListAll" class="btn btn-back btn-align-end">Return back</a>
+                        </div>
+                        <div class="form-field-container">
+                            <input type="reset" class="btn btn-clear btn-align-end" value="Clear form" />
+                        </div>
+                        <div class="form-field-container">
+                            <input type="submit" class="btn btn-align-end" value="Create" />
+                        </div>
+                    </div>
+                </form>
+            </article>
+        </section>
+
+        <section class="display-data-footer ">
+        </section>
+    </section>
+</section>
 
 @section Scripts{
     <script src="~/js/articlesBySupplier.js" asp-append-version="true"></script>

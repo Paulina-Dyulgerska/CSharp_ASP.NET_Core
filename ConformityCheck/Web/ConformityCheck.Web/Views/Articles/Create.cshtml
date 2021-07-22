@@ -54,7 +54,7 @@
 
                     <div class="form-field-container large-margin-vertical">
                         <label asp-for="ConformityTypes"></label>
-                        <select size="@GetCountsService.GetCounts().ConformityTypes" asp-for="ConformityTypes" class="form-control" placeholder="Conformity types">
+                        <select size="@(GetCountsService.GetCounts().ConformityTypes + 1)" asp-for="ConformityTypes" class="form-control" placeholder="Conformity types">
                             <vc:conformity-types></vc:conformity-types>
                         </select>
                         <span asp-validation-for="ConformityTypes" class="text-danger"></span>

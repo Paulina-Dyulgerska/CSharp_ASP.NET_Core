@@ -1,6 +1,7 @@
 ﻿@using ConformityCheck.Web.ViewModels.ConformityTypes.ViewComponents
 @model IEnumerable<ConformityTypesViewComponentModel>
 
+<option class="form-control" value=""></option>
 @foreach (var item in Model)
 {
     <option class="form-control" value="@item.Id">@item.Description</option>
