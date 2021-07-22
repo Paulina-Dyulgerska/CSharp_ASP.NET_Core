@@ -19,8 +19,9 @@
 
     public class ConformitiesController : BaseController
     {
-        private const string SuppliersCallerViewName = "Suppliers";
         private const string ArticlesCallerViewName = "Articles";
+        private const string SuppliersCallerViewName = "Suppliers";
+        private const string ConformitiesCallerViewName = "Conformities";
         private readonly string conformityFilesDirectory;
         private readonly IArticlesService articlesService;
         private readonly ISuppliersService supplierService;
@@ -266,7 +267,15 @@
                 return this.RedirectToAction(nameof(SuppliersController.Details), SuppliersCallerViewName, new { id = input.SupplierId });
             }
 
+            if (input.CallerViewName == ConformitiesCallerViewName)
+            {
+                return this.RedirectToAction(nameof(ConformitiesController.ListAll), ConformitiesCallerViewName, new { id = input.Id });
+            }
+
             return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
+            // TODO 
+            // return this.RedirectToAction("Details", CallerViewName, new { id = input.CallerId });
+
         }
 
         [Authorize]

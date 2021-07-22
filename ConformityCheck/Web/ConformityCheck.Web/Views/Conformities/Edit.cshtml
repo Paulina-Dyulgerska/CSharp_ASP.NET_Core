@@ -7,114 +7,6 @@
     //var substances = Model.SubstancesAvailable.Select(x => new SelectListItem($"{x.CASNumber} - {x.Description}", x.Id.ToString()));
 }
 
-@* Old form *@
-
-<div class="form-group  ">
-    <label class="font-weight-bold" asp-for="ConformityTypeDescription">Conformity type:</label>
-    <input asp-for="ConformityTypeDescription" class="form-control" hidden />
-    <span class="text-primary ">@Model.ConformityTypeDescription</span>
-</div>
-
-<div class="form-group ">
-    <label class="font-weight-bold" asp-for="SupplierNumber">Supplier:</label>
-    <input asp-for="SupplierNumber" class="form-control" hidden />
-    <input asp-for="SupplierName" class="form-control" hidden />
-    <span class="text-primary ">@Model.SupplierNumber - @Model.SupplierName</span>
-</div>
-
-<div class="form-group ">
-    <label class="font-weight-bold" asp-for="ArticleNumber">Article Nr:</label>
-    <input asp-for="ArticleNumber" class="form-control" hidden />
-    <input asp-for="ArticleDescription" class="form-control" hidden />
-    <span class="text-primary ">@Model.ArticleNumber - @Model.ArticleDescription</span>
-</div>
-
-@if (@Model.ConformityFileUrl != null)
-{
-    @* Variant 1: da probvam moga li da go naprawq s POST? *@
-    <div class="form-group">
-        <span>
-            Conformity is available.
-            Click the button to see the conformity file: <br />
-        </span>
-        <a class="openPdf btn btn-sm btn-info" asp-action="ShowModalDocument"
-           asp-route-conformityFileUrl="@Model.ConformityFileUrl"
-           target="_blank">
-            <span class="icon text-white">
-                <i class="fas fa-eye"></i>
-            </span>
-            <span class="text">Conformity</span>
-        </a>
-        @* Variant 2: *@
-        @*<a href="@Url.Action("ShowModalDocument", "Conformities", new { ConformityFileUrl = @Model.ConformityFileUrl})" target="_blank">Link Text</a>*@
-        @* Variant 3: *@
-        @*<div class="modal fade" id="modalGeneric" role="dialog">
-            </div>
-            <a class="ml-1" data-toggle="tooltip" title="Predogled"
-               data-url="@Url.Action("PdfPartial", "Conformities", new { ConformityFileUrl = Model.ConformityFileUrl })"
-               onclick="showGenericModal(event);">
-                show the file
-            </a>*@
-    </div>
-    <div class="form-group">
-        <p class="font-weight-bold">
-            Please choose the button below, if you want to replace the current conformity file with a new one.
-            Important! The available conformity document will be deleted and new one will be created!
-            The new file will replace the current one!
-        </p>
-        <a class="addPdf btn btn-sm btn-primary"
-           asp-action="AddToArticleSupplierConformityType"
-           asp-route-articleId="@Model.ArticleId"
-           asp-route-supplierId="@Model.SupplierId"
-           asp-route-conformityTypeId="@Model.ConformityTypeId"
-           asp-route-callerViewName="Articles">
-            <span class="icon text-white">
-                <i class="fas fa-edit"></i>
-            </span>
-            <span class="text">Add new conformity file</span>
-        </a>
-    </div>
-}
-
-<div class="form-group ">
-    <label class="font-weight-bold" asp-for="IssueDate">Date of conformity creation:</label>
-    <input asp-for="IssueDate" class="form-control" placeholder="@Model.IssueDate.ToLocalTime()" />
-    <span asp-validation-for="IssueDate" class="text-danger"></span>
-</div>
-
-<div class="form-group">
-    <label asp-for="ValidityDate">Date till the conformity is valid:</label>
-    <input asp-for="ValidityDate" class="form-control" placeholder="@Model.ValidityDate?.ToLocalTime()" />
-    <span asp-validation-for="ValidityDate" class="text-danger"></span>
-</div>
-
-<div class="form-group">
-    <label asp-for="Comments">Edit comments to the conformity</label>
-    <input asp-for="Comments" class="form-control" placeholder="@Model.Comments" />
-    <span asp-validation-for="Comments" class="text-danger"></span>
-</div>
-
-<div class="form-group">
-    <label class="font-weight-bold" asp-for="IsAccepted">
-        If the conformity is accepted, please check the box:
-    </label>
-    <br />
-    @if (Model.IsAccepted)
-    {
-        <input asp-for="IsAccepted" type="checkbox" checked />
-    }
-    else
-    {
-        <input asp-for="IsAccepted" type="checkbox" />
-    }
-    <span asp-validation-for="IsAccepted" class="text-danger"></span>
-</div>
-
-
-
-
-
-
 @section SubMenu{
     <partial name="_SubMenuGeneral" model="Model" />
 }
@@ -132,6 +24,71 @@
 
         <section class="display-data-body">
             <article class="form-data-container">
+                <article class="data-container conformity-edit">
+                    <ul>
+                        <li>
+                            Conformity type:
+                            <strong>@Model.ConformityTypeDescription</strong>
+                        </li>
+                        <li>
+                            Supplier:
+                            <strong>@Model.SupplierNumber - @Model.SupplierName</strong>
+                        </li>
+                        <li>
+                            Article:
+                            <strong>@Model.ArticleNumber - @Model.ArticleDescription</strong>
+                        </li>
+                        <li>
+                            @if (@Model.ConformityFileUrl != null)
+                            {
+                                @* Variant 1: da probvam moga li da go naprawq s POST? *@
+                                <div class="form-group">
+                                    <span>
+                                        Conformity is available.
+                                        Click the button to see the conformity file: <br />
+                                    </span>
+                                    <a class="openPdf btn btn-sm btn-info" asp-action="ShowModalDocument"
+                                       asp-route-conformityFileUrl="@Model.ConformityFileUrl"
+                                       target="_blank">
+                                        <span class="icon text-white">
+                                            <i class="fas fa-eye"></i>
+                                        </span>
+                                        <span class="text">Conformity</span>
+                                    </a>
+                                    @* Variant 2: *@
+                                    @*<a href="@Url.Action("ShowModalDocument", "Conformities", new { ConformityFileUrl = @Model.ConformityFileUrl})" target="_blank">Link Text</a>*@
+                                    @* Variant 3: *@
+                                    @*<div class="modal fade" id="modalGeneric" role="dialog">
+                                        </div>
+                                        <a class="ml-1" data-toggle="tooltip" title="Predogled"
+                                           data-url="@Url.Action("PdfPartial", "Conformities", new { ConformityFileUrl = Model.ConformityFileUrl })"
+                                           onclick="showGenericModal(event);">
+                                            show the file
+                                        </a>*@
+                                </div>
+                                <div class="form-group">
+                                    <p class="font-weight-bold">
+                                        Please choose the button below, if you want to replace the current conformity file with a new one.
+                                        Important! The available conformity document will be deleted and new one will be created!
+                                        The new file will replace the current one!
+                                    </p>
+                                    <a class="addPdf btn btn-sm btn-primary"
+                                       asp-action="AddToArticleSupplierConformityType"
+                                       asp-route-articleId="@Model.ArticleId"
+                                       asp-route-supplierId="@Model.SupplierId"
+                                       asp-route-conformityTypeId="@Model.ConformityTypeId"
+                                       asp-route-callerViewName="Conformities">
+                                        <span class="icon text-white">
+                                            <i class="fas fa-edit"></i>
+                                        </span>
+                                        <span class="text">Add new conformity file</span>
+                                    </a>
+                                </div>
+                            }
+                        </li>
+                    </ul>
+                </article>
+
                 <form method="post" class="input-group" enctype="multipart/form-data">
 
                     <div asp-validation-summary="All" class="text-danger"></div>
@@ -139,63 +96,6 @@
                     <input asp-for="SupplierId" hidden value="@Model.SupplierId">
                     <input asp-for="ConformityTypeId" hidden value="@Model.ConformityTypeId">
                     <input asp-for="ArticleId" hidden value="@Model.ArticleId">
-
-
-
-
-
-
-
-                    @* Not finished *@
-                    <div class="form-field-container large-margin-vertical">
-                        <label asp-for="SupplierId">
-                            * Select supplier
-                        </label>
-                        <select asp-for="SupplierId" class="form-control">
-                            <vc:suppliers></vc:suppliers>
-                        </select>
-                        <span asp-validation-for="SupplierId" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-field-container large-margin-vertical">
-                        <label asp-for="ConformityTypeId">
-                            * Select conformity type
-                        </label>
-                        <select asp-for="ConformityTypeId" class="form-control" autofocus>
-                            <vc:conformity-types></vc:conformity-types>
-                        </select>
-                        <span asp-validation-for="ConformityTypeId" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-field-container large-margin-vertical">
-                        <p>
-                            <strong>
-                                * Please select one the options below. The choosen conformity type will be assigned to the article/s
-                                if missing. Available opitions are:
-                            </strong>
-                        </p>
-                        <div class="form-field-container">
-                            <article class="form-field-container">
-                                <label asp-for="ValidForAllArticles">Conformity for all suppliers' articles:</label>
-                                <input asp-for="ValidForAllArticles" type="checkbox">
-                            </article>
-                            <article class="form-field-container">
-                                <label asp-for="ValidForSingleArticle">Conformity for a single article.</label>
-                                <input asp-for="ValidForSingleArticle" type="checkbox">
-                            </article>
-                            <p>
-                                (Articles list will be generated if a single article's confirmation is choosen)
-                            </p>
-                        </div>
-
-                        <div class="articles-container form-field-container" style="display:none">
-                            <label asp-for="ArticleId"></label>
-                            <select asp-for="ArticleId" class="form-control" autofocus>
-                                <option>Select supplier with articles first</option>
-                            </select>
-                            <span asp-validation-for="ArticleId" class="text-danger"></span>
-                        </div>
-                    </div>
 
                     <div class="form-field-container large-margin-vertical">
                         <label asp-for="IssueDate"></label>
@@ -215,21 +115,28 @@
                         <span asp-validation-for="Comments" class="text-danger"></span>
                     </div>
 
-                    <div class="form-field-container large-margin-vertical custom-file-upload-container">
-                        <label asp-for="InputFile" class="custom-file-upload form-control">
-                            * <i class="fas fa-file-upload"></i> Choose conformity file
-                        </label>
-                        <input asp-for="InputFile" class="form-control" placeholder="Add file" />
-                        <span asp-validation-for="InputFile" class="text-danger"></span>
-                    </div>
-
                     <div class="form-field-container large-margin-vertical">
                         <label asp-for="IsAccepted">
                             If the conformity is accepted, please check this box:
                         </label>
-                        <input asp-for="IsAccepted" type="checkbox" />
+                        @if (Model.IsAccepted)
+                        {
+                            <input asp-for="IsAccepted" type="checkbox" checked />
+                        }
+                        else
+                        {
+                            <input asp-for="IsAccepted" type="checkbox" />
+                        }
                         <span asp-validation-for="IsAccepted" class="text-danger"></span>
                     </div>
+
+                    @*<div class="form-field-container large-margin-vertical custom-file-upload-container">
+                            <label asp-for="InputFile" class="custom-file-upload form-control">
+                                * <i class="fas fa-file-upload"></i> Choose conformity file
+                            </label>
+                            <input asp-for="InputFile" class="form-control" placeholder="Add file" />
+                            <span asp-validation-for="InputFile" class="text-danger"></span>
+                        </div>*@
 
                     @* TODO: add the declared substances and assing the restrictions. *@
 
