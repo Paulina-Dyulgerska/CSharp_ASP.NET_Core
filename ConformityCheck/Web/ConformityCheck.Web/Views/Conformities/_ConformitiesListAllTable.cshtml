@@ -17,7 +17,7 @@
                         </span>
                     </a>
                 </th>
-                <th class="col-xs">
+                <th class="col-s">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.ArticleDescriptionSortParam"
@@ -112,7 +112,7 @@
                             </span>
                         </a>
                     </th>*@
-                <th class="col-xs">
+                <th class="col-s">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.UserEmailSortParam"
@@ -134,7 +134,7 @@
             {
                 <tr class="" data-id="@conformity.Id">
                     <td id="search" class="col-s" data-label="Art. Nr.">@conformity.Article.Number</td>
-                    <td id="search" class="col-xs" data-label="Art. Desc.">@conformity.Article.Description</td>
+                    <td id="search" class="col-s" data-label="Art. Desc.">@conformity.Article.Description</td>
                     <td id="search" class="col-xs" data-label="Sup. Nr.">@conformity.Supplier.Number</td>
                     <td id="search" class="col-s" data-label="Sup. Name">@conformity.Supplier.Name</td>
                     <td id="search" class="col-xs" data-label="Conf. Type">@conformity.ConformityType.Description</td>
@@ -145,7 +145,7 @@
                             @(conformity.ModifiedOn.HasValue ?
                                    conformity.ModifiedOn.Value.ToLocalTime().ToShortDateString() : "-")
                         </td>*@
-                    <td class="col-xs" data-label="User">@conformity.UserEmail</td>
+                    <td class="col-s" data-label="User">@conformity.UserEmail</td>
                     <td class="col-s" data-label="Details">
                         <a asp-action="Details" class="btn btn-details" asp-route-id="@conformity.Id">
                             <span class="text">Details</span>
