@@ -8,6 +8,7 @@
     public class ArticleCreateInputModel : ArticleBaseModel
     {
         [SupplierEntityAttribute(allowNull: true)]
+        [Display(Name = "Select supplier")]
         public string SupplierId { get; set; }
 
         [Required]

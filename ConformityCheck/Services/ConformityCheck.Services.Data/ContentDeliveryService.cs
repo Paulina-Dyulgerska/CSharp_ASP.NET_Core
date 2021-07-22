@@ -3,17 +3,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
-    using ConformityCheck.Web.ViewModels.Suppliers.ViewComponents;
-    using ConformityCheck.Web.ViewModels.Suppliers.ViewComponents;
-    using ConformityCheck.Web.ViewModels.Products.ViewComponents;
-    using ConformityCheck.Web.ViewModels.Substances.ViewComponents;
-    using ConformityCheck.Web.ViewModels.Suppliers.ViewComponents;
     using Microsoft.EntityFrameworkCore;
-    using ConformityCheck.Web.ViewModels.Articles.ViewComponents;
-    using ConformityCheck.Web.ViewModels.ConformityTypes.ViewComponents;
 
     public class ContentDeliveryService : IContentDeliveryService
     {
@@ -37,150 +31,137 @@
             this.conformityTypesRepository = conformityTypesRepository;
         }
 
-        public async Task<IEnumerable<ArticlesViewComponentModel>> GetAllArticlesAsync()
+        public async Task<IEnumerable<T>> GetAllArticlesAsync<T>()
         {
             return await this.articlesRepository
                 .AllAsNoTracking()
                 .OrderBy(x => x.Number)
-                //.Select(x => new ArticleViewComponentModel
-                //{
-                //    Id = x.Id,
-                //    NumberAndDescription = $"{x.Number} - {x.Description}",
-                //})
-                .To<ArticlesViewComponentModel>()
+                .To<T>()
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ArticlesViewComponentModel>> GetLastCreatedArticlesAsync()
+        public async Task<IEnumerable<T>> GetLastCreatedArticlesAsync<T>()
         {
             return await this.articlesRepository
                 .AllAsNoTracking()
                 .OrderByDescending(x => x.CreatedOn)
                 .ThenByDescending(x => x.ModifiedOn)
                 .ThenBy(x => x.Number)
-                //.Select(x => new ArticleViewComponentModel
-                //{
-                //    Id = x.Id,
-                //    NumberAndDescription = $"{x.Number} - {x.Description}",
-                //})
-                .To<ArticlesViewComponentModel>()
+
+                // .Select(x => new ArticleViewComponentModel
+                // {
+                //     Id = x.Id,
+                //     NumberAndDescription = $"{x.Number} - {x.Description}",
+                // })
+                .To<T>()
                 .ToListAsync();
         }
 
-        //public async Task<IEnumerable<ArticlesViewComponentModel>> GetArticlesBySupplierIdAsync(string id)
-        //{
-        //    return await this.artc
-        //        .AllAsNoTracking()
-        //        .Where(x=>x.ArticleSuppliers)
-        //        .OrderByDescending(x => x.CreatedOn)
-        //        .ThenByDescending(x => x.ModifiedOn)
-        //        .ThenBy(x => x.Number)
-        //        //.Select(x => new ArticleViewComponentModel
-        //        //{
-        //        //    Id = x.Id,
-        //        //    NumberAndDescription = $"{x.Number} - {x.Description}",
-        //        //})
-        //        .To<ArticlesViewComponentModel>()
-        //        .ToListAsync();
-        //}
-
-        public async Task<IEnumerable<SuppliersViewComponentModel>> GetAllSuppliersAsync()
+        // public async Task<IEnumerable<ArticlesViewComponentModel>> GetArticlesBySupplierIdAsync(string id)
+        // {
+        //     return await this.artc
+        //         .AllAsNoTracking()
+        //         .Where(x=>x.ArticleSuppliers)
+        //         .OrderByDescending(x => x.CreatedOn)
+        //         .ThenByDescending(x => x.ModifiedOn)
+        //         .ThenBy(x => x.Number)
+        //         //.Select(x => new ArticleViewComponentModel
+        //         //{
+        //         //    Id = x.Id,
+        //         //    NumberAndDescription = $"{x.Number} - {x.Description}",
+        //         //})
+        //         .To<ArticlesViewComponentModel>()
+        //         .ToListAsync();
+        // }
+        public async Task<IEnumerable<T>> GetAllSuppliersAsync<T>()
         {
             return await this.suppliersRepository
                 .AllAsNoTracking()
                 .OrderBy(x => x.Name)
-                //.Select(x => new SupplierViewComponentModel
-                //{
-                //    Id = x.Id,
-                //    NameAndNumber = $"{x.Name} - {x.Number}",
-                //})
-                .To<SuppliersViewComponentModel>()
+                .To<T>()
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<SuppliersViewComponentModel>> GetLastCreatedSuppliersAsync()
+        public async Task<IEnumerable<T>> GetLastCreatedSuppliersAsync<T>()
         {
             return await this.suppliersRepository
                 .AllAsNoTracking()
                 .OrderByDescending(x => x.CreatedOn)
                 .ThenByDescending(x => x.ModifiedOn)
                 .ThenBy(x => x.Name)
-                //.Select(x => new SupplierViewComponentModel
-                //{
-                //    Id = x.Id,
-                //    NameAndNumber = $"{x.Name} - {x.Number}",
-                //})
-                .To<SuppliersViewComponentModel>()
+
+                // .Select(x => new SupplierViewComponentModel
+                // {
+                //     Id = x.Id,
+                //     NameAndNumber = $"{x.Name} - {x.Number}",
+                // })
+                .To<T>()
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ConformityTypesViewComponentModel>> GetAllConformityTypesAsync()
+        public async Task<IEnumerable<T>> GetAllConformityTypesAsync<T>()
         {
             return await this.conformityTypesRepository
                 .AllAsNoTracking()
                 .OrderBy(x => x.Id)
-                //.Select(x => new ConformityTypeViewComponentModel
-                //{
-                //    Id = x.Id,
-                //    Description = x.Description,
-                //})
-                .To<ConformityTypesViewComponentModel>()
+                .To<T>()
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ConformityTypesViewComponentModel>> GetLastCreatedConformityTypesAsync()
+        public async Task<IEnumerable<T>> GetLastCreatedConformityTypesAsync<T>()
         {
             return await this.conformityTypesRepository
                 .AllAsNoTracking()
                 .OrderByDescending(x => x.CreatedOn)
                 .ThenByDescending(x => x.ModifiedOn)
                 .ThenBy(x => x.Description)
-                //.Select(x => new ConformityTypeViewComponentModel
-                //{
-                //    Id = x.Id,
-                //    Description = x.Description,
-                //})
-                .To<ConformityTypesViewComponentModel>()
+
+                // .Select(x => new ConformityTypeViewComponentModel
+                // {
+                //     Id = x.Id,
+                //     Description = x.Description,
+                // })
+                .To<T>()
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ProductsViewComponentModel>> GetAllProductsAsync()
+        public async Task<IEnumerable<T>> GetAllProductsAsync<T>()
         {
             return await this.productsRepository
                 .AllAsNoTracking()
                 .OrderBy(x => x.Number)
-                .To<ProductsViewComponentModel>()
+                .To<T>()
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ProductsViewComponentModel>> GetLstCreatedProductsAsync()
+        public async Task<IEnumerable<T>> GetLastCreatedProductsAsync<T>()
         {
             return await this.productsRepository
                 .AllAsNoTracking()
                 .OrderByDescending(x => x.CreatedOn)
                 .ThenByDescending(x => x.ModifiedOn)
                 .ThenBy(x => x.Number)
-                .To<ProductsViewComponentModel>()
+                .To<T>()
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<SubstancesViewComponentModel>> GetAllSubstancesAsync()
+        public async Task<IEnumerable<T>> GetAllSubstancesAsync<T>()
         {
             return await this.substancesRepository
                 .AllAsNoTracking()
                 .OrderBy(x => x.CASNumber)
-                .To<SubstancesViewComponentModel>()
+                .To<T>()
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<SubstancesViewComponentModel>> GetLastCreatedSubstancesAsync()
+        public async Task<IEnumerable<T>> GetLastCreatedSubstancesAsync<T>()
         {
             return await this.substancesRepository
                 .AllAsNoTracking()
                 .OrderByDescending(x => x.CreatedOn)
                 .ThenByDescending(x => x.ModifiedOn)
                 .ThenBy(x => x.CASNumber)
-                .To<SubstancesViewComponentModel>()
+                .To<T>()
                 .ToListAsync();
         }
     }

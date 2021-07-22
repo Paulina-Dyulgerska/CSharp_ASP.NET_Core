@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
 
     using ConformityCheck.Services.Data;
+    using ConformityCheck.Web.ViewModels.Articles.ViewComponents;
     using Microsoft.AspNetCore.Mvc;
 
     public class ArticlesViewComponent : ViewComponent
@@ -15,15 +16,15 @@
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
-
         {
-            var viewModel = await this.contentDeliveryService.GetAllArticlesAsync();
+            var viewModel = await this.contentDeliveryService.GetAllArticlesAsync<ArticlesViewComponentModel>();
 
+            // the default view for this view components is called - this is the Default.cshtml!
+            // Another View could be called, just put the name here, but IMPORTANT - do not forget to put this new view in the same
+            // folder, that already contains the Default.cshtml view for this View component! This is the folder for this View component
+            // views: ...\ConformityCheck\Web\ConformityCheck.Web\Views\Shared\Components\Articles\Default.cshtml
+            // return this.View("Shared", viewModel);
             return this.View(viewModel);
-            //return this.View("Shared",viewModel);
-            //vika se po default Default.cshtml view-to!!! No moga da si vikna i drugo, prosto shte mu
-            //napisha imeto tuk, 
-            //vajnoto e towa novo view da se namira v syshtata smotana papka, v koqto se namira i Default.cshtml!!!
         }
     }
 }
