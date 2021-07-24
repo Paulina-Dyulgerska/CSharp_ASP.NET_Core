@@ -212,7 +212,7 @@ $('#searchConformityTypeInput').on('keyup', function () {
             data: { 'input': $(this).val() },
             success: function (json) {
                 if (json.length < 1) {
-                    $('#suggestions').hide();
+                    $('#suggestions.conformity-type').hide();
                 }
                 else {
                     let html = '';
@@ -221,7 +221,7 @@ $('#searchConformityTypeInput').on('keyup', function () {
                         html += '<option class="form-control" value="' + conformityType.id + '">'
                             + conformityType.description + '</option>';
                     }
-                    $('#suggestions').show();
+                    $('#suggestions.conformity-type').show();
                     $('#selectSearchConformityTypeInput').html(html);
                 }
             },
@@ -232,7 +232,7 @@ $('#searchConformityTypeInput').on('keyup', function () {
         });
     }
     else {
-        //$('#suggestions').hide();
+        //$('#suggestions.conformity-type').hide();
     }
 });
 
@@ -248,16 +248,16 @@ $('#searchConformityInput').on('keyup', function () {
             data: { 'input': $(this).val() },
             success: function (json) {
                 if (json.length < 1) {
-                    $('#suggestions').hide();
+                    $('#suggestions.conformity').hide();
                 }
                 else {
                     let html = '';
                     for (i = 0; i < json.length; i++) {
                         var conformity = json[i];
-                        html += '<option class="form-control" value="' + conformity.article.number + '">'
-                            + conformity.supplier.number + '</option>';
+                        html += '<option class="form-control" value="' + conformity.id + '">'
+                            + conformity.article.number + ' - ' + conformity.supplier.name + '</option>';
                     }
-                    $('#suggestions').show();
+                    $('#suggestions.conformity').show();
                     $('#selectSearchConformityInput').html(html);
                 }
             },
@@ -268,7 +268,7 @@ $('#searchConformityInput').on('keyup', function () {
         });
     }
     else {
-        //$('#suggestions').hide();
+        //$('#suggestions.conformity').hide();
     }
 });
 

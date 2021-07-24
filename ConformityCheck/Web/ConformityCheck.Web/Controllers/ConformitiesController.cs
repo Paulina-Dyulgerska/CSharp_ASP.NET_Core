@@ -334,9 +334,9 @@
             return this.File(filePath, System.Net.Mime.MediaTypeNames.Application.Pdf);
         }
 
-        public async Task<IActionResult> GetByArticleOrSupplierOrConformityType(string searchInput)
+        public async Task<IActionResult> GetByArticleOrSupplierOrConformityType(string input)
         {
-            var model = await this.conformitiesService.GetAllBySearchInputAsync<ConformityExportModel>(searchInput);
+            var model = await this.conformitiesService.GetAllBySearchInputAsync<ConformityExportModel>(input);
 
             return this.Json(model);
         }

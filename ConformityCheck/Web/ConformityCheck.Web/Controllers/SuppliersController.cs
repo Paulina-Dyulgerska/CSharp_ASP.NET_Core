@@ -190,8 +190,7 @@
         }
 
         // [Authorize]
-        public async Task<IActionResult> GetByNumberOrName(
-            string input)
+        public async Task<IActionResult> GetByNumberOrName(string input)
         {
             var model = await this.suppliersService.GetAllBySearchInputAsync<SupplierExportModel>(input);
 

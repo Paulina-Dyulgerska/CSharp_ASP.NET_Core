@@ -159,6 +159,7 @@ blockquote {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     box-shadow: 0px 0px 20px 0px #6da4ff45;
     padding: 0 20px 20px 20px;
 }
@@ -637,14 +638,12 @@ textarea {
     background: linear-gradient(to right, #6da4ff, #f1f7fe);
 }
 
-.main-wrapper,
-/*.submenu*/ 
-{
+.main-wrapper {
     flex-grow: 1;
 }
 
 .submenu {
-    /*display: none;*/
+    flex-basis: 100%;
 }
 
 .overlay-color {
@@ -747,6 +746,14 @@ textarea {
     }
 }
 
+.nav-list-vertical .tools-container {
+    flex-direction: column;
+    align-items: unset;
+}
+
+.nav-list-vertical select {
+    max-width: 200px;
+}
 
 /* Buttons styles ---------------------------------------------------------------------------------*/
 .btns-container {
@@ -840,6 +847,12 @@ textarea {
     .btn-search:hover {
         background-color: #e5effd;
     }
+
+@media screen and (max-width:600px) {
+    .btn-search {
+        margin: 10px;
+    }
+}
 
 .btn-back {
     background: #839ec4;

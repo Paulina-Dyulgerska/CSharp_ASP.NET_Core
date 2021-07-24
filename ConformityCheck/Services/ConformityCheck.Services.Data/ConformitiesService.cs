@@ -253,7 +253,6 @@
         public async Task<IEnumerable<T>> GetAllBySearchInputAsync<T>(string searchInput)
         {
             var entities = await this.conformitiesRepository.AllAsNoTracking()
-                .To<ConformityExportModel>()
                 .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
