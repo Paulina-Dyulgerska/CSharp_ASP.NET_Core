@@ -126,7 +126,7 @@ $(".dataTable").click(function addRowHandlers({ target }) {
 });
 
 // search articles:
-//$('#suggestions').hide();
+//$('#suggestions.articles').hide();
 $('#searchAticleInput').on('keyup', function () {
     console.log($('#searchAticleInput').val());
     if (!isNullOrWhitespace($(this).val())) {
@@ -137,7 +137,7 @@ $('#searchAticleInput').on('keyup', function () {
             data: { 'input': $(this).val() },
             success: function (json) {
                 if (json.length < 1) {
-                    $('#suggestions').hide();
+                    $('#suggestions.articles').hide();
                 }
                 else {
                     let html = '';
@@ -147,7 +147,7 @@ $('#searchAticleInput').on('keyup', function () {
                             + article.number + ' - ' + article.description +
                             '</option>';
                     }
-                    $('#suggestions').show();
+                    $('#suggestions.articles').show();
                     $('#selectSearchArticleInput').html(html);
                 }
             },
@@ -158,13 +158,13 @@ $('#searchAticleInput').on('keyup', function () {
         });
     }
     else {
-        //$('#suggestions').hide();
+        //$('#suggestions.articles').hide();
     }
 });
 
 
 // search suppliers:
-//$('#suggestions').hide();
+//$('#suggestions.suppliers').hide();
 $('#searchSupplierInput').on('keyup', function () {
     console.log($('#searchSupplierInput').val());
     if (!isNullOrWhitespace($(this).val())) {
@@ -175,7 +175,7 @@ $('#searchSupplierInput').on('keyup', function () {
             data: { 'input': $(this).val() },
             success: function (json) {
                 if (json.length < 1) {
-                    $('#suggestions').hide();
+                    $('#suggestions.suppliers').hide();
                 }
                 else {
                     let html = '';
@@ -185,7 +185,7 @@ $('#searchSupplierInput').on('keyup', function () {
                             + supplier.number + ' - ' + supplier.name +
                             '</option>';
                     }
-                    $('#suggestions').show();
+                    $('#suggestions.suppliers').show();
                     $('#selectSearchSupplierInput').html(html);
                 }
             },
@@ -196,7 +196,7 @@ $('#searchSupplierInput').on('keyup', function () {
         });
     }
     else {
-        //$('#suggestions').hide();
+        //$('#suggestions.suppliers').hide();
     }
 });
 

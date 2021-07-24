@@ -74,21 +74,93 @@
 <section class="search-container">
     <article class="">
         <h4 class="">
-           Quick links:
+            Quick links:
         </h4>
 
-        <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text" id="btnGroupAddon">
-                        <i class="fas fa-search"></i>
+        @*<div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text" id="btnGroupAddon">
+                            <i class="fas fa-search"></i>
+                        </div>
                     </div>
+                    <input size="36" type="text" id="searchInput" class="form-control" placeholder="Search for article number or name..." aria-label="Input group example" aria-describedby="btnGroupAddon">
                 </div>
-                <input size="36" type="text" id="searchInput" class="form-control" placeholder="Search for article number or name..." aria-label="Input group example" aria-describedby="btnGroupAddon">
-            </div>
-        </div>
-
-        <a asp-action="Create" class="btn btn-cta">Create article</a>
+            </div>*@
+        <ul>
+            <li>
+                <article class="tools-container">
+                    <article class="search-container">
+                        <form method="get" asp-controller="Articles" asp-action="ListAll">
+                            <article class="input-group">
+                                <article class="input-group-prepend">
+                                    <span class="input-group-text">
+                                    </span>
+                                </article>
+                                <input type="search" class="form-control" asp-for="CurrentSearchInput"
+                                       size="46" id="searchAticleInput"
+                                       placeholder="Search for article number or description..."
+                                       value="@Model.CurrentSearchInput">
+                                <article class="input-group-append">
+                                    <button type="submit" class="btn btn-search">
+                                        <i class="fas fa-search"></i> Search
+                                    </button>
+                                </article>
+                            </article>
+                        </form>
+                    </article>
+                    <article class="search-results-container articles" id="suggestions" style="display:none">
+                        <form method="get" asp-controller="Articles" asp-action="Details" asp-route-id="@Model.Id">
+                            <article class="input-group">
+                                <select asp-for="Id" id="selectSearchArticleInput" class="form-control"></select>
+                                <article class="input-group-append">
+                                    <input type="submit" class="btn" value="Show article" />
+                                </article>
+                            </article>
+                        </form>
+                    </article>
+                    <a asp-controller="Articles" asp-action="Create" class="btn btn-cta">Create article</a>
+                </article>
+            </li>
+            <li>
+                <article class="tools-container">
+                    <article class="search-container">
+                        <form method="get" asp-controller="Suppliers" asp-action="ListAll">
+                            <article class="input-group">
+                                <article class="input-group-prepend">
+                                    <span class="input-group-text">
+                                    </span>
+                                </article>
+                                <input type="search" class="form-control" asp-for="CurrentSearchInput"
+                                       size="46" id="searchSupplierInput"
+                                       placeholder="Search for supplier number or name..."
+                                       value="@Model.CurrentSearchInput">
+                                <article class="input-group-append">
+                                    <button type="submit" class="btn btn-search">
+                                        <i class="fas fa-search"></i> Search
+                                    </button>
+                                </article>
+                            </article>
+                        </form>
+                    </article>
+                    <article class="search-results-container suppliers" id="suggestions" style="display:none">
+                        <form method="get" asp-controller="Suppliers" asp-action="Details" asp-route-id="@Model.Id">
+                            <article class="input-group">
+                                <select asp-for="Id" id="selectSearchSupplierInput" class="form-control"></select>
+                                <article class="input-group-append">
+                                    <input type="submit" class="btn" value="Show supplier" />
+                                </article>
+                            </article>
+                        </form>
+                    </article>
+                    <a asp-controller="Suppliers" asp-action="Create" class="btn btn-cta">Create supplier</a>
+                </article>
+            </li>
+            <li>
+            </li>
+            <li>
+            </li>
+        </ul>
     </article>
 </section>
 
@@ -329,5 +401,5 @@
     <!--<script src="~/lib/datatables/DataTables-1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="~/lib/datatables/DataTables-1.10.22/js/dataTables.bootstrap4.min.js"></script>-->
     <!-- Page level custom scripts -->
-    <!--<script src="~/js/datatables.js"></script>-->
+    <script src="~/js/tables.js" asp-append-version="true"></script>
 }

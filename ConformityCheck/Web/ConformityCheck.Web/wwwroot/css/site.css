@@ -638,7 +638,8 @@ textarea {
 }
 
 .main-wrapper,
-.submenu {
+/*.submenu*/ 
+{
     flex-grow: 1;
 }
 
