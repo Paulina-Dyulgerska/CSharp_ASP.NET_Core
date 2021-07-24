@@ -2,7 +2,7 @@
 {
     using ConformityCheck.Common.ValidationAttributes;
 
-    public class ConformityEditGetModel
+    public class ConformityGetInputModel
     {
         [ConformityEntityAttribute(allowNull: true)]
         public string Id { get; set; }

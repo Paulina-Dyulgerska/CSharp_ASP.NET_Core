@@ -181,7 +181,7 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> AddToArticleSupplierConformityType(ConformityEditGetModel input)
+        public async Task<IActionResult> AddToArticleSupplierConformityType(ConformityGetInputModel input)
         {
             var model = await this.conformitiesService.GetForCreateAsync(input);
 
@@ -216,7 +216,15 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> Edit(ConformityEditGetModel input)
+        public async Task<IActionResult> Details(ConformityGetInputModel input)
+        {
+            var model = await this.conformitiesService.GetByIdAsync<ConformityExportModel>(input.Id);
+
+            return this.View(model);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Edit(ConformityGetInputModel input)
         {
             var model = await this.conformitiesService.GetByIdAsync<ConformityEditInputModel>(input.Id);
 
@@ -247,7 +255,7 @@
             // {
             //     this.ModelState.AddModelError(string.Empty, ex.Message);
             //     //da validiram s attribute i da ne prawq tezi gluposti tuk:!!!!!
-            //     var getModel = new ConformityEditGetModel
+            //     var getModel = new ConformityGetInputModel
             //     {
             //         ArticleId = input.ArticleId,
             //         SupplierId = input.SupplierId,

@@ -17,11 +17,7 @@
 
         public string PhoneNumber { get; set; }
 
-        public string ContactPersonFirstName { get; set; }
-
-        public string ContactPersonLastName { get; set; }
-
-        public string ContactPersonName => this.ContactPersonFirstName + " " + this.ContactPersonLastName;
+        public string ContactPersonName { get; set; }
 
         // AutoMapper-a moje da vzeme ot Supplier.ArticleSuppliers.Count() i da mi go dade
         // direktno tuk, bez da pravq custom mapping!!! Ako spazwam conventiona za imenata na 
@@ -53,11 +49,8 @@
                 x => x.PhoneNumber,
                 opt => opt.MapFrom(x => x.Supplier.PhoneNumber))
                 .ForMember(
-                x => x.ContactPersonFirstName,
-                opt => opt.MapFrom(x => x.Supplier.ContactPersonFirstName))
-                .ForMember(
-                x => x.ContactPersonLastName,
-                opt => opt.MapFrom(x => x.Supplier.ContactPersonLastName))
+                x => x.ContactPersonName,
+                opt => opt.MapFrom(x => $"{x.Supplier.ContactPersonFirstName} {x.Supplier.ContactPersonLastName}"))
                 .ForMember(
                 x => x.IsMainSupplier,
                 opt => opt.MapFrom(x => x.IsMainSupplier));

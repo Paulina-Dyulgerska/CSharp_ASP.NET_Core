@@ -1,7 +1,7 @@
 ﻿@using ConformityCheck.Web.ViewModels.Suppliers
 @model SupplierArticlesDetailsExportModel
 @{
-    this.ViewData["Title"] = "Supplier details";
+    this.ViewData["Title"] = "Details for supplier";
 }
 
 @section SubMenu{
@@ -14,7 +14,7 @@
         <section class="display-data-header">
             <article class="title-container">
                 <h4 class="title">
-                    @this.ViewData["Title"] for @Model.Name
+                    @this.ViewData["Title"] @Model.Name
                 </h4>
                 <span class="presented-items-info">(total of @Model.ItemsCount conformity records)</span>
             </article>
@@ -46,9 +46,9 @@
                             <strong>@Model.UserEmail</strong>
                         </li>
                     </ul>
-                    <article class="large-margin-horizontal large-margin-vertical">
+                    <article class="large-margin-horizontal large-margin-vertical center">
                         <a asp-action="Edit" class="btn btn-edit" asp-route-id="@Model.Id">
-                            <span class="text">Edit supplier's data</span>
+                            <span class="text">Edit supplier data</span>
                         </a>
                     </article>
                 </article>

@@ -468,7 +468,7 @@
             }
         }
 
-        public async Task<ConformityCreateInputModel> GetForCreateAsync(ConformityEditGetModel input)
+        public async Task<ConformityCreateInputModel> GetForCreateAsync(ConformityGetInputModel input)
         {
             var articleEntity = await this.articlesRepository
                 .AllAsNoTracking()

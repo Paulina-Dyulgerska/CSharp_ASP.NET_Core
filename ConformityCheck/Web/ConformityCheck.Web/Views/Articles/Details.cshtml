@@ -39,7 +39,7 @@
                         <strong>@Model.Suppliers.Where(s => s.IsMainSupplier).FirstOrDefault()?.Name</strong>
                     </li>
                     <li>
-                        Main supplier Nr.: 
+                        Main supplier Nr.:
                         <strong>@Model.Suppliers.Where(s => s.IsMainSupplier).FirstOrDefault()?.Number</strong>
                     </li>
                     <li>
@@ -51,25 +51,27 @@
                         <strong>@(Model.IsConfirmed ? "Yes" : "No")</strong>
                     </li>
                     <li>
-                        Article's creation date: 
+                        Article's creation date:
                         <strong>@Model.CreatedOn</strong>
                     </li>
                     <li>
-                        Article's last modify date: 
+                        Article's last modify date:
                         <strong>@Model.ModifiedOn</strong>
                     </li>
                     <li>
-                        Article's creator name: 
+                        Article's creator name:
                         <strong>@Model.UserEmail</strong>
                     </li>
                 </ul>
+                <article class="large-margin-horizontal large-margin-vertical center">
+                    <a asp-action="Edit" class="btn btn-edit" asp-route-id="@Model.Id">
+                        <span class="text">Edit article data</span>
+                    </a>
+                </article>
             </article>
         </section>
 
         <section class="display-data-footer ">
-            <a asp-action="Edit" class="btn btn-edit" asp-route-id="@Model.Id">
-                <span class="text">Edit article data</span>
-            </a>
         </section>
     </section>
 </section>

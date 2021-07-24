@@ -211,6 +211,10 @@ textarea {
     margin-left: 1rem;
 }
 
+.center {
+    text-align: center;
+}
+
 /*Alert bar styles --------------------------------------------------------------------------------------------*/
 .alert {
     position: relative;

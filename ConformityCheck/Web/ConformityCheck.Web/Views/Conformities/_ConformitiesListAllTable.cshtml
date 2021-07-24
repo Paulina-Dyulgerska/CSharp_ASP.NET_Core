@@ -154,7 +154,8 @@
                     <td class="col-s" data-label="Edit">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <a asp-action="Edit" class="btn btn-edit" asp-route-id="@conformity.Id">
+                            <a asp-action="Edit" class="btn btn-edit" asp-route-id="@conformity.Id"
+                                asp-route-callerViewName="Conformities">
                                 <span class="text">Edit</span>
                             </a>
                         }
