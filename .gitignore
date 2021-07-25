@@ -3,7 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-appsettings*.json
+appsettings.Production.json
+appsettings.Development.json
+
+help.txt
+new 1.txt
 TODOs.txt
 UsageOfThisProject.txt
 ConformityCheck/Data/ConformityCheck.Data/Seeding/DataFiles/*
