@@ -53,8 +53,10 @@
             services.Configure<CookiePolicyOptions>(
                 options =>
                     {
+                        // options.MinimumSameSitePolicy = SameSiteMode.None;
+                        options.MinimumSameSitePolicy = SameSiteMode.Strict;
+                        options.ConsentCookie.IsEssential = true;
                         options.CheckConsentNeeded = context => true;
-                        options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
 
             services.AddControllersWithViews(
@@ -63,7 +65,7 @@
                         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     }).AddRazorRuntimeCompilation();
             services.AddRazorPages();
-            services.AddDatabaseDeveloperPageExceptionFilter(); //for app.UseMigrationsEndPoint()
+            services.AddDatabaseDeveloperPageExceptionFilter(); // for app.UseMigrationsEndPoint()
             services.AddAntiforgery(options =>
             {
                 options.HeaderName = "X-CSRF-TOKEN";
