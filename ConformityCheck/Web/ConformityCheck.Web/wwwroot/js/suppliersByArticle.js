@@ -23,7 +23,6 @@
     });
 });
 
-$('#Conformity_SupplierId').change();
 $('#Conformity_SupplierId').change(function () {
     //var data = JSON.stringify({
     //    articleId: $('#Id').val(),

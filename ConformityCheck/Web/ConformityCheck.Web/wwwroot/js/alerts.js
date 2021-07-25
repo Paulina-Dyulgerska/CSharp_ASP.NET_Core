@@ -1,3 +1,4 @@
 ﻿setTimeout(function () {
-    $('.alert').toggle();
+    $('.alert-success').toggle();
+    $('.alert-danger').toggle();
 }, 8000);

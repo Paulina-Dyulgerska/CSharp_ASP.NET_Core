@@ -303,6 +303,7 @@
             // take the user and record its id in the article, product, conformity, etc.
             var conformityType = new ConformityType
             {
+                //Description = WebUtility.HtmlEncode(input.Description.ToUpper()),
                 Description = input.Description.ToUpper(),
                 UserId = userId,
             };

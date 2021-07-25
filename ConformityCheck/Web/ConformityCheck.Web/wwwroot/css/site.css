@@ -216,6 +216,10 @@ textarea {
     text-align: center;
 }
 
+.hidden {
+    display: none;
+}
+
 /*Alert bar styles --------------------------------------------------------------------------------------------*/
 .alert {
     position: relative;

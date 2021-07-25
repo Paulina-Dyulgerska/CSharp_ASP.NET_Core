@@ -50,7 +50,7 @@
                 </article>
             </article>
             <article class="search-results-container articles" id="suggestions" style="display:none">
-                <form method="get" asp-action="Details" asp-route-id="@Model.Id" >
+                <form method="get" asp-action="Details" asp-route-id="@Model.Id">
                     <article class="input-group">
                         <select asp-for="Id" id="selectSearchArticleInput" class="form-control"></select>
                         <article class="input-group-append">
@@ -83,5 +83,6 @@
 
 @section Scripts{
     <script src="~/js/tables.js" asp-append-version="true"></script>
+    <script src="~/js/searchEntities.js" asp-append-version="true"></script>
     @*<script src="~/lib/datatables/dist/js/datatables.min.js"></script>*@
 }

@@ -46,6 +46,7 @@
         public string ContactPersonLastName { get; set; }
 
         [Display(Name= "Creator username")]
+        [BindNever]
         public string UserEmail { get; set; }
     }
 }
