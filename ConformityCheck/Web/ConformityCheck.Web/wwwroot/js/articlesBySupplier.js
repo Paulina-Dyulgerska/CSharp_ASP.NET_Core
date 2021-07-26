@@ -1,29 +1,49 @@
-﻿$(document).ready(function () {
+﻿const resetCheckboxes = () => {
     //$('#ValidForSingleArticle').removeAttr('checked')
     $('#ValidForSingleArticle').prop('checked', false);
     $('#ValidForAllArticles').prop('checked', false);
+    $('#ValidForSingleArticle').prop('disabled', false);
+    $('#ValidForAllArticles').prop('disabled', false);
     $('.articles-container').hide();
+}
+
+$(document).ready(function () {
+    resetCheckboxes();
 });
 
 $('#SupplierId').change(function () {
-    $('.articles-container').hide();
-    $('#ArticleId').html(null);
+    resetCheckboxes();
+    let selectList = $('#ArticleId');
     console.log($("#SupplierId").val());
     $.ajax({
         //url: '/Suppliers/GetArticlesById/' + $("#SupplierId").val(),
         url: '/Suppliers/GetArticlesById/' + $(this).val(),
         dataType: 'json',
         success: function (json) {
-            let html = '<option class="form-control" value=""></option>';
             if (json.length >= 1) {
+                selectList.empty();
+
+                let option = document.createElement('option');
+                selectList.append(option);
+
                 for (i = 0; i < json.length; i++) {
-                    var article = json[i];
-                    html += '<option class="form-control" value="' + article.id + '">'
-                        + article.number + ' - ' + article.description +
-                        '</option>';
+                    const article = json[i];
+                    option = document.createElement('option');
+                    option.value = article.id;
+                    option.text = escapeHtml(article.number) + ' - ' + escapeHtml(article.description)
+                    selectList.append(option);
                 }
-                $('#ArticleId').html(html);
             }
+            //let html = '<option class="form-control" value=""></option>';
+            //if (json.length >= 1) {
+            //    for (i = 0; i < json.length; i++) {
+            //        var article = json[i];
+            //        html += '<option class="form-control" value="' + article.id + '">'
+            //            + article.number + ' - ' + article.description +
+            //            '</option>';
+            //    }
+            //    $('#ArticleId').html(html);
+            //}
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(xhr);

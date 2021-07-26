@@ -5,6 +5,22 @@ function isNullOrWhitespace(input) {
     return (typeof input === 'undefined' || input == null) || input.replace(/\s/g, '').length < 1;
 }
 
+const entityMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+    '/': '&#x2F;',
+    '`': '&#x60;',
+    '=': '&#x3D;'
+};
+
+function escapeHtml(string) {
+    return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+        return entityMap[s];
+    });
+}
 
 //$(".submenu-edit .nav-list .list-item").click(function showSubMenu({ target }) {
 //    console.log(target.parentElement);
@@ -17,7 +33,6 @@ function isNullOrWhitespace(input) {
 //    } else {
 //        link.style.display = "none";
 //        $(link).hide();
-
 //    }
 //});
 

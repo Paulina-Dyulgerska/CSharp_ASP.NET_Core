@@ -1,20 +1,28 @@
-﻿$(document).ready(function () {
+﻿// article suppliers by article id:
+$(document).ready(function () {
     console.log($('#Id').val());
+    let selectList = $('#Conformity_SupplierId');
     $.ajax({
         url: '/Articles/GetSuppliersById/' + $('#Id').val(),
         dataType: 'json',
         success: function (json) {
-            let html = '<option class="form-control" value="">Select Supplier</option>';
+            selectList.empty();
+
+            let option = document.createElement('option');
+            option.text = 'Select supplier';
+            selectList.append(option);
+
             for (i = 0; i < json.length; i++) {
-                var supplier = json[i];
-                html += '<option class="form-control" value="' + supplier.id + '">'
-                    + supplier.name + ' - ' + supplier.number;
+                const supplier = json[i];
+                option = document.createElement('option');
+                option.value = supplier.id;
+                let text = escapeHtml(supplier.name) + ' - ' + escapeHtml(supplier.number);
                 if (supplier.isMainSupplier) {
-                    html += ' - Main Supplier';
+                    text += ' - Main Supplier';
                 }
-                html += '</option>';
+                option.text = text;
+                selectList.append(option);
             }
-            $('#Conformity_SupplierId').html(html);
         },
         error: function (xhr, ajaxOptions, thrownError) {
             alert('Error by loading the supplier articles');
@@ -23,12 +31,13 @@
     });
 });
 
+//conformity types by article id and choosen supplier
 $('#Conformity_SupplierId').change(function () {
     //var data = JSON.stringify({
     //    articleId: $('#Id').val(),
     //    supplierId: $('#Conformity_SupplierId').val(),
     //});
-
+    let selectList = $('#Conformity_ConformityTypeId');
     $.ajax({
         method: 'GET',
         url: '/Articles/GetConformityTypesByIdAndSupplier',
@@ -36,20 +45,25 @@ $('#Conformity_SupplierId').change(function () {
         data: { 'articleId': $('#Id').val(), 'supplierId': $('#Conformity_SupplierId').val() },
         contentType: "application/json; charset=utf-8",
         success: function (json) {
-            let html = '<option class="form-control" value="">Select conformity type</option>';
-            for (i = 0; i < json.length; i++) {
-                var conformityType = json[i];
-                html += '<option class="form-control" value="' + conformityType.id + '">'
-                    + conformityType.description;
-                if (conformityType.supplierConfirmed) {
-                    html += ' - Confirmed by this supplier';
-                } else {
-                    html += ' - Not confirmed by this supplier';
-                }
+            selectList.empty();
 
-                html += '</option>';
+            let option = document.createElement('option');
+            option.text = 'Select conformity type';
+            selectList.append(option);
+
+            for (i = 0; i < json.length; i++) {
+                const conformityType = json[i];
+                option = document.createElement('option');
+                option.value = conformityType.id;
+                let text = escapeHtml(conformityType.description);
+                if (conformityType.supplierConfirmed) {
+                    text += ' - Confirmed by this supplier';
+                } else {
+                    text += ' - Not confirmed by this supplier';
+                }
+                option.text = text;
+                selectList.append(option);
             }
-            $('#Conformity_ConformityTypeId').html(html);
         },
         error: function (xhr, ajaxOptions, thrownError) {
             alert('Error by loading the supplier articles');

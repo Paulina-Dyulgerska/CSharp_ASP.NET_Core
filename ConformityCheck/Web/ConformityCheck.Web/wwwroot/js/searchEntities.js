@@ -1,21 +1,4 @@
-﻿const entityMap = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;',
-    '/': '&#x2F;',
-    '`': '&#x60;',
-    '=': '&#x3D;'
-};
-
-function escapeHtml(string) {
-    return String(string).replace(/[&<>"'`=\/]/g, function (s) {
-        return entityMap[s];
-    });
-}
-
-// search articles: safer than the function directly writing in the select's html:
+﻿// search articles: safer than the function directly writing in the select's html:
 $('#searchAticleInput').on('keyup', function () {
     console.log($('#searchAticleInput').val());
     let selectList = $('#selectSearchArticleInput');

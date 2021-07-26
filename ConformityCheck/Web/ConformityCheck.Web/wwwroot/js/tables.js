@@ -33,7 +33,7 @@ function sortList() {
 }
 
 // filtering tables:
-//document.querySelector('#searchInput').addEventListener('keyup', filterTableByTwoColumns, false);
+// document.querySelector('#searchInput').addEventListener('keyup', filterTableByTwoColumns, false);
 $('#searchInput').on('keyup', filterTableByTwoColumns);
 function filterTableByTwoColumns(event) {
     //console.log(event);
@@ -53,6 +53,23 @@ function filterTableByTwoColumns(event) {
         }
     }
 }
+
+// row click:
+$(".dataTable").click(function addRowHandlers({ target }) {
+    console.log("hi")
+    if (target.parentElement.localName === "tr") {
+        const link = target.parentElement.querySelector("a.btn-details");
+        console.log(link);
+        if (link) {
+            link.click();
+        }
+    }
+});
+
+// sorting icon reverse:
+$(".icon").click(function () {
+    $(this).toggleClass("rotate");
+});
 
 //// color rows:
 //$(document).ready(function () {
@@ -112,19 +129,3 @@ function filterTableByTwoColumns(event) {
 //        currentRow.onclick = createClickHandler(currentRow);
 //    }
 //});
-
-//// row click:
-$(".dataTable").click(function addRowHandlers({ target }) {
-    console.log("hi")
-    if (target.parentElement.localName === "tr") {
-        const link = target.parentElement.querySelector("a.btn-details");
-        console.log(link);
-        if (link) {
-            link.click();
-        }
-    }
-});
-
-$(".icon").click(function () {
-    $(this).toggleClass("rotate");
-});
