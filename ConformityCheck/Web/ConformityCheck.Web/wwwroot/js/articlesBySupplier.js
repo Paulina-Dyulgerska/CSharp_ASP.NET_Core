@@ -5,7 +5,6 @@
     $('.articles-container').hide();
 });
 
-
 $('#SupplierId').change(function () {
     $('.articles-container').hide();
     $('#ArticleId').html(null);
@@ -76,21 +75,15 @@ $(document).ready(function () {
 
 //$(document).ready(function ($) {
 //    console.log('Hi 3');
-
 //    var allowSubmit = false;
 //    $('#btn').click(function (event) {
 //        console.log('Hi 4');
-
 //        var form = $(".col-md-6 mx-auto");
 //        if (form.valid() && !allowSubmit) {
-
 //            event.preventDefault();
-
 //            //run our functions
 //            _ourfunction(test, {
-
 //                success: function (data) {
-
 //                    if (!($('#ValidForSingleArticle').prop('checked') && $('#ArticleId').select())) {
 //                        console.log('Hi 2');
 //                        alert('Please select an article!');
@@ -103,9 +96,7 @@ $(document).ready(function () {
 //                    console.log("error");
 //                }
 //            });
-
 //            allowSubmit = true;
-
 //        }
 //    });
 //});

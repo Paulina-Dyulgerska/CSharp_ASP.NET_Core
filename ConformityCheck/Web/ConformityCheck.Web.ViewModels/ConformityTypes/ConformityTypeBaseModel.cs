@@ -8,7 +8,7 @@
 
     public abstract class ConformityTypeBaseModel : IMapFrom<ConformityType>
     {
-        // [DescriptionRegExAttribute]
+        // [DescriptionRegExAttribute] // not used - this is how I save a validation request on the FE = 1 request less
         [Required]
         [MinLength(2)]
         [MaxLength(50)]
