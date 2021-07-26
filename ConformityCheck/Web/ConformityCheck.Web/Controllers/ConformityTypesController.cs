@@ -159,6 +159,7 @@
         }
 
         [Authorize]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Delete(ConformityTypeDeleteInputModel input)
         {
             if (!this.ModelState.IsValid)

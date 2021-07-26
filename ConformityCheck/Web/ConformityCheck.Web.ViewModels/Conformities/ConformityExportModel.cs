@@ -2,6 +2,7 @@
 {
     using System;
 
+    using AutoMapper;
     using ConformityCheck.Common.ValidationAttributes;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
@@ -9,7 +10,7 @@
     using ConformityCheck.Web.ViewModels.ConformityTypes;
     using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class ConformityExportModel : IMapFrom<Conformity>, IMapFrom<ConformityExportModel>
+    public class ConformityExportModel : IMapFrom<Conformity>, IHaveCustomMappings
     {
         [ConformityEntityAttribute]
         public string Id { get; set; }
@@ -36,12 +37,21 @@
 
         public string UserEmail { get; set; }
 
-        public string FileUrl { get; set; }
-
-        public string Extension { get; set; }
-
         public DateTime CreatedOn { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
+
+        public string ConformityFileUrl { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            // /wwwroot/conformityFiles/conformities/jhdsi-343g3h453-=g34g.pdf
+            configuration.CreateMap<Conformity, ConformityExportModel>()
+                .ForMember(x => x.ConformityFileUrl, opt =>
+                    opt.MapFrom(x =>
+                        x.RemoteFileUrl != null ?
+                        x.RemoteFileUrl :
+                        "/files/conformities/" + x.Id + "." + x.FileExtension));
+        }
     }
 }

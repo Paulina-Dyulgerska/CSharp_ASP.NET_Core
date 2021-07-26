@@ -27,6 +27,61 @@
                 <article class="data-container conformity-details">
                     <ul>
                         <li>
+                            @if (@Model.ConformityFileUrl != null)
+                            {
+                                @* Variant 0: POST request*@
+                                @*<form asp-action="PdfPartial" target="_blank">
+                                        <article class="">
+                                            <p>
+                                                <strong>
+                                                    Conformity is available.
+                                                </strong>
+                                            </p>
+                                            <p>
+                                                Click the button to see the conformity file:
+                                            </p>
+                                            <input type="text" class="form-control" asp-for="ConformityFileUrl" value="@Model.ConformityFileUrl" hidden>
+                                            <button type="submit" class="openPdf btn btn-cta">
+                                                <span>
+                                                    <i class="fas fa-eye"></i> Conformity
+                                                </span>
+                                            </button>
+                                        </article>
+                                    </form>*@
+
+                                @* Variant 1: *@
+                                <article class="">
+                                    <p>
+                                        <strong>
+                                            Conformity is available.
+                                        </strong>
+                                    </p>
+                                    <p>
+                                        Click the button to see the conformity file:
+                                    </p>
+                                    <a class="openPdf btn btn-cta" asp-action="ShowModalDocument"
+                                       asp-route-conformityFileUrl="@Model.ConformityFileUrl"
+                                       target="_blank">
+                                        <span>
+                                            <i class="fas fa-eye"></i> Conformity
+                                        </span>
+                                    </a>
+
+                                    @* Variant 2: *@
+                                    @*<a href="@Url.Action("ShowModalDocument", "Conformities", new { ConformityFileUrl = @Model.ConformityFileUrl})" target="_blank">Link Text</a>*@
+
+                                    @* Variant 3: *@
+                                    @*<div class="modal fade" id="modalGeneric" role="dialog">
+                                        </div>
+                                        <a class="ml-1" data-toggle="tooltip" title="Predogled"
+                                           data-url="@Url.Action("PdfPartial", "Conformities", new { ConformityFileUrl = Model.ConformityFileUrl })"
+                                           onclick="showGenericModal(event);">
+                                            show the file
+                                        </a>*@
+                                </article>
+                            }
+                        </li>
+                        <li>
                             Conformity type:
                             <strong>@Model.ConformityType.Description</strong>
                         </li>
@@ -82,65 +137,6 @@
                             Modified on:
                             <strong>@Model.ModifiedOn</strong>
                         </li>
-                        <li>
-                            @if (@Model.FileUrl != null)
-                            {
-                                @* Variant 1: da probvam moga li da go naprawq s POST? *@
-                                <article class="">
-                                    <p>
-                                        <strong>
-                                            Conformity is available.
-                                        </strong>
-                                    </p>
-                                    <p>
-                                        Click the button to see the conformity file:
-                                    </p>
-                                    <a class="openPdf btn btn-cta" asp-action="ShowModalDocument"
-                                       asp-route-conformityFileUrl="@Model.FileUrl"
-                                       target="_blank">
-                                        <span>
-                                            <i class="fas fa-eye"></i> Conformity
-                                        </span>
-                                    </a>
-                                    @* Variant 2: *@
-                                    @*<a href="@Url.Action("ShowModalDocument", "Conformities", new { ConformityFileUrl = @Model.ConformityFileUrl})" target="_blank">Link Text</a>*@
-                                    @* Variant 3: *@
-                                    @*<div class="modal fade" id="modalGeneric" role="dialog">
-                        </div>
-                        <a class="ml-1" data-toggle="tooltip" title="Predogled"
-                           data-url="@Url.Action("PdfPartial", "Conformities", new { ConformityFileUrl = Model.ConformityFileUrl })"
-                           onclick="showGenericModal(event);">
-                            show the file
-                        </a>*@
-                                </article>
-                                <article class="large-margin-vertical">
-                                    <p class="">
-                                        Please choose the button below, if you want to replace the current conformity file with a new one.
-                                    </p>
-                                    <p>
-                                        <strong>
-                                            Important!
-                                        </strong>
-                                    </p>
-                                    <p>
-                                        The available conformity document will be deleted and new one will be created!
-                                    </p>
-                                    <p>
-                                        The new file will replace the current one!
-                                    </p>
-                                    <a class="addPdf btn btn-cta"
-                                       asp-action="AddToArticleSupplierConformityType"
-                                       asp-route-articleId="@Model.Article.Id"
-                                       asp-route-supplierId="@Model.Supplier.Id"
-                                       asp-route-conformityTypeId="@Model.ConformityType.Id"
-                                       asp-route-callerViewName="Conformities">
-                                        <span>
-                                            <i class="fas fa-edit"></i> Add new conformity file
-                                        </span>
-                                    </a>
-                                </article>
-                            }
-                        </li>
                     </ul>
                     <article class="large-margin-horizontal large-margin-vertical center">
                         <a class="btn btn-edit"
@@ -151,18 +147,13 @@
                         </a>
                     </article>
                 </article>
-
-                <div class="btns-container">
-                    <div class="form-field-container">
-                        <a asp-action="ListAll" class="btn btn-back btn-align-end">Return back</a>
-                    </div>
-                    @*<div class="form-field-container">
-                            <input type="submit" class="btn btn-align-end" value="Save changes" />
-                        </div>*@
-                </div>
             </article>
+            <div class="btns-container">
+                <div class="form-field-container">
+                    <a asp-action="ListAll" class="btn btn-back btn-align-end">Return back</a>
+                </div>
+            </div>
         </section>
-
         <section class="display-data-footer ">
         </section>
     </section>

@@ -321,6 +321,7 @@
         }
 
         [Authorize]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Delete(string id)
         {
             var user = await this.userManager.GetUserAsync(this.User);

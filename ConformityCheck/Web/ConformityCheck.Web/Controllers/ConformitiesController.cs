@@ -286,7 +286,7 @@
 
         }
 
-        [Authorize]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Delete(ConformityDeleteInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -320,6 +320,7 @@
             return this.PartialView("_PartialDocumentPreview", conformityFileUrl);
         }
 
+        // [HttpPost]
         [Authorize]
         public IActionResult ShowModalDocument(string conformityFileUrl)
         {
@@ -331,6 +332,8 @@
             };
 
             this.Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
+
+            // Controller.File() works with [HttpGet]
             return this.File(filePath, System.Net.Mime.MediaTypeNames.Application.Pdf);
         }
 

@@ -41,7 +41,27 @@
                         <li>
                             @if (@Model.ConformityFileUrl != null)
                             {
-                                @* Variant 1: da probvam moga li da go naprawq s POST? *@
+                                @* Variant 0: POST request*@
+                                @*<form asp-action="ShowModalDocument" target="_blank">
+                                        <article class="">
+                                            <p>
+                                                <strong>
+                                                    Conformity is available.
+                                                </strong>
+                                            </p>
+                                            <p>
+                                                Click the button to see the conformity file:
+                                            </p>
+                                            <input type="text" class="form-control" asp-for="ConformityFileUrl" value="@Model.ConformityFileUrl" hidden>
+                                            <button type="submit" class="openPdf btn btn-cta">
+                                                <span>
+                                                    <i class="fas fa-eye"></i> Conformity
+                                                </span>
+                                            </button>
+                                        </article>
+                                    </form>*@
+
+                                @* Variant 1: *@
                                 <article class="">
                                     <p>
                                         <strong>
@@ -60,6 +80,7 @@
                                     </a>
                                     @* Variant 2: *@
                                     @*<a href="@Url.Action("ShowModalDocument", "Conformities", new { ConformityFileUrl = @Model.ConformityFileUrl})" target="_blank">Link Text</a>*@
+
                                     @* Variant 3: *@
                                     @*<div class="modal fade" id="modalGeneric" role="dialog">
                                         </div>
@@ -143,12 +164,12 @@
                     </div>
 
                     @*<div class="form-field-container large-margin-vertical custom-file-upload-container">
-            <label asp-for="InputFile" class="custom-file-upload form-control">
-                * <i class="fas fa-file-upload"></i> Choose conformity file
-            </label>
-            <input asp-for="InputFile" class="form-control" placeholder="Add file" />
-            <span asp-validation-for="InputFile" class="text-danger"></span>
-        </div>*@
+                            <label asp-for="InputFile" class="custom-file-upload form-control">
+                                * <i class="fas fa-file-upload"></i> Choose conformity file
+                            </label>
+                            <input asp-for="InputFile" class="form-control" placeholder="Add file" />
+                            <span asp-validation-for="InputFile" class="text-danger"></span>
+                        </div>*@
 
                     @* TODO: add the declared substances and assing the restrictions. *@
 
