@@ -60,7 +60,7 @@
                                     <td class="col-l" data-label="Article main supplier">
                                         @(supplier.IsMainSupplier ? "Yes" : "No")
                                     </td>
-                                    <td class="col-l" data-label="Remove supplier">
+                                    <td class="col-l type-radio-parent" data-label="Remove supplier">
                                         <input asp-for="SupplierId" type="radio" value="@supplier.Id" />
                                     </td>
                                 </tr>

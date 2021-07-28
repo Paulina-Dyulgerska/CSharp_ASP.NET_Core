@@ -361,55 +361,5 @@
 
             return this.Json(model);
         }
-
-        // TODO - in a new controller ContentDeliveryController Api one:
-        //[ApiController]
-        //[Route("api/[controller]")]
-        //public class VotesController : BaseController
-        //{
-        //    private readonly IVotesService votesService;
-
-        //    public VotesController(IVotesService votesService)
-        //    {
-        //        this.votesService = votesService;
-        //    }
-
-        //    [HttpPost]
-        //    [Authorize]
-        //    public async Task<ActionResult<PostVoteResponseModel>> Post(PostVoteInputModel input)
-        //    {
-        //        var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        //        await this.votesService.SetVoteAsync(input.RecipeId, userId, input.Value);
-        //        var averageVotes = this.votesService.GetAverageVotes(input.RecipeId);
-        //        return new PostVoteResponseModel { AverageVote = averageVotes };
-        //    }
-        //}
-        //<form method = "post" id="antiForgeryForm"></form>
-        //        @section Scripts
-        //        {
-        //    <script>
-        //        $("li[data-vote]").each(function (el) {
-        //            $(this).click(function() {
-        //                var value = $(this).attr("data-vote");
-        //                var recipeId = @Model.Id;
-        //                var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
-        //                var data = { recipeId: recipeId, value: value };
-        //                $.ajax({
-        //            type: "POST",
-        //                    url: "/api/Votes",
-        //                    data: JSON.stringify(data),
-        //                    headers:
-        //                {
-        //                    'X-CSRF-TOKEN': antiForgeryToken
-        //                    },
-        //                    success: function(data) {
-        //                        $('#averageVoteValue').html(data.averageVote.toFixed(1));
-        //                },
-        //                    contentType: 'application/json',
-        //                });
-        //        })
-        //        });
-        //    </script>
-        //}
     }
 }

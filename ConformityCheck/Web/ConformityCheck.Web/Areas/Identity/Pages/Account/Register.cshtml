@@ -1,0 +1,94 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+            </article>
+
+            <article class="display-data-body user-data">
+                <article class="form-data-container align-flex-start">
+                    <article class="data-container">
+                        <h4 class="large-margin-vertical">Create a new account.</h4>
+                        <hr />
+                        <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="input-group">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="form-field-container large-margin-vertical">
+                                <label asp-for="Input.Email"></label>
+                                <input asp-for="Input.Email" class="form-control" autofocus />
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-field-container large-margin-vertical">
+                                <label asp-for="Input.Password"></label>
+                                <input asp-for="Input.Password" class="form-control" />
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-field-container large-margin-vertical">
+                                <label asp-for="Input.ConfirmPassword"></label>
+                                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </form>
+                    </article>
+
+                    <article class="data-container">
+                        <h4 class="large-margin-vertical">Use another service to register.</h4>
+                        <hr />
+                        @{
+                            if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                            {
+                                <div>
+                                    <p>
+                                        There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                        for details on setting up this ASP.NET application to support logging in via external services.
+                                    </p>
+                                </div>
+                            }
+                            else
+                            {
+                                <form id="external-account"
+                                      asp-page="./ExternalLogin"
+                                      asp-route-returnUrl="@Model.ReturnUrl"
+                                      method="post" class="input-group">
+                                    <div class="form-field-container">
+                                        <p>
+                                            @foreach (var provider in Model.ExternalLogins)
+                                            {
+                                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                            }
+                                        </p>
+                                    </div>
+                                </form>
+                            }
+                        }
+                        <hr />
+                        <div class="form-field-container large-margin-vertical">
+                            <p>
+                                <a asp-page="./Login"> Alreeady have an account?</a>
+                            </p>
+                            <p>
+                                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                            </p>
+                        </div>
+                    </article>
+                </article>
+            </article>
+        </section>
+
+        <section class="display-data-footer">
+        </section>
+
+    </section>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

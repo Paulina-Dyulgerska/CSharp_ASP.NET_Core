@@ -220,12 +220,20 @@ textarea {
     display: none;
 }
 
+.flex-column {
+    flex-direction: column;
+}
+
+.border-radius {
+    border-radius: 4px;
+}
+
 /*Alert bar styles --------------------------------------------------------------------------------------------*/
 .alert {
     position: relative;
     width: 100%;
     padding: .75rem 1.25rem;
-    margin-bottom: 1rem;
+    margin: 1rem 0;
     border: 1px solid transparent;
     border-radius: .25rem;
 }
@@ -663,15 +671,6 @@ textarea {
     z-index: 0;
 }
 
-.flex-column {
-    flex-direction: column;
-}
-
-.border-radius {
-    border-radius: 4px;
-}
-
-
 /* Home page styles -----------------------------------------------------------------------------------------*/
 .home-container {
     flex-basis: 60%;
@@ -948,6 +947,10 @@ textarea {
         content: '\f0e0';
     }
 
+button.close {
+    display:none;
+}
+
 /*Dispay data styles -----------------------------------------------------------------------------------*/
 .display-data-wrapper {
     width: 100%;
@@ -961,6 +964,7 @@ textarea {
 .display-data-body {
     display: flex;
     flex-direction: column;
+    /*align-self: center;*/
 }
 
 .display-data-footer {
@@ -1029,8 +1033,11 @@ textarea {
     margin: 2rem auto;
     padding: 1rem;
 }
+.user-data .data-container{
+    margin: 2rem 0;
+}
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 600px) {
     .data-container {
         max-width: 95%;
     }
@@ -1051,6 +1058,10 @@ textarea {
     align-items: center;
     justify-content: space-evenly;
 }
+
+    .form-data-container.align-flex-start {
+        align-items: flex-start;
+    }
 
 .input-group-append {
     display: flex;
@@ -1087,6 +1098,27 @@ select.form-control {
     .form-field-container > label {
         font-weight: bold;
     }
+
+input[type=search],
+input[type=text],
+input[type=email],
+input[type=password] {
+    min-width: 250px;
+    max-width: 100%;
+}
+
+.user-data input[type=search],
+.user-data input[type=text],
+.user-data input[type=email],
+.user-data input[type=password] {
+    min-width: 400px;
+}
+
+
+/*input[type=radio] parent:*/
+.table td.type-radio-parent {
+    text-align: center;
+}
 
 input[type=radio] {
     cursor: pointer;

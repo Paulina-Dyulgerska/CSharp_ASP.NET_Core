@@ -61,7 +61,7 @@
                                         <td class="col-m" data-label="Conformity available">
                                             @(conformityType.SupplierConfirmed ? "Yes" : "No")
                                         </td>
-                                        <td class="col-l" data-label="Remove conformity type">
+                                        <td class="col-l type-radio-parent" data-label="Remove conformity type">
                                             <input asp-for="ConformityTypeId" type="radio" value="@conformityType.Id" />
                                         </td>
                                     </tr>

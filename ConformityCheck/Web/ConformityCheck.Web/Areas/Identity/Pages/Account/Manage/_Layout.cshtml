@@ -1,0 +1,45 @@
+﻿@{
+    this.ViewData["Title"] = "Manage your account";
+
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    {
+        Layout = (string)parentLayout;
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+            </article>
+
+            <article class="display-data-body user-data">
+                <article class="form-data-container align-flex-start">
+                    <article class="data-container">
+                        <h6>Change your account settings</h6>
+                        <hr />
+                        <partial name="_ManageNav" />
+                    </article>
+
+                    <article class="data-container">
+                        @RenderBody()
+                    </article>
+                </article>
+            </article>
+        </section>
+
+        <section class="display-data-footer ">
+        </section>
+    </section>
+</section>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

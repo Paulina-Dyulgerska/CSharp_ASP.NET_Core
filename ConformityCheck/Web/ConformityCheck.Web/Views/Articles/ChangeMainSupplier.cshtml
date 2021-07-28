@@ -60,7 +60,7 @@
                                     <td class="col-l" data-label="Article main supplier">
                                         @(supplier.IsMainSupplier ? "Yes" : "No")
                                     </td>
-                                    <td class="col-l" data-label="Change main supplier">
+                                    <td class="col-l type-radio-parent" data-label="Change main supplier">
                                         @if (supplier.IsMainSupplier)
                                     {
                                         <input asp-for="SupplierId" type="radio" value="@supplier.Id" checked />
