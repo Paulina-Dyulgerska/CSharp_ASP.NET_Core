@@ -16,8 +16,10 @@ $('#SupplierId').change(function () {
     let selectList = $('#ArticleId');
     console.log($("#SupplierId").val());
     $.ajax({
+        method: 'GET',
         //url: '/Suppliers/GetArticlesById/' + $("#SupplierId").val(),
-        url: '/Suppliers/GetArticlesById/' + $(this).val(),
+        //url: '/Suppliers/GetArticlesById/' + $(this).val(),
+        url: '/api/GetSupplierArticles/' + $(this).val(),
         dataType: 'json',
         success: function (json) {
             if (json.length >= 1) {

@@ -16,31 +16,35 @@
     public class ArticlesController : BaseController
     {
         private readonly IArticlesService articlesService;
-        private readonly ISuppliersService supplierService;
-        private readonly IProductsService productService;
-        private readonly IConformityTypesService conformityTypeService;
-        private readonly ISubstancesService substanceService;
+        private readonly ISuppliersService suppliersService;
+        private readonly IProductsService productsService;
+        private readonly IConformityTypesService conformityTypesService;
+        private readonly ISubstancesService substancesService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public ArticlesController(
             IArticlesService articlesService,
-            ISuppliersService supplierService,
-            IProductsService productService,
-            IConformityTypesService conformityTypeService,
-            ISubstancesService substanceService,
+            ISuppliersService suppliersService,
+            IProductsService productsService,
+            IConformityTypesService conformityTypesService,
+            ISubstancesService substancesService,
             UserManager<ApplicationUser> userManager)
         {
             this.articlesService = articlesService;
-            this.supplierService = supplierService;
-            this.productService = productService;
-            this.conformityTypeService = conformityTypeService;
-            this.substanceService = substanceService;
+            this.suppliersService = suppliersService;
+            this.productsService = productsService;
+            this.conformityTypesService = conformityTypesService;
+            this.substancesService = substancesService;
             this.userManager = userManager;
         }
 
+        // [Authorize]
+        // public async Task<IActionResult> ListAllUnconfirmedByMainSupplierArticles()
+        // {
+        //     var model = this.articlesService.
+        //     return this.View(nameof(ListAll), model);
+        // }
         // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        //[Authorize]
         public async Task<IActionResult> ListAll(PagingViewModel input)
         {
             if (input.PageNumber <= 0)
@@ -84,13 +88,6 @@
             return this.View(model);
         }
 
-        //[Authorize]
-        //public async Task<IActionResult> ListAllUnconfirmedByMainSupplierArticles()
-        //{
-        //    var model = this.articlesService.
-        //    return this.View(nameof(ListAll), model);
-        //}
-
         [Authorize]
         public IActionResult Create()
         {
@@ -114,15 +111,21 @@
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
                 GlobalConstants.ArticleCreatedSuccessfullyMessage;
 
-            // return this.Json(input);
             return this.RedirectToAction(nameof(this.ListAll));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Details(string id)
+        {
+            var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(id);
+
+            return this.View(model);
         }
 
         [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
-            //trqbwa li da checkwam v DB za wsqko edno id, dali go imam v bazata?
-
+            // trqbwa li da checkwam v DB za wsqko edno id, dali go imam v bazata? TODO - create input model for the id validation.
             var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(id);
 
             return this.View(model);
@@ -168,11 +171,10 @@
             try
             {
                 model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(id);
-
             }
             catch (System.Exception)
             {
-
+                // TODO!
             }
 
             return this.View(model);
@@ -320,7 +322,6 @@
             return this.View(model);
         }
 
-        [Authorize]
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Delete(string id)
         {
@@ -334,15 +335,7 @@
             return this.RedirectToAction(nameof(this.ListAll));
         }
 
-        [Authorize]
-        public async Task<IActionResult> Details(string id)
-        {
-            var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(id);
-
-            return this.View(model);
-        }
-
-        // [Authorize]
+        // TODO - can be deleted - moved to api controller
         public async Task<IActionResult> GetSuppliersById(string id)
         {
             var model = await this.articlesService.GetSuppliersByIdAsync<SupplierExportModel>(id);
@@ -350,7 +343,7 @@
             return this.Json(model);
         }
 
-        // [Authorize]
+        // TODO - can be deleted - moved to api controller
         public async Task<IActionResult> GetConformityTypesByIdAndSupplier(
             string articleId,
             string supplierId)
@@ -361,7 +354,7 @@
             return this.Json(model);
         }
 
-        // [Authorize]
+        // TODO - can be deleted - moved to api controller
         public async Task<IActionResult> GetByNumberOrDescription(string input)
         {
             var model = await this.articlesService.GetAllBySearchInputAsync<ArticleExportModel>(input);

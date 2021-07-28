@@ -6,7 +6,8 @@ $('#searchAticleInput').on('keyup', function () {
     if (!isNullOrWhitespace($(this).val())) {
         $.ajax({
             method: 'GET',
-            url: '/Articles/GetByNumberOrDescription',
+            //url: '/Articles/GetByNumberOrDescription',
+            url: '/api/GetArticlesByNumberOrDescription',
             dataType: 'json',
             data: { 'input': $(this).val() },
             success: function (json) {
@@ -44,7 +45,8 @@ $('#searchSupplierInput').on('keyup', function () {
     if (!isNullOrWhitespace($(this).val())) {
         $.ajax({
             method: 'GET',
-            url: '/Suppliers/GetByNumberOrName',
+            //url: '/Suppliers/GetByNumberOrName',
+            url: '/api/GetSuppliersByNumberOrName',
             dataType: 'json',
             data: { 'input': $(this).val() },
             success: function (json) {
@@ -82,7 +84,8 @@ $('#searchConformityTypeInput').on('keyup', function () {
     if (!isNullOrWhitespace($(this).val())) {
         $.ajax({
             method: 'GET',
-            url: '/ConformityTypes/GetByIdOrDescription',
+            //url: '/ConformityTypes/GetByIdOrDescription',
+            url: '/api/GetConformityTypeByIdOrDescription',
             dataType: 'json',
             data: { 'input': $(this).val() },
             success: function (json) {
@@ -120,7 +123,8 @@ $('#searchConformityInput').on('keyup', function () {
     if (!isNullOrWhitespace($(this).val())) {
         $.ajax({
             method: 'GET',
-            url: '/Conformities/GetByArticleOrSupplierOrConformityType',
+            //url: '/Conformities/GetByArticleOrSupplierOrConformityType',
+            url: '/api/GetConformitiesByArticleOrSupplierOrConformityType',
             dataType: 'json',
             data: { 'input': $(this).val() },
             success: function (json) {

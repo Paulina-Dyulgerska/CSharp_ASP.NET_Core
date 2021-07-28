@@ -73,49 +73,51 @@
         <tbody>
             @foreach (var conformityType in this.Model.ConformityTypes)
             {
-            <tr class="" data-id="@conformityType.Id">
-                <td id="search" class="col-xs" data-label="Conf. Type Nr.">@conformityType.Id</td>
-                <td id="search" class="col-m" data-label="Description">@conformityType.Description</td>
-                <td class="col-s" data-label="Created">@conformityType.CreatedOn.ToLocalTime().ToShortDateString()</td>
-                <td class="col-m" data-label="Modified">
-                    @(conformityType.ModifiedOn.HasValue ?
+                <tr class="" data-id="@conformityType.Id">
+                    <td id="search" class="col-xs" data-label="Conf. Type Nr.">@conformityType.Id</td>
+                    <td id="search" class="col-m" data-label="Description">@conformityType.Description</td>
+                    <td class="col-s" data-label="Created">@conformityType.CreatedOn.ToLocalTime().ToShortDateString()</td>
+                    <td class="col-m" data-label="Modified">
+                        @(conformityType.ModifiedOn.HasValue ?
                            conformityType.ModifiedOn.Value.ToLocalTime().ToShortDateString() : "-")
-                </td>
-                <td class="col-l" data-label="User">@conformityType.UserId</td>
-                <td class="col-s" data-label="Details">
-                    <a asp-action="Details" class="btn btn-details" asp-route-id="@conformityType.Id">
-                        <span class="text">Details</span>
-                    </a>
-                </td>
-                <td class="col-s" data-label="Edit">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <a asp-action="Edit" class="btn btn-edit" asp-route-id="@conformityType.Id">
-                            <span class="text">Edit</span>
+                    </td>
+                    <td class="col-l" data-label="User">@conformityType.UserId</td>
+                    <td class="col-s" data-label="Details">
+                        <a asp-action="Details" class="btn btn-details" asp-route-id="@conformityType.Id">
+                            <span class="text">Details</span>
                         </a>
-                    }
-                    else
-                    {
-                        <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login">
-                            <span class="text">Login</span>
-                        </a>
-                    }
-                </td>
-                <td class="col-s" data-label="Delete">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <a asp-action="Delete" class="btn btn-delete" asp-route-id="@conformityType.Id">
-                            <span class="text">Delete</span>
-                        </a>
-                    }
-                    else
-                    {
-                        <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login">
-                            <span class="text">Login</span>
-                        </a>
-                    }
-                </td>
-            </tr>
+                    </td>
+                    <td class="col-s" data-label="Edit">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="Edit" class="btn btn-edit" asp-route-id="@conformityType.Id">
+                                <span class="text">Edit</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login"
+                               asp-route-returnUrl="/ConformityTypes/Edit/@conformityType.Id">
+                                <span class="text">Login</span>
+                            </a>
+                        }
+                    </td>
+                    <td class="col-s" data-label="Delete">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="Delete" class="btn btn-delete" asp-route-id="@conformityType.Id">
+                                <span class="text">Delete</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login"
+                               asp-route-returnUrl="/ConformityTypes/ListAll">
+                                <span class="text">Login</span>
+                            </a>
+                        }
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

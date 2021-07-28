@@ -1,7 +1,10 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Conformities
 {
-   public class ConformityDeleteInputModel
+    using ConformityCheck.Common.ValidationAttributes;
+
+    public class ConformityDeleteInputModel
     {
+        [ConformityEntityAttribute]
         public string Id { get; set; }
 
         public string ArticleId { get; set; }

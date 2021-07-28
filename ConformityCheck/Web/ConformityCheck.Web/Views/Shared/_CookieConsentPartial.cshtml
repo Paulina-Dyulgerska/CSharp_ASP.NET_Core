@@ -20,10 +20,10 @@
             var button = document.querySelector("#cookieConsent button[data-cookie-string]");
             button.addEventListener("click", function () {
                 document.cookie = button.dataset.cookieString;
+                document.querySelector("#cookieConsent").classList.add("hidden");
                 // var now = new Date();
                 // var expires = (new Date(now.getFullYear() + 1).toUTCString());
                 // document.cookie = '.AspNet.Consent=yes;expires=' + expires + ';path=/;';
-                //document.querySelector("#cookieConsent").classList.add("hidden");
             }, false);
         })();
     </script>

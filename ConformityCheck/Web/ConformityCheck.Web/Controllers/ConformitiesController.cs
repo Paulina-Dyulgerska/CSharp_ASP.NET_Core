@@ -5,6 +5,7 @@
     using System.Runtime.CompilerServices;
     using System.Security.Claims;
     using System.Threading.Tasks;
+
     using ConformityCheck.Common;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
@@ -17,6 +18,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    // [AutoValidateAntiforgeryToken] - it is globaly as a service and is in the DC.
     public class ConformitiesController : BaseController
     {
         private const string ArticlesCallerViewName = "Articles";
@@ -24,10 +26,10 @@
         private const string ConformitiesCallerViewName = "Conformities";
         private readonly string conformityFilesDirectory;
         private readonly IArticlesService articlesService;
-        private readonly ISuppliersService supplierService;
-        private readonly IProductsService productService;
-        private readonly IConformityTypesService conformityTypeService;
-        private readonly ISubstancesService substanceService;
+        private readonly ISuppliersService suppliersService;
+        private readonly IProductsService productsService;
+        private readonly IConformityTypesService conformityTypesService;
+        private readonly ISubstancesService substancesService;
         private readonly IConformitiesService conformitiesService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IWebHostEnvironment environment;
@@ -45,10 +47,10 @@
             IEmailSender emailSender)
         {
             this.articlesService = articlesService;
-            this.supplierService = suppliersService;
-            this.productService = productsService;
-            this.conformityTypeService = conformityTypesService;
-            this.substanceService = substancesService;
+            this.suppliersService = suppliersService;
+            this.productsService = productsService;
+            this.conformityTypesService = conformityTypesService;
+            this.substancesService = substancesService;
             this.conformitiesService = conformitiesService;
             this.userManager = userManager;
             this.environment = environment;
@@ -105,7 +107,7 @@
             return this.View();
         }
 
-        // [AutoValidateAntiforgeryToken] - it is globaly as a service and is in the DC.
+        // [ValidateAntiforgeryToken] - it is globaly as a service and is in the DC.
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(ConformityCreateInputModel input)
@@ -127,16 +129,8 @@
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
                 GlobalConstants.ConformityCreatedSuccessfullyMessage;
 
-            // return this.Json(input);
-            // TODO: Redirect to conformity info page
-            return this.RedirectToAction("ListAll", ArticlesCallerViewName);
+            return this.RedirectToAction(nameof(this.ListAll), ConformitiesCallerViewName);
         }
-
-        //[Authorize]
-        //public async Task<IActionResult> Details(string id)
-        //{
-        //    return this.View();
-        //}
 
         [Authorize]
         public async Task<IActionResult> AddToArticleConformityType(string id)
@@ -293,8 +287,7 @@
             {
                 foreach (var error in this.ModelState.Values.SelectMany(v => v.Errors))
                 {
-                    this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] +=
-                        error.ErrorMessage + Environment.NewLine;
+                    this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] += error.ErrorMessage + Environment.NewLine;
                 }
             }
 
@@ -320,7 +313,7 @@
             return this.PartialView("_PartialDocumentPreview", conformityFileUrl);
         }
 
-        // [HttpPost]
+        // TODO - can be deleted - moved to api controller
         [Authorize]
         public IActionResult ShowModalDocument(string conformityFileUrl)
         {
@@ -333,10 +326,10 @@
 
             this.Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
 
-            // Controller.File() works with [HttpGet]
             return this.File(filePath, System.Net.Mime.MediaTypeNames.Application.Pdf);
         }
 
+        // TODO - can be deleted - moved to api controller
         public async Task<IActionResult> GetByArticleOrSupplierOrConformityType(string input)
         {
             var model = await this.conformitiesService.GetAllBySearchInputAsync<ConformityExportModel>(input);

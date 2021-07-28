@@ -45,8 +45,6 @@
         public IQueryable<TEntity> ExecuteCustomQuery(string query, params object[] parameters)
             => this.DbSet.FromSqlRaw<TEntity>(query, parameters).AsQueryable();
 
-        // public int SaveChanges() => this.Context.SaveChanges();
-
         public void Dispose()
         {
             this.Dispose(true);

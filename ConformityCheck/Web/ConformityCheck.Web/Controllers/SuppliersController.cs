@@ -39,12 +39,6 @@
         }
 
         // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        // public async Task<IActionResult> ListAll()
-        // {
-        //     var model = await this.suppliersService.GetAllAsNoTrackingOrderedAsync<SupplierExportModel>();
-        //     return this.View(model);
-        // }
         public async Task<IActionResult> ListAll(PagingViewModel input)
         {
             if (input.PageNumber <= 0)
@@ -53,6 +47,7 @@
                 return this.NotFound();
             }
 
+            // var model = await this.suppliersService.GetAllAsNoTrackingOrderedAsync<SupplierExportModel>();
             var model = new SuppliersListAllModel
             {
                 ItemsPerPage = input.ItemsPerPage,
@@ -176,7 +171,6 @@
             return this.View(model);
         }
 
-        [Authorize]
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Delete(string id)
         {
@@ -190,7 +184,7 @@
             return this.RedirectToAction(nameof(this.ListAll));
         }
 
-        // [Authorize]
+        // TODO - can be deleted - moved to api controller
         public async Task<IActionResult> GetByNumberOrName(string input)
         {
             var model = await this.suppliersService.GetAllBySearchInputAsync<SupplierExportModel>(input);
@@ -198,7 +192,7 @@
             return this.Json(model);
         }
 
-        // [Authorize]
+        // TODO - can be deleted - moved to api controller
         public async Task<IActionResult> GetArticlesById(string id)
         {
             try

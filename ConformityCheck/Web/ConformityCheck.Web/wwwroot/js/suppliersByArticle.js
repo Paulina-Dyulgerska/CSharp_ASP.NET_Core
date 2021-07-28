@@ -3,7 +3,9 @@ $(document).ready(function () {
     console.log($('#Id').val());
     let selectList = $('#Conformity_SupplierId');
     $.ajax({
-        url: '/Articles/GetSuppliersById/' + $('#Id').val(),
+        method: 'GET',
+        //url: '/Articles/GetSuppliersById/' + $('#Id').val(),
+        url: '/api/GetArticleSuppliers/' + $('#Id').val(),
         dataType: 'json',
         success: function (json) {
             selectList.empty();
@@ -25,7 +27,7 @@ $(document).ready(function () {
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            alert('Error by loading the supplier articles');
+            alert('Error by loading the article suppliers.');
             //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -40,7 +42,8 @@ $('#Conformity_SupplierId').change(function () {
     let selectList = $('#Conformity_ConformityTypeId');
     $.ajax({
         method: 'GET',
-        url: '/Articles/GetConformityTypesByIdAndSupplier',
+        //url: '/Articles/GetConformityTypesByIdAndSupplier',
+        url: '/api/GetArticleConformityTypesBySupplier',
         dataType: 'json',
         data: { 'articleId': $('#Id').val(), 'supplierId': $('#Conformity_SupplierId').val() },
         contentType: "application/json; charset=utf-8",
@@ -66,7 +69,7 @@ $('#Conformity_SupplierId').change(function () {
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            alert('Error by loading the supplier articles');
+            alert('Error by loading the article conformity types');
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

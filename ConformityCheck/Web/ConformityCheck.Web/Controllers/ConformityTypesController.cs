@@ -20,33 +20,28 @@
     public class ConformityTypesController : Controller
     {
         private readonly IArticlesService articlesService;
-        private readonly ISuppliersService supplierService;
-        private readonly IProductsService productService;
-        private readonly IConformityTypesService conformityTypeService;
-        private readonly ISubstancesService substanceService;
+        private readonly ISuppliersService suppliersService;
+        private readonly IProductsService productsService;
+        private readonly IConformityTypesService conformityTypesService;
+        private readonly ISubstancesService substancesService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public ConformityTypesController(
             IArticlesService articlesService,
-            ISuppliersService supplierService,
-            IProductsService productService,
-            IConformityTypesService conformityTypeService,
-            ISubstancesService substanceService,
+            ISuppliersService suppliersService,
+            IProductsService productsService,
+            IConformityTypesService conformityTypesService,
+            ISubstancesService substancesService,
             UserManager<ApplicationUser> userManager)
         {
             this.articlesService = articlesService;
-            this.supplierService = supplierService;
-            this.productService = productService;
-            this.conformityTypeService = conformityTypeService;
-            this.substanceService = substanceService;
+            this.suppliersService = suppliersService;
+            this.productsService = productsService;
+            this.conformityTypesService = conformityTypesService;
+            this.substancesService = substancesService;
             this.userManager = userManager;
         }
 
-        // public async Task<IActionResult> ListAll()
-        // {
-        //     var model = await this.conformityTypeService.GetAllAsNoTrackingOrderedAsync<ConformityTypeExportModel>();
-        //     return this.View(model);
-        // }
         public async Task<IActionResult> ListAll(PagingViewModel input)
         {
             if (input.PageNumber <= 0)
@@ -55,6 +50,7 @@
                 return this.NotFound();
             }
 
+            // var model = await this.conformityTypesService.GetAllAsNoTrackingOrderedAsync<ConformityTypeExportModel>();
             var model = new ConformityTypesListAllModel
             {
                 ItemsPerPage = input.ItemsPerPage,
@@ -68,8 +64,8 @@
 
             if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
             {
-                model.ItemsCount = this.conformityTypeService.GetCount();
-                model.ConformityTypes = await this.conformityTypeService
+                model.ItemsCount = this.conformityTypesService.GetCount();
+                model.ConformityTypes = await this.conformityTypesService
                                             .GetAllOrderedAsPagesAsync<ConformityTypeExportModel>(
                                                 input.CurrentSortOrder,
                                                 input.PageNumber,
@@ -78,8 +74,8 @@
             else
             {
                 input.CurrentSearchInput = input.CurrentSearchInput.Trim();
-                model.ItemsCount = this.conformityTypeService.GetCountBySearchInput(input.CurrentSearchInput);
-                model.ConformityTypes = await this.conformityTypeService
+                model.ItemsCount = this.conformityTypesService.GetCountBySearchInput(input.CurrentSearchInput);
+                model.ConformityTypes = await this.conformityTypesService
                                             .GetAllBySearchInputOrderedAsPagesAsync<ConformityTypeExportModel>(
                                             input.CurrentSearchInput,
                                             input.CurrentSortOrder,
@@ -108,7 +104,7 @@
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await this.userManager.GetUserAsync(this.User);
 
-            await this.conformityTypeService.CreateAsync(input, userId);
+            await this.conformityTypesService.CreateAsync(input, userId);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
                 GlobalConstants.ConformityTypeCreatedSuccessfullyMessage;
@@ -119,7 +115,7 @@
         [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await this.conformityTypeService.GetByIdAsync<ConformityTypeEditInputModel>(id);
+            var model = await this.conformityTypesService.GetByIdAsync<ConformityTypeEditInputModel>(id);
 
             return this.View(model);
         }
@@ -130,16 +126,16 @@
         {
             if (!this.ModelState.IsValid)
             {
-                var model = await this.conformityTypeService.GetByIdAsync<ConformityTypeEditInputModel>(input.Id);
+                var model = await this.conformityTypesService.GetByIdAsync<ConformityTypeEditInputModel>(input.Id);
 
                 // this is needed to reject the creation of conformity type with a dublicated description.
+                // not needed since the validation attribute is created.
                 var propertyDescription = nameof(input.Description);
 
                 if (this.ModelState.Keys.Contains(propertyDescription)
                     && this.ModelState[propertyDescription].AttemptedValue.ToString() == model.Description)
                 {
                     this.ModelState.Remove(propertyDescription);
-
                     return await this.Edit(input);
                 }
 
@@ -149,7 +145,7 @@
             // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await this.userManager.GetUserAsync(this.User);
 
-            await this.conformityTypeService.EditAsync(input, user.Id);
+            await this.conformityTypesService.EditAsync(input, user.Id);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
                 GlobalConstants.ConformityTypeEditedsuccessfullyMessage;
@@ -158,7 +154,6 @@
             return this.RedirectToAction(nameof(this.ListAll));
         }
 
-        [Authorize]
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Delete(ConformityTypeDeleteInputModel input)
         {
@@ -166,7 +161,7 @@
             {
                 foreach (var error in this.ModelState.Values.SelectMany(v => v.Errors))
                 {
-                    this.TempData["ErrorMessage"] += error.ErrorMessage + Environment.NewLine;
+                    this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] += error.ErrorMessage + Environment.NewLine;
                 }
 
                 return this.RedirectToAction(nameof(this.ListAll));
@@ -174,7 +169,7 @@
 
             var user = await this.userManager.GetUserAsync(this.User);
 
-            await this.conformityTypeService.DeleteAsync(input.Id, user.Id);
+            await this.conformityTypesService.DeleteAsync(input.Id, user.Id);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
                 GlobalConstants.ConformityTypeDeletedsuccessfullyMessage;
@@ -182,10 +177,10 @@
             return this.RedirectToAction(nameof(this.ListAll));
         }
 
-        // [Authorize]
+        // TODO - can be deleted - moved to api controller
         public async Task<IActionResult> GetByIdOrDescription(string input)
         {
-            var model = await this.conformityTypeService.GetAllBySearchInputAsync<ConformityTypeExportModel>(input);
+            var model = await this.conformityTypesService.GetAllBySearchInputAsync<ConformityTypeExportModel>(input);
 
             return this.Json(model);
         }

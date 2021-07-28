@@ -1030,6 +1030,12 @@ textarea {
     padding: 1rem;
 }
 
+@media screen and (max-width: 600px){
+    .data-container {
+        max-width: 95%;
+    }
+}
+
 /* Form input item group styles -------------------------------------------------------------------------------------*/
 .input-group {
     display: flex;

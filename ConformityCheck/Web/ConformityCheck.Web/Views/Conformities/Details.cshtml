@@ -29,56 +29,58 @@
                         <li>
                             @if (@Model.ConformityFileUrl != null)
                             {
-                                @* Variant 0: POST request*@
-                                @*<form asp-action="PdfPartial" target="_blank">
-                                        <article class="">
-                                            <p>
-                                                <strong>
-                                                    Conformity is available.
-                                                </strong>
-                                            </p>
-                                            <p>
-                                                Click the button to see the conformity file:
-                                            </p>
-                                            <input type="text" class="form-control" asp-for="ConformityFileUrl" value="@Model.ConformityFileUrl" hidden>
-                                            <button type="submit" class="openPdf btn btn-cta">
-                                                <span>
-                                                    <i class="fas fa-eye"></i> Conformity
-                                                </span>
-                                            </button>
-                                        </article>
-                                    </form>*@
+                            @* Variant 0: POST request*@
+                            @*<form method="post" asp-controller="ContentDelivery" asp-action="ShowModalDocument" target="_blank">
+                                    <article class="">
+                                        <p>
+                                            <strong>
+                                                Conformity is available.
+                                            </strong>
+                                        </p>
+                                        <p>
+                                            Click the button to see the conformity file:
+                                        </p>
+                                        <input type="text" class="form-control" asp-for="ConformityFileUrl" value="@Model.ConformityFileUrl" hidden>
+                                        <button type="submit" class="openPdf btn btn-cta">
+                                            <span>
+                                                <i class="fas fa-eye"></i> Conformity
+                                            </span>
+                                        </button>
+                                    </article>
+                                </form>*@
 
-                                @* Variant 1: *@
-                                <article class="">
-                                    <p>
-                                        <strong>
-                                            Conformity is available.
-                                        </strong>
-                                    </p>
-                                    <p>
-                                        Click the button to see the conformity file:
-                                    </p>
-                                    <a class="openPdf btn btn-cta" asp-action="ShowModalDocument"
-                                       asp-route-conformityFileUrl="@Model.ConformityFileUrl"
-                                       target="_blank">
-                                        <span>
-                                            <i class="fas fa-eye"></i> Conformity
-                                        </span>
-                                    </a>
+                            @* Variant 1: *@
+                            <article class="">
+                                <p>
+                                    <strong>
+                                        Conformity is available.
+                                    </strong>
+                                </p>
+                                <p>
+                                    Click the button to see the conformity file:
+                                </p>
+                                <a class="openPdf btn btn-cta"
+                                   asp-controller="ContentDelivery"
+                                   asp-action="ShowModalDocument"
+                                   asp-route-conformityFileUrl="@Model.ConformityFileUrl"
+                                   target="_blank">
+                                    <span>
+                                        <i class="fas fa-eye"></i> Conformity
+                                    </span>
+                                </a>
 
-                                    @* Variant 2: *@
-                                    @*<a href="@Url.Action("ShowModalDocument", "Conformities", new { ConformityFileUrl = @Model.ConformityFileUrl})" target="_blank">Link Text</a>*@
+                                @* Variant 2: *@
+                                @*<a href="@Url.Action("ShowModalDocument", "ContentDelivery", new { ConformityFileUrl = @Model.ConformityFileUrl})" target="_blank">Link Text</a>*@
 
-                                    @* Variant 3: *@
-                                    @*<div class="modal fade" id="modalGeneric" role="dialog">
-                                        </div>
-                                        <a class="ml-1" data-toggle="tooltip" title="Predogled"
-                                           data-url="@Url.Action("PdfPartial", "Conformities", new { ConformityFileUrl = Model.ConformityFileUrl })"
-                                           onclick="showGenericModal(event);">
-                                            show the file
-                                        </a>*@
-                                </article>
+                                @* Variant 3: *@
+                                @*<div class="modal fade" id="modalGeneric" role="dialog">
+                                    </div>
+                                    <a class="ml-1" data-toggle="tooltip" title="Predogled"
+                                       data-url="@Url.Action("PdfPartial", "Conformities", new { ConformityFileUrl = Model.ConformityFileUrl })"
+                                       onclick="showGenericModal(event);">
+                                        show the file
+                                    </a>*@
+                            </article>
                             }
                         </li>
                         <li>

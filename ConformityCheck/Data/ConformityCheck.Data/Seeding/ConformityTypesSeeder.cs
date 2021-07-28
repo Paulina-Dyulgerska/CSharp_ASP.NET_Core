@@ -23,13 +23,13 @@
             var jsonConformityTypes = File
                 .ReadAllText("../../../ConformityCheck/Data/ConformityCheck.Data/Seeding/DataFiles/ConformityTypesData.json");
             var conformityTypes = JsonSerializer.Deserialize<IEnumerable<ConformityTypeDTO>>(jsonConformityTypes);
-            var conformityTypeService = serviceProvider.GetRequiredService<IConformityTypesSeedService>();
+            var conformityTypesService = serviceProvider.GetRequiredService<IConformityTypesSeedService>();
 
             foreach (var conformityType in conformityTypes)
             {
                 try
                 {
-                    await conformityTypeService.CreateAsync(conformityType);
+                    await conformityTypesService.CreateAsync(conformityType);
                 }
                 catch (Exception)
                 {

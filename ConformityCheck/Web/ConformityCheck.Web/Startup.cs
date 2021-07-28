@@ -1,5 +1,6 @@
 ﻿namespace ConformityCheck.Web
 {
+    using System;
     using System.Reflection;
 
     using ConformityCheck.Data;
@@ -50,20 +51,20 @@
                 options.AppSecret = this.configuration["FacebookLogin:AppSecret"];
             });
 
-            services.Configure<CookiePolicyOptions>(
-                options =>
-                    {
-                        // options.MinimumSameSitePolicy = SameSiteMode.None;
-                        options.MinimumSameSitePolicy = SameSiteMode.Strict;
-                        options.ConsentCookie.IsEssential = true;
-                        options.CheckConsentNeeded = context => true;
-                    });
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.MinimumSameSitePolicy = SameSiteMode.Lax;
+                options.ConsentCookie.IsEssential = true;
+                options.ConsentCookie.Expiration = TimeSpan.FromDays(30);
+                options.CheckConsentNeeded = context => true;
+            });
 
-            services.AddControllersWithViews(
-                options =>
-                    {
-                        options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-                    }).AddRazorRuntimeCompilation();
+            services.AddControllersWithViews(options =>
+                                            {
+                                                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                                            })
+                    .AddRazorRuntimeCompilation();
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter(); // for app.UseMigrationsEndPoint()
             services.AddAntiforgery(options =>

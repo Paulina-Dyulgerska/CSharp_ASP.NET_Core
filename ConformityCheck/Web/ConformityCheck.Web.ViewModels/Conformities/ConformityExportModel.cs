@@ -10,7 +10,7 @@
     using ConformityCheck.Web.ViewModels.ConformityTypes;
     using ConformityCheck.Web.ViewModels.Suppliers;
 
-    public class ConformityExportModel : IMapFrom<Conformity>, IHaveCustomMappings
+    public class ConformityExportModel : IMapFrom<Conformity>, IMapFrom<ConformityExportModel>, IHaveCustomMappings
     {
         [ConformityEntityAttribute]
         public string Id { get; set; }
@@ -20,8 +20,6 @@
         public ConformityTypeExportModel ConformityType { get; set; }
 
         public SupplierExportModel Supplier { get; set; }
-
-        //public ArticleExportModel Article { get; set; }
 
         public bool IsAccepted { get; set; }
 

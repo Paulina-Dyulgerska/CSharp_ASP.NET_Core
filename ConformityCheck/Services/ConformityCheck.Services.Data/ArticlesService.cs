@@ -679,42 +679,6 @@
             return entities;
         }
 
-        // not in the Interface!
-        public IEnumerable<T> ListArticleConformities<T>(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T> ListArticleSuppliers<T>(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T> ListArticleProducts<T>(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T> SearchByArticleNumber<T>(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T> SearchByConformityType<T>(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T> SearchByConfirmedStatus<T>(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T> SearchBySupplierNumber<T>(string id)
-        {
-            throw new NotImplementedException();
-        }
-
         private string PascalCaseConverter(string stringToFix)
         {
             var st = new StringBuilder();
@@ -726,31 +690,5 @@
 
             return st.ToString().Trim();
         }
-
-        // for delete:
-        // public IEnumerable<string> GetSuppliersIdsList(string articleId)
-        // {
-        //     return this.articlesRepository.All()
-        //         .Where(x => x.Id == articleId).Select(x => x.ArticleSuppliers.Select(s => s.Supplier.Id)).FirstOrDefault();
-        // }
-        // public int GetSuppliersCount(string articleId)
-        // {
-        //     return this.articlesRepository.All()
-        //         .Where(x => x.Id == articleId).Select(x => x.ArticleSuppliers).FirstOrDefault().Count;
-        // }
-        // public bool IsArticleFullyConfirmed(string articleId)
-        // {
-        //     return this.articlesRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == articleId)
-        //     .ArticleConformityTypes.All(x => x.Conformity.IsAccepted);
-        // }
-        // public IEnumerable<string> GetSuppliersNumbersList(string articleId)
-        // {
-        //     return this.articlesRepository.All()
-        //         .Where(x => x.Id == articleId).Select(x => x.ArticleSuppliers.Select(s => s.Supplier.Number)).FirstOrDefault();
-        // }
-        // private string FormatInputString(string stringToFormat) //it is 25% slower than the PascalCaseConverter
-        // {
-        //    return $"{stringToFormat.ToUpper()[0]}{stringToFormat.Substring(1).ToLower()}".Trim();
-        // }
     }
 }

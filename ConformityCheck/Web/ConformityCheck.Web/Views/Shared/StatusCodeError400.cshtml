@@ -1,0 +1,34 @@
+﻿@{
+    this.ViewData["Title"] = "Error 404";
+}
+
+
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+            </article>
+        </section>
+
+        <section class="display-data-body">
+            <article class="form-data-container flex-column">
+                <article class="data-container">
+                    <p>
+                        <strong>
+                            This site cannot be found
+                        </strong>
+                    </p>
+                </article>
+                <img class="border-radius" src="~/files/errors/404.gif" />
+            </article>
+        </section>
+
+        <section class="display-data-footer ">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-sm btn-info">Back to home page</a>
+        </section>
+    </section>
+</section>

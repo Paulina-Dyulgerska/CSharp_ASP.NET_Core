@@ -1,4 +1,5 @@
-﻿$(function () {
+﻿// for the get request - variant 1:
+$(function () {
     $('a.openPdf').click(function () {
         var url = $(this).attr('href');
         var windowWidth = 600;
@@ -13,8 +14,9 @@
     //return false;
 });
 
+// for the get request - variant 1:
 $(function () {
-    $('a.addPdf').click(function () {
+    $('button.addPdf').click(function () {
         var divForInputFile = $('#inputFile');
         divForInputFile.removeAttr('hidden');
     });

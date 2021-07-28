@@ -155,13 +155,14 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <a asp-action="Edit" class="btn btn-edit" asp-route-id="@conformity.Id"
-                                asp-route-callerViewName="Conformities">
+                               asp-route-callerViewName="Conformities">
                                 <span class="text">Edit</span>
                             </a>
                         }
                         else
                         {
-                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login">
+                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login"
+                               asp-route-returnUrl="/Conformities/Edit/@conformity.Id">
                                 <span class="text">Login</span>
                             </a>
                         }
@@ -176,7 +177,8 @@
                         }
                         else
                         {
-                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login">
+                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login" 
+                               asp-route-returnUrl="/Conformities/ListAll">
                                 <span class="text">Login</span>
                             </a>
                         }
