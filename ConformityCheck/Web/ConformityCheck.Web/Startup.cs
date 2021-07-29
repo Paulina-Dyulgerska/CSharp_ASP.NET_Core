@@ -13,6 +13,7 @@
     using ConformityCheck.Services.Data;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Services.Messaging;
+    using ConformityCheck.Web.Infrastructure.Settings;
     using ConformityCheck.Web.ViewModels;
 
     using Microsoft.AspNetCore.Builder;
@@ -45,11 +46,20 @@
                     .AddRoles<ApplicationRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddAuthentication().AddFacebook(options =>
-            {
-                options.AppId = this.configuration["FacebookLogin:AppId"];
-                options.AppSecret = this.configuration["FacebookLogin:AppSecret"];
-            });
+            services.Configure<ReCaptchaSettings>(this.configuration.GetSection(ReCaptchaSettings.ReCaptcha));
+
+            var facebookSettingsSection = this.configuration.GetSection(FacebookLoginSettings.FacebookLogin);
+            services.Configure<FacebookLoginSettings>(facebookSettingsSection);
+            var facebookSettings = facebookSettingsSection.Get<FacebookLoginSettings>();
+
+            services.AddAuthentication()
+                    .AddFacebook(options =>
+                    {
+                        // options.AppId = this.configuration["FacebookLogin:AppId"];
+                        // options.AppSecret = this.configuration["FacebookLogin:AppSecret"];
+                        options.AppId = facebookSettings.AppId;
+                        options.AppSecret = facebookSettings.AppSecret;
+                    });
 
             services.Configure<CookiePolicyOptions>(options =>
             {
