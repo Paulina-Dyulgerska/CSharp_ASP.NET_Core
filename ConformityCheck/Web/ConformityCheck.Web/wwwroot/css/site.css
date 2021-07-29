@@ -948,7 +948,7 @@ textarea {
     }
 
 button.close {
-    display:none;
+    display: none;
 }
 
 /*Dispay data styles -----------------------------------------------------------------------------------*/
@@ -1033,13 +1033,19 @@ button.close {
     margin: 2rem auto;
     padding: 1rem;
 }
-.user-data .data-container{
+
+.user-data .data-container {
     margin: 2rem 0;
+    max-width: unset;
+    flex-basis: 45%;
 }
 
 @media screen and (max-width: 600px) {
-    .data-container {
+    .data-container,
+    .user-data .data-container {
         max-width: 95%;
+        flex-grow: 1;
+        margin: 2rem;
     }
 }
 

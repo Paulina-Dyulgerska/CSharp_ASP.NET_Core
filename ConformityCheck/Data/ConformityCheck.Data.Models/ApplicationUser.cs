@@ -3,7 +3,7 @@ namespace ConformityCheck.Data.Models
 {
     using System;
     using System.Collections.Generic;
-
+    using System.ComponentModel.DataAnnotations;
     using ConformityCheck.Data.Common.Models;
 
     using Microsoft.AspNetCore.Identity;
@@ -17,6 +17,12 @@ namespace ConformityCheck.Data.Models
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
         }
+
+        [MaxLength(20)]
+        public string FirstName { get; set; }
+
+        [MaxLength(20)]
+        public string LastName { get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }

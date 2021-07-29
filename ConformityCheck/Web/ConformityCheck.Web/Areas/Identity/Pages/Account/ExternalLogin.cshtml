@@ -4,29 +4,47 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
-<h4 id="external-login-title">Associate your @Model.ProviderDisplayName account.</h4>
-<hr />
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+                <h4 id="external-login-title" class="large-margin-vertical">
+                    Associate your @Model.ProviderDisplayName account.
+                </h4>
+            </article>
 
-<p id="external-login-description" class="text-info">
-    You've successfully authenticated with <strong>@Model.ProviderDisplayName</strong>.
-    Please enter an email address for this site below and click the Register button to finish
-    logging in.
-</p>
+            <article class="display-data-body user-data">
+                <article class="form-data-container align-flex-start">
+                    <article class="data-container">
+                        <p id="external-login-description" class="text-info">
+                            You've successfully authenticated with <strong>@Model.ProviderDisplayName</strong>.
+                            Please enter an email address for this site below and click the Register button to finish
+                            logging in.
+                        </p>
+                        <form class="input-group"
+                              asp-page-handler="Confirmation"
+                              asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-field-container large-margin-vertical">
+                                <label asp-for="Input.Email"></label>
+                                <input asp-for="Input.Email" class="form-control" />
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </form>
+                    </article>
+                </article>
+            </article>
+        </section>
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
-    </div>
-</div>
+        <section class="display-data-footer ">
+        </section>
+    </section>
+</section>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
