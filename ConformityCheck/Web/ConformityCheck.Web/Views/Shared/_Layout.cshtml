@@ -40,7 +40,7 @@
             </label>
             <input class="nav-toggler" type="checkbox" name="toggle-nav" id="toggle-nav" />
 
-            <nav class="nav" onclick=onClickNavItem>
+            <nav class="nav">
                 <ul class="nav-list nav-left">
                     <li class="list-item">
                         <a class="" asp-area="" asp-controller="Articles" asp-action="ListAll">Articles</a>
@@ -59,9 +59,9 @@
                     </li>
                     @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                     {
-                    <li class="list-item">
-                        <a class="" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
-                    </li>
+                        <li class="list-item">
+                            <a class="" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
+                        </li>
                     }
                 </ul>
                 <partial name="_LoginPartial" />

@@ -1,4 +1,6 @@
 ﻿@inject IGetCountsService GetCountsService
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+
 @model ArticleCreateInputModel
 @{
     this.ViewData["Title"] = "Create new article";
@@ -29,6 +31,7 @@
                     @*enctype is multipart/form-data if uploading a file, do not forget to change it*@
 
                     <div asp-validation-summary="All" class="text-danger"></div>
+                    <input type="hidden" id="RecaptchaValue" name="RecaptchaValue" />
 
                     <div class="form-field-container large-margin-vertical">
                         <label asp-for="Number"></label>
@@ -98,3 +101,22 @@
         </section>
     </section>
 </section>
+
+@section Scripts{
+    <script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptchaV3Settings:SiteKey"]"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@this.Configuration["GoogleReCaptchaV3Settings:SiteKey"]', { action: 'article_create' })
+                .then(function (token) {
+                    console.log('Script reCaptcha loaded!');
+                    console.log('token' + token);
+                    document.getElementById('RecaptchaValue').value = token;
+                })
+                .catch(err => {
+                    console.log('Error: ');
+                    console.log(err.description);
+                    console.log(err);
+                });
+        });
+    </script>
+}

@@ -24,6 +24,7 @@
 		<ProjectReference Include="..\..\ConformityCheck.Common\ConformityCheck.Common.csproj" />
 		<ProjectReference Include="..\..\Data\ConformityCheck.Data.Models\ConformityCheck.Data.Models.csproj" />
 		<ProjectReference Include="..\..\Services\ConformityCheck.Services.Mapping\ConformityCheck.Services.Mapping.csproj" />
+		<ProjectReference Include="..\ConformityCheck.Web.Infrastructure\ConformityCheck.Web.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>

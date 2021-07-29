@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using ConformityCheck.Common.ValidationAttributes;
+    using ConformityCheck.Web.Infrastructure.ValidationAttributes;
 
     public class ArticleCreateInputModel : ArticleBaseModel
     {
@@ -19,5 +20,8 @@
         public IEnumerable<string> Products { get; set; }
 
         public IEnumerable<string> Substances { get; set; }
+
+        [GoogleReCaptchaValidationAttribute]
+        public string RecaptchaValue { get; set; }
     }
 }

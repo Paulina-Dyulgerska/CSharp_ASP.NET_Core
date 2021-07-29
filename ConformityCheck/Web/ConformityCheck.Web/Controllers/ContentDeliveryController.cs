@@ -1,6 +1,5 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -70,22 +69,6 @@
             return this.Ok(model);
         }
 
-        [HttpGet(nameof(GetArticlesByNumberOrDescription))]
-        public async Task<IActionResult> GetArticlesByNumberOrDescription(string input)
-        {
-            var model = await this.articlesService.GetAllBySearchInputAsync<ArticleExportModel>(input);
-
-            return this.Ok(model);
-        }
-
-        [HttpGet(nameof(GetSuppliersByNumberOrName))]
-        public async Task<IActionResult> GetSuppliersByNumberOrName(string input)
-        {
-            var model = await this.suppliersService.GetAllBySearchInputAsync<SupplierExportModel>(input);
-
-            return this.Ok(model);
-        }
-
         [HttpGet(nameof(GetSupplierArticles) + "/{id}")]
         public async Task<IActionResult> GetSupplierArticles(string id)
         {
@@ -100,6 +83,22 @@
             {
                 throw new System.Exception(ex.Message);
             }
+        }
+
+        [HttpGet(nameof(GetArticlesByNumberOrDescription))]
+        public async Task<IActionResult> GetArticlesByNumberOrDescription(string input)
+        {
+            var model = await this.articlesService.GetAllBySearchInputAsync<ArticleExportModel>(input);
+
+            return this.Ok(model);
+        }
+
+        [HttpGet(nameof(GetSuppliersByNumberOrName))]
+        public async Task<IActionResult> GetSuppliersByNumberOrName(string input)
+        {
+            var model = await this.suppliersService.GetAllBySearchInputAsync<SupplierExportModel>(input);
+
+            return this.Ok(model);
         }
 
         [HttpGet(nameof(GetConformityTypeByIdOrDescription))]
