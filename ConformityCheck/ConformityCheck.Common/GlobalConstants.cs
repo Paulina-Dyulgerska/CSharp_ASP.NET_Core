@@ -6,6 +6,10 @@
 
         public const string AdministratorRoleName = "Administrator";
 
+        public const string JsonContentType = "application/json";
+
+        public const string JwtCookieName = "ConformityCheck.AspNetCore.Identity.Application";
+
         public const string TempDataMessagePropertyName = "Message";
         public const string TempDataErrorMessagePropertyName = "ErrorMessage";
 
