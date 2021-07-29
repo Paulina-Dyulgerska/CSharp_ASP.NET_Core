@@ -705,9 +705,6 @@
         public async Task CreateAsync(SupplierCreateInputModel input, string userId)
         {
             // TODO - to give the numbers authomaticaly!!!
-            // var userEntity = this.usersRepository.AllAsNoTracking()
-            //    .FirstOrDefault(x => x.UserName == articleInputModel.UserId);
-            // take the user and record its id in the article, product, conformity, etc.
             var entity = new Supplier
             {
                 Number = input.Number.Trim().ToUpper(),
@@ -732,9 +729,6 @@
                 .All()
                 .FirstOrDefaultAsync(x => x.Id == input.Id);
 
-            // var userEntity = this.usersRepository.AllAsNoTracking()
-            //    .FirstOrDefault(x => x.UserName == articleInputModel.UserId);
-            // take the user and record its id in the article, product, conformity, etc.
             entity.Name = input.Name.Trim().ToUpper();
             entity.Email = input.Email?.Trim();
             entity.PhoneNumber = input.PhoneNumber?.Trim();
