@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
 
     using ConformityCheck.Data.Models;
+    using ConformityCheck.Web.Infrastructure.ValidationAttributes;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -20,7 +21,7 @@
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, 
+        public LoginModel(SignInManager<ApplicationUser> signInManager,
             ILogger<LoginModel> logger,
             UserManager<ApplicationUser> userManager)
         {
@@ -31,6 +32,9 @@
 
         [BindProperty]
         public InputModel Input { get; set; }
+
+        [GoogleReCaptchaValidation]
+        public string RecaptchaValue { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
@@ -75,7 +79,7 @@
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        
+
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout

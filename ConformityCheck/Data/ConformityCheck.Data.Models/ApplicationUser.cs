@@ -18,9 +18,13 @@ namespace ConformityCheck.Data.Models
             this.Logins = new HashSet<IdentityUserLogin<string>>();
         }
 
+        // ! not required but if provided - 3 symbols min length
+        [MinLength(3)]
         [MaxLength(20)]
         public string FirstName { get; set; }
 
+        // ! not required but if provided - 3 symbols min length
+        [MinLength(3)]
         [MaxLength(20)]
         public string LastName { get; set; }
 

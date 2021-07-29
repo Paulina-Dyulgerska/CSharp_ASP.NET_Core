@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using ConformityCheck.Common.ValidationAttributes;
+using ConformityCheck.Web.Infrastructure.ValidationAttributes;
 
 namespace ConformityCheck.Web.Areas.Identity.Pages.Account
 {
@@ -41,6 +42,9 @@ namespace ConformityCheck.Web.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
+        [GoogleReCaptchaValidation]
+        public string RecaptchaValue { get; set; }
+
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
@@ -63,10 +67,12 @@ namespace ConformityCheck.Web.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
+            // ! not required but if provided - 3 symbols min length
             [NameRegExAttribute]
             [Display(Name = "First name")]
             public string FirstName { get; set; }
 
+            // ! not required but if provided - 3 symbols min length
             [NameRegExAttribute]
             [Display(Name = "Last name")]
             public string LastName { get; set; }

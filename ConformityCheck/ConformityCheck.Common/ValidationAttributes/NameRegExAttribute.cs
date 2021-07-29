@@ -12,7 +12,12 @@
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var pattern = "[a-zA-Z]";
+            if (value == null)
+            {
+                return ValidationResult.Success;
+            }
+
+            var pattern = "[a-zA-Z]{3,}";
             var match = Regex.IsMatch(value.ToString(), pattern);
 
             if (!match)

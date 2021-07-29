@@ -1,5 +1,8 @@
-﻿@inject IGetCountsService GetCountsService
-@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+﻿@using Microsoft.Extensions.Configuration
+@using ConformityCheck.Web.Infrastructure.Settings
+
+@inject IConfiguration Configuration
+@inject IGetCountsService GetCountsService
 
 @model ArticleCreateInputModel
 @{
@@ -102,11 +105,16 @@
     </section>
 </section>
 
+@{
+    IConfiguration recaptchaSettingsSection = this.Configuration.GetSection(ReCaptchaSettings.ReCaptcha);
+    var recaptchaSettings = recaptchaSettingsSection.Get<ReCaptchaSettings>();
+}
+
 @section Scripts{
-    <script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptchaV3Settings:SiteKey"]"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=@recaptchaSettings.SiteKey"></script>
     <script>
         grecaptcha.ready(function () {
-            grecaptcha.execute('@this.Configuration["GoogleReCaptchaV3Settings:SiteKey"]', { action: 'article_create' })
+            grecaptcha.execute('@recaptchaSettings.SiteKey', { action: 'article_create' })
                 .then(function (token) {
                     console.log('Script reCaptcha loaded!');
                     console.log('token' + token);
@@ -119,4 +127,21 @@
                 });
         });
     </script>
+
+    @*<script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptchaV3Settings:SiteKey"]"></script>
+        <script>
+            grecaptcha.ready(function () {
+                grecaptcha.execute('@this.Configuration["GoogleReCaptchaV3Settings:SiteKey"]', { action: 'article_create' })
+                    .then(function (token) {
+                        console.log('Script reCaptcha loaded!');
+                        console.log('token' + token);
+                        document.getElementById('RecaptchaValue').value = token;
+                    })
+                    .catch(err => {
+                        console.log('Error: ');
+                        console.log(err.description);
+                        console.log(err);
+                    });
+            });
+        </script>*@
 }

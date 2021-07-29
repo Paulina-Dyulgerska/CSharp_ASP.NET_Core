@@ -1,5 +1,10 @@
 ﻿@page
 @model RegisterModel
+@using Microsoft.Extensions.Configuration
+@using ConformityCheck.Web.Infrastructure.Settings
+
+@inject IConfiguration Configuration
+
 @{
     ViewData["Title"] = "Register";
 }
@@ -20,6 +25,7 @@
                         <hr />
                         <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="input-group">
                             <div asp-validation-summary="All" class="text-danger"></div>
+                            <input type="hidden" id="RecaptchaValue" name="RecaptchaValue" />
                             <div class="form-field-container large-margin-vertical">
                                 <label asp-for="Input.Email"></label>
                                 <input asp-for="Input.Email" class="form-control" autofocus />
@@ -99,6 +105,44 @@
     </section>
 </section>
 
-@section Scripts {
+@{
+    IConfiguration recaptchaSettingsSection = this.Configuration.GetSection(ReCaptchaSettings.ReCaptcha);
+    var recaptchaSettings = recaptchaSettingsSection.Get<ReCaptchaSettings>();
+}
+
+@section Scripts{
     <partial name="_ValidationScriptsPartial" />
+    <script src="https://www.google.com/recaptcha/api.js?render=@recaptchaSettings.SiteKey"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@recaptchaSettings.SiteKey', { action: 'article_create' })
+                .then(function (token) {
+                    console.log('Script reCaptcha loaded!');
+                    console.log('token' + token);
+                    document.getElementById('RecaptchaValue').value = token;
+                })
+                .catch(err => {
+                    console.log('Error: ');
+                    console.log(err.description);
+                    console.log(err);
+                });
+        });
+    </script>
+
+    @*<script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptchaV3Settings:SiteKey"]"></script>
+        <script>
+            grecaptcha.ready(function () {
+                grecaptcha.execute('@this.Configuration["GoogleReCaptchaV3Settings:SiteKey"]', { action: 'article_create' })
+                    .then(function (token) {
+                        console.log('Script reCaptcha loaded!');
+                        console.log('token' + token);
+                        document.getElementById('RecaptchaValue').value = token;
+                    })
+                    .catch(err => {
+                        console.log('Error: ');
+                        console.log(err.description);
+                        console.log(err);
+                    });
+            });
+        </script>*@
 }
