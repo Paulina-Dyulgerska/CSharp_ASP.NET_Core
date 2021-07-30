@@ -16,6 +16,7 @@
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var recaptchaSettings = (IOptions<ReCaptchaSettings>)validationContext.GetService(typeof(IOptions<ReCaptchaSettings>));
+
             if (recaptchaSettings == null || string.IsNullOrWhiteSpace(recaptchaSettings.Value.Secret))
             {
                 return new ValidationResult(

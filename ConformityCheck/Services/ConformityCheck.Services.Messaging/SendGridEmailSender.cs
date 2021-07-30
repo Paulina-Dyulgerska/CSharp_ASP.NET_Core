@@ -17,7 +17,15 @@
             this.client = new SendGridClient(apiKey);
         }
 
-        public async Task SendEmailAsync(string from, string fromName, string to, string subject, string htmlContent, IEnumerable<EmailAttachment> attachments = null)
+        public async Task SendEmailAsync(
+            string from,
+            string fromName,
+            string to,
+            string toName,
+            string subject,
+            string htmlContent,
+            string userId = null,
+            IEnumerable<EmailAttachment> attachments = null)
         {
             if (string.IsNullOrWhiteSpace(subject) && string.IsNullOrWhiteSpace(htmlContent))
             {
@@ -46,6 +54,17 @@
                 Console.WriteLine(e);
                 throw;
             }
+
+            // just to test the email sending:
+            // var apiKey = "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";
+            // var client = new SendGridClient(apiKey);
+            // var fromA = new EmailAddress("admin@dotnetweb.net", "Example User");
+            // var subjectA = "Hello Djudja";
+            // var toA = new EmailAddress("paylina_st@yahoo.com", "Example User");
+            // var plainTextContent = "Sending emails is not so easy to do, but I have done it, even with C# :)";
+            // var htmlContentA = "<strong>Sending emails is not so easy to do, but I have done it, even with C# :)</strong>";
+            // var msg = MailHelper.CreateSingleEmail(fromA, toA, subjectA, plainTextContent, htmlContentA);
+            // var response = await client.SendEmailAsync(msg);
         }
     }
 }

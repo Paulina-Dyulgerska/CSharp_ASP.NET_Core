@@ -3,12 +3,16 @@ $('#searchAticleInput').on('keyup', function () {
     console.log($('#searchAticleInput').val());
     let selectList = $('#selectSearchArticleInput');
     let suggestions = $('#suggestions.articles');
+    //let recaptchaValue = $('#RecaptchaValue').val();
     if (!isNullOrWhitespace($(this).val())) {
         $.ajax({
+            //method: 'POST',
             method: 'GET',
             //url: '/Articles/GetByNumberOrDescription',
             url: '/api/GetArticlesByNumberOrDescription',
+            contentType: 'application/json',
             dataType: 'json',
+            //data: JSON.stringify({ 'input': $(this).val(), 'recaptchaValue': recaptchaValue }),
             data: { 'input': $(this).val() },
             success: function (json) {
                 if (json.length < 1) {
@@ -28,6 +32,10 @@ $('#searchAticleInput').on('keyup', function () {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert('Error by loading articles');
+                console.log(xhr.statusText);
+                console.log(xhr.responseText);
+                console.log(xhr);
+                console.log(thrownError);
                 //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

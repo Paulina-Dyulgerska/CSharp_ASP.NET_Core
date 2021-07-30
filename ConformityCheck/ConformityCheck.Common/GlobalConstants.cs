@@ -4,6 +4,8 @@
     {
         public const string SystemName = "Conformity Check";
 
+        public const string SystemEmail = "admin@dotnetweb.net";
+
         public const string AdministratorRoleName = "Administrator";
 
         public const string JsonContentType = "application/json";

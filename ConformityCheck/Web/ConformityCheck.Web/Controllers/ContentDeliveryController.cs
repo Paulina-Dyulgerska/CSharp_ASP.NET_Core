@@ -5,6 +5,7 @@
 
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
+    using ConformityCheck.Web.ViewModels;
     using ConformityCheck.Web.ViewModels.Administration.Users;
     using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.Conformities;
