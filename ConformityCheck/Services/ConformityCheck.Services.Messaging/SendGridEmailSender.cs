@@ -56,7 +56,7 @@
             }
 
             // just to test the email sending:
-            // var apiKey = "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";
+            // var apiKey = "PutSendGridApiKeyHere";
             // var client = new SendGridClient(apiKey);
             // var fromA = new EmailAddress("admin@dotnetweb.net", "Example User");
             // var subjectA = "Hello Djudja";
