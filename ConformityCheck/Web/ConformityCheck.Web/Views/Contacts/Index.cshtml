@@ -1,6 +1,7 @@
 ﻿@using Microsoft.Extensions.Configuration
 @using ConformityCheck.Web.Infrastructure.Settings
 @using ConformityCheck.Web.ViewModels.Contacts
+@using System.Security.Claims;
 
 @inject IConfiguration Configuration
 
@@ -10,36 +11,86 @@
     this.ViewData["Title"] = "Send us a message";
 }
 
-<form method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" value="@this.User.Identity.Name" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Title"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Content"></label>
-        <textarea asp-for="Content" class="form-control" rows="5"></textarea>
-        <span asp-validation-for="Content" class="text-danger"></span>
-    </div>
-    <p>
-        Натискайки бутона "Изпратете ни съобщение", вие потвърждавате, че сте запознати и съгласни с нашата
-        <a asp-area="" asp-controller="Home" asp-action="Privacy">политика за опазване на личните данни</a>
-    </p>
-    <input type="hidden" id="RecaptchaValue" name="RecaptchaValue" />
-    <button type="submit" class="btn btn-primary">Изпратете ни съобщение</button>
-</form>
+<section class="display-data-wrapper">
+    <section class="display-data-container">
 
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+            </article>
+        </section>
+
+        <section class="display-data-body">
+            <article class="form-data-container">
+
+                <form method="post" class="input-group">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input type="hidden" id="RecaptchaValue" name="RecaptchaValue" />
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="Name"></label>
+                        @if (this.User.Identity.IsAuthenticated)
+                        {
+                            <input asp-for="Name" class="form-control" value="@Model.Name" hidden />
+                            <input class="form-control" value="@Model.Name" disabled />
+                        }
+                        else
+                        {
+                            <input asp-for="Name" class="form-control" />
+                        }
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="Email"></label>
+                        @if (this.User.Identity.IsAuthenticated)
+                        {
+                            <input asp-for="Email" class="form-control" value="@Model.Email" hidden />
+                            <input class="form-control" value="@Model.Email" disabled />
+                        }
+                        else
+                        {
+                            <input asp-for="Email" class="form-control" />
+                        }
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="Title"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="Content"></label>
+                        <textarea asp-for="Content" class="form-control" rows="5"></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+                    <p>
+                        By clicking "Send" button, you're agreeing to our terms of service & our
+                        <span>
+                            <a asp-area="" asp-controller="Home" asp-action="Privacy"> privacy policy.</a>
+                        </span>
+                    </p>
+
+                    <div class="btns-container">
+                        <div class="form-field-container">
+                            <a asp-action="/" class="btn btn-back btn-align-end">Return back</a>
+                        </div>
+                        <div class="form-field-container">
+                            <input type="reset" class="btn btn-clear btn-align-end" value="Clear form" />
+                        </div>
+                        <div class="form-field-container">
+                            <input type="submit" class="btn btn-align-end" value="Send" />
+                        </div>
+                    </div>
+                </form>
+            </article>
+        </section>
+
+        <section class="display-data-footer ">
+        </section>
+    </section>
+</section>
 
 @{
     IConfiguration recaptchaSettingsSection = this.Configuration.GetSection(ReCaptchaSettings.ReCaptcha);

@@ -139,7 +139,7 @@ li {
 
 a {
     text-decoration: none;
-    display: block;
+    /*display: block;*/
     color: #0e2979;
 }
 
@@ -355,8 +355,8 @@ textarea {
                     position: absolute;
                     width: 100%;
                     height: 1.5px;
-                    bottom: 2px;
-                    left: 0;
+                    bottom: -2px;
+                    /*left: 0;*/
                     background: #0e2979;
                     visibility: hidden;
                     /* border-radius: 5px; */
@@ -1089,7 +1089,7 @@ button.close {
     }
 
 input.form-control,
-select.form-control {
+select.form-control{
     padding: .5rem .75rem;
     /*align-self: flex-start;*/
     /*    min-width: 350px;

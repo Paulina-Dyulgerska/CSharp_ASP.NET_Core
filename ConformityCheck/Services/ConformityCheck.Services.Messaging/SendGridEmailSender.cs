@@ -33,7 +33,7 @@
             }
 
             var fromAddress = new EmailAddress(from, fromName);
-            var toAddress = new EmailAddress(to);
+            var toAddress = new EmailAddress(to, toName);
             var message = MailHelper.CreateSingleEmail(fromAddress, toAddress, subject, null, htmlContent);
             if (attachments?.Any() == true)
             {
@@ -56,7 +56,7 @@
             }
 
             // just to test the email sending:
-            // var apiKey = "PutSendGridApiKeyHere";
+            // var apiKey = "[Put-Send-Grid-ApiKey-In-ApiKeys-Place]";
             // var client = new SendGridClient(apiKey);
             // var fromA = new EmailAddress("admin@dotnetweb.net", "Example User");
             // var subjectA = "Hello Djudja";

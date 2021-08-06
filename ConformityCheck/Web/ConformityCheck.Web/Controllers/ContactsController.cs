@@ -1,5 +1,6 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ConformityCheck.Common;
@@ -29,8 +30,21 @@
             this.userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            if (user != null)
+            {
+                var model = new ContactFormViewModel
+                {
+                    Name = user.FirstName != null ? $"{user.FirstName} {user.LastName}" : user.UserName,
+                    Email = user.Email,
+                };
+
+                return this.View(model);
+            }
+
             return this.View();
         }
 
@@ -55,53 +69,39 @@
             await this.contactsRepository.AddAsync(contactFormEntry);
             await this.contactsRepository.SaveChangesAsync();
 
-            var user = await this.userManager.GetUserAsync(this.User);
-
             // send email to site admin
             await this.emailSender.SendEmailAsync(
                 GlobalConstants.SystemEmail,
                 GlobalConstants.SystemName,
                 GlobalConstants.SystemEmail,
                 GlobalConstants.SystemName,
-                $"{model.Email} - {model.Name}",
-                $"{model.Title} - {model.Content}");
+                $"You have message from {model.Name}",
+                $"Message content: {model.Title} - {model.Content}");
 
-            // TODO - user special email and thank you emai + thank you page
-            //if (user != null)
-            //{
-            //    // send email to contact message sender (logged in user)
-            //    await this.emailSender.SendEmailAsync(
-            //        GlobalConstants.SystemEmail,
-            //        GlobalConstants.SystemName,
-            //        model.Email,
-            //        model.Name,
-            //        model.Title,
-            //        model.Content,
-            //        user.Id);
-            //}
-            //else
-            //{
-            //    // send email to contact message sender (not logged in)
-            //    await this.emailSender.SendEmailAsync(
-            //        GlobalConstants.SystemEmail,
-            //        GlobalConstants.SystemName,
-            //        model.Email,
-            //        model.Name,
-            //        model.Title,
-            //        model.Content);
-            //}
+            // TODO - user special email and thank you email + thank you page
+            // send email to contact message sender 
+            var user = await this.userManager.GetUserAsync(this.User);
+            await this.emailSender.SendEmailAsync(
+                GlobalConstants.SystemEmail,
+                GlobalConstants.SystemName,
+                model.Email,
+                model.Name,
+                "Thank you for your message",
+                $"Dear {model.Name},\r\n Thank you for your interest to our site and the message sent!\r\n We will contact you as soon as we review your request.\r\n\r\nKind Regards,\r\nConformity Check Team",
+                user.Id);
 
             this.TempData[RedirectedFromContactForm] = true;
 
-            // return this.RedirectToAction("ThankYou");
-            return this.RedirectToAction("Index", "Home");
+            return this.RedirectToAction(nameof(this.ThankYou));
         }
 
         public IActionResult ThankYou()
         {
             if (this.TempData[RedirectedFromContactForm] == null)
             {
-                return this.NotFound();
+                // return this.NotFound();
+                // return this.RedirectToAction(nameof(HomeController.Index), nameof(HomeController));
+                return this.RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
             return this.View();

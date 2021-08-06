@@ -6,23 +6,26 @@
 
     public class ContactFormViewModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Моля въведете вашите имена")]
-        [Display(Name = "Вашите имена")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your name")]
+        [Display(Name = "* Your name")]
         public string Name { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Моля въведете вашият email адрес")]
-        [EmailAddress(ErrorMessage = "Моля въведете валиден email адрес")]
-        [Display(Name = "Вашият email адрес")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your email address")]
+        [EmailAddress(ErrorMessage = "Please enter your email address")]
+        [Display(Name = "* Your email address")]
         public string Email { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Моля въведете заглавие на съобщението")]
-        [StringLength(100, ErrorMessage = "Заглавието трябва да е поне {2} и не повече от {1} символа.", MinimumLength = 5)]
-        [Display(Name = "Заглавие на съобщението")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter message title")]
+        [StringLength(
+            100,
+            ErrorMessage = "The message titel must be at least {2} and no more than {1} symbols long",
+            MinimumLength = 5)]
+        [Display(Name = "* Message title")]
         public string Title { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Моля въведете съдържание на съобщението")]
-        [StringLength(10000, ErrorMessage = "Съобщението трябва да е поне {2} символа.", MinimumLength = 20)]
-        [Display(Name = "Съдържание на съобщението")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter message content")]
+        [StringLength(10000, ErrorMessage = "The message must be at least {2} symbols long", MinimumLength = 20)]
+        [Display(Name = "* Message content")]
         public string Content { get; set; }
 
         [GoogleReCaptchaValidation]
