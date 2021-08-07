@@ -11,7 +11,7 @@
     using ConformityCheck.Services.Mapping;
     using Microsoft.AspNetCore.Http;
 
-    public abstract class ConformityBaseModel : IMapFrom<Conformity>, IHaveCustomMappings, IValidatableObject
+    public class ConformityBaseModel : IMapFrom<Conformity>, IHaveCustomMappings, IValidatableObject
     {
         private DateTime issueDate;
 

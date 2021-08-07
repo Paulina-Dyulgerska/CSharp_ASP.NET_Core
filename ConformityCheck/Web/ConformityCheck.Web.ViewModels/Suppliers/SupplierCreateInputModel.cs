@@ -2,34 +2,8 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using ConformityCheck.Common.ValidationAttributes;
-
-    public class SupplierCreateInputModel
+    public class SupplierCreateInputModel : SupplierBaseModel
     {
-        // TODO - to generate numbers authomatically
-        [Required]
-        [MaxLength(20)]
-        [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9-]*$", ErrorMessage = "The field Nr. could contain only letters, digits or '-'.")]
-        [SupplierNumberDublicatedAttribute]
-        [Display(Name = "* Supplier number")]
-        public string Number { get; set; }
-
-        [Required]
-        [MaxLength(50)]
-        [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9 _-]*$", ErrorMessage = "The field Name could contain only letters, digits, '-', '_' or ' '.")]
-        [SupplierNameDublicatedAttribute]
-        [Display(Name = "* Supplier name")]
-        public string Name { get; set; }
-
-        [Required]
-        [MaxLength(50)]
-        [EmailAddress]
-        [RegularExpression(
-            "^(?:[a-zA-Z0-9][a-zA-Z0-9_.-]+@(?:[a-zA-Z0-9-_]{2,}[.][a-zA-Z0-9-_]{2,}))(?:.[a-zA-Z0-9-_]{2,})?$",
-            ErrorMessage = "The Email field is not a valid e-mail address.")]
-        [Display(Name = "* Supplier email")]
-        public string Email { get; set; }
-
         [MaxLength(20)]
         [RegularExpression("[0-9+ -]*", ErrorMessage = "The field Phone Number could contain only digits, '-', '+' or ' '.")]
         [Display(Name = "Supplier phone number")]

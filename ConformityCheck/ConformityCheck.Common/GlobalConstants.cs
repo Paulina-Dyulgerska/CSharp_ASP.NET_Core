@@ -16,20 +16,22 @@
         public const string TempDataErrorMessagePropertyName = "ErrorMessage";
 
         public const string ArticleCreatedSuccessfullyMessage = "Article is successfully created.";
-        public const string ArticleEditedsuccessfullyMessage = "Article is successfully edited.";
-        public const string ArticleDeletedsuccessfullyMessage = "Article is successfully deleted.";
+        public const string ArticleEditedSuccessfullyMessage = "Article is successfully edited.";
+        public const string ArticleDeletedSuccessfullyMessage = "Article is successfully deleted.";
 
         public const string SupplierCreatedSuccessfullyMessage = "Supplier is successfully created.";
-        public const string SupplierEditedsuccessfullyMessage = "Supplier is successfully edited.";
-        public const string SupplierDeletedsuccessfullyMessage = "Supplier is successfully deleted.";
+        public const string SupplierEditedSuccessfullyMessage = "Supplier is successfully edited.";
+        public const string SupplierDeletedSuccessfullyMessage = "Supplier is successfully deleted.";
 
         public const string ConformityTypeCreatedSuccessfullyMessage = "Conformity type is successfully created.";
-        public const string ConformityTypeEditedsuccessfullyMessage = "Conformity type is successfully edited.";
-        public const string ConformityTypeDeletedsuccessfullyMessage = "Conformity type is successfully deleted.";
+        public const string ConformityTypeEditedSuccessfullyMessage = "Conformity type is successfully edited.";
+        public const string ConformityTypeDeletedSuccessfullyMessage = "Conformity type is successfully deleted.";
 
         public const string ConformityCreatedSuccessfullyMessage = "Conformity is successfully created.";
-        public const string ConformityEditedsuccessfullyMessage = "Conformity is successfully edited.";
-        public const string ConformityDeletedsuccessfullyMessage = "Conformity is successfully deleted.";
+        public const string ConformityEditedSuccessfullyMessage = "Conformity is successfully edited.";
+        public const string ConformityDeletedSuccessfullyMessage = "Conformity is successfully deleted.";
+
+        public const string RequestSentSuccessfullyMessage = "Request is successfully send.";
 
         public const string IdSortParam = "id";
         public const string IdSortParamDesc = "idDesc";

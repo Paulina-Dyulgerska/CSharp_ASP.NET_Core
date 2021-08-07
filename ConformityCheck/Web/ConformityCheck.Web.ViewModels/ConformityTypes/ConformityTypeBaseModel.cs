@@ -6,7 +6,7 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public abstract class ConformityTypeBaseModel : IMapFrom<ConformityType>
+    public class ConformityTypeBaseModel : IMapFrom<ConformityType>
     {
         // [DescriptionRegExAttribute] // not used - this is how I save a validation request on the FE = 1 request less
         [Required]

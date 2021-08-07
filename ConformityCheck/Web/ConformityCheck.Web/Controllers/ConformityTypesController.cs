@@ -148,7 +148,7 @@
             await this.conformityTypesService.EditAsync(input, user.Id);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ConformityTypeEditedsuccessfullyMessage;
+                GlobalConstants.ConformityTypeEditedSuccessfullyMessage;
 
             // TODO: return this.RedirectToAction(nameof(this.Details), "ConformityTypes", new { input.Id });
             return this.RedirectToAction(nameof(this.ListAll));
@@ -172,7 +172,7 @@
             await this.conformityTypesService.DeleteAsync(input.Id, user.Id);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ConformityTypeDeletedsuccessfullyMessage;
+                GlobalConstants.ConformityTypeDeletedSuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.ListAll));
         }

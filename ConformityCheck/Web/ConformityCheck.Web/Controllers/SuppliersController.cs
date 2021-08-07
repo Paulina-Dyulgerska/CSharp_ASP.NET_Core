@@ -138,7 +138,7 @@
             await this.suppliersService.EditAsync(input, user.Id);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.SupplierEditedsuccessfullyMessage;
+                GlobalConstants.SupplierEditedSuccessfullyMessage;
 
             // TODO: return this.RedirectToAction(nameof(this.Details), "Suppliers", new { input.Id });
             return this.RedirectToAction(nameof(this.ListAll));
@@ -179,7 +179,7 @@
             await this.suppliersService.DeleteAsync(id, user.Id);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.SupplierDeletedsuccessfullyMessage;
+                GlobalConstants.SupplierDeletedSuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.ListAll));
         }

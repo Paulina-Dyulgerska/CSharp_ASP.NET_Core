@@ -2,11 +2,12 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using AutoMapper;
     using ConformityCheck.Common.ValidationAttributes;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public abstract class ArticleBaseModel : IMapFrom<Article>, IMapTo<Article>
+    public class ArticleBaseModel : IMapFrom<Article>, IMapTo<Article>
     {
         [Required]
         [MaxLength(20)]

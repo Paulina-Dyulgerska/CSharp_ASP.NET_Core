@@ -159,7 +159,7 @@
             await this.articlesService.EditAsync(input, user.Id);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ArticleEditedsuccessfullyMessage;
+                GlobalConstants.ArticleEditedSuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
@@ -202,7 +202,7 @@
             await this.articlesService.AddSupplierAsync(input);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ArticleEditedsuccessfullyMessage;
+                GlobalConstants.ArticleEditedSuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.Edit), new { input.Id });
         }
@@ -229,7 +229,7 @@
             await this.articlesService.ChangeMainSupplierAsync(input);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ArticleEditedsuccessfullyMessage;
+                GlobalConstants.ArticleEditedSuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
@@ -256,7 +256,7 @@
             await this.articlesService.RemoveSupplierAsync(input);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ArticleEditedsuccessfullyMessage;
+                GlobalConstants.ArticleEditedSuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
@@ -283,7 +283,7 @@
             await this.articlesService.AddConformityTypeAsync(input);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ArticleEditedsuccessfullyMessage;
+                GlobalConstants.ArticleEditedSuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
@@ -310,7 +310,7 @@
             await this.articlesService.RemoveConformityTypesAsync(input);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ArticleEditedsuccessfullyMessage;
+                GlobalConstants.ArticleEditedSuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
@@ -331,7 +331,7 @@
             await this.articlesService.DeleteAsync(id, user.Id);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ArticleDeletedsuccessfullyMessage;
+                GlobalConstants.ArticleDeletedSuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.ListAll));
         }

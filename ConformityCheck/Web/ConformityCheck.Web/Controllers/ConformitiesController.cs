@@ -169,7 +169,7 @@
             }
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ConformityEditedsuccessfullyMessage;
+                GlobalConstants.ConformityEditedSuccessfullyMessage;
 
             return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id });
         }
@@ -199,7 +199,7 @@
             await this.conformitiesService.CreateAsync(input, user.Id, this.conformityFilesDirectory);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ConformityEditedsuccessfullyMessage;
+                GlobalConstants.ConformityEditedSuccessfullyMessage;
 
             if (input.CallerViewName == SuppliersCallerViewName)
             {
@@ -262,7 +262,7 @@
             await this.conformitiesService.EditAsync(input, user.Id, this.conformityFilesDirectory);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ConformityEditedsuccessfullyMessage;
+                GlobalConstants.ConformityEditedSuccessfullyMessage;
 
             if (input.CallerViewName == SuppliersCallerViewName)
             {
@@ -296,7 +296,7 @@
             await this.conformitiesService.DeleteAsync(input.Id, user.Id);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ConformityDeletedsuccessfullyMessage;
+                GlobalConstants.ConformityDeletedSuccessfullyMessage;
 
             if (input.CallerViewName == SuppliersCallerViewName)
             {
