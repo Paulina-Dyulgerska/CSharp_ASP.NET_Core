@@ -16,21 +16,21 @@
             </article>
             <article class="tools-container">
                 <article class="search-container">
-                    <form method="get" asp-action="ListAll">
+                    <form method="get" asp-action="ListAll" class="flex-row">
                         <article class="input-group">
-                            <article class="input-group-prepend">
-                                <span class="input-group-text">
-                                </span>
-                            </article>
-                            <input type="search" class="form-control" asp-for="CurrentSearchInput"
-                                   size="40" id="searchConformityInput"
+                            <input type="search" class="form-control" size="40"
+                                   asp-for="CurrentSearchInput"
+                                   id="searchConformityInput" list="selectSearchConformityInput"
                                    placeholder="Search for article, supplier or conformity type"
-                                   value="@Model.CurrentSearchInput">
-                            <article class="input-group-append">
-                                <button type="submit" class="btn btn-search">
-                                    <i class="fas fa-search"></i> Search
-                                </button>
-                            </article>
+                                   value="@Model.CurrentSearchInput"
+                                   autocomplete="off">
+                            <datalist id="selectSearchConformityInput" class="form-control dropdown-content">
+                            </datalist>
+                        </article>
+                        <article class="btns-container">
+                            <button type="submit" class="btn btn-search">
+                                <i class="fas fa-search"></i> Search
+                            </button>
                         </article>
                     </form>
                 </article>
@@ -44,16 +44,6 @@
                         <partial name="_ItemsPerPagePartial" model="Model" />
                     </article>
                 </article>
-            </article>
-            <article class="search-results-container conformity" id="suggestions" style="display:none">
-                <form method="get" asp-action="Details" asp-route-id="@Model.Id">
-                    <article class="input-group">
-                        <select asp-for="Id" id="selectSearchConformityInput" class="form-control"></select>
-                        <article class="input-group-append">
-                            <input type="submit" class="btn btn-secondary" value="Show conformity" />
-                        </article>
-                    </article>
-                </form>
             </article>
         </section>
 

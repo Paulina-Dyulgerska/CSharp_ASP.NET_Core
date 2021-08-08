@@ -76,7 +76,7 @@
         </article>
     </article>
 </section>
-<section class="search-container">
+<section class="search-container large-margin-vertical">
     <article class="">
         <h4 class="">
             Quick links:
@@ -93,134 +93,79 @@
             </div>*@
         <ul class="nav-list-vertical">
             <li class="">
-                <article class="tools-container">
-                    <article class="search-container">
-                        <form method="get" asp-controller="Articles" asp-action="ListAll">
-                            <article class="input-group">
-                                <article class="input-group-prepend">
-                                    <span class="input-group-text">
-                                    </span>
-                                </article>
-                                <input type="search" class="form-control" asp-for="CurrentSearchInput"
-                                       id="searchAticleInput"
-                                       placeholder="Search for article" value="@Model.CurrentSearchInput">
-                                <article class="input-group-append">
-                                    <button type="submit" class="btn btn-search">
-                                        <i class="fas fa-search"></i> Search
-                                    </button>
-                                </article>
-                            </article>
-                        </form>
-                    </article>
-                    <article class="search-results-container articles" id="suggestions" style="display:none">
-                        <form method="get" asp-controller="Articles" asp-action="Details" asp-route-id="@Model.Id">
-                            <article class="input-group">
-                                <select asp-for="Id" id="selectSearchArticleInput" class="form-control"></select>
-                                <article class="input-group-append">
-                                    <input type="submit" class="btn" value="Show article" />
-                                </article>
-                            </article>
-                        </form>
-                    </article>
+                <article class="search-container">
+                    <form method="get" asp-controller="Articles" asp-action="ListAll" class="flex-row">
+                        <article class="input-group">
+                            <input type="search" class="form-control" asp-for="CurrentSearchInput"
+                                   id="searchAticleInput" list="selectSearchArticleInput"
+                                   placeholder="Search for article" value="@Model.CurrentSearchInput"
+                                   autocomplete="off">
+                            <datalist id="selectSearchArticleInput" class="form-control dropdown-content">
+                            </datalist>
+                        </article>
+                        <article class="btns-container">
+                            <button type="submit" class="btn btn-search">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </article>
+                    </form>
                 </article>
             </li>
             <li>
-                <article class="tools-container">
-                    <article class="search-container">
-                        <form method="get" asp-controller="Suppliers" asp-action="ListAll">
-                            <article class="input-group">
-                                <article class="input-group-prepend">
-                                    <span class="input-group-text">
-                                    </span>
-                                </article>
-                                <input type="search" class="form-control" asp-for="CurrentSearchInput"
-                                       id="searchSupplierInput"
-                                       placeholder="Search for supplier"
-                                       value="@Model.CurrentSearchInput">
-                                <article class="input-group-append">
-                                    <button type="submit" class="btn btn-search">
-                                        <i class="fas fa-search"></i> Search
-                                    </button>
-                                </article>
-                            </article>
-                        </form>
-                    </article>
-                    <article class="search-results-container suppliers" id="suggestions" style="display:none">
-                        <form method="get" asp-controller="Suppliers" asp-action="Details" asp-route-id="@Model.Id">
-                            <article class="input-group">
-                                <select asp-for="Id" id="selectSearchSupplierInput" class="form-control"></select>
-                                <article class="input-group-append">
-                                    <input type="submit" class="btn" value="Show supplier" />
-                                </article>
-                            </article>
-                        </form>
-                    </article>
+                <article class="search-container">
+                    <form method="get" asp-controller="Suppliers" asp-action="ListAll" class="flex-row">
+                        <article class="input-group">
+                            <input type="search" class="form-control" asp-for="CurrentSearchInput"
+                                   id="searchSupplierInput" list="selectSearchSupplierInput"
+                                   placeholder="Search for supplier" value="@Model.CurrentSearchInput"
+                                   autocomplete="off">
+                            <datalist id="selectSearchSupplierInput" class="form-control dropdown-content">
+                            </datalist>
+                        </article>
+                        <article class="btns-container">
+                            <button type="submit" class="btn btn-search">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </article>
+                    </form>
                 </article>
             </li>
             <li>
-                <article class="tools-container">
-                    <article class="search-container">
-                        <form method="get" asp-controller="Conformities" asp-action="ListAll">
-                            <article class="input-group">
-                                <article class="input-group-prepend">
-                                    <span class="input-group-text">
-                                    </span>
-                                </article>
-                                <input type="search" class="form-control" asp-for="CurrentSearchInput"
-                                       id="searchConformityInput"
-                                       placeholder="Search for conformity"
-                                       value="@Model.CurrentSearchInput">
-                                <article class="input-group-append">
-                                    <button type="submit" class="btn btn-search">
-                                        <i class="fas fa-search"></i> Search
-                                    </button>
-                                </article>
-                            </article>
-                        </form>
-                    </article>
-                    <article class="search-results-container conformity" id="suggestions" style="display:none">
-                        <form method="get" asp-controller="Conformities" asp-action="Details" asp-route-id="@Model.Id">
-                            <article class="input-group">
-                                <select asp-for="Id" id="selectSearchConformityInput" class="form-control"></select>
-                                <article class="input-group-append">
-                                    <input type="submit" class="btn btn-secondary" value="Show conformity" />
-                                </article>
-                            </article>
-                        </form>
-                    </article>
+                <article class="search-container">
+                    <form method="get" asp-controller="Conformities" asp-action="ListAll" class="flex-row">
+                        <article class="input-group">
+                            <input type="search" class="form-control" asp-for="CurrentSearchInput"
+                                   id="searchConformityInput" list="selectSearchConformityInput"
+                                   placeholder="Search for conformity" value="@Model.CurrentSearchInput"
+                                   autocomplete="off">
+                            <datalist id="selectSearchConformityInput" class="form-control dropdown-content">
+                            </datalist>
+                        </article>
+                        <article class="btns-container">
+                            <button type="submit" class="btn btn-search">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </article>
+                    </form>
                 </article>
             </li>
             <li>
-                <article class="tools-container">
-                    <article class="search-container">
-                        <form method="get" asp-controller="ConformityTypes" asp-action="ListAll">
-                            <article class="input-group">
-                                <article class="input-group-prepend">
-                                    <span class="input-group-text">
-                                    </span>
-                                </article>
-                                <input type="search" class="form-control" asp-for="CurrentSearchInput"
-                                       id="searchConformityTypeInput"
-                                       placeholder="Search for conf. type"
-                                       value="@Model.CurrentSearchInput">
-                                <article class="input-group-append">
-                                    <button type="submit" class="btn btn-search">
-                                        <i class="fas fa-search"></i> Search
-                                    </button>
-                                </article>
-                            </article>
-                        </form>
-                    </article>
-                    <article class="search-results-container conformity-type" id="suggestions" style="display:none">
-                        <form method="get" asp-controller="ConformityTypes" asp-action="Details" asp-route-id="@Model.Id">
-                            <article class="input-group">
-                                <select asp-for="Id" id="selectSearchConformityTypeInput" class="form-control"></select>
-                                <article class="input-group-append">
-                                    <input type="submit" class="btn btn-secondary" value="Show conformity type" />
-                                </article>
-                            </article>
-                        </form>
-                    </article>
+                <article class="search-container">
+                    <form method="get" asp-controller="ConformityTypes" asp-action="ListAll" class="flex-row">
+                        <article class="input-group">
+                            <input type="search" class="form-control" asp-for="CurrentSearchInput"
+                                   id="searchConformityTypeInput" list="selectSearchConformityTypeInput"
+                                   placeholder="Search for conformity type" value="@Model.CurrentSearchInput"
+                                   autocomplete="off">
+                            <datalist id="selectSearchConformityTypeInput" class="form-control dropdown-content">
+                            </datalist>
+                        </article>
+                        <article class="btns-container">
+                            <button type="submit" class="btn btn-search">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </article>
+                    </form>
                 </article>
             </li>
         </ul>
@@ -236,7 +181,6 @@
     <!-- Page level plugins -->
     <!--<script src="~/lib/datatables/DataTables-1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="~/lib/datatables/DataTables-1.10.22/js/dataTables.bootstrap4.min.js"></script>-->
-
     <!-- Page level custom scripts -->
     <script src="~/js/tables.js" asp-append-version="true"></script>
     <script src="~/js/searchEntities.js" asp-append-version="true"></script>

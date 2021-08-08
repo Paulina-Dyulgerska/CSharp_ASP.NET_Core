@@ -17,8 +17,5 @@
         public int RegulationLists { get; set; }
 
         public string CurrentSearchInput { get; set; }
-
-        // Search result entity id:
-        public string Id { get; set; }
     }
 }

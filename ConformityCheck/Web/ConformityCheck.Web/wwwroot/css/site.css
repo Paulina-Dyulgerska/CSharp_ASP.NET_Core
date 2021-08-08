@@ -224,6 +224,15 @@ textarea {
     flex-direction: column;
 }
 
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /*align-items: flex-start;*/
+    align-items: center;
+    justify-content: center;
+}
+
 .border-radius {
     border-radius: 4px;
 }
@@ -682,6 +691,7 @@ textarea {
     padding-left: 20px;
     flex-basis: 40%;*/
     z-index: 1;
+    margin: 2rem;
 }
 
 @media screen and (max-width: 600px) {
@@ -850,12 +860,6 @@ textarea {
     .btn-search:hover {
         background-color: #e5effd;
     }
-
-@media screen and (max-width:600px) {
-    .btn-search {
-        margin: 10px;
-    }
-}
 
 .btn-back {
     background: #839ec4;
@@ -1051,9 +1055,11 @@ button.close {
 
 /* Form input item group styles -------------------------------------------------------------------------------------*/
 .input-group {
+    position: relative;
     display: flex;
     flex-direction: column;
-    margin: 2rem auto;
+    align-items: stretch;
+    margin: 0 10px;
     flex-basis: 40%;
     /*align-items: center;*/
 }
@@ -1072,7 +1078,8 @@ button.close {
 .input-group-append {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 0.5rem;
+    margin: 1rem 0.5rem;
+    align-self: center;
 }
 
 .form-control {
@@ -1089,7 +1096,7 @@ button.close {
     }
 
 input.form-control,
-select.form-control{
+select.form-control {
     padding: .5rem .75rem;
     /*align-self: flex-start;*/
     /*    min-width: 350px;
@@ -1151,6 +1158,11 @@ input[type=checkbox] {
         background: #6da4ff;
     }
 
+.search-container input,
+.search-container btn {
+    margin: 10px;
+}
+
 /*.custom-file-upload-container {
     position: relative;
 }
@@ -1164,6 +1176,29 @@ input[type=checkbox] {
     font-size: 0.85rem;
     background: white;
 }*/
+/* Dropdown styles ----------------------------------------------------------------------------------------------------------*/
+.dropdown-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    overflow: hidden;
+    border: 1px solid #6da4ff;
+    border-top: unset;
+    border-radius: 0 0 4px 4px;
+    position: absolute;
+    top: 46px;
+    z-index: 999999;
+}
+
+    .dropdown-content a {
+        padding: .5rem .75rem;
+        overflow: hidden;
+    }
+
+.dropdown a:hover {
+    background-color: #ddd;
+}
 
 /* Tools container styles ---------------------------------------------------------------------------------*/
 .tools-container {
@@ -1175,7 +1210,7 @@ input[type=checkbox] {
     .tools-container .input-group {
         flex-direction: row;
         align-items: center;
-        margin: .7rem;
+        justify-content: center;
     }
 
 .search-results-container .input-group {

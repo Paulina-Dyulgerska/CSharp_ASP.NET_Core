@@ -18,21 +18,20 @@
             </article>
             <article class="tools-container">
                 <article class="search-container">
-                    <form method="get" asp-action="ListAll">
+                    <form method="get" asp-action="ListAll" class="flex-row">
                         <article class="input-group">
-                            <article class="input-group-prepend">
-                                <span class="input-group-text">
-                                </span>
-                            </article>
-                            <input type="search" class="form-control" asp-for="CurrentSearchInput"
-                                   size="40" id="searchSupplierInput"
-                                   placeholder="Search for supplier number or name"
-                                   value="@Model.CurrentSearchInput">
-                            <article class="input-group-append">
-                                <button type="submit" class="btn btn-search">
-                                    <i class="fas fa-search"></i> Search
-                                </button>
-                            </article>
+                            <input type="search" class="form-control" size="40"
+                                   asp-for="CurrentSearchInput"
+                                   id="searchSupplierInput" list="selectSearchSupplierInput"
+                                   placeholder="Search for supplier number or name" value="@Model.CurrentSearchInput"
+                                   autocomplete="off">
+                            <datalist id="selectSearchSupplierInput" class="form-control dropdown-content">
+                            </datalist>
+                        </article>
+                        <article class="btns-container">
+                            <button type="submit" class="btn btn-search">
+                                <i class="fas fa-search"></i> Search
+                            </button>
                         </article>
                     </form>
                 </article>
@@ -46,16 +45,6 @@
                         <partial name="_ItemsPerPagePartial" model="Model" />
                     </article>
                 </article>
-            </article>
-            <article class="search-results-container suppliers" id="suggestions" style="display:none">
-                <form method="get" asp-action="Details" asp-route-id="@Model.Id">
-                    <article class="input-group">
-                        <select asp-for="Id" id="selectSearchSupplierInput" class="form-control"></select>
-                        <article class="input-group-append">
-                            <input type="submit" class="btn" value="Show supplier" />
-                        </article>
-                    </article>
-                </form>
             </article>
         </section>
 
