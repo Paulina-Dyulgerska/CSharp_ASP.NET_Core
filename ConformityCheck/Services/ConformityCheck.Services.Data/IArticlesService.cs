@@ -5,6 +5,7 @@
 
     using ConformityCheck.Data.Models;
     using ConformityCheck.Web.ViewModels.Articles;
+    using ConformityCheck.Web.ViewModels.Conformities;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
 
     public interface IArticlesService : IService<string>
@@ -25,6 +26,8 @@
         Task AddConformityTypesAsync(Article article, IEnumerable<int> conformityTypes);
 
         Task RemoveConformityTypesAsync(ArticleManageConformityTypesInputModel input);
+
+        Task AddRequestDateAsync(ConformityGetInputModel input);
 
         Task<IEnumerable<T>> GetSuppliersByIdAsync<T>(string id);
 

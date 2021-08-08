@@ -1,5 +1,6 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Articles
 {
+    using System;
 
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
@@ -18,6 +19,8 @@
         public int ConformityTypeId { get; set; }
 
         public string ConformityTypeDescription { get; set; }
+
+        public DateTime? RequestDate { get; set; }
 
         public ConformityValidityExportModel ArticleConformity { get; set; }
     }

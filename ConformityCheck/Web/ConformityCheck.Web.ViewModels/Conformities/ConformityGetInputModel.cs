@@ -15,5 +15,7 @@
 
         // [ArticleEntityAttribute]
         public string ArticleId { get; set; }
+
+        public string CallerViewName { get; set; }
     }
 }

@@ -11,6 +11,7 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Articles;
+    using ConformityCheck.Web.ViewModels.Conformities;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
     using Microsoft.EntityFrameworkCore;
 
@@ -637,6 +638,17 @@
                 .FirstOrDefaultAsync(x => x.ArticleId == input.Id && x.ConformityTypeId == input.ConformityTypeId);
 
             this.articleConformityTypesRepository.Delete(articleConformityTypeEntity);
+
+            await this.articleConformityTypesRepository.SaveChangesAsync();
+        }
+
+        public async Task AddRequestDateAsync(ConformityGetInputModel input)
+        {
+            var articleConformityTypeEntity = await this.articleConformityTypesRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.ArticleId == input.ArticleId && x.ConformityTypeId == input.ConformityTypeId);
+
+            articleConformityTypeEntity.RequestDate = DateTime.Now;
 
             await this.articleConformityTypesRepository.SaveChangesAsync();
         }

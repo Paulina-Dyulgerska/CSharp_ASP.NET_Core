@@ -72,10 +72,17 @@
                 $"{conformityType.Description} conformity request for article {article.Number} - {article.Description}",
                 $"Dear {supplier.Name},\r\nWe would like to kindly request a {conformityType.Description} confirmation for article {article.Number} - {article.Description}.\r\n\r\nKind Regards,\r\nConformity Check Team,\r\n{user.FirstName} {user.LastName}");
 
+            await this.articlesService.AddRequestDateAsync(input);
+
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
                 GlobalConstants.RequestSentSuccessfullyMessage;
 
-            return this.RedirectToAction(nameof(SuppliersController.Details), SuppliersCallerViewName, new { id = input.SupplierId });
+            if (input.CallerViewName == SuppliersCallerViewName)
+            {
+                return this.RedirectToAction(nameof(SuppliersController.Details), SuppliersCallerViewName, new { id = input.SupplierId });
+            }
+
+            return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
         }
     }
 }
