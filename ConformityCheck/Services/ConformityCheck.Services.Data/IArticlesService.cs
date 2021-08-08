@@ -27,8 +27,6 @@
 
         Task RemoveConformityTypesAsync(ArticleManageConformityTypesInputModel input);
 
-        Task AddRequestDateAsync(ConformityGetInputModel input);
-
         Task<IEnumerable<T>> GetSuppliersByIdAsync<T>(string id);
 
         Task<IEnumerable<ConformityTypeExportModel>> GetConformityTypesByIdAndSupplierAsync(

@@ -72,7 +72,7 @@
                 $"{conformityType.Description} conformity request for article {article.Number} - {article.Description}",
                 $"Dear {supplier.Name},\r\nWe would like to kindly request a {conformityType.Description} confirmation for article {article.Number} - {article.Description}.\r\n\r\nKind Regards,\r\nConformity Check Team,\r\n{user.FirstName} {user.LastName}");
 
-            await this.articlesService.AddRequestDateAsync(input);
+            await this.conformitiesService.AddRequestDateAsync(input, user.Id);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
                 GlobalConstants.RequestSentSuccessfullyMessage;

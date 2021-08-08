@@ -21,8 +21,6 @@
 
         public DateTime? ModifiedOn { get; set; }
 
-        public DateTime? RequestDate { get; set; }
-
         public bool SupplierConfirmed { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)

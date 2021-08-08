@@ -11,5 +11,7 @@
         Task EditAsync(ConformityEditInputModel input, string userId, string conformityFilePath);
 
         Task<ConformityCreateInputModel> GetForCreateAsync(ConformityGetInputModel input);
+
+        Task AddRequestDateAsync(ConformityGetInputModel input, string userId);
     }
 }

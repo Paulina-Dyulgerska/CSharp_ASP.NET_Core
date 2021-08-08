@@ -642,17 +642,6 @@
             await this.articleConformityTypesRepository.SaveChangesAsync();
         }
 
-        public async Task AddRequestDateAsync(ConformityGetInputModel input)
-        {
-            var articleConformityTypeEntity = await this.articleConformityTypesRepository
-                .All()
-                .FirstOrDefaultAsync(x => x.ArticleId == input.ArticleId && x.ConformityTypeId == input.ConformityTypeId);
-
-            articleConformityTypeEntity.RequestDate = DateTime.Now;
-
-            await this.articleConformityTypesRepository.SaveChangesAsync();
-        }
-
         public async Task<IEnumerable<T>> GetSuppliersByIdAsync<T>(string id)
         {
             return await this.articleSuppliersRepository

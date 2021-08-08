@@ -45,8 +45,8 @@
                     </ul>
                 </article>
 
-                <form method="post" class="input-group" 
-                      asp-controller="Conformities" 
+                <form method="post" class="input-group"
+                      asp-controller="Conformities"
                       asp-action="AddToArticleSupplierConformityType"
                       enctype="multipart/form-data">
 
@@ -55,7 +55,8 @@
                     <input asp-for="ArticleId" hidden value="@Model.ArticleId" />
                     <input asp-for="SupplierId" hidden value="@Model.SupplierId" />
                     <input asp-for="ConformityTypeId" hidden value="@Model.ConformityTypeId" />
-                    <input asp-for="ValidForSingleArticle" value="true" checked hidden />
+                    <input asp-for="CallerViewName" hidden value="@Model.CallerViewName" />
+                    <input asp-for="ValidForSingleArticle" hidden value="true" checked  />
 
                     <div class="form-field-container large-margin-vertical">
                         <label asp-for="IssueDate"></label>

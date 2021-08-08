@@ -492,6 +492,7 @@
                 SupplierId = supplierEntity.Id,
                 SupplierName = supplierEntity.Name,
                 SupplierNumber = supplierEntity.Number,
+                CallerViewName = input.CallerViewName,
             };
 
             return entity;
@@ -553,10 +554,38 @@
             return await this.conformitiesRepository.SaveChangesAsync();
         }
 
+        public async Task AddRequestDateAsync(ConformityGetInputModel input, string userId)
+        {
+            var currentConformity = await this.conformitiesRepository.All()
+                            .Where(x => x.ArticleId == input.ArticleId
+                                        && x.SupplierId == input.SupplierId
+                                        && x.ConformityTypeId == input.ConformityTypeId)
+                            .FirstOrDefaultAsync();
+
+            if (currentConformity == null)
+            {
+                currentConformity = new Conformity
+                {
+                    ArticleId = input.ArticleId,
+                    SupplierId = input.SupplierId,
+                    ConformityTypeId = input.ConformityTypeId,
+                    IssueDate = DateTime.UtcNow.Date,
+                    IsAccepted = false,
+                    UserId = userId,
+                };
+
+                await this.conformitiesRepository.AddAsync(currentConformity);
+            }
+
+            currentConformity.RequestDate = DateTime.UtcNow;
+
+            await this.conformitiesRepository.SaveChangesAsync();
+        }
+
         private async Task AddConformityToAnArticleAsync(
-            ConformityCreateInputModel input,
-            string userId,
-            string conformityFilePath)
+           ConformityCreateInputModel input,
+           string userId,
+           string conformityFilePath)
         {
             var currentConformity = await this.conformitiesRepository.All()
                 .Where(x => x.ArticleId == input.ArticleId && x.SupplierId == input.SupplierId && x.ConformityTypeId == input.ConformityTypeId)

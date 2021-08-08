@@ -1,13 +1,11 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Articles
 {
-    using System;
-
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Conformities;
 
-    public class ArticleConformityExportModel : IMapFrom<ArticleConformityType>, 
-        IMapFrom<Conformity>, 
+    public class ArticleConformityExportModel : IMapFrom<ArticleConformityType>,
+        IMapFrom<Conformity>,
         IMapFrom<ArticleSupplier>
     {
         public string ArticleId { get; set; }
@@ -19,8 +17,6 @@
         public int ConformityTypeId { get; set; }
 
         public string ConformityTypeDescription { get; set; }
-
-        public DateTime? RequestDate { get; set; }
 
         public ConformityValidityExportModel ArticleConformity { get; set; }
     }

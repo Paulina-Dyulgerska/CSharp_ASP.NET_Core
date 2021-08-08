@@ -277,7 +277,6 @@
             return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
             // TODO 
             // return this.RedirectToAction("Details", CallerViewName, new { id = input.CallerId });
-
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
