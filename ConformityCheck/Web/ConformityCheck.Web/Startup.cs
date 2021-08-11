@@ -2,7 +2,7 @@
 {
     using System;
     using System.Reflection;
-
+    using ConformityCheck.Common;
     using ConformityCheck.Data;
     using ConformityCheck.Data.Common;
     using ConformityCheck.Data.Common.Repositories;
@@ -52,6 +52,10 @@
             services.Configure<FacebookLoginSettings>(facebookSettingsSection);
             var facebookSettings = facebookSettingsSection.Get<FacebookLoginSettings>();
 
+            var emailSettingsSection = this.configuration.GetSection(EmailSettings.EmailSetting);
+            services.Configure<EmailSettings>(emailSettingsSection);
+            var emailSettings = emailSettingsSection.Get<EmailSettings>();
+
             services.AddAuthentication()
                     .AddFacebook(options =>
                     {
@@ -100,12 +104,12 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ISubstancesService, SubstancesService>();
             services.AddTransient<ISuppliersService, SuppliersService>();
-            // services.AddTransient<IEmailSender, NullMessageSender>();
-            services.AddTransient<IEmailSender>(
-                serviceProvider => new SendGridEmailSender(this.configuration["EmailSettings:ApiKey"]));
             services.AddTransient<IContentDeliveryService, ContentDeliveryService>();
             services.AddTransient<IConformitiesService, ConformitiesService>();
             services.AddTransient<IContentCheckService, ContentCheckService>();
+            // services.AddTransient<IEmailSender, NullMessageSender>();
+            //services.AddTransient<IEmailSender>(serviceProvider => new SendGridEmailSender(this.configuration["EmailSettings:ApiKey"]));
+            services.AddTransient<IEmailSender>(serviceProvider => new SendGridEmailSender(emailSettings.ApiKey));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

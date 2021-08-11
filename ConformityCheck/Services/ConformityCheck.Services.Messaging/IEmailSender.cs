@@ -14,5 +14,10 @@
             string htmlContent,
             string userId = null,
             IEnumerable<EmailAttachment> attachments = null);
+
+        Task SendEmailAsync(
+            string to,
+            string subject,
+            string htmlContent);
     }
 }

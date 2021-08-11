@@ -16,6 +16,8 @@
             options.Lockout.MaxFailedAccessAttempts = 3;
             options.Lockout.DefaultLockoutTimeSpan = new TimeSpan(0, 30, 0);
             options.User.RequireUniqueEmail = true;
+            options.SignIn.RequireConfirmedEmail = true;
+            options.SignIn.RequireConfirmedAccount = true;
 
             //// TODO - for production:
             // options.Password.RequireDigit = true;

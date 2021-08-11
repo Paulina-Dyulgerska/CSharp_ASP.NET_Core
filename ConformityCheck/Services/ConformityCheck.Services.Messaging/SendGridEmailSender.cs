@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using ConformityCheck.Common;
     using SendGrid;
     using SendGrid.Helpers.Mail;
 
@@ -65,6 +65,17 @@
             // var htmlContentA = "<strong>Sending emails is not so easy to do, but I have done it, even with C# :)</strong>";
             // var msg = MailHelper.CreateSingleEmail(fromA, toA, subjectA, plainTextContent, htmlContentA);
             // var response = await client.SendEmailAsync(msg);
+        }
+
+        public async Task SendEmailAsync(string to, string subject, string htmlContent)
+        {
+            await this.SendEmailAsync(
+                GlobalConstants.SystemEmail,
+                GlobalConstants.SystemName,
+                to,
+                to,
+                subject,
+                htmlContent);
         }
     }
 }

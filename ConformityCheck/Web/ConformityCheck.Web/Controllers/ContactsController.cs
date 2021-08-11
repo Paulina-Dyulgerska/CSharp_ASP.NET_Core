@@ -79,7 +79,7 @@
                 $"Message content: {model.Title} - {model.Content}");
 
             // TODO - user special email and thank you email + thank you page
-            // send email to contact message sender 
+            // send email to contact message sender
             var user = await this.userManager.GetUserAsync(this.User);
             await this.emailSender.SendEmailAsync(
                 GlobalConstants.SystemEmail,
@@ -87,8 +87,7 @@
                 model.Email,
                 model.Name,
                 "Thank you for your message",
-                $"Dear {model.Name},\r\n Thank you for your interest to our site and the message sent!\r\n We will contact you as soon as we review your request.\r\n\r\nKind Regards,\r\nConformity Check Team",
-                user.Id);
+                $"Dear {model.Name},\r\n Thank you for your interest to our site and the message sent!\r\n We will contact you as soon as we review your request.\r\n\r\nKind Regards,\r\nConformity Check Team");
 
             this.TempData[RedirectedFromContactForm] = true;
 

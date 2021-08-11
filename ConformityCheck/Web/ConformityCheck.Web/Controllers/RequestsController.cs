@@ -63,7 +63,7 @@
             var supplier = await this.suppliersService.GetByIdAsync<SupplierBaseModel>(input.SupplierId);
             var conformityType = await this.conformityTypesService.GetByIdAsync<ConformityTypeBaseModel>(input.ConformityTypeId);
 
-            // send email to site admin
+            // send email to supplier
             await this.emailSender.SendEmailAsync(
                 GlobalConstants.SystemEmail,
                 GlobalConstants.SystemName,

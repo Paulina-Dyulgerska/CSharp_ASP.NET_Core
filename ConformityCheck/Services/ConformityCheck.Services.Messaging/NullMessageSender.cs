@@ -17,5 +17,10 @@
         {
             return Task.CompletedTask;
         }
+
+        public Task SendEmailAsync(string to, string subject, string htmlContent)
+        {
+            return Task.CompletedTask;
+        }
     }
 }
