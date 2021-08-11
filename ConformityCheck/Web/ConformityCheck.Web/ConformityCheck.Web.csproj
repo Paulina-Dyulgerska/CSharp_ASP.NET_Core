@@ -1,58 +1,47 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <!--<TargetFramework>netcoreapp3.1</TargetFramework>-->
-    <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>aspnet-ConformityCheck-BBB373B5-EF3F-4DBB-B8AA-7152CEC275BF</UserSecretsId>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<UserSecretsId>aspnet-ConformityCheck-BBB373B5-EF3F-4DBB-B8AA-7152CEC275BF</UserSecretsId>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+	<PropertyGroup>
+		<CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <WarningLevel>3</WarningLevel>
-  </PropertyGroup>
+	<ItemGroup>
+		<AdditionalFiles Include="..\..\stylecop.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Views\Articles\Hekp.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <AdditionalFiles Include="..\..\stylecop.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="wwwroot\js\datatables.js" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="5.0.9" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.9" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.9" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.9" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.9">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+		<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.113" />
+		<PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="5.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.8">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.113" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\ConformityCheck.Common\ConformityCheck.Common.csproj" />
-    <ProjectReference Include="..\..\Data\ConformityCheck.Data.Models\ConformityCheck.Data.Models.csproj" />
-    <ProjectReference Include="..\..\Data\ConformityCheck.Data\ConformityCheck.Data.csproj" />
-    <ProjectReference Include="..\..\Services\ConformityCheck.Services.Data\ConformityCheck.Services.Data.csproj" />
-    <ProjectReference Include="..\..\Services\ConformityCheck.Services.Mapping\ConformityCheck.Services.Mapping.csproj" />
-    <ProjectReference Include="..\..\Services\ConformityCheck.Services.Messaging\ConformityCheck.Services.Messaging.csproj" />
-    <ProjectReference Include="..\..\Services\ConformityCheck.Services\ConformityCheck.Services.csproj" />
-    <ProjectReference Include="..\ConformityCheck.Web.Infrastructure\ConformityCheck.Web.Infrastructure.csproj" />
-    <ProjectReference Include="..\ConformityCheck.Web.ViewModels\ConformityCheck.Web.ViewModels.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\ConformityCheck.Common\ConformityCheck.Common.csproj" />
+		<ProjectReference Include="..\..\Data\ConformityCheck.Data.Models\ConformityCheck.Data.Models.csproj" />
+		<ProjectReference Include="..\..\Data\ConformityCheck.Data\ConformityCheck.Data.csproj" />
+		<ProjectReference Include="..\..\Services\ConformityCheck.Services.Data\ConformityCheck.Services.Data.csproj" />
+		<ProjectReference Include="..\..\Services\ConformityCheck.Services.Mapping\ConformityCheck.Services.Mapping.csproj" />
+		<ProjectReference Include="..\..\Services\ConformityCheck.Services.Messaging\ConformityCheck.Services.Messaging.csproj" />
+		<ProjectReference Include="..\..\Services\ConformityCheck.Services\ConformityCheck.Services.csproj" />
+		<ProjectReference Include="..\ConformityCheck.Web.Infrastructure\ConformityCheck.Web.Infrastructure.csproj" />
+		<ProjectReference Include="..\ConformityCheck.Web.ViewModels\ConformityCheck.Web.ViewModels.csproj" />
+	</ItemGroup>
 </Project>
