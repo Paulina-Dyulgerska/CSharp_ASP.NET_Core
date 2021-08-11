@@ -1158,7 +1158,7 @@ input[type=checkbox] {
         background: #6da4ff;
     }
 
-.search-container input,
+/*.search-container input,*/
 .search-container btn {
     margin: 10px;
 }

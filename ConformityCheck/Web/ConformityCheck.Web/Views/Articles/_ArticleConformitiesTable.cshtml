@@ -9,15 +9,15 @@
             <tr>
                 <th class="col-s">Conformity type</th>
                 <th class="col-s">Supplier Nr.</th>
-                <th class="col-m">Supplier name</th>
-                <th class="col-xs">Conformity available</th>
-                <th class="col-xs">Is accepted</th>
-                <th class="col-xs">Is valid</th>
+                <th class="col-s">Supplier name</th>
+                <th class="col-s">Conformity available</th>
+                <th class="col-xs">Accepted</th>
+                <th class="col-xs">Valid</th>
                 <th class="col-s">User</th>
-                <th class="col-s">Send request</th>
-                <th class="col-s">Request date</th>
                 <th class="col-s">Add / Edit</th>
                 <th class="col-s">Delete</th>
+                <th class="col-s">Send request</th>
+                <th class="col-s">Request date</th>
             </tr>
         </thead>
         <tbody>
@@ -53,24 +53,11 @@
                             }
                         </td>
                         <td class="col-s" data-label="Supplier Nr.">@supplier.Number</td>
-                        <td class="col-m" data-label="Supplier name">@supplier.Name</td>
-                        <td class="col-xs" data-label="Conformity available">@(conformityBySupplier != null ? "Yes" : "No")</td>
-                        <td class="col-xs" data-label="Is accepted">@(conformityBySupplier != null && conformityBySupplier.IsAccepted ? "Yes" : "No")</td>
-                        <td class="col-xs" data-label="Is valid">@(conformityBySupplier != null && conformityBySupplier.IsValid ? "Yes" : "No")</td>
+                        <td class="col-s" data-label="Supplier name">@supplier.Name</td>
+                        <td class="col-s" data-label="Conformity available">@(conformityBySupplier != null ? "Yes" : "No")</td>
+                        <td class="col-xs" data-label="Accepted">@(conformityBySupplier != null && conformityBySupplier.IsAccepted ? "Yes" : "No")</td>
+                        <td class="col-xs" data-label="Valid">@(conformityBySupplier != null && conformityBySupplier.IsValid ? "Yes" : "No")</td>
                         <td class="col-s" data-label="User">@(conformityBySupplier != null ? conformityBySupplier.UserEmail : "-")</td>
-                        <td class="col-s" data-label="Send request">
-                            <a asp-controller="Requests" asp-action="SendRequest" class="btn btn-request"
-                               asp-route-articleId="@Model.Id"
-                               asp-route-supplierId="@supplier.Id"
-                               asp-route-conformityTypeId="@conformityType.Id"
-                               asp-route-callerViewName="Articles">
-                                Request
-                            </a>
-                        </td>
-                        <td class="col-s" data-label="Request date">
-                            @(conformityBySupplier?.RequestDate != null ?
-                               conformityBySupplier.RequestDate.Value.ToLocalTime().ToShortDateString() : "-")
-                        </td>
                         @if (conformityBySupplier?.AcceptanceDate != null)
                         {
                             <td class="col-s" data-label="Add / Edit">
@@ -106,6 +93,19 @@
                             </td>
                             <td class="col-s" data-label="Delete"> - </td>
                         }
+                        <td class="col-s" data-label="Send request">
+                            <a asp-controller="Requests" asp-action="SendRequest" class="btn btn-request"
+                               asp-route-articleId="@Model.Id"
+                               asp-route-supplierId="@supplier.Id"
+                               asp-route-conformityTypeId="@conformityType.Id"
+                               asp-route-callerViewName="Articles">
+                                Request
+                            </a>
+                        </td>
+                        <td class="col-s" data-label="Request date">
+                            @(conformityBySupplier?.RequestDate != null ?
+                               conformityBySupplier.RequestDate.Value.ToLocalTime().ToShortDateString() : "-")
+                        </td>
                     </tr>
                     @*<tr>@String.Join(", ", supplier.Conformities.Select(x=>x.Id))</tr>*@
                 }
