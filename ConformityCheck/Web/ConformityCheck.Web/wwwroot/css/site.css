@@ -237,6 +237,25 @@ textarea {
     border-radius: 4px;
 }
 
+#cookieConsent {
+    z-index: 1;
+}
+
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+}
+
+    .close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {
+        opacity: .75;
+    }
+
+
 /*Alert bar styles --------------------------------------------------------------------------------------------*/
 .alert {
     position: relative;
@@ -952,8 +971,12 @@ textarea {
     }
 
 button.close {
-    display: none;
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
 }
+
 
 /*Dispay data styles -----------------------------------------------------------------------------------*/
 .display-data-wrapper {

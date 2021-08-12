@@ -8,7 +8,7 @@
 
 @if (showBanner)
 {
-    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
+    <div id="cookieConsent" class="alert" role="alert">
         We use cookies to understand how you use our site and to improve your experience.
         <a asp-area="" asp-controller="Home" asp-action="Privacy">Learn More</a>.
         <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
@@ -18,7 +18,8 @@
     <script>
         (function () {
             var button = document.querySelector("#cookieConsent button[data-cookie-string]");
-            button.addEventListener("click", function () {
+            button.addEventListener("click", function (e) {
+                console.log(e);
                 document.cookie = button.dataset.cookieString;
                 document.querySelector("#cookieConsent").classList.add("hidden");
                 // var now = new Date();

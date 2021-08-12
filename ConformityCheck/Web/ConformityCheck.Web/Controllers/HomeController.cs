@@ -1,11 +1,13 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
+    using System;
     using System.Diagnostics;
 
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels;
     using ConformityCheck.Web.ViewModels.Home;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     // 1. ApplicationDbContext
     // 2. Repositories
@@ -13,10 +15,12 @@
     public class HomeController : BaseController
     {
         private readonly IGetCountsService getCountsService;
+        private readonly ILogger<HomeController> logger;
 
-        public HomeController(IGetCountsService getCountsService)
+        public HomeController(IGetCountsService getCountsService, ILogger<HomeController> logger)
         {
             this.getCountsService = getCountsService;
+            this.logger = logger;
         }
 
         public IActionResult Index()
@@ -33,11 +37,16 @@
                 Suppliers = countsDto.Suppliers,
             };
 
+            this.logger.LogInformation("User opens Home page");
+
             return this.View(model);
         }
 
         public IActionResult Privacy()
         {
+            this.logger.LogInformation("User opens Privacy page");
+            throw new ArgumentException("Subject and message should be provided.");
+
             return this.View();
         }
 

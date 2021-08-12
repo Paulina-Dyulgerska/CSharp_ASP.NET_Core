@@ -4,17 +4,21 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using ConformityCheck.Common;
+    using Microsoft.Extensions.Logging;
     using SendGrid;
     using SendGrid.Helpers.Mail;
 
     public class SendGridEmailSender : IEmailSender
     {
         private readonly SendGridClient client;
+        private readonly ILogger<SendGridEmailSender> logger;
 
-        public SendGridEmailSender(string apiKey)
+        public SendGridEmailSender(string apiKey, ILogger<SendGridEmailSender> logger)
         {
             this.client = new SendGridClient(apiKey);
+            this.logger = logger;
         }
 
         public async Task SendEmailAsync(
@@ -46,12 +50,11 @@
             try
             {
                 var response = await this.client.SendEmailAsync(message);
-                Console.WriteLine(response.StatusCode);
-                Console.WriteLine(await response.Body.ReadAsStringAsync());
+                this.logger.LogInformation($"Email was send to user {to}; response status code: {response.StatusCode}; response body: {await response.Body.ReadAsStringAsync()}");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
+                this.logger.LogError($"Error sending email to user {to}; error: {ex};");
                 throw;
             }
 

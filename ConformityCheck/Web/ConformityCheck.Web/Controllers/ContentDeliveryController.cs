@@ -15,6 +15,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
 
     [ApiController]
     [Route("/api")]
@@ -26,6 +27,7 @@
         private readonly IConformitiesService conformitiesService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly ILogger<ContentDeliveryController> logger;
 
         public ContentDeliveryController(
             IArticlesService articlesService,
@@ -33,7 +35,8 @@
             IConformityTypesService conformityTypesService,
             IConformitiesService conformitiesService,
             UserManager<ApplicationUser> userManager,
-            RoleManager<ApplicationRole> roleManager)
+            RoleManager<ApplicationRole> roleManager,
+            ILogger<ContentDeliveryController> logger)
         {
             this.articlesService = articlesService;
             this.suppliersService = suppliersService;
@@ -41,6 +44,7 @@
             this.conformitiesService = conformitiesService;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -78,10 +82,11 @@
                 var model = await this.suppliersService.GetArticlesByIdAsync<ArticleExportModel>(id);
                 return this.Ok(model);
             }
-
-            // TODO : ILogger!
             catch (System.Exception ex)
             {
+                this.logger.LogError(
+                    123,
+                    $"Error: {ex.Message}; Exeption stack trace: {ex.StackTrace}; Exeption innerexeption: {ex.InnerException.Message}");
                 throw new System.Exception(ex.Message);
             }
         }

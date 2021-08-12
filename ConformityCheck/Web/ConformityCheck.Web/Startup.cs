@@ -15,6 +15,7 @@
     using ConformityCheck.Services.Messaging;
     using ConformityCheck.Web.Infrastructure.Settings;
     using ConformityCheck.Web.ViewModels;
+    using Microsoft.Extensions.Logging;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -25,6 +26,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using System.IO;
 
     public class Startup
     {
@@ -45,6 +47,12 @@
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                     .AddRoles<ApplicationRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddLogging(loggingBuilder =>
+            {
+                var loggingSection = this.configuration.GetSection("Logging");
+                loggingBuilder.AddFile(loggingSection);
+            });
 
             services.Configure<ReCaptchaSettings>(this.configuration.GetSection(ReCaptchaSettings.ReCaptcha));
 
@@ -108,8 +116,9 @@
             services.AddTransient<IConformitiesService, ConformitiesService>();
             services.AddTransient<IContentCheckService, ContentCheckService>();
             // services.AddTransient<IEmailSender, NullMessageSender>();
-            //services.AddTransient<IEmailSender>(serviceProvider => new SendGridEmailSender(this.configuration["EmailSettings:ApiKey"]));
-            services.AddTransient<IEmailSender>(serviceProvider => new SendGridEmailSender(emailSettings.ApiKey));
+            // services.AddTransient<IEmailSender>(serviceProvider => new SendGridEmailSender(this.configuration["EmailSettings:ApiKey"]));
+            services.AddTransient<IEmailSender>(serviceProvider =>
+                        new SendGridEmailSender(emailSettings.ApiKey, serviceProvider.GetRequiredService<ILogger<SendGridEmailSender>>()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
