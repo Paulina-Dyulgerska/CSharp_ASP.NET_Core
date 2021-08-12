@@ -2,7 +2,7 @@
 {
     using System;
     using System.Reflection;
-    using ConformityCheck.Common;
+
     using ConformityCheck.Data;
     using ConformityCheck.Data.Common;
     using ConformityCheck.Data.Common.Repositories;
@@ -15,18 +15,15 @@
     using ConformityCheck.Services.Messaging;
     using ConformityCheck.Web.Infrastructure.Settings;
     using ConformityCheck.Web.ViewModels;
-    using Microsoft.Extensions.Logging;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Diagnostics;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using System.IO;
+    using Microsoft.Extensions.Logging;
 
     public class Startup
     {
