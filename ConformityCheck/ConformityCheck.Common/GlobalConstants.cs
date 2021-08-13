@@ -18,6 +18,7 @@
         public const string ArticleCreatedSuccessfullyMessage = "Article is successfully created.";
         public const string ArticleEditedSuccessfullyMessage = "Article is successfully edited.";
         public const string ArticleDeletedSuccessfullyMessage = "Article is successfully deleted.";
+        public const string ArticleInvalidId = "No article with such id found.";
 
         public const string SupplierCreatedSuccessfullyMessage = "Supplier is successfully created.";
         public const string SupplierEditedSuccessfullyMessage = "Supplier is successfully edited.";

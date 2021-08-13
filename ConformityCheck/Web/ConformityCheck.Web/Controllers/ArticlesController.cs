@@ -7,8 +7,6 @@
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels;
     using ConformityCheck.Web.ViewModels.Articles;
-    using ConformityCheck.Web.ViewModels.ConformityTypes;
-    using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -38,12 +36,6 @@
             this.userManager = userManager;
         }
 
-        // [Authorize]
-        // public async Task<IActionResult> ListAllUnconfirmedByMainSupplierArticles()
-        // {
-        //     var model = this.articlesService.
-        //     return this.View(nameof(ListAll), model);
-        // }
         // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         public async Task<IActionResult> ListAll(PagingViewModel input)
         {
@@ -115,18 +107,31 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(ArticleIdInputModel input)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(id);
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] =
+                    GlobalConstants.ArticleInvalidId;
+                return this.RedirectToAction(nameof(this.ListAll));
+            }
+
+            var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(input.Id);
 
             return this.View(model);
         }
 
         [Authorize]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(ArticleIdInputModel input)
         {
-            // trqbwa li da checkwam v DB za wsqko edno id, dali go imam v bazata? TODO - create input model for the id validation.
-            var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(id);
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] =
+                    GlobalConstants.ArticleInvalidId;
+                return this.RedirectToAction(nameof(this.ListAll));
+            }
+
+            var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(input.Id);
 
             return this.View(model);
         }
@@ -135,14 +140,13 @@
         [Authorize]
         public async Task<IActionResult> Edit(ArticleEditInputModel input)
         {
-            // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (!this.ModelState.IsValid)
             {
                 var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(input.Id);
 
                 return this.View(model);
 
-                //// not needed at the model with the current model
+                //// not needed with the current model
                 // var propertyNumber = nameof(input.Number);
                 // if (this.ModelState.Keys.Contains(propertyNumber)
                 //    && this.ModelState[propertyNumber].AttemptedValue.ToString() == model.Number)
@@ -165,17 +169,16 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> AddSupplier(string id)
+        public async Task<IActionResult> AddSupplier(ArticleIdInputModel input)
         {
-            var model = new ArticleManageSuppliersExportModel();
-            try
+            if (!this.ModelState.IsValid)
             {
-                model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(id);
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] =
+                    GlobalConstants.ArticleInvalidId;
+                return this.RedirectToAction(nameof(this.ListAll));
             }
-            catch (System.Exception)
-            {
-                // TODO!
-            }
+
+            var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(input.Id);
 
             return this.View(model);
         }
@@ -188,29 +191,28 @@
             {
                 var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(input.Id);
 
-                // if false article id is sent:
-                // if (model == null)
-                // {
-                //     return this.RedirectToAction("Index", "Home");
-                // }
                 return this.View(model);
             }
-
-            // TODO - delete it:
-            var user = await this.userManager.GetUserAsync(this.User);
 
             await this.articlesService.AddSupplierAsync(input);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
                 GlobalConstants.ArticleEditedSuccessfullyMessage;
 
-            return this.RedirectToAction(nameof(this.Edit), new { input.Id });
+            return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
 
         [Authorize]
-        public async Task<IActionResult> ChangeMainSupplier(string id)
+        public async Task<IActionResult> ChangeMainSupplier(ArticleIdInputModel input)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(id);
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] =
+                    GlobalConstants.ArticleInvalidId;
+                return this.RedirectToAction(nameof(this.ListAll));
+            }
+
+            var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(input.Id);
 
             return this.View(model);
         }
@@ -235,9 +237,16 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> RemoveSupplier(string id)
+        public async Task<IActionResult> RemoveSupplier(ArticleIdInputModel input)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(id);
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] =
+                    GlobalConstants.ArticleInvalidId;
+                return this.RedirectToAction(nameof(this.ListAll));
+            }
+
+            var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(input.Id);
 
             return this.View(model);
         }
@@ -262,9 +271,16 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> AddConformityType(string id)
+        public async Task<IActionResult> AddConformityType(ArticleIdInputModel input)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesExportModel>(id);
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] =
+                    GlobalConstants.ArticleInvalidId;
+                return this.RedirectToAction(nameof(this.ListAll));
+            }
+
+            var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesExportModel>(input.Id);
 
             return this.View(model);
         }
@@ -289,9 +305,16 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> RemoveConformityType(string id)
+        public async Task<IActionResult> RemoveConformityType(ArticleIdInputModel input)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesExportModel>(id);
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] =
+                    GlobalConstants.ArticleInvalidId;
+                return this.RedirectToAction(nameof(this.ListAll));
+            }
+
+            var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesExportModel>(input.Id);
 
             return this.View(model);
         }
@@ -316,51 +339,37 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> RemoveConformity(string id)
+        public async Task<IActionResult> RemoveConformity(ArticleIdInputModel input)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(id);
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.ArticleInvalidId;
+                return this.RedirectToAction(nameof(this.ListAll));
+            }
+
+            var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(input.Id);
 
             return this.View(model);
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(ArticleIdInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] =
+                    GlobalConstants.ArticleInvalidId;
+                return this.RedirectToAction(nameof(this.ListAll));
+            }
+
             var user = await this.userManager.GetUserAsync(this.User);
 
-            await this.articlesService.DeleteAsync(id, user.Id);
+            await this.articlesService.DeleteAsync(input.Id, user.Id);
 
             this.TempData[GlobalConstants.TempDataMessagePropertyName] =
                 GlobalConstants.ArticleDeletedSuccessfullyMessage;
 
             return this.RedirectToAction(nameof(this.ListAll));
-        }
-
-        // TODO - can be deleted - moved to api controller
-        public async Task<IActionResult> GetSuppliersById(string id)
-        {
-            var model = await this.articlesService.GetSuppliersByIdAsync<SupplierExportModel>(id);
-
-            return this.Json(model);
-        }
-
-        // TODO - can be deleted - moved to api controller
-        public async Task<IActionResult> GetConformityTypesByIdAndSupplier(
-            string articleId,
-            string supplierId)
-        {
-            var model = await this.articlesService
-                .GetConformityTypesByIdAndSupplierAsync(articleId, supplierId);
-
-            return this.Json(model);
-        }
-
-        // TODO - can be deleted - moved to api controller
-        public async Task<IActionResult> GetByNumberOrDescription(string input)
-        {
-            var model = await this.articlesService.GetAllBySearchInputAsync<ArticleExportModel>(input);
-
-            return this.Json(model);
         }
     }
 }
