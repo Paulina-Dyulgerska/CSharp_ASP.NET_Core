@@ -1,10 +1,10 @@
-﻿namespace ConformityCheck.Web.ViewModels.Contacts
+﻿namespace ConformityCheck.Web.ViewModels.ContactFormEntries
 {
     using System.ComponentModel.DataAnnotations;
 
     using ConformityCheck.Web.Infrastructure.ValidationAttributes;
 
-    public class ContactFormViewModel
+    public class ContactFormEntryViewModel
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your name")]
         [Display(Name = "* Your name")]
@@ -27,6 +27,8 @@
         [StringLength(10000, ErrorMessage = "The message must be at least {2} symbols long", MinimumLength = 20)]
         [Display(Name = "* Message content")]
         public string Content { get; set; }
+
+        public string Ip { get; set; }
 
         [GoogleReCaptchaValidation]
         public string RecaptchaValue { get; set; }

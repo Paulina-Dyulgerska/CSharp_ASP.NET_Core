@@ -113,6 +113,7 @@
             services.AddTransient<ISuppliersService, SuppliersService>();
             services.AddTransient<IContentDeliveryService, ContentDeliveryService>();
             services.AddTransient<IConformitiesService, ConformitiesService>();
+            services.AddTransient<IContactFormEntriesService, ContactFormEntriesService>();
             services.AddTransient<IContentCheckService, ContentCheckService>();
             // services.AddTransient<IEmailSender, NullMessageSender>();
             // services.AddTransient<IEmailSender>(serviceProvider => new SendGridEmailSender(this.configuration["EmailSettings:ApiKey"]));

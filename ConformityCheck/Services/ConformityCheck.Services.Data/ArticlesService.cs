@@ -11,35 +11,25 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Articles;
-    using ConformityCheck.Web.ViewModels.Conformities;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
     using Microsoft.EntityFrameworkCore;
 
     public class ArticlesService : IArticlesService
     {
         private readonly IDeletableEntityRepository<Article> articlesRepository;
-        private readonly IDeletableEntityRepository<Supplier> suppliersRepository;
         private readonly IRepository<ArticleSupplier> articleSuppliersRepository;
-        private readonly IDeletableEntityRepository<ConformityType> conformityTypesRepository;
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
-        private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
         private readonly IRepository<ArticleConformityType> articleConformityTypesRepository;
 
         public ArticlesService(
             IDeletableEntityRepository<Article> articlesRepository,
-            IDeletableEntityRepository<Supplier> suppliersRepository,
             IRepository<ArticleSupplier> articleSuppliersRepository,
-            IDeletableEntityRepository<ConformityType> conformityTypesRepository,
             IDeletableEntityRepository<Conformity> conformitiesRepository,
-            IDeletableEntityRepository<ApplicationUser> usersRepository,
             IRepository<ArticleConformityType> articleConformityTypeRepository)
         {
             this.articlesRepository = articlesRepository;
-            this.suppliersRepository = suppliersRepository;
             this.articleSuppliersRepository = articleSuppliersRepository;
-            this.conformityTypesRepository = conformityTypesRepository;
             this.conformitiesRepository = conformitiesRepository;
-            this.usersRepository = usersRepository;
             this.articleConformityTypesRepository = articleConformityTypeRepository;
         }
 
