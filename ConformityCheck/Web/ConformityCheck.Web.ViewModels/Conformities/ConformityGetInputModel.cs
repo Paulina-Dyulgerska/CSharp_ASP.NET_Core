@@ -4,16 +4,13 @@
 
     public class ConformityGetInputModel
     {
-        [ConformityEntityAttribute(allowNull: true)]
-        public string Id { get; set; }
-
-        // [ConformityTypeEntityAttribute]
+        [ConformityTypeEntityAttribute]
         public int ConformityTypeId { get; set; }
 
-        // [SupplierEntityAttribute]
+        [SupplierEntityAttribute]
         public string SupplierId { get; set; }
 
-        // [ArticleEntityAttribute]
+        [ArticleEntityAttribute]
         public string ArticleId { get; set; }
 
         public string CallerViewName { get; set; }

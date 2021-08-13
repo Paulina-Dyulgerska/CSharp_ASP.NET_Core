@@ -669,7 +669,9 @@
                     .AllAsNoTracking()
                     .AnyAsync(x => x.ArticleId == articleId
                                 && x.SupplierId == supplierId
-                                && x.ConformityTypeId == entity.Id);
+                                && x.ConformityTypeId == entity.Id
+                                && x.IsAccepted
+                                && x.ValidityDate >= DateTime.UtcNow);
 
                 if (hasConformityEntity)
                 {

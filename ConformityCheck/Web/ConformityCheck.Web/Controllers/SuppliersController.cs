@@ -1,17 +1,17 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
-    using System.Linq;
+    using System;
     using System.Threading.Tasks;
 
     using ConformityCheck.Common;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels;
-    using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public class SuppliersController : BaseController
     {
@@ -21,6 +21,7 @@
         private readonly IConformityTypesService conformityTypesService;
         private readonly ISubstancesService substancesService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<SuppliersController> logger;
 
         public SuppliersController(
             IArticlesService articlesService,
@@ -28,7 +29,8 @@
             IProductsService productsService,
             IConformityTypesService conformityTypesService,
             ISubstancesService substancesService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            ILogger<SuppliersController> logger)
         {
             this.articlesService = articlesService;
             this.suppliersService = suppliersService;
@@ -36,6 +38,7 @@
             this.conformityTypesService = conformityTypesService;
             this.substancesService = substancesService;
             this.userManager = userManager;
+            this.logger = logger;
         }
 
         // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -59,25 +62,37 @@
                                     GlobalConstants.CurrentSortDirectionAsc : GlobalConstants.CurrentSortDirectionDesc,
             };
 
-            if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
+            try
             {
-                model.ItemsCount = this.suppliersService.GetCount();
-                model.Suppliers = await this.suppliersService
-                                            .GetAllOrderedAsPagesAsync<SupplierExportModel>(
+                if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
+                {
+                    model.ItemsCount = this.suppliersService.GetCount();
+                    model.Suppliers = await this.suppliersService
+                                                .GetAllOrderedAsPagesAsync<SupplierExportModel>(
+                                                    input.CurrentSortOrder,
+                                                    input.PageNumber,
+                                                    input.ItemsPerPage);
+                }
+                else
+                {
+                    input.CurrentSearchInput = input.CurrentSearchInput.Trim();
+                    model.ItemsCount = this.suppliersService.GetCountBySearchInput(input.CurrentSearchInput);
+                    model.Suppliers = await this.suppliersService
+                                                .GetAllBySearchInputOrderedAsPagesAsync<SupplierExportModel>(
+                                                input.CurrentSearchInput,
                                                 input.CurrentSortOrder,
                                                 input.PageNumber,
                                                 input.ItemsPerPage);
+                }
+
+                this.logger.LogInformation($"Suppliers loaded successfully");
             }
-            else
+            catch (Exception ex)
             {
-                input.CurrentSearchInput = input.CurrentSearchInput.Trim();
-                model.ItemsCount = this.suppliersService.GetCountBySearchInput(input.CurrentSearchInput);
-                model.Suppliers = await this.suppliersService
-                                            .GetAllBySearchInputOrderedAsPagesAsync<SupplierExportModel>(
-                                            input.CurrentSearchInput,
-                                            input.CurrentSortOrder,
-                                            input.PageNumber,
-                                            input.ItemsPerPage);
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Suppliers loading failed: {ex}");
+
+                return this.Redirect("/");
             }
 
             return this.View(model);
@@ -95,29 +110,41 @@
         {
             if (!this.ModelState.IsValid)
             {
-                foreach (var error in this.ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    // DoSomething(error);
-                }
-
                 return this.View(input);
             }
 
-            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = await this.userManager.GetUserAsync(this.User);
+            try
+            {
+                // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var user = await this.userManager.GetUserAsync(this.User);
+                await this.suppliersService.CreateAsync(input, user.Id);
 
-            await this.suppliersService.CreateAsync(input, user.Id);
+                this.TempData[GlobalConstants.TempDataMessagePropertyName] = GlobalConstants.SupplierCreatedSuccessfullyMessage;
+                this.logger.LogInformation($"Supplier number: {input.Number} was created by user: {user.Id}");
+            }
+            catch (Exception ex)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Supplier creation failed: {ex}");
 
-            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.SupplierCreatedSuccessfullyMessage;
+                // return user to the Create view instead of Home/Error page
+                return this.View();
+            }
 
             return this.RedirectToAction(nameof(this.ListAll));
         }
 
         [Authorize]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(SupplierIdInputModel input)
         {
-            var model = await this.suppliersService.GetByIdAsync<SupplierEditInputModel>(id);
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
+
+                return this.RedirectToAction(nameof(this.ListAll));
+            }
+
+            var model = await this.suppliersService.GetByIdAsync<SupplierEditInputModel>(input.Id);
 
             return this.View(model);
         }
@@ -126,22 +153,30 @@
         [Authorize]
         public async Task<IActionResult> Edit(SupplierEditInputModel input)
         {
-            // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
 
-            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = await this.userManager.GetUserAsync(this.User);
+            try
+            {
+                // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var user = await this.userManager.GetUserAsync(this.User);
+                await this.suppliersService.EditAsync(input, user.Id);
 
-            await this.suppliersService.EditAsync(input, user.Id);
+                this.TempData[GlobalConstants.TempDataMessagePropertyName] = GlobalConstants.SupplierEditedSuccessfullyMessage;
+                this.logger.LogInformation($"Supplier number: {input.Id} was edited by user: {user.Id}");
+            }
+            catch (Exception ex)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Supplier modification failed: {ex}");
 
-            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.SupplierEditedSuccessfullyMessage;
+                // return user to the Create view instead of Home/Error page
+                return this.View();
+            }
 
-            // TODO: return this.RedirectToAction(nameof(this.Details), "Suppliers", new { input.Id });
-            return this.RedirectToAction(nameof(this.ListAll));
+            return this.RedirectToAction(nameof(this.Details), new { input.Id });
         }
 
         [Authorize]
@@ -154,58 +189,60 @@
                 return this.NotFound();
             }
 
-            // var model = await this.suppliersService.DetailsBySupplierAsync(input);
-            var model = await this.suppliersService.GetByIdWIthArticlesAndConformityOrderedAsPageAsync(
-                                            input.Id,
-                                            input.CurrentSortOrder,
-                                            input.PageNumber,
-                                            input.ItemsPerPage);
-            model.ItemsPerPage = input.ItemsPerPage;
-            model.PageNumber = input.PageNumber;
-            model.PagingControllerActionCallName = nameof(this.Details);
-            model.CurrentSortOrder = input.CurrentSortOrder;
-            model.CurrentSearchInput = input.CurrentSearchInput;
-            model.CurrentSortDirection = input.CurrentSortDirection == GlobalConstants.CurrentSortDirectionDesc ?
-                                    GlobalConstants.CurrentSortDirectionAsc : GlobalConstants.CurrentSortDirectionDesc;
+            try
+            {
+                // var model = await this.suppliersService.DetailsBySupplierAsync(input);
+                var model = await this.suppliersService.GetByIdWIthArticlesAndConformityOrderedAsPageAsync(
+                                                input.Id,
+                                                input.CurrentSortOrder,
+                                                input.PageNumber,
+                                                input.ItemsPerPage);
+                model.ItemsPerPage = input.ItemsPerPage;
+                model.PageNumber = input.PageNumber;
+                model.PagingControllerActionCallName = nameof(this.Details);
+                model.CurrentSortOrder = input.CurrentSortOrder;
+                model.CurrentSearchInput = input.CurrentSearchInput;
+                model.CurrentSortDirection = input.CurrentSortDirection == GlobalConstants.CurrentSortDirectionDesc ?
+                                        GlobalConstants.CurrentSortDirectionAsc : GlobalConstants.CurrentSortDirectionDesc;
+                return this.View(model);
+            }
+            catch (Exception ex)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Supplier details loading failed: {ex}");
 
-            return this.View(model);
+                // return user to the List all view instead of Home/Error page
+                return this.RedirectToAction(nameof(this.ListAll));
+            }
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(SupplierIdInputModel input)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-            await this.suppliersService.DeleteAsync(id, user.Id);
+                return this.RedirectToAction(nameof(this.ListAll));
+            }
 
-            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.SupplierDeletedSuccessfullyMessage;
-
-            return this.RedirectToAction(nameof(this.ListAll));
-        }
-
-        // TODO - can be deleted - moved to api controller
-        public async Task<IActionResult> GetByNumberOrName(string input)
-        {
-            var model = await this.suppliersService.GetAllBySearchInputAsync<SupplierExportModel>(input);
-
-            return this.Json(model);
-        }
-
-        // TODO - can be deleted - moved to api controller
-        public async Task<IActionResult> GetArticlesById(string id)
-        {
             try
             {
-                var model = await this.suppliersService.GetArticlesByIdAsync<ArticleExportModel>(id);
-                return this.Json(model);
+                var user = await this.userManager.GetUserAsync(this.User);
+                await this.suppliersService.DeleteAsync(input.Id, user.Id);
+
+                this.TempData[GlobalConstants.TempDataMessagePropertyName] = GlobalConstants.SupplierDeletedSuccessfullyMessage;
+                this.logger.LogInformation($"Supplier: {input.Id} was deleted by user: {user.Id}");
+            }
+            catch (Exception ex)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Supplier deletion failed: {ex}");
+
+                // if error accure here, the Home/Error page will be displayed
             }
 
-            // TODO : ILogger!
-            catch (System.Exception ex)
-            {
-                throw new System.Exception(ex.Message);
-            }
+            return this.RedirectToAction(nameof(this.ListAll));
         }
     }
 }

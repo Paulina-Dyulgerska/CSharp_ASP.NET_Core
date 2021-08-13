@@ -2,8 +2,6 @@
 {
     using System;
     using System.Linq;
-    using System.Runtime.CompilerServices;
-    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using ConformityCheck.Common;
@@ -17,6 +15,7 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     // [AutoValidateAntiforgeryToken] - it is globaly as a service and is in the DC.
     public class ConformitiesController : BaseController
@@ -34,6 +33,7 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IWebHostEnvironment environment;
         private readonly IEmailSender emailSender;
+        private readonly ILogger<ConformitiesController> logger;
 
         public ConformitiesController(
             IArticlesService articlesService,
@@ -44,7 +44,8 @@
             IConformitiesService conformitiesService,
             UserManager<ApplicationUser> userManager,
             IWebHostEnvironment environment,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ILogger<ConformitiesController> logger)
         {
             this.articlesService = articlesService;
             this.suppliersService = suppliersService;
@@ -55,6 +56,7 @@
             this.userManager = userManager;
             this.environment = environment;
             this.emailSender = emailSender;
+            this.logger = logger;
             this.conformityFilesDirectory = $"{this.environment.WebRootPath}/files";
         }
 
@@ -74,28 +76,40 @@
                 CurrentSortOrder = input.CurrentSortOrder,
                 CurrentSearchInput = input.CurrentSearchInput,
                 CurrentSortDirection = input.CurrentSortDirection == GlobalConstants.CurrentSortDirectionDesc ?
-                                    GlobalConstants.CurrentSortDirectionAsc : GlobalConstants.CurrentSortDirectionDesc,
+                             GlobalConstants.CurrentSortDirectionAsc : GlobalConstants.CurrentSortDirectionDesc,
             };
 
-            if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
+            try
             {
-                model.ItemsCount = this.conformitiesService.GetCount();
-                model.Conformities = await this.conformitiesService
-                                            .GetAllOrderedAsPagesAsync<ConformityExportModel>(
-                                                input.CurrentSortOrder,
-                                                input.PageNumber,
-                                                input.ItemsPerPage);
+                if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
+                {
+                    model.ItemsCount = this.conformitiesService.GetCount();
+                    model.Conformities = await this.conformitiesService
+                                                .GetAllOrderedAsPagesAsync<ConformityExportModel>(
+                                                    input.CurrentSortOrder,
+                                                    input.PageNumber,
+                                                    input.ItemsPerPage);
+                }
+                else
+                {
+                    input.CurrentSearchInput = input.CurrentSearchInput.Trim();
+                    model.ItemsCount = this.conformitiesService.GetCountBySearchInput(input.CurrentSearchInput);
+                    model.Conformities = await this.conformitiesService
+                                                .GetAllBySearchInputOrderedAsPagesAsync<ConformityExportModel>(
+                                                    input.CurrentSearchInput,
+                                                    input.CurrentSortOrder,
+                                                    input.PageNumber,
+                                                    input.ItemsPerPage);
+                }
+
+                this.logger.LogInformation($"Conformities loaded successfully");
             }
-            else
+            catch (Exception ex)
             {
-                input.CurrentSearchInput = input.CurrentSearchInput.Trim();
-                model.ItemsCount = this.conformitiesService.GetCountBySearchInput(input.CurrentSearchInput);
-                model.Conformities = await this.conformitiesService
-                                            .GetAllBySearchInputOrderedAsPagesAsync<ConformityExportModel>(
-                                            input.CurrentSearchInput,
-                                            input.CurrentSortOrder,
-                                            input.PageNumber,
-                                            input.ItemsPerPage);
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Conformities loading failed: {ex}");
+
+                return this.Redirect("/");
             }
 
             return this.View(model);
@@ -107,7 +121,7 @@
             return this.View();
         }
 
-        // [ValidateAntiforgeryToken] - it is globaly as a service and is in the DC.
+        // [ValidateAntiforgeryToken] - it is globaly as a service
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(ConformityCreateInputModel input)
@@ -119,23 +133,40 @@
                 return this.View();
             }
 
-            // TODO - add just supplier's conformity - not connected with articles but egeneral one.
+            // TODO - add just supplier's conformity - not connected with articles but a general one.
+            try
+            {
+                // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var user = await this.userManager.GetUserAsync(this.User);
+                await this.conformitiesService.CreateAsync(input, user.Id, this.conformityFilesDirectory);
 
-            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = await this.userManager.GetUserAsync(this.User);
+                this.TempData[GlobalConstants.TempDataMessagePropertyName] = GlobalConstants.ConformityCreatedSuccessfullyMessage;
+                this.logger.LogInformation($"Conformity for article: {input.ArticleId}, conformity type: {input.ConformityTypeId} and supplier: {input.SupplierId} was created by user: {user.Id}");
+            }
+            catch (Exception ex)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity creation failed: {ex}");
 
-            await this.conformitiesService.CreateAsync(input, user.Id, this.conformityFilesDirectory);
+                // return user to the Create view instead of Home/Error page
+                return this.View();
+            }
 
-            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ConformityCreatedSuccessfullyMessage;
-
-            return this.RedirectToAction(nameof(this.ListAll), ConformitiesCallerViewName);
+            return this.RedirectToAction(nameof(this.ListAll));
         }
 
         [Authorize]
-        public async Task<IActionResult> AddToArticleConformityType(string id)
+        public async Task<IActionResult> AddToArticleConformityType(ArticleIdInputModel input)
         {
-            var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesExportModel>(id);
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
+
+                return this.RedirectToAction(nameof(this.ListAll), ArticlesCallerViewName);
+            }
+
+            // if error accure here, the Home/Error page will be displayed
+            var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesExportModel>(input.Id);
 
             return this.View(model);
         }
@@ -153,23 +184,24 @@
                 return this.View(model);
             }
 
-            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = await this.userManager.GetUserAsync(this.User);
-
             try
             {
+                // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var user = await this.userManager.GetUserAsync(this.User);
                 await this.conformitiesService.CreateAsync(input.Conformity, user.Id, this.conformityFilesDirectory);
+
+                this.TempData[GlobalConstants.TempDataMessagePropertyName] = GlobalConstants.ConformityCreatedSuccessfullyMessage;
+                this.logger.LogInformation($"Conformity for article: {input.Conformity.ArticleId}, conformity type: {input.Conformity.ConformityTypeId} and supplier: {input.Conformity.SupplierId} was created by user: {user.Id}");
             }
             catch (Exception ex)
             {
-                // da validiram s attribute i da ne prawq tezi gluposti tuk:!!!!!
-                this.ModelState.AddModelError(string.Empty, ex.Message);
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogInformation($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity creation failed: {ex}");
 
-                return this.View(input);
+                var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesExportModel>(id);
+
+                return this.View(model);
             }
-
-            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ConformityEditedSuccessfullyMessage;
 
             return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id });
         }
@@ -177,6 +209,13 @@
         [Authorize]
         public async Task<IActionResult> AddToArticleSupplierConformityType(ConformityGetInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
+
+                return this.RedirectToAction(nameof(this.ListAll), input.CallerViewName);
+            }
+
             var model = await this.conformitiesService.GetForCreateAsync(input);
 
             return this.View(model);
@@ -193,33 +232,64 @@
                 return this.View(input);
             }
 
-            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = await this.userManager.GetUserAsync(this.User);
+            try
+            {
+                // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var user = await this.userManager.GetUserAsync(this.User);
+                await this.conformitiesService.CreateAsync(input, user.Id, this.conformityFilesDirectory);
 
-            await this.conformitiesService.CreateAsync(input, user.Id, this.conformityFilesDirectory);
+                this.TempData[GlobalConstants.TempDataMessagePropertyName] = GlobalConstants.ConformityCreatedSuccessfullyMessage;
+                this.logger.LogInformation($"Conformity for article: {input.ArticleId}, conformity type: {input.ConformityTypeId} and supplier: {input.SupplierId} was created by user: {user.Id}");
+            }
+            catch (Exception ex)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogInformation($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity creation failed: {ex}");
 
-            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ConformityEditedSuccessfullyMessage;
+                var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesExportModel>(input.ArticleId);
 
+                return this.View(model);
+            }
+
+            // TODO return this.RedirectToAction("Details", CallerViewName, new { id = input.CallerId });
             if (input.CallerViewName == SuppliersCallerViewName)
             {
                 return this.RedirectToAction(nameof(SuppliersController.Details), SuppliersCallerViewName, new { id = input.SupplierId });
+            }
+
+            if (input.CallerViewName == ConformitiesCallerViewName)
+            {
+                return this.RedirectToAction(nameof(this.ListAll));
             }
 
             return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
         }
 
         [Authorize]
-        public async Task<IActionResult> Details(ConformityGetInputModel input)
+        public async Task<IActionResult> Details(ConformityIdInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
+
+                return this.RedirectToAction(nameof(this.ListAll));
+            }
+
             var model = await this.conformitiesService.GetByIdAsync<ConformityExportModel>(input.Id);
 
             return this.View(model);
         }
 
         [Authorize]
-        public async Task<IActionResult> Edit(ConformityGetInputModel input)
+        public async Task<IActionResult> Edit(ConformityIdInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
+
+                return this.RedirectToAction(nameof(this.ListAll));
+            }
+
             var model = await this.conformitiesService.GetByIdAsync<ConformityEditInputModel>(input.Id);
 
             return this.View(model);
@@ -229,7 +299,6 @@
         [Authorize]
         public async Task<IActionResult> Edit(ConformityEditInputModel input)
         {
-            // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (!this.ModelState.IsValid)
             {
                 var model = await this.conformitiesService.GetByIdAsync<ConformityEditInputModel>(input.Id);
@@ -237,33 +306,26 @@
                 return this.View(model);
             }
 
-            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = await this.userManager.GetUserAsync(this.User);
+            try
+            {
+                // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var user = await this.userManager.GetUserAsync(this.User);
+                await this.conformitiesService.EditAsync(input, user.Id, this.conformityFilesDirectory);
 
-            // Not needed since the validation is not in the service but in with an attribute done:
-            // try
-            // {
-            //     await this.conformitiesService.EditAsync(input, user.Id, this.conformityFilesDirectory);
-            // }
-            // catch (Exception ex)
-            // {
-            //     this.ModelState.AddModelError(string.Empty, ex.Message);
-            //     //da validiram s attribute i da ne prawq tezi gluposti tuk:!!!!!
-            //     var getModel = new ConformityGetInputModel
-            //     {
-            //         ArticleId = input.ArticleId,
-            //         SupplierId = input.SupplierId,
-            //         ConformityTypeId = input.ConformityTypeId,
-            //         Id = input.Id,
-            //     };
-            //     var model = await this.conformitiesService.GetForEditAsync(getModel);
-            //     return this.View(model);
-            // }
-            await this.conformitiesService.EditAsync(input, user.Id, this.conformityFilesDirectory);
+                this.TempData[GlobalConstants.TempDataMessagePropertyName] = GlobalConstants.ConformityEditedSuccessfullyMessage;
+                this.logger.LogInformation($"Conformity: {input.Id} was edited by user: {user.Id}");
+            }
+            catch (Exception ex)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogInformation($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity modification failed: {ex}");
 
-            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ConformityEditedSuccessfullyMessage;
+                var model = await this.conformitiesService.GetByIdAsync<ConformityEditInputModel>(input.Id);
 
+                return this.View(model);
+            }
+
+            // TODO return this.RedirectToAction("Details", CallerViewName, new { id = input.CallerId });
             if (input.CallerViewName == SuppliersCallerViewName)
             {
                 return this.RedirectToAction(nameof(SuppliersController.Details), SuppliersCallerViewName, new { id = input.SupplierId });
@@ -271,12 +333,10 @@
 
             if (input.CallerViewName == ConformitiesCallerViewName)
             {
-                return this.RedirectToAction(nameof(ConformitiesController.ListAll), ConformitiesCallerViewName, new { id = input.Id });
+                return this.RedirectToAction(nameof(this.ListAll));
             }
 
             return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
-            // TODO 
-            // return this.RedirectToAction("Details", CallerViewName, new { id = input.CallerId });
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -288,21 +348,39 @@
                 {
                     this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] += error.ErrorMessage + Environment.NewLine;
                 }
+
+                return this.RedirectToAction(nameof(this.ListAll));
             }
 
-            var user = await this.userManager.GetUserAsync(this.User);
+            try
+            {
+                // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var user = await this.userManager.GetUserAsync(this.User);
+                await this.conformitiesService.DeleteAsync(input.Id, user.Id);
 
-            await this.conformitiesService.DeleteAsync(input.Id, user.Id);
+                this.TempData[GlobalConstants.TempDataMessagePropertyName] = GlobalConstants.ConformityDeletedSuccessfullyMessage;
+                this.logger.LogInformation($"Conformity: {input.Id} was deleted by user: {user.Id}");
+            }
+            catch (Exception ex)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogInformation($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity deletion failed: {ex}");
 
-            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ConformityDeletedSuccessfullyMessage;
+                // if error accure here, the Home/Error page will be displayed
+            }
 
+            // TODO return this.RedirectToAction("Details", CallerViewName, new { id = input.CallerId });
             if (input.CallerViewName == SuppliersCallerViewName)
             {
-                return this.RedirectToAction(nameof(SuppliersController.Edit), SuppliersCallerViewName, new { id = input.SupplierId });
+                return this.RedirectToAction(nameof(SuppliersController.Details), SuppliersCallerViewName, new { id = input.SupplierId });
             }
 
-            return this.RedirectToAction(nameof(ArticlesController.Edit), ArticlesCallerViewName, new { id = input.ArticleId });
+            if (input.CallerViewName == ConformitiesCallerViewName)
+            {
+                return this.RedirectToAction(nameof(this.ListAll));
+            }
+
+            return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
         }
 
         // TODO - delete - not used:
@@ -310,30 +388,6 @@
         public IActionResult PdfPartial(string conformityFileUrl)
         {
             return this.PartialView("_PartialDocumentPreview", conformityFileUrl);
-        }
-
-        // TODO - can be deleted - moved to api controller
-        [Authorize]
-        public IActionResult ShowModalDocument(string conformityFileUrl)
-        {
-            string filePath = "~" + conformityFileUrl;
-            var contentDisposition = new System.Net.Mime.ContentDisposition
-            {
-                FileName = conformityFileUrl.Split('/').LastOrDefault(),
-                Inline = true,
-            };
-
-            this.Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
-
-            return this.File(filePath, System.Net.Mime.MediaTypeNames.Application.Pdf);
-        }
-
-        // TODO - can be deleted - moved to api controller
-        public async Task<IActionResult> GetByArticleOrSupplierOrConformityType(string input)
-        {
-            var model = await this.conformitiesService.GetAllBySearchInputAsync<ConformityExportModel>(input);
-
-            return this.Json(model);
         }
     }
 }

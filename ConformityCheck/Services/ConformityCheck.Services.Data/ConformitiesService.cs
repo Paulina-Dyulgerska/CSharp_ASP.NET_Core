@@ -9,10 +9,7 @@
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
-    using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.Conformities;
-    using ConformityCheck.Web.ViewModels.ConformityTypes;
-    using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.EntityFrameworkCore;
 
     public class ConformitiesService : IConformitiesService
@@ -22,7 +19,6 @@
         private readonly IRepository<ArticleSupplier> articleSuppliersRepository;
         private readonly IDeletableEntityRepository<ConformityType> conformityTypesRepository;
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
-        private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
         private readonly IRepository<ArticleConformityType> articleConformityTypeRepository;
 
         public ConformitiesService(
@@ -31,7 +27,6 @@
             IRepository<ArticleSupplier> articleSuppliersRepository,
             IDeletableEntityRepository<ConformityType> conformityTypesRepository,
             IDeletableEntityRepository<Conformity> conformitiesRepository,
-            IDeletableEntityRepository<ApplicationUser> usersRepository,
             IRepository<ArticleConformityType> articleConformityTypeRepository)
         {
             this.articlesRepository = articlesRepository;
@@ -39,7 +34,6 @@
             this.articleSuppliersRepository = articleSuppliersRepository;
             this.conformityTypesRepository = conformityTypesRepository;
             this.conformitiesRepository = conformitiesRepository;
-            this.usersRepository = usersRepository;
             this.articleConformityTypeRepository = articleConformityTypeRepository;
         }
 

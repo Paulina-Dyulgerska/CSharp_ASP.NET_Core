@@ -1,13 +1,12 @@
-﻿namespace ConformityCheck.Web.ViewModels.Articles
+﻿namespace ConformityCheck.Web.ViewModels.Suppliers
 {
     using System.ComponentModel.DataAnnotations;
 
     using ConformityCheck.Common.ValidationAttributes;
 
-    public class ArticleSelectedInputModel
+    public class SupplierIdInputModel
     {
-        [Required]
-        [ArticleEntityAttribute]
+        [SupplierEntityAttribute]
         public string Id { get; set; }
     }
 }

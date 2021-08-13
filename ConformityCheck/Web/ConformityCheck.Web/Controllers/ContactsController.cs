@@ -10,6 +10,7 @@
     using ConformityCheck.Web.ViewModels.Contacts;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public class ContactsController : BaseController
     {
@@ -19,15 +20,18 @@
 
         private readonly IEmailSender emailSender;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<ContactsController> logger;
 
         public ContactsController(
             IRepository<ContactFormEntry> contactsRepository,
             IEmailSender emailSender,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            ILogger<ContactsController> logger)
         {
             this.contactsRepository = contactsRepository;
             this.emailSender = emailSender;
             this.userManager = userManager;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> Index()

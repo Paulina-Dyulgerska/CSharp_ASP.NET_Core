@@ -4,7 +4,6 @@
     using System.Linq;
 
     using AutoMapper;
-    using ConformityCheck.Common.ValidationAttributes;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Conformities;

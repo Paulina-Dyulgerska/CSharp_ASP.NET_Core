@@ -6,12 +6,9 @@
 
     public class ArticleManageConformityTypesInputModel /*: IValidatableObject*/
     {
-        // Required e here to activate the Required in the client-side validation.
-        [Required]
         [ArticleEntityAttribute]
         public string Id { get; set; }
 
-        [Required]
         [ConformityTypeEntityAttribute]
         public int ConformityTypeId { get; set; }
 

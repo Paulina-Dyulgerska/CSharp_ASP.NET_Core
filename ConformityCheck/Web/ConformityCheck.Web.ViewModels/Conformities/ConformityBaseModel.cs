@@ -32,7 +32,7 @@
         public string SupplierNumber { get; set; }
 
         [Display(Name = "* Article:")]
-        [ArticleEntityAttribute(allowNull: true)]
+        [ArticleEntityAttribute(allowNull: false)]
         public string ArticleId { get; set; }
 
         public string ArticleNumber { get; set; }

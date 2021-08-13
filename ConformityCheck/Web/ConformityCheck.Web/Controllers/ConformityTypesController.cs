@@ -2,10 +2,6 @@
 {
     using System;
     using System.Linq;
-    using System.Net;
-    using System.Security.Claims;
-    using System.Text;
-    using System.Text.Json;
     using System.Threading.Tasks;
 
     using ConformityCheck.Common;
@@ -16,6 +12,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public class ConformityTypesController : Controller
     {
@@ -25,6 +22,7 @@
         private readonly IConformityTypesService conformityTypesService;
         private readonly ISubstancesService substancesService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<ConformityTypesController> logger;
 
         public ConformityTypesController(
             IArticlesService articlesService,
@@ -32,7 +30,8 @@
             IProductsService productsService,
             IConformityTypesService conformityTypesService,
             ISubstancesService substancesService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            ILogger<ConformityTypesController> logger)
         {
             this.articlesService = articlesService;
             this.suppliersService = suppliersService;
@@ -40,6 +39,7 @@
             this.conformityTypesService = conformityTypesService;
             this.substancesService = substancesService;
             this.userManager = userManager;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> ListAll(PagingViewModel input)
@@ -62,25 +62,37 @@
                                     GlobalConstants.CurrentSortDirectionAsc : GlobalConstants.CurrentSortDirectionDesc,
             };
 
-            if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
+            try
             {
-                model.ItemsCount = this.conformityTypesService.GetCount();
-                model.ConformityTypes = await this.conformityTypesService
-                                            .GetAllOrderedAsPagesAsync<ConformityTypeExportModel>(
+                if (string.IsNullOrWhiteSpace(input.CurrentSearchInput))
+                {
+                    model.ItemsCount = this.conformityTypesService.GetCount();
+                    model.ConformityTypes = await this.conformityTypesService
+                                                .GetAllOrderedAsPagesAsync<ConformityTypeExportModel>(
+                                                    input.CurrentSortOrder,
+                                                    input.PageNumber,
+                                                    input.ItemsPerPage);
+                }
+                else
+                {
+                    input.CurrentSearchInput = input.CurrentSearchInput.Trim();
+                    model.ItemsCount = this.conformityTypesService.GetCountBySearchInput(input.CurrentSearchInput);
+                    model.ConformityTypes = await this.conformityTypesService
+                                                .GetAllBySearchInputOrderedAsPagesAsync<ConformityTypeExportModel>(
+                                                input.CurrentSearchInput,
                                                 input.CurrentSortOrder,
                                                 input.PageNumber,
                                                 input.ItemsPerPage);
+                }
+
+                this.logger.LogInformation($"Conformity types loaded successfully");
             }
-            else
+            catch (Exception ex)
             {
-                input.CurrentSearchInput = input.CurrentSearchInput.Trim();
-                model.ItemsCount = this.conformityTypesService.GetCountBySearchInput(input.CurrentSearchInput);
-                model.ConformityTypes = await this.conformityTypesService
-                                            .GetAllBySearchInputOrderedAsPagesAsync<ConformityTypeExportModel>(
-                                            input.CurrentSearchInput,
-                                            input.CurrentSortOrder,
-                                            input.PageNumber,
-                                            input.ItemsPerPage);
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity types loading failed: {ex}");
+
+                return this.Redirect("/");
             }
 
             return this.View(model);
@@ -101,21 +113,38 @@
                 return this.View(input);
             }
 
-            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = await this.userManager.GetUserAsync(this.User);
+            try
+            {
+                // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var user = await this.userManager.GetUserAsync(this.User);
+                await this.conformityTypesService.CreateAsync(input, user.Id);
 
-            await this.conformityTypesService.CreateAsync(input, user.Id);
+                this.TempData[GlobalConstants.TempDataMessagePropertyName] = GlobalConstants.ConformityTypeCreatedSuccessfullyMessage;
+                this.logger.LogInformation($"Conformity type: {input.Description} was created by user: {user.Id}");
+            }
+            catch (Exception ex)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity type creation failed: {ex}");
 
-            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ConformityTypeCreatedSuccessfullyMessage;
+                // return user to the Create view instead of Home/Error page
+                return this.View();
+            }
 
             return this.RedirectToAction(nameof(this.ListAll));
         }
 
         [Authorize]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(ConformityTypeIdInputModel input)
         {
-            var model = await this.conformityTypesService.GetByIdAsync<ConformityTypeEditInputModel>(id);
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
+
+                return this.RedirectToAction(nameof(this.ListAll));
+            }
+
+            var model = await this.conformityTypesService.GetByIdAsync<ConformityTypeEditInputModel>(input.Id);
 
             return this.View(model);
         }
@@ -142,15 +171,25 @@
                 return this.View(model);
             }
 
-            // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = await this.userManager.GetUserAsync(this.User);
+            try
+            {
+                // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var user = await this.userManager.GetUserAsync(this.User);
+                await this.conformityTypesService.EditAsync(input, user.Id);
 
-            await this.conformityTypesService.EditAsync(input, user.Id);
+                this.TempData[GlobalConstants.TempDataMessagePropertyName] = GlobalConstants.ConformityTypeEditedSuccessfullyMessage;
+                this.logger.LogInformation($"Conformity type: {input.Id} was edited by user: {user.Id}");
+            }
+            catch (Exception ex)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity type modification failed: {ex}");
 
-            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ConformityTypeEditedSuccessfullyMessage;
+                // return user to the Create view instead of Home/Error page
+                return this.View();
+            }
 
-            // TODO: return this.RedirectToAction(nameof(this.Details), "ConformityTypes", new { input.Id });
+            // TODO: return this.RedirectToAction(nameof(this.Details), new { input.Id });
             return this.RedirectToAction(nameof(this.ListAll));
         }
 
@@ -167,22 +206,23 @@
                 return this.RedirectToAction(nameof(this.ListAll));
             }
 
-            var user = await this.userManager.GetUserAsync(this.User);
+            try
+            {
+                var user = await this.userManager.GetUserAsync(this.User);
+                await this.conformityTypesService.DeleteAsync(input.Id, user.Id);
 
-            await this.conformityTypesService.DeleteAsync(input.Id, user.Id);
+                this.TempData[GlobalConstants.TempDataMessagePropertyName] = GlobalConstants.ConformityTypeDeletedSuccessfullyMessage;
+                this.logger.LogInformation($"Conformity type: {input.Id} was deleted by user: {user.Id}");
+            }
+            catch (Exception ex)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity type deletion failed: {ex}");
 
-            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.ConformityTypeDeletedSuccessfullyMessage;
+                // if error accure here, the Home/Error page will be displayed
+            }
 
             return this.RedirectToAction(nameof(this.ListAll));
-        }
-
-        // TODO - can be deleted - moved to api controller
-        public async Task<IActionResult> GetByIdOrDescription(string input)
-        {
-            var model = await this.conformityTypesService.GetAllBySearchInputAsync<ConformityTypeExportModel>(input);
-
-            return this.Json(model);
         }
     }
 }

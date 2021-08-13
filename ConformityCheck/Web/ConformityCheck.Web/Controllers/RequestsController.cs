@@ -1,5 +1,6 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using ConformityCheck.Common;
@@ -14,6 +15,7 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     [Authorize]
     public class RequestsController : BaseController
@@ -31,6 +33,7 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IWebHostEnvironment environment;
         private readonly IEmailSender emailSender;
+        private readonly ILogger<RequestsController> logger;
 
         public RequestsController(
             IArticlesService articlesService,
@@ -41,7 +44,8 @@
             IConformitiesService conformitiesService,
             UserManager<ApplicationUser> userManager,
             IWebHostEnvironment environment,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ILogger<RequestsController> logger)
         {
             this.articlesService = articlesService;
             this.suppliersService = suppliersService;
@@ -52,30 +56,41 @@
             this.userManager = userManager;
             this.environment = environment;
             this.emailSender = emailSender;
+            this.logger = logger;
             this.conformityFilesDirectory = $"{this.environment.WebRootPath}/files";
         }
 
         public async Task<IActionResult> SendRequest(ConformityGetInputModel input)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+            try
+            {
+                var user = await this.userManager.GetUserAsync(this.User);
 
-            var article = await this.articlesService.GetByIdAsync<ArticleBaseModel>(input.ArticleId);
-            var supplier = await this.suppliersService.GetByIdAsync<SupplierBaseModel>(input.SupplierId);
-            var conformityType = await this.conformityTypesService.GetByIdAsync<ConformityTypeBaseModel>(input.ConformityTypeId);
+                var article = await this.articlesService.GetByIdAsync<ArticleBaseModel>(input.ArticleId);
+                var supplier = await this.suppliersService.GetByIdAsync<SupplierBaseModel>(input.SupplierId);
+                var conformityType = await this.conformityTypesService.GetByIdAsync<ConformityTypeBaseModel>(input.ConformityTypeId);
 
-            // send email to supplier
-            await this.emailSender.SendEmailAsync(
-                GlobalConstants.SystemEmail,
-                GlobalConstants.SystemName,
-                supplier.Email,
-                supplier.Name,
-                $"{conformityType.Description} conformity request for article {article.Number} - {article.Description}",
-                $"Dear {supplier.Name},\r\nWe would like to kindly request a {conformityType.Description} confirmation for article {article.Number} - {article.Description}.\r\n\r\nKind Regards,\r\nConformity Check Team,\r\n{user.FirstName} {user.LastName}");
+                // send email to supplier
+                await this.emailSender.SendEmailAsync(
+                    GlobalConstants.SystemEmail,
+                    GlobalConstants.SystemName,
+                    supplier.Email,
+                    supplier.Name,
+                    $"{conformityType.Description} conformity request for article {article.Number} - {article.Description}",
+                    $"Dear {supplier.Name},\r\nWe would like to kindly request a {conformityType.Description} confirmation for article {article.Number} - {article.Description}.\r\n\r\nKind Regards,\r\nConformity Check Team,\r\n{user.FirstName} {user.LastName}");
 
-            await this.conformitiesService.AddRequestDateAsync(input, user.Id);
+                await this.conformitiesService.AddRequestDateAsync(input, user.Id);
 
-            this.TempData[GlobalConstants.TempDataMessagePropertyName] =
-                GlobalConstants.RequestSentSuccessfullyMessage;
+                this.TempData[GlobalConstants.TempDataMessagePropertyName] = GlobalConstants.RequestSentSuccessfullyMessage;
+                this.logger.LogInformation($"Conformity request for article {input.ArticleId} - {input.ConformityTypeId} - was send to {input.SupplierId} by user: {user.Id}");
+            }
+            catch (Exception ex)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity request sending failed: {ex}");
+
+                // if error accure here, the Home/Error page will be displayed
+            }
 
             if (input.CallerViewName == SuppliersCallerViewName)
             {

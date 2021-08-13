@@ -1,6 +1,5 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
-    using System;
     using System.Diagnostics;
 
     using ConformityCheck.Services.Data;
@@ -25,16 +24,16 @@
 
         public IActionResult Index()
         {
-            var countsDto = this.getCountsService.GetCounts();
+            var counts = this.getCountsService.GetCounts();
             var model = new IndexViewModel
             {
-                Articles = countsDto.Articles,
-                Conformities = countsDto.Conformities,
-                ConformityTypes = countsDto.ConformityTypes,
-                Products = countsDto.Products,
-                RegulationLists = countsDto.RegulationLists,
-                Substances = countsDto.Substances,
-                Suppliers = countsDto.Suppliers,
+                Articles = counts.Articles,
+                Conformities = counts.Conformities,
+                ConformityTypes = counts.ConformityTypes,
+                Products = counts.Products,
+                RegulationLists = counts.RegulationLists,
+                Substances = counts.Substances,
+                Suppliers = counts.Suppliers,
             };
 
             this.logger.LogInformation("User opens Home page");
@@ -45,7 +44,6 @@
         public IActionResult Privacy()
         {
             this.logger.LogInformation("User opens Privacy page");
-            throw new ArgumentException("Subject and message should be provided.");
 
             return this.View();
         }

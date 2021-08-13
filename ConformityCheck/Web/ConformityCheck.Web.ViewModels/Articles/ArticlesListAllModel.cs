@@ -1,22 +1,14 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Articles
 {
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
 
     using ConformityCheck.Common;
-    using ConformityCheck.Common.ValidationAttributes;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
     public class ArticlesListAllModel : PagingViewModel, IMapFrom<Article>
     {
         public IEnumerable<ArticleDetailsExportModel> Articles { get; set; }
-
-        // the choosen article Id:
-        // public ArticleSelectedInputModel ArticleSelected { get; set; }
-        [Required]
-        [ArticleEntityAttribute]
-        public string Id { get; set; }
 
         public string NumberSortParam => this.CurrentSortOrder == GlobalConstants.NumberSortParamDesc ?
             GlobalConstants.NumberSortParam : GlobalConstants.NumberSortParamDesc;
