@@ -5,12 +5,11 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+
     using ConformityCheck.Common;
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
-    using ConformityCheck.Web.ViewModels.Articles;
-    using ConformityCheck.Web.ViewModels.Conformities;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.EntityFrameworkCore;
 
@@ -18,18 +17,15 @@
     {
         private readonly IDeletableEntityRepository<Supplier> suppliersRepository;
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
-        private readonly IRepository<ArticleConformityType> articleConformityTypesRepository;
         private readonly IRepository<ArticleSupplier> articleSuppliersRepository;
 
         public SuppliersService(
             IDeletableEntityRepository<Supplier> suppliersRepository,
             IDeletableEntityRepository<Conformity> conformitiesRepository,
-            IRepository<ArticleConformityType> articleConformityTypeRepository,
             IRepository<ArticleSupplier> articleSupplierRepository)
         {
             this.suppliersRepository = suppliersRepository;
             this.conformitiesRepository = conformitiesRepository;
-            this.articleConformityTypesRepository = articleConformityTypeRepository;
             this.articleSuppliersRepository = articleSupplierRepository;
         }
 
@@ -84,17 +80,6 @@
                 .ToListAsync();
         }
 
-        // public async Task<IEnumerable<T>> GetOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage)
-        //  {
-        //      return await this.suppliersRepository
-        //                          .AllAsNoTracking()
-        //                          .OrderByDescending(x => x.CreatedOn)
-        //                          .ThenByDescending(x => x.ModifiedOn)
-        //                          .ThenBy(x => x.Number)
-        //                          .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
-        //                          .To<T>()
-        //                          .ToListAsync();
-        //  }
         public async Task<IEnumerable<T>> GetAllOrderedAsPagesAsync<T>(string sortOrder, int page, int itemsPerPage)
         {
             switch (sortOrder)
@@ -310,115 +295,12 @@
                 .AllAsNoTracking()
                 .Where(x => x.SupplierId == id)
                 .OrderBy(x => x.Article.Number)
-
-                // .Select(x => new Article
-                // {
-                //    Id = x.ArticleId,
-                //    Number = x.Article.Number,
-                //    Description = x.Article.Description,
-                // })
                 .To<T>()
                 .ToListAsync();
 
             return articles;
         }
 
-        //public async Task<IEnumerable<ArticleConformityExportModel>> GetArticlesWithConformityByIdOrderedAsPageAsync(
-        //    string id,
-        //    string sortOrder,
-        //    int page,
-        //    int itemsPerPage)
-        //{
-        //    var supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
-
-        //    switch (sortOrder)
-        //    {
-        //        case "numberDesc":
-        //            return supplier.Articles
-        //                .OrderByDescending(a => a.ArticleNumber)
-        //                .ThenBy(a => a.ConformityTypeDescription)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "description":
-        //            return supplier.Articles
-        //                .OrderBy(a => a.ArticleDescription)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "descriptionDesc":
-        //            return supplier.Articles
-        //                .OrderByDescending(a => a.ArticleDescription)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "conformityType":
-        //            return supplier.Articles
-        //                .OrderBy(a => a.ConformityTypeDescription)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "conformityTypeDesc":
-        //            return supplier.Articles
-        //                .OrderByDescending(a => a.ConformityTypeDescription)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "hasConformity":
-        //            return supplier.Articles
-        //                .OrderBy(a => a.ArticleConformity)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "hasConformityDesc":
-        //            return supplier.Articles
-        //                .OrderByDescending(a => a.ArticleConformity)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "acceptedConformity":
-        //            return supplier.Articles
-        //                .OrderBy(a => a.ArticleConformity?.IsAccepted)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "acceptedConformityDesc":
-        //            return supplier.Articles
-        //                .OrderByDescending(a => a.ArticleConformity?.IsAccepted)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "validConformity":
-        //            return supplier.Articles
-        //                .OrderBy(a => a.ArticleConformity?.IsValid)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "validConformityDesc":
-        //            return supplier.Articles
-        //                .OrderByDescending(a => a.ArticleConformity?.IsValid)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        // case "number":
-        //        default:
-        //            return supplier.Articles
-        //                .OrderBy(a => a.ArticleNumber)
-        //                .ThenBy(a => a.ConformityTypeDescription)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-        //    }
-        //}
         public async Task<SupplierArticlesDetailsExportModel> GetByIdWIthArticlesAndConformityOrderedAsPageAsync(
            string id,
            string sortOrder,
@@ -528,128 +410,116 @@
             }
         }
 
-        //public async Task<IEnumerable<ArticleConformityExportModel>>
-        //    GetArticlesBySearchInputWithConformityByIdOrderedAsPageAsync(
-        //               string id,
-        //               string searchInput,
-        //               string sortOrder,
-        //               int page,
-        //               int itemsPerPage)
-        //{
-        //    var supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
-
-        //    switch (sortOrder)
-        //    {
-        //        case "numberDesc":
-        //            return supplier.Articles
-        //                .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
-        //                          || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
-        //                .OrderByDescending(a => a.ArticleNumber)
-        //                .ThenBy(a => a.ConformityTypeDescription)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "description":
-        //            return supplier.Articles
-        //                .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
-        //                          || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
-        //                .OrderBy(a => a.ArticleDescription)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "descriptionDesc":
-        //            return supplier.Articles
-        //                .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
-        //                          || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
-        //                .OrderByDescending(a => a.ArticleDescription)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "conformityType":
-        //            return supplier.Articles
-        //                .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
-        //                          || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
-        //                .OrderBy(a => a.ConformityTypeDescription)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "conformityTypeDesc":
-        //            return supplier.Articles
-        //                .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
-        //                          || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
-        //                .OrderByDescending(a => a.ConformityTypeDescription)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "hasConformity":
-        //            return supplier.Articles
-        //                .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
-        //                          || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
-        //                .OrderBy(a => a.ArticleConformity)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "hasConformityDesc":
-        //            return supplier.Articles
-        //                .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
-        //                          || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
-        //                .OrderByDescending(a => a.ArticleConformity)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "acceptedConformity":
-        //            return supplier.Articles
-        //                .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
-        //                          || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
-        //                .OrderBy(a => a.ArticleConformity?.IsAccepted)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "acceptedConformityDesc":
-        //            return supplier.Articles
-        //                .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
-        //                          || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
-        //                .OrderByDescending(a => a.ArticleConformity?.IsAccepted)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "validConformity":
-        //            return supplier.Articles
-        //                .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
-        //                          || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
-        //                .OrderBy(a => a.ArticleConformity?.IsValid)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        case "validConformityDesc":
-        //            return supplier.Articles
-        //                .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
-        //                          || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
-        //                .OrderByDescending(a => a.ArticleConformity?.IsValid)
-        //                .ThenBy(a => a.ArticleNumber)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-
-        //        // case "number":
-        //        default:
-        //            return supplier.Articles
-        //                .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
-        //                          || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
-        //                .OrderBy(a => a.ArticleNumber)
-        //                .ThenBy(a => a.ConformityTypeDescription)
-        //                .Skip((page - 1) * itemsPerPage)
-        //                .Take(itemsPerPage);
-        //    }
-        //}
+        // public async Task<IEnumerable<ArticleConformityExportModel>>
+        //     GetArticlesBySearchInputWithConformityByIdOrderedAsPageAsync(
+        //                string id,
+        //                string searchInput,
+        //                string sortOrder,
+        //                int page,
+        //                int itemsPerPage)
+        // {
+        //     var supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
+        //     switch (sortOrder)
+        //     {
+        //         case "numberDesc":
+        //             return supplier.Articles
+        //                 .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
+        //                           || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
+        //                 .OrderByDescending(a => a.ArticleNumber)
+        //                 .ThenBy(a => a.ConformityTypeDescription)
+        //                 .Skip((page - 1) * itemsPerPage)
+        //                 .Take(itemsPerPage);
+        //         case "description":
+        //             return supplier.Articles
+        //                 .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
+        //                           || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
+        //                 .OrderBy(a => a.ArticleDescription)
+        //                 .ThenBy(a => a.ArticleNumber)
+        //                 .Skip((page - 1) * itemsPerPage)
+        //                 .Take(itemsPerPage);
+        //         case "descriptionDesc":
+        //             return supplier.Articles
+        //                 .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
+        //                           || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
+        //                 .OrderByDescending(a => a.ArticleDescription)
+        //                 .ThenBy(a => a.ArticleNumber)
+        //                 .Skip((page - 1) * itemsPerPage)
+        //                 .Take(itemsPerPage);
+        //         case "conformityType":
+        //             return supplier.Articles
+        //                 .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
+        //                           || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
+        //                 .OrderBy(a => a.ConformityTypeDescription)
+        //                 .ThenBy(a => a.ArticleNumber)
+        //                 .Skip((page - 1) * itemsPerPage)
+        //                 .Take(itemsPerPage);
+        //         case "conformityTypeDesc":
+        //             return supplier.Articles
+        //                 .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
+        //                           || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
+        //                 .OrderByDescending(a => a.ConformityTypeDescription)
+        //                 .ThenBy(a => a.ArticleNumber)
+        //                 .Skip((page - 1) * itemsPerPage)
+        //                 .Take(itemsPerPage);
+        //         case "hasConformity":
+        //             return supplier.Articles
+        //                 .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
+        //                           || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
+        //                 .OrderBy(a => a.ArticleConformity)
+        //                 .ThenBy(a => a.ArticleNumber)
+        //                 .Skip((page - 1) * itemsPerPage)
+        //                 .Take(itemsPerPage);
+        //         case "hasConformityDesc":
+        //             return supplier.Articles
+        //                 .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
+        //                           || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
+        //                 .OrderByDescending(a => a.ArticleConformity)
+        //                 .ThenBy(a => a.ArticleNumber)
+        //                 .Skip((page - 1) * itemsPerPage)
+        //                 .Take(itemsPerPage);
+        //         case "acceptedConformity":
+        //             return supplier.Articles
+        //                 .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
+        //                           || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
+        //                 .OrderBy(a => a.ArticleConformity?.IsAccepted)
+        //                 .ThenBy(a => a.ArticleNumber)
+        //                 .Skip((page - 1) * itemsPerPage)
+        //                 .Take(itemsPerPage);
+        //         case "acceptedConformityDesc":
+        //             return supplier.Articles
+        //                 .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
+        //                           || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
+        //                 .OrderByDescending(a => a.ArticleConformity?.IsAccepted)
+        //                 .ThenBy(a => a.ArticleNumber)
+        //                 .Skip((page - 1) * itemsPerPage)
+        //                 .Take(itemsPerPage);
+        //         case "validConformity":
+        //             return supplier.Articles
+        //                 .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
+        //                           || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
+        //                 .OrderBy(a => a.ArticleConformity?.IsValid)
+        //                 .ThenBy(a => a.ArticleNumber)
+        //                 .Skip((page - 1) * itemsPerPage)
+        //                 .Take(itemsPerPage);
+        //         case "validConformityDesc":
+        //             return supplier.Articles
+        //                 .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
+        //                           || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
+        //                 .OrderByDescending(a => a.ArticleConformity?.IsValid)
+        //                 .ThenBy(a => a.ArticleNumber)
+        //                 .Skip((page - 1) * itemsPerPage)
+        //                 .Take(itemsPerPage);
+        //         case "number":
+        //         default:
+        //             return supplier.Articles
+        //                 .Where(x => x.ArticleNumber.Contains(searchInput.ToUpper())
+        //                           || x.ArticleDescription.ToUpper().Contains(searchInput.ToUpper()))
+        //                 .OrderBy(a => a.ArticleNumber)
+        //                 .ThenBy(a => a.ConformityTypeDescription)
+        //                 .Skip((page - 1) * itemsPerPage)
+        //                 .Take(itemsPerPage);
+        //     }
+        // }
 
         // public async Task<SupplierArticlesDetailsExportModel> DetailsByIdAsync(string id)
         // {

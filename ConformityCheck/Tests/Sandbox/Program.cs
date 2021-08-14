@@ -5,6 +5,7 @@
     using System.IO;
     using System.Threading.Tasks;
 
+    using CommandLine;
     using ConformityCheck.Data;
     using ConformityCheck.Data.Common;
     using ConformityCheck.Data.Common.Repositories;
@@ -13,28 +14,10 @@
     using ConformityCheck.Data.Seeding;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Services.Messaging;
-
-    using CommandLine;
-
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-
-    public class Test
-    {
-        public Test(string name, int year)
-        {
-            this.Name = name;
-            this.Year = year;
-        }
-
-        public string Name { get; }
-
-        public int Year { get; }
-    }
-
-    public record Test2(string Name, int Year);
 
     public static class Program
     {
@@ -102,4 +85,23 @@
             services.AddTransient<ISettingsService, SettingsService>();
         }
     }
+
+#pragma warning disable SA1402 // File may only contain a single type
+    public class Test
+#pragma warning restore SA1402 // File may only contain a single type
+    {
+        public Test(string name, int year)
+        {
+            this.Name = name;
+            this.Year = year;
+        }
+
+        public string Name { get; }
+
+        public int Year { get; }
+    }
+
+#pragma warning disable SA1313 // Parameter names should begin with lower-case letter
+    public record Test2(string Name, int Year);
+#pragma warning restore SA1313 // Parameter names should begin with lower-case letter
 }

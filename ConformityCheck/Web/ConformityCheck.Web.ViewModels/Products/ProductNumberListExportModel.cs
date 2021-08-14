@@ -5,6 +5,5 @@
     public class ProductNumberListExportModel
     {
         public IEnumerable<ProductNumberExportModel> Products { get; set; }
-
     }
 }

@@ -40,7 +40,7 @@
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(
                     this.configuration.GetConnectionString("DefaultConnection")
-                    //o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
+                    // o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
                     ));
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)

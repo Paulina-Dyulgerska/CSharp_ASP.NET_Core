@@ -47,19 +47,6 @@
         public string ValidConformitySortParam => this.CurrentSortOrder == GlobalConstants.ValidConformitySortParamDesc ?
             GlobalConstants.ValidConformitySortParam : GlobalConstants.ValidConformitySortParamDesc;
 
-        //public string NumberSortParam => string.IsNullOrEmpty(this.CurrentSortOrder) ? "numberDesc" : string.Empty;
-
-        //public string DescriptionSortParam => this.CurrentSortOrder == "descriptionDesc" ? "description" : "descriptionDesc";
-
-        //public string ConformityTypeSortParam => this.CurrentSortOrder == "conformityTypeDesc" ? "conformityType" : "conformityTypeDesc";
-
-        //public string HasConformitySortParam => this.CurrentSortOrder == "hasConformityDesc" ? "hasConformity" : "hasConformityDesc";
-
-        //public string AcceptedConformitySortParam => this.CurrentSortOrder == "acceptedConformityDesc" ?
-        //                                                             "acceptedConformity" : "acceptedConformityDesc";
-
-        //public string ValidConformitySortParam => this.CurrentSortOrder == "validConformityDesc" ? "validConformity" : "validConformityDesc";
-
         public IEnumerable<ConformityExportModel> Conformities
         {
             get

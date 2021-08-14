@@ -8,16 +8,11 @@
     {
         public void Configure(EntityTypeBuilder<ConformityType> conformityType)
         {
-            // ne moje da se iztrie ConformityType, predi
-            // da se iztriqt vsichki Conformities, koito sa ot tozi type!
+            // cannot delete ConformityType if there are Conformities for this ConformityType uploaded!
             conformityType
                 .HasMany(ct => ct.Conformities)
                 .WithOne(c => c.ConformityType)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            //conformityType
-            //    .HasIndex(ct => ct.Description)
-            //    .IsUnique();
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿namespace ConformityCheck.Web.ViewModels
 {
-    using ConformityCheck.Common;
     using System;
+
+    using ConformityCheck.Common;
 
     public class PagingViewModel
     {

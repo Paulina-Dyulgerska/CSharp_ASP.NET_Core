@@ -35,7 +35,6 @@
                     Email = adminUser.Email,
                     EmailConfirmed = adminUser.EmailConfirmed,
                 };
-
                 var resultUserAdd = await userManager.CreateAsync(user, adminUser.Password);
 
                 if (!resultUserAdd.Succeeded)

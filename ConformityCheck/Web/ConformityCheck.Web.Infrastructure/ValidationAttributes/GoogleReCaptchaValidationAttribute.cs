@@ -8,7 +8,6 @@
 
     using ConformityCheck.Web.Infrastructure.ReCaptcha;
     using ConformityCheck.Web.Infrastructure.Settings;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Options;
 
     public class GoogleReCaptchaValidationAttribute : ValidationAttribute

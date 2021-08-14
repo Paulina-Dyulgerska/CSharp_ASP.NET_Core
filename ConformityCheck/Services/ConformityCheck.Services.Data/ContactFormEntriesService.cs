@@ -1,13 +1,13 @@
-﻿using ConformityCheck.Data.Common.Repositories;
-using ConformityCheck.Data.Models;
-using ConformityCheck.Web.ViewModels.ContactFormEntries;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConformityCheck.Services.Data
+﻿namespace ConformityCheck.Services.Data
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using ConformityCheck.Data.Common.Repositories;
+    using ConformityCheck.Data.Models;
+    using ConformityCheck.Web.ViewModels.ContactFormEntries;
+
     public class ContactFormEntriesService : IContactFormEntriesService
     {
         private readonly IRepository<ContactFormEntry> contactFormEntriesRepository;

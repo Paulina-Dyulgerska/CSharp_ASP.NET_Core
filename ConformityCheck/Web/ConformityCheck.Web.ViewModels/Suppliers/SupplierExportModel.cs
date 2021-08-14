@@ -20,7 +20,7 @@
         public string ContactPersonName { get; set; }
 
         // AutoMapper-a moje da vzeme ot Supplier.ArticleSuppliers.Count() i da mi go dade
-        // direktno tuk, bez da pravq custom mapping!!! Ako spazwam conventiona za imenata na 
+        // direktno tuk, bez da pravq custom mapping!!! Ako spazwam conventiona za imenata na
         // propertytata, toj shte se opravi s neshta kato Count, Min, Max i t.n.
         public int ArticleSuppliersCount { get; set; }
 

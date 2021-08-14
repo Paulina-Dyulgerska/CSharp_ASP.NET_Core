@@ -15,7 +15,7 @@
             configuration.CreateMap<Supplier, SuppliersViewComponentModel>()
                 .ForMember(
                 x => x.NameAndNumber,
-                opt => opt.MapFrom(x => $"{ x.Name} - { x.Number}"));
+                opt => opt.MapFrom(x => $"{x.Name} - {x.Number}"));
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿namespace ConformityCheck.Services.Data
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -9,7 +8,6 @@
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data.Models;
-    using ConformityCheck.Services.Mapping;
 
     public class ArticlesSeedService : IArticlesSeedService
     {
