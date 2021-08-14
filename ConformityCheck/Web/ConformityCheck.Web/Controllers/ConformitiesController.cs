@@ -229,7 +229,15 @@
             {
                 input.ValidForSingleArticle = false;
 
-                return this.View(input);
+                var model = await this.conformitiesService.GetForCreateAsync(new ConformityGetInputModel
+                {
+                    ArticleId = input.ArticleId,
+                    ConformityTypeId = input.ConformityTypeId,
+                    SupplierId = input.SupplierId,
+                    CallerViewName = input.CallerViewName,
+                });
+
+                return this.View(model);
             }
 
             try

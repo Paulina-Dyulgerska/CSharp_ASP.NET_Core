@@ -52,11 +52,11 @@
                     </li>
                     <li>
                         Article's creation date:
-                        <strong>@Model.CreatedOn</strong>
+                        <strong>@Model.CreatedOn.ToString(GlobalConstants.DateTimeFormat)</strong>
                     </li>
                     <li>
                         Article's last modify date:
-                        <strong>@Model.ModifiedOn</strong>
+                        <strong>@Model.ModifiedOn?.ToString(GlobalConstants.DateTimeFormat)</strong>
                     </li>
                     <li>
                         Article's creator name:

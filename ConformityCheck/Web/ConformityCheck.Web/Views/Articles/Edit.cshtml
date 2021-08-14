@@ -24,10 +24,10 @@
                 <details>
                     <summary>Article details</summary>
                     <p>
-                        Article creation date: @Model.CreatedOn
+                        Article creation date: @Model.CreatedOn.ToString(GlobalConstants.DateTimeFormat)
                     </p>
                     <p>
-                        Article last modify date: @Model.ModifiedOn
+                        Article last modify date: @Model.ModifiedOn?.ToString(GlobalConstants.DateTimeFormat)
                     </p>
                     <p>
                         Article creator name: @Model.UserEmail

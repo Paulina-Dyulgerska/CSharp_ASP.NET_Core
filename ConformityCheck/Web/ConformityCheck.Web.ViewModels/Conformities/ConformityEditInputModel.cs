@@ -1,5 +1,6 @@
 ﻿namespace ConformityCheck.Web.ViewModels.Conformities
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
 
     using AutoMapper;
@@ -14,6 +15,8 @@
         public string Id { get; set; }
 
         public string ConformityFileUrl { get; set; }
+
+        public DateTime? AcceptanceDate { get; set; }
 
         public override void CreateMappings(IProfileExpression configuration)
         {

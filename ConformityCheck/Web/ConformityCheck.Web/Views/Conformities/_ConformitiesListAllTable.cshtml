@@ -132,58 +132,58 @@
         <tbody>
             @foreach (var conformity in this.Model.Conformities)
             {
-                <tr class="" data-id="@conformity.Id">
-                    <td id="search" class="col-s" data-label="Art. Nr.">@conformity.Article.Number</td>
-                    <td id="search" class="col-s" data-label="Art. Desc.">@conformity.Article.Description</td>
-                    <td id="search" class="col-xs" data-label="Sup. Nr.">@conformity.Supplier.Number</td>
-                    <td id="search" class="col-s" data-label="Sup. Name">@conformity.Supplier.Name</td>
-                    <td id="search" class="col-xs" data-label="Conf. Type">@conformity.ConformityType.Description</td>
-                    <td class="col-xs" data-label="Assepted">@(conformity.IsAccepted ? "Yes" : "No")</td>
-                    <td class="col-xs" data-label="Valid">@(conformity.IsValid ? "Yes" : "No")</td>
-                    <td class="col-s" data-label="Created">@conformity.CreatedOn.ToLocalTime().ToShortDateString()</td>
-                    @*<td class="col-s" data-label="Modified">
-                            @(conformity.ModifiedOn.HasValue ?
-                                   conformity.ModifiedOn.Value.ToLocalTime().ToShortDateString() : "-")
-                        </td>*@
-                    <td class="col-s" data-label="User">@conformity.UserEmail</td>
-                    <td class="col-s" data-label="Details">
-                        <a asp-action="Details" class="btn btn-details" asp-route-id="@conformity.Id">
-                            <span class="text">Details</span>
+            <tr class="" data-id="@conformity.Id">
+                <td id="search" class="col-s" data-label="Art. Nr.">@conformity.Article.Number</td>
+                <td id="search" class="col-s" data-label="Art. Desc.">@conformity.Article.Description</td>
+                <td id="search" class="col-xs" data-label="Sup. Nr.">@conformity.Supplier.Number</td>
+                <td id="search" class="col-s" data-label="Sup. Name">@conformity.Supplier.Name</td>
+                <td id="search" class="col-xs" data-label="Conf. Type">@conformity.ConformityType.Description</td>
+                <td class="col-xs" data-label="Assepted">@(conformity.IsAccepted ? "Yes" : "No")</td>
+                <td class="col-xs" data-label="Valid">@(conformity.IsValid ? "Yes" : "No")</td>
+                <td class="col-s" data-label="Created">@conformity.CreatedOn.ToString(GlobalConstants.DateTimeFormat)</td>
+                @*<td class="col-s" data-label="Modified">
+            @(conformity.ModifiedOn.HasValue ?
+                   conformity.ModifiedOn.Value.ToString(GlobalConstants.DateTimeFormat) : "-")
+        </td>*@
+                <td class="col-s" data-label="User">@conformity.UserEmail</td>
+                <td class="col-s" data-label="Details">
+                    <a asp-action="Details" class="btn btn-details" asp-route-id="@conformity.Id">
+                        <span class="text">Details</span>
+                    </a>
+                </td>
+                <td class="col-s" data-label="Edit">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Edit" class="btn btn-edit" asp-route-id="@conformity.Id"
+                           asp-route-callerViewName="Conformities">
+                            <span class="text">Edit</span>
                         </a>
-                    </td>
-                    <td class="col-s" data-label="Edit">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <a asp-action="Edit" class="btn btn-edit" asp-route-id="@conformity.Id"
-                               asp-route-callerViewName="Conformities">
-                                <span class="text">Edit</span>
-                            </a>
-                        }
-                        else
-                        {
-                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login"
-                               asp-route-returnUrl="/Conformities/Edit/@conformity.Id">
-                                <span class="text">Login</span>
-                            </a>
-                        }
-                    </td>
+                    }
+                    else
+                    {
+                        <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login"
+                           asp-route-returnUrl="/Conformities/Edit/@conformity.Id">
+                            <span class="text">Login</span>
+                        </a>
+                    }
+                </td>
 
-                    <td class="col-s" data-label="Delete">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <a asp-action="Delete" class="btn btn-delete" asp-route-id="@conformity.Id">
-                                <span class="text">Delete</span>
-                            </a>
-                        }
-                        else
-                        {
-                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login" 
-                               asp-route-returnUrl="/Conformities/ListAll">
-                                <span class="text">Login</span>
-                            </a>
-                        }
-                    </td>
-                </tr>
+                <td class="col-s" data-label="Delete">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Delete" class="btn btn-delete" asp-route-id="@conformity.Id">
+                            <span class="text">Delete</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login"
+                           asp-route-returnUrl="/Conformities/ListAll">
+                            <span class="text">Login</span>
+                        </a>
+                    }
+                </td>
+            </tr>
             }
         </tbody>
     </table>

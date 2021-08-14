@@ -19,7 +19,7 @@ namespace ConformityCheck.Data.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Ip = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                 },
                 constraints: table =>
                 {

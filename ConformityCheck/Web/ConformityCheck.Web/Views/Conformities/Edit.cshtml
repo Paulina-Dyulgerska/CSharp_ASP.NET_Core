@@ -39,7 +39,7 @@
                             <strong>@Model.ArticleNumber - @Model.ArticleDescription</strong>
                         </li>
                         <li>
-                            @if (@Model.ConformityFileUrl != null)
+                            @if (@Model.AcceptanceDate != null)
                             {
                             @* Variant 0: POST request*@
                             @*<form method="post" asp-controller="ContentDelivery" asp-action="ShowModalDocument" target="_blank">

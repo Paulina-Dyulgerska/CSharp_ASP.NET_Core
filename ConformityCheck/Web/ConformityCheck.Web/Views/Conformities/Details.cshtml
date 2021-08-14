@@ -27,60 +27,60 @@
                 <article class="data-container conformity-details">
                     <ul>
                         <li>
-                            @if (@Model.ConformityFileUrl != null)
+                            @if (@Model.AcceptanceDate != null)
                             {
-                            @* Variant 0: POST request*@
-                            @*<form method="post" asp-controller="ContentDelivery" asp-action="ShowModalDocument" target="_blank">
-                                    <article class="">
-                                        <p>
-                                            <strong>
-                                                Conformity is available.
-                                            </strong>
-                                        </p>
-                                        <p>
-                                            Click the button to see the conformity file:
-                                        </p>
-                                        <input type="text" class="form-control" asp-for="ConformityFileUrl" value="@Model.ConformityFileUrl" hidden>
-                                        <button type="submit" class="openPdf btn btn-cta">
-                                            <span>
-                                                <i class="fas fa-eye"></i> Conformity
-                                            </span>
-                                        </button>
-                                    </article>
-                                </form>*@
+                                @* Variant 0: POST request*@
+                                @*<form method="post" asp-controller="ContentDelivery" asp-action="ShowModalDocument" target="_blank">
+                                        <article class="">
+                                            <p>
+                                                <strong>
+                                                    Conformity is available.
+                                                </strong>
+                                            </p>
+                                            <p>
+                                                Click the button to see the conformity file:
+                                            </p>
+                                            <input type="text" class="form-control" asp-for="ConformityFileUrl" value="@Model.ConformityFileUrl" hidden>
+                                            <button type="submit" class="openPdf btn btn-cta">
+                                                <span>
+                                                    <i class="fas fa-eye"></i> Conformity
+                                                </span>
+                                            </button>
+                                        </article>
+                                    </form>*@
 
-                            @* Variant 1: *@
-                            <article class="">
-                                <p>
-                                    <strong>
-                                        Conformity is available.
-                                    </strong>
-                                </p>
-                                <p>
-                                    Click the button to see the conformity file:
-                                </p>
-                                <a class="openPdf btn btn-cta"
-                                   asp-controller="ContentDelivery"
-                                   asp-action="ShowModalDocument"
-                                   asp-route-conformityFileUrl="@Model.ConformityFileUrl"
-                                   target="_blank">
-                                    <span>
-                                        <i class="fas fa-eye"></i> Conformity
-                                    </span>
-                                </a>
+                                @* Variant 1: *@
+                                <article class="">
+                                    <p>
+                                        <strong>
+                                            Conformity is available.
+                                        </strong>
+                                    </p>
+                                    <p>
+                                        Click the button to see the conformity file:
+                                    </p>
+                                    <a class="openPdf btn btn-cta"
+                                       asp-controller="ContentDelivery"
+                                       asp-action="ShowModalDocument"
+                                       asp-route-conformityFileUrl="@Model.ConformityFileUrl"
+                                       target="_blank">
+                                        <span>
+                                            <i class="fas fa-eye"></i> Conformity
+                                        </span>
+                                    </a>
 
-                                @* Variant 2: *@
-                                @*<a href="@Url.Action("ShowModalDocument", "ContentDelivery", new { ConformityFileUrl = @Model.ConformityFileUrl})" target="_blank">Link Text</a>*@
+                                    @* Variant 2: *@
+                                    @*<a href="@Url.Action("ShowModalDocument", "ContentDelivery", new { ConformityFileUrl = @Model.ConformityFileUrl})" target="_blank">Link Text</a>*@
 
-                                @* Variant 3: *@
-                                @*<div class="modal fade" id="modalGeneric" role="dialog">
-                                    </div>
-                                    <a class="ml-1" data-toggle="tooltip" title="Predogled"
-                                       data-url="@Url.Action("PdfPartial", "Conformities", new { ConformityFileUrl = Model.ConformityFileUrl })"
-                                       onclick="showGenericModal(event);">
-                                        show the file
-                                    </a>*@
-                            </article>
+                                    @* Variant 3: *@
+                                    @*<div class="modal fade" id="modalGeneric" role="dialog">
+                                        </div>
+                                        <a class="ml-1" data-toggle="tooltip" title="Predogled"
+                                           data-url="@Url.Action("PdfPartial", "Conformities", new { ConformityFileUrl = Model.ConformityFileUrl })"
+                                           onclick="showGenericModal(event);">
+                                            show the file
+                                        </a>*@
+                                </article>
                             }
                         </li>
                         <li>
@@ -97,23 +97,23 @@
                         </li>
                         <li>
                             Accepted:
-                            <strong>@Model.IsAccepted</strong>
+                            <strong>@(Model.IsAccepted ? "Yes" : "No")</strong>
                         </li>
                         <li>
                             Issue date:
-                            <strong>@Model.IssueDate</strong>
+                            <strong>@Model.IssueDate.ToString(GlobalConstants.DateTimeFormat)</strong>
                         </li>
                         <li>
                             Acceptance date:
-                            <strong>@Model.AcceptanceDate</strong>
+                            <strong>@Model.AcceptanceDate?.ToString(GlobalConstants.DateTimeFormat)</strong>
                         </li>
                         <li>
                             Valid:
-                            <strong>@Model.IsValid</strong>
+                            <strong>@(Model.IsValid ? "Yes" : "No")</strong>
                         </li>
                         <li>
                             Validity date:
-                            <strong>@Model.ValidityDate</strong>
+                            <strong>@Model.ValidityDate?.ToString(GlobalConstants.DateTimeFormat)</strong>
                         </li>
                         <li>
                             Supplier email:
@@ -133,20 +133,34 @@
                         </li>
                         <li>
                             Created on:
-                            <strong>@Model.CreatedOn</strong>
+                            <strong>@Model.CreatedOn.ToString(GlobalConstants.DateTimeFormat)</strong>
                         </li>
                         <li>
                             Modified on:
-                            <strong>@Model.ModifiedOn</strong>
+                            <strong>@Model.ModifiedOn?.ToString(GlobalConstants.DateTimeFormat)</strong>
                         </li>
                     </ul>
                     <article class="large-margin-horizontal large-margin-vertical center">
-                        <a class="btn btn-edit"
-                           asp-action="Edit"
-                           asp-route-id="@Model.Id"
-                           asp-route-callerViewName="Conformities">
-                            <span class="text">Edit conformity data</span>
-                        </a>
+                        @if (@Model.AcceptanceDate != null)
+                        {
+                            <a class="btn btn-edit"
+                               asp-action="Edit"
+                               asp-route-id="@Model.Id"
+                               asp-route-callerViewName="Conformities">
+                                <span class="text">Edit conformity data</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-edit"
+                               asp-action="AddToArticleSupplierConformityType"
+                               asp-route-articleId="@Model.Article.Id"
+                               asp-route-supplierId="@Model.Supplier.Id"
+                               asp-route-conformityTypeId="@Model.ConformityType.Id"
+                               asp-route-callerViewName="Conformities">
+                                <span class="text">Edit conformity data</span>
+                            </a>
+                        }
                     </article>
                 </article>
             </article>

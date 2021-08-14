@@ -30,7 +30,7 @@
                     <tr>
                         <td class="col-s" data-label="Conformity type">
                             @conformityType.Description
-                            @if (conformityBySupplier != null)
+                            @if (conformityBySupplier?.AcceptanceDate != null)
                             {
                                 <a class="btn btn-details"
                                    asp-controller="Conformities"
@@ -104,7 +104,7 @@
                         </td>
                         <td class="col-s" data-label="Request date">
                             @(conformityBySupplier?.RequestDate != null ?
-                               conformityBySupplier.RequestDate.Value.ToLocalTime().ToShortDateString() : "-")
+                               conformityBySupplier.RequestDate.Value.ToString(GlobalConstants.DateTimeFormat) : "-")
                         </td>
                     </tr>
                     @*<tr>@String.Join(", ", supplier.Conformities.Select(x=>x.Id))</tr>*@

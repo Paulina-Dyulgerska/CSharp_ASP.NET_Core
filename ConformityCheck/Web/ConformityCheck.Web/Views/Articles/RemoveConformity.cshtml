@@ -20,10 +20,10 @@
                 <details>
                     <summary>Article details</summary>
                     <p>
-                        Article's creation date: @Model.CreatedOn
+                        Article's creation date: @Model.CreatedOn.ToString(GlobalConstants.DateTimeFormat)
                     </p>
                     <p>
-                        Article's last modify date: @Model.ModifiedOn
+                        Article's last modify date: @Model.ModifiedOn?.ToString(GlobalConstants.DateTimeFormat)
                     </p>
                     <p>
                         Article's creator name: @Model.UserEmail

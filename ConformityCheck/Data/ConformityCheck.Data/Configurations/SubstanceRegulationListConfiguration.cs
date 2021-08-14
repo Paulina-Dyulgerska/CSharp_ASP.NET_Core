@@ -8,8 +8,6 @@
     {
         public void Configure(EntityTypeBuilder<SubstanceRegulationList> substanceRegulationList)
         {
-            //substanceRegulationList.HasKey(x => new { x.RegulationListId, x.SubstanceId });
-
             substanceRegulationList.HasOne(srl => srl.RegulationList)
             .WithMany(rl => rl.SubstanceRegulationLists)
             .HasForeignKey(s => s.RegulationListId);

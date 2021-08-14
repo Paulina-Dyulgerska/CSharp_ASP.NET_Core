@@ -94,10 +94,7 @@
                 {
                     <td class="col-s" data-label="Has conf.">Yes</td>
                     <td class="col-s" data-label="Accepted">@(article.ArticleConformity.IsAccepted ? "Yes" : "No")</td>
-                    <td class="col-xs" data-label="Valid">
-                        @((article.ArticleConformity.IsAccepted && article.ArticleConformity.ValidityDate >= DateTime.UtcNow.Date)
-                    ? "Yes" : "No")
-                    </td>
+                    <td class="col-xs" data-label="Valid">@(article.ArticleConformity.IsValid ? "Yes" : "No")</td>
                     <td class="col-s" data-label="Add / Edit">
                         <a asp-controller="Conformities" asp-action="Edit" class="btn btn-edit"
                            asp-route-Id="@article.ArticleConformity.Id"
@@ -145,7 +142,7 @@
                 </td>
                 <td class="col-s" data-label="Request date">
                     @(article.ArticleConformity?.RequestDate != null ?
-                           article.ArticleConformity.RequestDate.Value.ToLocalTime().ToShortDateString() : "-")
+                           article.ArticleConformity.RequestDate.Value.ToString(GlobalConstants.DateTimeFormat) : "-")
                 </td>
 
             </tr>

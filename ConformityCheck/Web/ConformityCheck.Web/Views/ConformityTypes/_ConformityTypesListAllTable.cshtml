@@ -76,10 +76,10 @@
                 <tr class="" data-id="@conformityType.Id">
                     <td id="search" class="col-xs" data-label="Conf. Type Nr.">@conformityType.Id</td>
                     <td id="search" class="col-m" data-label="Description">@conformityType.Description</td>
-                    <td class="col-s" data-label="Created">@conformityType.CreatedOn.ToLocalTime().ToShortDateString()</td>
+                    <td class="col-s" data-label="Created">@conformityType.CreatedOn.ToString(GlobalConstants.DateTimeFormat)</td>
                     <td class="col-m" data-label="Modified">
                         @(conformityType.ModifiedOn.HasValue ?
-                           conformityType.ModifiedOn.Value.ToLocalTime().ToShortDateString() : "-")
+                           conformityType.ModifiedOn.Value.ToString(GlobalConstants.DateTimeFormat) : "-")
                     </td>
                     <td class="col-l" data-label="User">@conformityType.UserId</td>
                     <td class="col-s" data-label="Details">

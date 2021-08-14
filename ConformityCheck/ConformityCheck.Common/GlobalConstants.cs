@@ -12,6 +12,8 @@
 
         public const string JwtCookieName = "ConformityCheck.AspNetCore.Identity.Application";
 
+        public const string DateTimeFormat = "dd/MM/yyyy";
+
         public const string TempDataMessagePropertyName = "Message";
         public const string TempDataErrorMessagePropertyName = "ErrorMessage";
 
