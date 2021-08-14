@@ -1,15 +1,16 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
-    using ConformityCheck.Web.ViewModels;
     using ConformityCheck.Web.ViewModels.Administration.Users;
     using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.Conformities;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
+    using ConformityCheck.Web.ViewModels.ContentDelivery;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -18,6 +19,7 @@
     using Microsoft.Extensions.Logging;
 
     [ApiController]
+    [Authorize]
     [Route("/api")]
     public class ContentDeliveryController : ControllerBase
     {
@@ -50,121 +52,257 @@
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var model = await this.articlesService.GetAllAsNoTrackingAsync<ArticleExportModel>();
+            try
+            {
+                var model = await this.articlesService.GetAllAsNoTrackingAsync<ArticleExportModel>();
 
-            return this.Ok(model);
+                this.logger.LogInformation($"Api {nameof(this.GetAll)} success.");
+
+                return this.Ok(model);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(
+                    1978,
+                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+
+                throw;
+            }
         }
 
         [HttpGet(nameof(GetArticleSuppliers) + "/{id}")]
-        public async Task<IActionResult> GetArticleSuppliers(string id)
+        public async Task<IActionResult> GetArticleSuppliers([FromRoute] ArticleIdInputModel input)
         {
-            var model = await this.articlesService.GetSuppliersByIdAsync<SupplierExportModel>(id);
+            // TODO - delete, not needed, API filter is doing this:
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
 
-            return this.Ok(model);
+            try
+            {
+                var model = await this.articlesService.GetSuppliersByIdAsync<SupplierExportModel>(input.Id);
+
+                this.logger.LogInformation($"Api {nameof(this.GetArticleSuppliers)} success.");
+
+                return this.Ok(model);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(
+                    1978,
+                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+
+                throw;
+            }
         }
 
         [HttpGet(nameof(GetArticleConformityTypesBySupplier))]
-        public async Task<IActionResult> GetArticleConformityTypesBySupplier(
-            string articleId,
-            string supplierId)
+        public async Task<IActionResult> GetArticleConformityTypesBySupplier([FromQuery] ArticleIdSupplierIdInputModel input)
         {
-            var model = await this.articlesService
-                .GetConformityTypesByIdAndSupplierAsync(articleId, supplierId);
+            // TODO - delete, not needed, API filter is doing this:
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
 
-            return this.Ok(model);
+            try
+            {
+                var model = await this.articlesService.GetConformityTypesByIdAndSupplierAsync(input.ArticleId, input.SupplierId);
+
+                this.logger.LogInformation($"Api {nameof(this.GetArticleConformityTypesBySupplier)} success.");
+
+                return this.Ok(model);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(
+                    1978,
+                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+
+                throw;
+            }
         }
 
         [HttpGet(nameof(GetSupplierArticles) + "/{id}")]
-        public async Task<IActionResult> GetSupplierArticles(string id)
+        public async Task<IActionResult> GetSupplierArticles([FromRoute] SupplierIdInputModel input)
         {
+            // TODO - delete, not needed, API filter is doing this:
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
             try
             {
-                var model = await this.suppliersService.GetArticlesByIdAsync<ArticleExportModel>(id);
+                var model = await this.suppliersService.GetArticlesByIdAsync<ArticleExportModel>(input.Id);
+
+                this.logger.LogInformation($"Api {nameof(this.GetSupplierArticles)} success.");
+
                 return this.Ok(model);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 this.logger.LogError(
-                    123,
-                    $"Error: {ex.Message}; Exeption stack trace: {ex.StackTrace}; Exeption innerexeption: {ex.InnerException.Message}");
-                throw new System.Exception(ex.Message);
+                    1978,
+                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+
+                throw;
             }
         }
 
         [HttpGet(nameof(GetArticlesByNumberOrDescription))]
         public async Task<IActionResult> GetArticlesByNumberOrDescription(string input)
         {
-            var model = await this.articlesService.GetAllBySearchInputAsync<ArticleExportModel>(input);
+            try
+            {
+                var model = await this.articlesService.GetAllBySearchInputAsync<ArticleExportModel>(input);
 
-            return this.Ok(model);
+                this.logger.LogInformation($"Api {nameof(this.GetArticlesByNumberOrDescription)} success.");
+
+                return this.Ok(model);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(
+                    1978,
+                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+
+                throw;
+            }
         }
 
         [HttpGet(nameof(GetSuppliersByNumberOrName))]
         public async Task<IActionResult> GetSuppliersByNumberOrName(string input)
         {
-            var model = await this.suppliersService.GetAllBySearchInputAsync<SupplierExportModel>(input);
+            try
+            {
+                var model = await this.suppliersService.GetAllBySearchInputAsync<SupplierExportModel>(input);
 
-            return this.Ok(model);
+                this.logger.LogInformation($"Api {nameof(this.GetSuppliersByNumberOrName)} success.");
+
+                return this.Ok(model);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(
+                    1978,
+                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+
+                throw;
+            }
         }
 
         [HttpGet(nameof(GetConformityTypeByIdOrDescription))]
         public async Task<IActionResult> GetConformityTypeByIdOrDescription(string input)
         {
-            var model = await this.conformityTypesService.GetAllBySearchInputAsync<ConformityTypeExportModel>(input);
+            try
+            {
+                var model = await this.conformityTypesService.GetAllBySearchInputAsync<ConformityTypeExportModel>(input);
 
-            return this.Ok(model);
+                this.logger.LogInformation($"Api {nameof(this.GetConformityTypeByIdOrDescription)} success.");
+
+                return this.Ok(model);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(
+                    1978,
+                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+
+                throw;
+            }
         }
 
         [HttpGet(nameof(GetConformitiesByArticleOrSupplierOrConformityType))]
         public async Task<IActionResult> GetConformitiesByArticleOrSupplierOrConformityType(string input)
         {
-            var model = await this.conformitiesService.GetAllBySearchInputAsync<ConformityExportModel>(input);
+            try
+            {
+                var model = await this.conformitiesService.GetAllBySearchInputAsync<ConformityExportModel>(input);
 
-            return this.Ok(model);
+                this.logger.LogInformation($"Api {nameof(this.GetConformitiesByArticleOrSupplierOrConformityType)} success.");
+
+                return this.Ok(model);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(
+                    1978,
+                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+
+                throw;
+            }
         }
 
         [Authorize]
         [HttpGet(nameof(ShowModalDocument))]
         public IActionResult ShowModalDocument(string conformityFileUrl)
         {
-            string filePath = "~" + conformityFileUrl;
-            var contentDisposition = new System.Net.Mime.ContentDisposition
+            try
             {
-                FileName = conformityFileUrl.Split('/').LastOrDefault(),
-                Inline = true,
-            };
+                string filePath = "~" + conformityFileUrl;
+                var contentDisposition = new System.Net.Mime.ContentDisposition
+                {
+                    FileName = conformityFileUrl.Split('/').LastOrDefault(),
+                    Inline = true,
+                };
 
-            this.Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
+                this.Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
 
-            return this.File(filePath, System.Net.Mime.MediaTypeNames.Application.Pdf);
+                this.logger.LogInformation($"Api {nameof(this.ShowModalDocument)} success.");
+
+                return this.File(filePath, System.Net.Mime.MediaTypeNames.Application.Pdf);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(
+                    1978,
+                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+
+                throw;
+            }
         }
 
         [HttpGet(nameof(GetAllUsers))]
         public async Task<IActionResult> GetAllUsers()
         {
-            var users = await this.userManager.Users
-                .Select(x => new UserExportModel
-                {
-                    Id = x.Id,
-                    UserName = x.UserName,
-                    Email = x.Email,
-                    Roles = x.Roles.Select(r => r.RoleId).ToArray(),
-                })
-                .ToListAsync();
-
-            foreach (var user in users)
+            try
             {
-                if (user.Roles.Length > 0)
+                var users = await this.userManager.Users
+               .Select(x => new UserExportModel
+               {
+                   Id = x.Id,
+                   UserName = x.UserName,
+                   Email = x.Email,
+                   Roles = x.Roles.Select(r => r.RoleId).ToArray(),
+               })
+               .ToListAsync();
+
+                foreach (var user in users)
                 {
-                    for (int i = 0; i < user.Roles.Length; i++)
+                    if (user.Roles.Length > 0)
                     {
-                        var role = await this.roleManager.FindByIdAsync(user.Roles[i]);
-                        user.Roles[i] = role.Name;
+                        for (int i = 0; i < user.Roles.Length; i++)
+                        {
+                            var role = await this.roleManager.FindByIdAsync(user.Roles[i]);
+                            user.Roles[i] = role.Name;
+                        }
                     }
                 }
-            }
 
-            return this.Ok(users);
+                this.logger.LogInformation($"Api {nameof(this.GetAllUsers)} success.");
+
+                return this.Ok(users);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(
+                    1978,
+                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+
+                throw;
+            }
         }
 
         //[ApiController]
