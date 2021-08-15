@@ -32,9 +32,11 @@
                         <label asp-for="SupplierId">
                             * Select supplier
                         </label>
-                        <select asp-for="SupplierId" class="form-control">
-                            <vc:suppliers></vc:suppliers>
-                        </select>
+                        <cache expires-after="TimeSpan.FromSeconds(120)">
+                            <select asp-for="SupplierId" class="form-control">
+                                <vc:suppliers></vc:suppliers>
+                            </select>
+                        </cache>
                         <span asp-validation-for="SupplierId" class="text-danger"></span>
                     </div>
 
@@ -42,9 +44,11 @@
                         <label asp-for="ConformityTypeId">
                             * Select conformity type
                         </label>
-                        <select asp-for="ConformityTypeId" class="form-control" autofocus>
-                            <vc:conformity-types></vc:conformity-types>
-                        </select>
+                        <cache expires-after="TimeSpan.FromSeconds(1200)">
+                            <select asp-for="ConformityTypeId" class="form-control" autofocus>
+                                <vc:conformity-types></vc:conformity-types>
+                            </select>
+                        </cache>
                         <span asp-validation-for="ConformityTypeId" class="text-danger"></span>
                     </div>
 

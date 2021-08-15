@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace ConformityCheck.Data.Migrations
+﻿namespace ConformityCheck.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddUserNames : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

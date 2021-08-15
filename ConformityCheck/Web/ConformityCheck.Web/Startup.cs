@@ -81,6 +81,15 @@
                 options.CheckConsentNeeded = context => true;
             });
 
+            services.AddDistributedSqlServerCache(
+                        options =>
+                        {
+                            options.ConnectionString = this.configuration.GetConnectionString("DefaultConnection");
+                            options.SchemaName = "dbo";
+                            options.TableName = "DistributedCache";
+                        });
+            services.AddSession();
+
             services.AddControllersWithViews(options =>
                                             {
                                                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());

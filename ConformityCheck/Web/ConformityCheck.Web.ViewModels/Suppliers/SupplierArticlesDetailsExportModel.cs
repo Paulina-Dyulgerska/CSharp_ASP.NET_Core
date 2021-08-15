@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-
+    using System.Text.Json.Serialization;
     using AutoMapper;
     using ConformityCheck.Common;
     using ConformityCheck.Data.Models;
@@ -47,6 +47,11 @@
         public string ValidConformitySortParam => this.CurrentSortOrder == GlobalConstants.ValidConformitySortParamDesc ?
             GlobalConstants.ValidConformitySortParam : GlobalConstants.ValidConformitySortParamDesc;
 
+        [Display(Name = "Articles:")]
+        [JsonInclude]
+        public IEnumerable<ArticleConformityExportModel> Articles { get; set; }
+
+        [JsonInclude]
         public IEnumerable<ConformityExportModel> Conformities
         {
             get
@@ -76,9 +81,6 @@
                 }
             }
         }
-
-        [Display(Name = "Articles:")]
-        public IEnumerable<ArticleConformityExportModel> Articles { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

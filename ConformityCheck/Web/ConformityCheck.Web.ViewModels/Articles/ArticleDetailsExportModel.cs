@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.Json.Serialization; // using Newtonsoft.Json;
 
     using AutoMapper;
     using ConformityCheck.Data.Models;
@@ -31,6 +32,16 @@
 
         public string UserEmail { get; set; }
 
+        // [JsonProperty]
+        [JsonInclude]
+        public IEnumerable<ConformityTypeExportModel> ConformityTypes { get; set; }
+
+        // [JsonProperty]
+        [JsonInclude]
+        public IEnumerable<ConformityExportModel> Conformities { get; set; }
+
+        // [JsonProperty]
+        [JsonInclude]
         public IEnumerable<SupplierExportModel> Suppliers
         {
             get
@@ -60,10 +71,6 @@
                 }
             }
         }
-
-        public IEnumerable<ConformityTypeExportModel> ConformityTypes { get; set; }
-
-        public IEnumerable<ConformityExportModel> Conformities { get; set; }
 
         public IEnumerable<string> Products { get; set; }
 

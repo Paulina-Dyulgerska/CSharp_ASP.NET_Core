@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Text.Json;
     using System.Threading.Tasks;
 
     using ConformityCheck.Common;
@@ -12,21 +13,25 @@
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Caching.Distributed;
 
     public class SuppliersService : ISuppliersService
     {
         private readonly IDeletableEntityRepository<Supplier> suppliersRepository;
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
         private readonly IRepository<ArticleSupplier> articleSuppliersRepository;
+        private readonly IDistributedCache distributedCache;
 
         public SuppliersService(
             IDeletableEntityRepository<Supplier> suppliersRepository,
             IDeletableEntityRepository<Conformity> conformitiesRepository,
-            IRepository<ArticleSupplier> articleSupplierRepository)
+            IRepository<ArticleSupplier> articleSupplierRepository,
+            IDistributedCache distributedCache)
         {
             this.suppliersRepository = suppliersRepository;
             this.conformitiesRepository = conformitiesRepository;
             this.articleSuppliersRepository = articleSupplierRepository;
+            this.distributedCache = distributedCache;
         }
 
         public int GetCount()
@@ -158,6 +163,38 @@
 
                 // case "createdOnDesc": show last created first
                 default:
+                    if (itemsPerPage == 12 && page == 1)
+                    {
+                        var entitiesCached = await this.distributedCache.GetStringAsync(GlobalConstants.Suppliers);
+
+                        IEnumerable<T> entities;
+
+                        if (entitiesCached == null)
+                        {
+                            entities = await this.suppliersRepository
+                                            .AllAsNoTracking()
+                                            .OrderByDescending(x => x.CreatedOn)
+                                            .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                            .To<T>()
+                                            .ToListAsync();
+
+                            await this.distributedCache.SetStringAsync(
+                                GlobalConstants.Suppliers,
+                                JsonSerializer.Serialize(entities), // JsonConvert.SerializeObject(entities),
+                                new DistributedCacheEntryOptions
+                                {
+                                    SlidingExpiration = TimeSpan.FromSeconds(300),
+                                });
+                        }
+                        else
+                        {
+                            // entities = JsonConvert.DeserializeObject<IEnumerable<T>>(entitiesCached);
+                            entities = JsonSerializer.Deserialize<IEnumerable<T>>(entitiesCached);
+                        }
+
+                        return entities;
+                    }
+
                     return await this.suppliersRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.CreatedOn)

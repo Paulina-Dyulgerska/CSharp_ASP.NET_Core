@@ -3,29 +3,28 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.Json;
     using System.Threading.Tasks;
 
+    using ConformityCheck.Common;
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
-    using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Caching.Distributed;
 
     public class ConformityTypesService : IConformityTypesService
     {
         private readonly IDeletableEntityRepository<ConformityType> conformityTypesRepository;
-        private readonly IRepository<ArticleConformityType> articleConformityTypeRepository;
-        private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
+        private readonly IDistributedCache distributedCache;
 
         public ConformityTypesService(
             IDeletableEntityRepository<ConformityType> conformityTypesRepository,
-            IRepository<ArticleConformityType> articleConformityTypeRepository,
-            IDeletableEntityRepository<Conformity> conformitiesRepository)
+            IDistributedCache distributedCache)
         {
             this.conformityTypesRepository = conformityTypesRepository;
-            this.articleConformityTypeRepository = articleConformityTypeRepository;
-            this.conformitiesRepository = conformitiesRepository;
+            this.distributedCache = distributedCache;
         }
 
         public int GetCount()
@@ -88,7 +87,7 @@
             // return conformityTypes.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
             switch (sortOrder)
             {
-                case "id":
+                case GlobalConstants.IdSortParam:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.Id)
@@ -96,7 +95,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "idDesc":
+                case GlobalConstants.IdSortParamDesc:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.Id)
@@ -104,7 +103,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "description":
+                case GlobalConstants.DescriptionSortParam:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.Description)
@@ -112,7 +111,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "descriptionDesc":
+                case GlobalConstants.DescriptionSortParamDesc:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.Description)
@@ -120,7 +119,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "userEmail":
+                case GlobalConstants.UserEmailSortParam:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.User.Email)
@@ -128,7 +127,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "userEmailDesc":
+                case GlobalConstants.UserEmailSortParamDesc:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.User.Email)
@@ -136,7 +135,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "modifiedOn":
+                case GlobalConstants.ModifiedOnSortParam:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.ModifiedOn)
@@ -144,7 +143,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "modifiedOnDesc":
+                case GlobalConstants.ModifiedOnSortParamDesc:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.ModifiedOn)
@@ -153,7 +152,7 @@
                                         .To<T>()
                                         .ToListAsync();
 
-                case "createdOn":
+                case GlobalConstants.CreatedOnSortParam:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.CreatedOn)
@@ -161,8 +160,40 @@
                                         .To<T>()
                                         .ToListAsync();
 
-                // case "createdOnDesc": show last created first
+                // case GlobalConstants.CreatedOnSortParamDesc: show last created first
                 default:
+                    if (itemsPerPage == 12 && page == 1)
+                    {
+                        var entitiesCached = await this.distributedCache.GetStringAsync(GlobalConstants.ConformityTypes);
+
+                        IEnumerable<T> entities;
+
+                        if (entitiesCached == null)
+                        {
+                            // entities = await this.conformityTypesRepository
+                            //                .AllAsNoTracking()
+                            //                .OrderByDescending(x => x.CreatedOn)
+                            //                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                            //                .To<T>()
+                            //                .ToListAsync();
+                            // await this.distributedCache.SetStringAsync(
+                            //    GlobalConstants.ConformityTypes,
+                            //    JsonSerializer.Serialize(entities), // JsonConvert.SerializeObject(entities),
+                            //    new DistributedCacheEntryOptions
+                            //    {
+                            //        SlidingExpiration = TimeSpan.FromSeconds(300),
+                            //    });
+                            entities = await this.UpdateCache<T>();
+                        }
+                        else
+                        {
+                            // entities = JsonConvert.DeserializeObject<IEnumerable<T>>(entitiesCached);
+                            entities = JsonSerializer.Deserialize<IEnumerable<T>>(entitiesCached);
+                        }
+
+                        return entities;
+                    }
+
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.CreatedOn)
@@ -192,7 +223,7 @@
         {
             switch (sortOrder)
             {
-                case "id":
+                case GlobalConstants.IdSortParam:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
@@ -202,7 +233,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "idDesc":
+                case GlobalConstants.IdSortParamDesc:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
@@ -212,7 +243,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "description":
+                case GlobalConstants.DescriptionSortParam:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
@@ -222,7 +253,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "descriptionDesc":
+                case GlobalConstants.DescriptionSortParamDesc:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
@@ -232,7 +263,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "userEmail":
+                case GlobalConstants.UserEmailSortParam:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
@@ -242,7 +273,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "userEmailDesc":
+                case GlobalConstants.UserEmailSortParamDesc:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
@@ -252,7 +283,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "modifiedOn":
+                case GlobalConstants.ModifiedOnSortParam:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
@@ -262,7 +293,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "modifiedOnDesc":
+                case GlobalConstants.ModifiedOnSortParamDesc:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
@@ -273,7 +304,7 @@
                                         .To<T>()
                                         .ToListAsync();
 
-                case "createdOn":
+                case GlobalConstants.CreatedOnSortParam:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
                                         .Where(x => x.Id.ToString().Contains(searchInput.ToUpper())
@@ -283,7 +314,7 @@
                                         .To<T>()
                                         .ToListAsync();
 
-                // case "createdOnDesc": show last created first
+                // case GlobalConstants.CreatedOnSortParamDesc: show last created first
                 default:
                     return await this.conformityTypesRepository
                                         .AllAsNoTracking()
@@ -308,6 +339,9 @@
             await this.conformityTypesRepository.AddAsync(conformityType);
 
             await this.conformityTypesRepository.SaveChangesAsync();
+
+            // update cache
+            await this.UpdateCache<ConformityTypeExportModel>();
         }
 
         public async Task EditAsync(ConformityTypeEditInputModel input, string userId)
@@ -321,6 +355,9 @@
             entity.UserId = userId;
 
             await this.conformityTypesRepository.SaveChangesAsync();
+
+            // update cache
+            await this.UpdateCache<ConformityTypeExportModel>();
         }
 
         public async Task<int> DeleteAsync(int id, string userId)
@@ -338,7 +375,30 @@
             // }
             this.conformityTypesRepository.Delete(entity);
 
+            // update cache
+            await this.UpdateCache<ConformityTypeExportModel>();
+
             return await this.conformityTypesRepository.SaveChangesAsync();
+        }
+
+        private async Task<IEnumerable<T>> UpdateCache<T>()
+        {
+            var entities = await this.conformityTypesRepository
+                .AllAsNoTracking()
+                .OrderByDescending(x => x.CreatedOn)
+                .Skip(0).Take(12)
+                .To<T>()
+                .ToListAsync();
+
+            await this.distributedCache.SetStringAsync(
+                GlobalConstants.ConformityTypes,
+                JsonSerializer.Serialize(entities), // JsonConvert.SerializeObject(entities),
+                new DistributedCacheEntryOptions
+                {
+                    SlidingExpiration = TimeSpan.FromSeconds(60 * 60 * 24 * 365),
+                });
+
+            return entities;
         }
     }
 }

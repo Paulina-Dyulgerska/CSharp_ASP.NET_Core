@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Text.Json; // using Newtonsoft.Json;
     using System.Threading.Tasks;
 
     using ConformityCheck.Common;
@@ -13,6 +14,7 @@
     using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.ConformityTypes;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Caching.Distributed;
 
     public class ArticlesService : IArticlesService
     {
@@ -20,17 +22,20 @@
         private readonly IRepository<ArticleSupplier> articleSuppliersRepository;
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
         private readonly IRepository<ArticleConformityType> articleConformityTypesRepository;
+        private readonly IDistributedCache distributedCache;
 
         public ArticlesService(
             IDeletableEntityRepository<Article> articlesRepository,
             IRepository<ArticleSupplier> articleSuppliersRepository,
             IDeletableEntityRepository<Conformity> conformitiesRepository,
-            IRepository<ArticleConformityType> articleConformityTypeRepository)
+            IRepository<ArticleConformityType> articleConformityTypeRepository,
+            IDistributedCache distributedCache)
         {
             this.articlesRepository = articlesRepository;
             this.articleSuppliersRepository = articleSuppliersRepository;
             this.conformitiesRepository = conformitiesRepository;
             this.articleConformityTypesRepository = articleConformityTypeRepository;
+            this.distributedCache = distributedCache;
         }
 
         public int GetCount()
@@ -244,12 +249,44 @@
 
                 // case "createdOnDesc": show last created first
                 default:
+                    if (itemsPerPage == 12 && page == 1)
+                    {
+                        var entitiesCached = await this.distributedCache.GetStringAsync(GlobalConstants.Articles);
+
+                        IEnumerable<T> entities;
+
+                        if (entitiesCached == null)
+                        {
+                            entities = await this.articlesRepository
+                                            .AllAsNoTracking()
+                                            .OrderByDescending(x => x.CreatedOn)
+                                            .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                            .To<T>()
+                                            .ToListAsync();
+
+                            await this.distributedCache.SetStringAsync(
+                                GlobalConstants.Articles,
+                                JsonSerializer.Serialize(entities), // JsonConvert.SerializeObject(entities),
+                                new DistributedCacheEntryOptions
+                                {
+                                    SlidingExpiration = TimeSpan.FromSeconds(300),
+                                });
+                        }
+                        else
+                        {
+                            // entities = JsonConvert.DeserializeObject<IEnumerable<T>>(entitiesCached);
+                            entities = JsonSerializer.Deserialize<IEnumerable<T>>(entitiesCached);
+                        }
+
+                        return entities;
+                    }
+
                     return await this.articlesRepository
-                                        .AllAsNoTracking()
-                                        .OrderByDescending(x => x.CreatedOn)
-                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
-                                        .To<T>()
-                                        .ToListAsync();
+                                            .AllAsNoTracking()
+                                            .OrderByDescending(x => x.CreatedOn)
+                                            .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                            .To<T>()
+                                            .ToListAsync();
             }
         }
 

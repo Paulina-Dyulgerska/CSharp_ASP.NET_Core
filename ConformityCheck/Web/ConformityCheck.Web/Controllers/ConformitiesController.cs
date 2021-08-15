@@ -20,9 +20,9 @@
     // [AutoValidateAntiforgeryToken] - it is globaly as a service and is in the DC.
     public class ConformitiesController : BaseController
     {
-        private const string ArticlesCallerViewName = "Articles";
-        private const string SuppliersCallerViewName = "Suppliers";
-        private const string ConformitiesCallerViewName = "Conformities";
+        private const string ArticlesCallerViewName = GlobalConstants.Articles;
+        private const string SuppliersCallerViewName = GlobalConstants.Suppliers;
+        private const string ConformitiesCallerViewName = GlobalConstants.Conformities;
         private readonly string conformityFilesDirectory;
         private readonly IArticlesService articlesService;
         private readonly ISuppliersService suppliersService;

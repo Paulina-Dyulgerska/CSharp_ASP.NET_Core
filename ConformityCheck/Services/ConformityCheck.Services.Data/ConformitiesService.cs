@@ -4,13 +4,15 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text.Json;
     using System.Threading.Tasks;
-
+    using ConformityCheck.Common;
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Conformities;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Caching.Distributed;
 
     public class ConformitiesService : IConformitiesService
     {
@@ -20,6 +22,7 @@
         private readonly IDeletableEntityRepository<ConformityType> conformityTypesRepository;
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
         private readonly IRepository<ArticleConformityType> articleConformityTypeRepository;
+        private readonly IDistributedCache distributedCache;
 
         public ConformitiesService(
             IDeletableEntityRepository<Article> articlesRepository,
@@ -27,7 +30,8 @@
             IRepository<ArticleSupplier> articleSuppliersRepository,
             IDeletableEntityRepository<ConformityType> conformityTypesRepository,
             IDeletableEntityRepository<Conformity> conformitiesRepository,
-            IRepository<ArticleConformityType> articleConformityTypeRepository)
+            IRepository<ArticleConformityType> articleConformityTypeRepository,
+            IDistributedCache distributedCache)
         {
             this.articlesRepository = articlesRepository;
             this.suppliersRepository = suppliersRepository;
@@ -35,6 +39,7 @@
             this.conformityTypesRepository = conformityTypesRepository;
             this.conformitiesRepository = conformitiesRepository;
             this.articleConformityTypeRepository = articleConformityTypeRepository;
+            this.distributedCache = distributedCache;
         }
 
         public int GetCount()
@@ -97,7 +102,7 @@
             // return conformities.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
             switch (sortOrder)
             {
-                case "articleNumber":
+                case GlobalConstants.ArticleNumberSortParam:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.Article.Number)
@@ -105,7 +110,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "articleNumberDesc":
+                case GlobalConstants.ArticleNumberSortParamDesc:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.Article.Number)
@@ -113,7 +118,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "articleDescription":
+                case GlobalConstants.ArticleDescriptionSortParam:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.Article.Description)
@@ -121,7 +126,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "articleDescriptionDesc":
+                case GlobalConstants.ArticleDescriptionSortParamDesc:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.Article.Description)
@@ -129,7 +134,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "supplierNumber":
+                case GlobalConstants.SupplierNumberSortParam:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.Supplier.Number)
@@ -137,7 +142,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "supplierNumberDesc":
+                case GlobalConstants.SupplierNumberSortParamDesc:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.Supplier.Number)
@@ -145,7 +150,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "supplierName":
+                case GlobalConstants.SupplierNameSortParam:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.Supplier.Name)
@@ -153,7 +158,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "supplierNameDesc":
+                case GlobalConstants.SupplierNameSortParamDesc:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.Supplier.Name)
@@ -161,7 +166,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "conformityTypeDescriptionSortParam":
+                case GlobalConstants.ConformityTypeDescriptionSortParam:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.ConformityType.Description)
@@ -169,7 +174,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "conformityTypeDescriptionSortParamDesc":
+                case GlobalConstants.ConformityTypeDescriptionSortParamDesc:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.ConformityType.Description)
@@ -177,7 +182,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "isAssepted":
+                case GlobalConstants.IsAcceptedSortParam:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.IsAccepted)
@@ -185,7 +190,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "isAsseptedDesc":
+                case GlobalConstants.IsAcceptedSortParamDesc:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.IsAccepted)
@@ -193,7 +198,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "isValid":
+                case GlobalConstants.IsValidSortParam:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.IsAccepted && x.ValidityDate > DateTime.UtcNow.Date)
@@ -201,7 +206,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "isValidDesc":
+                case GlobalConstants.IsValidSortParamDesc:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.IsAccepted && x.ValidityDate > DateTime.UtcNow.Date)
@@ -209,7 +214,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "userEmail":
+                case GlobalConstants.UserEmailSortParam:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.User.Email)
@@ -217,7 +222,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "userEmailDesc":
+                case GlobalConstants.UserEmailSortParamDesc:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderByDescending(x => x.User.Email)
@@ -225,7 +230,7 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "createdOn":
+                case GlobalConstants.CreatedOnSortParam:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
                                         .OrderBy(x => x.CreatedOn)
@@ -233,14 +238,46 @@
                                         .To<T>()
                                         .ToListAsync();
 
-                // case "createdOnDesc": show last created first
+                // case GlobalConstants.CreatedOnSortParamDesc: show last created first
                 default:
+                    if (itemsPerPage == 12 && page == 1)
+                    {
+                        var entitiesCached = await this.distributedCache.GetStringAsync(GlobalConstants.Conformities);
+
+                        IEnumerable<T> entities;
+
+                        if (entitiesCached == null)
+                        {
+                            entities = await this.conformitiesRepository
+                                            .AllAsNoTracking()
+                                            .OrderByDescending(x => x.CreatedOn)
+                                            .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                            .To<T>()
+                                            .ToListAsync();
+
+                            await this.distributedCache.SetStringAsync(
+                                GlobalConstants.Conformities,
+                                JsonSerializer.Serialize(entities), // JsonConvert.SerializeObject(entities),
+                                new DistributedCacheEntryOptions
+                                {
+                                    SlidingExpiration = TimeSpan.FromSeconds(300),
+                                });
+                        }
+                        else
+                        {
+                            // entities = JsonConvert.DeserializeObject<IEnumerable<T>>(entitiesCached);
+                            entities = JsonSerializer.Deserialize<IEnumerable<T>>(entitiesCached);
+                        }
+
+                        return entities;
+                    }
+
                     return await this.conformitiesRepository
-                                        .AllAsNoTracking()
-                                        .OrderByDescending(x => x.CreatedOn)
-                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
-                                        .To<T>()
-                                        .ToListAsync();
+                                            .AllAsNoTracking()
+                                            .OrderByDescending(x => x.CreatedOn)
+                                            .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                            .To<T>()
+                                            .ToListAsync();
             }
         }
 
@@ -262,10 +299,9 @@
         {
             switch (sortOrder)
             {
-                case "articleNumber":
+                case GlobalConstants.ArticleNumberSortParam:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
-                                        .To<ConformityExportModel>()
                                         .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
@@ -276,10 +312,9 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "articleNumberDesc":
+                case GlobalConstants.ArticleNumberSortParamDesc:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
-                                        .To<ConformityExportModel>()
                                         .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
@@ -290,10 +325,9 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "articleDescription":
+                case GlobalConstants.ArticleDescriptionSortParam:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
-                                        .To<ConformityExportModel>()
                                         .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
@@ -304,10 +338,9 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "articleDescriptionDesc":
+                case GlobalConstants.ArticleDescriptionSortParamDesc:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
-                                        .To<ConformityExportModel>()
                                         .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
@@ -318,10 +351,9 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "supplierNumber":
+                case GlobalConstants.SupplierNumberSortParam:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
-                                        .To<ConformityExportModel>()
                                         .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
@@ -332,10 +364,9 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "supplierNumberDesc":
+                case GlobalConstants.SupplierNumberSortParamDesc:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
-                                        .To<ConformityExportModel>()
                                         .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
@@ -346,10 +377,9 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "supplierName":
+                case GlobalConstants.SupplierNameSortParam:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
-                                        .To<ConformityExportModel>()
                                         .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
@@ -360,10 +390,9 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "supplierNameDesc":
+                case GlobalConstants.SupplierNameSortParamDesc:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
-                                        .To<ConformityExportModel>()
                                         .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
@@ -374,10 +403,9 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "conformityTypeDescriptionSortParam":
+                case GlobalConstants.ConformityTypeDescriptionSortParam:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
-                                        .To<ConformityExportModel>()
                                         .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
@@ -388,10 +416,9 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "conformityTypeDescriptionSortParamDesc":
+                case GlobalConstants.ConformityTypeDescriptionSortParamDesc:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
-                                        .To<ConformityExportModel>()
                                         .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
@@ -402,38 +429,87 @@
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "userEmail":
+                case GlobalConstants.IsAcceptedSortParam:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
-                                        .To<ConformityExportModel>()
                                         .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Name.ToUpper().Contains(searchInput.ToUpper())
                                            || x.ConformityType.Description.ToUpper().Contains(searchInput.ToUpper()))
-                                        .OrderBy(x => x.UserEmail)
-                                        .ThenBy(x => x.CreatedOn)
+                                        .OrderBy(x => x.IsAccepted)
+                                        .ThenBy(x => x.Article.Number)
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "userEmailDesc":
+                case GlobalConstants.IsAcceptedSortParamDesc:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
-                                        .To<ConformityExportModel>()
                                         .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Name.ToUpper().Contains(searchInput.ToUpper())
                                            || x.ConformityType.Description.ToUpper().Contains(searchInput.ToUpper()))
-                                        .OrderByDescending(x => x.UserEmail)
+                                        .OrderByDescending(x => x.IsAccepted)
+                                        .ThenBy(x => x.Article.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case GlobalConstants.IsValidSortParam:
+                    return await this.conformitiesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.Supplier.Name.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.ConformityType.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.IsAccepted && x.ValidityDate > DateTime.UtcNow.Date)
+                                        .ThenBy(x => x.Article.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case GlobalConstants.IsValidSortParamDesc:
+                    return await this.conformitiesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.Supplier.Name.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.ConformityType.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.IsAccepted && x.ValidityDate > DateTime.UtcNow.Date)
+                                        .ThenBy(x => x.Article.Number)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case GlobalConstants.UserEmailSortParam:
+                    return await this.conformitiesRepository
+                                        .AllAsNoTracking()
+                                        .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.Supplier.Name.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.ConformityType.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderBy(x => x.User.Email)
                                         .ThenBy(x => x.CreatedOn)
                                         .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                                         .To<T>()
                                         .ToListAsync();
-                case "createdOn":
+                case GlobalConstants.UserEmailSortParamDesc:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
-                                        .To<ConformityExportModel>()
+                                        .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.Supplier.Name.ToUpper().Contains(searchInput.ToUpper())
+                                           || x.ConformityType.Description.ToUpper().Contains(searchInput.ToUpper()))
+                                        .OrderByDescending(x => x.User.Email)
+                                        .ThenBy(x => x.CreatedOn)
+                                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                                        .To<T>()
+                                        .ToListAsync();
+                case GlobalConstants.CreatedOnSortParam:
+                    return await this.conformitiesRepository
+                                        .AllAsNoTracking()
                                         .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
@@ -444,11 +520,10 @@
                                         .To<T>()
                                         .ToListAsync();
 
-                // case "createdOnDesc": show last created first
+                // case GlobalConstants.CreatedOnSortParamDesc: show last created first
                 default:
                     return await this.conformitiesRepository
                                         .AllAsNoTracking()
-                                        .To<ConformityExportModel>()
                                         .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())

@@ -1,6 +1,7 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Threading.Tasks;
 
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels;
@@ -22,9 +23,9 @@
             this.logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var counts = this.getCountsService.GetCounts();
+            var counts = await this.getCountsService.GetCounts();
             var model = new IndexViewModel
             {
                 Articles = counts.Articles,

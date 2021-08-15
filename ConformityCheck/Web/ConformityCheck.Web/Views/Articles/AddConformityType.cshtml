@@ -43,9 +43,11 @@
                         <label asp-for="ConformityTypeId">
                             If you want to add a conformity type to the article, please select one from the list:
                         </label>
-                        <select asp-for="ConformityTypeId" class="form-control">
-                            <vc:conformity-types></vc:conformity-types>
-                        </select>
+                        <cache expires-after="TimeSpan.FromSeconds(1200)">
+                            <select asp-for="ConformityTypeId" class="form-control">
+                                <vc:conformity-types></vc:conformity-types>
+                            </select>
+                        </cache>
                         <span asp-validation-for="ConformityTypeId" class="text-danger"></span>
                     </div>
 

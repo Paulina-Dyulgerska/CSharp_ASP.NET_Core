@@ -20,6 +20,11 @@
         public const string InvalidEntityId = "No such entity.";
         public const string OperationFailed = "Operation failed.";
 
+        public const string Articles = "Articles";
+        public const string Suppliers = "Suppliers";
+        public const string ConformityTypes = "ConformityTypes";
+        public const string Conformities = "Conformities";
+
         public const string ArticleCreatedSuccessfullyMessage = "Article is successfully created.";
         public const string ArticleEditedSuccessfullyMessage = "Article is successfully edited.";
         public const string ArticleDeletedSuccessfullyMessage = "Article is successfully deleted.";

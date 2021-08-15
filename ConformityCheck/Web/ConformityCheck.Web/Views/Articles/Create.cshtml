@@ -11,6 +11,8 @@
     //var conformityTypes = Model.ConformityTypesAvailable.Select(x => new SelectListItem(x.Description, x.Id.ToString()));
     //var products = Model.ProductsAvailable.Select(x => new SelectListItem(x.Number, x.Id));
     //var substances = Model.SubstancesAvailable.Select(x => new SelectListItem($"{x.CASNumber} - {x.Description}", x.Id.ToString()));
+
+    var counts = await this.GetCountsService.GetCounts();
 }
 
 @section SubMenu{
@@ -52,32 +54,42 @@
                         <label asp-for="SupplierId"></label>
                         @*<select asp-for="SupplierId" class="form-control" asp-items="suppliers"></select>*@
                         @*<select asp-for="SupplierEmail" class="form-control" asp-items="@Html.GetEnumSelectList<RecipeType>()"></select>*@
-                        <select asp-for="SupplierId" class="form-control" placeholder="Supplier">
-                            <vc:suppliers></vc:suppliers>
-                        </select>
+                        <cache expires-after="TimeSpan.FromSeconds(120)">
+                            <select asp-for="SupplierId" class="form-control" placeholder="Supplier">
+                                <vc:suppliers></vc:suppliers>
+                            </select>
+                        </cache>
                         <span asp-validation-for="SupplierId" class="text-danger"></span>
                     </div>
 
                     <div class="form-field-container large-margin-vertical">
                         <label asp-for="ConformityTypes"></label>
-                        <select size="@(GetCountsService.GetCounts().ConformityTypes + 1)" asp-for="ConformityTypes" class="form-control" placeholder="Conformity types">
-                            <vc:conformity-types></vc:conformity-types>
-                        </select>
+                        <cache expires-after="TimeSpan.FromSeconds(1200)">
+                            <select size="@(counts.ConformityTypes + 1)" asp-for="ConformityTypes" class="form-control" placeholder="Conformity types">
+                                <vc:conformity-types></vc:conformity-types>
+                            </select>
+                        </cache>
                         <span asp-validation-for="ConformityTypes" class="text-danger"></span>
                     </div>
+
                     @*<div class="form-field-container large-margin-vertical">
                             <label asp-for="Products"></label>
-                            <select asp-for="Products" class="form-control">
-                                <vc:products></vc:products>
-                            </select>
+                            <cache expires-after="TimeSpan.FromSeconds(1200)">
+                                <select asp-for="Products" class="form-control">
+                                    <vc:products></vc:products>
+                                </select>
+                            </cache>
+
                             <span asp-validation-for="Products" class="text-danger"></span>
                         </div>
-
                         <div class="form-field-container large-margin-vertical">
                             <label asp-for="Substances"></label>
-                            <select asp-for="Substances" class="form-control">
-                                <vc:substances></vc:substances>
-                            </select>
+                            <cache expires-after="TimeSpan.FromSeconds(1200)">
+                                <select asp-for="Substances" class="form-control">
+                                    <vc:substances></vc:substances>
+                                </select>
+                            </cache>
+
                             <span asp-validation-for="Substances" class="text-danger"></span>
                         </div>
                         <div id="conformitiesContainer">

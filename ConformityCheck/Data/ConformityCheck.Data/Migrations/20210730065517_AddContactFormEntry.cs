@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace ConformityCheck.Data.Migrations
+﻿namespace ConformityCheck.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddContactFormEntry : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

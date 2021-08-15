@@ -8,9 +8,6 @@
     {
         public void Configure(EntityTypeBuilder<ArticleConformityType> articleConformityType)
         {
-            //articleConformityType
-            //     .HasKey(x => new { x.ArticleId, x.ConformityTypeId });
-
             articleConformityType
                 .HasOne(ac => ac.Article)
                 .WithMany(a => a.ArticleConformityTypes)
