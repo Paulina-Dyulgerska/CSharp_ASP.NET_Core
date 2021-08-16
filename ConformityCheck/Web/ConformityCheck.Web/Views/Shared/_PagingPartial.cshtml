@@ -1,6 +1,120 @@
 ﻿@model PagingViewModel
 <ul class="pagination">
-    <li class="page-item @if (!Model.HasPreviousPage) { <text>disabled</text> }">
+    @if (Model.PageNumber > 1)
+    {
+        <li class="page-item">
+            <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
+               asp-route-pageNumber="@Model.PreviousPageNumber"
+               asp-route-itemsPerPage="@Model.ItemsPerPage"
+               asp-route-currentSortOrder="@Model.CurrentSortOrder"
+               asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+        </li>
+    }
+    @if (Model.PageNumber > Model.IntervalOfPagesToShow + 1)
+    {
+        <li class="page-item">
+            <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
+               asp-route-pageNumber="1"
+               asp-route-itemsPerPage="@Model.ItemsPerPage"
+               asp-route-currentSortOrder="@Model.CurrentSortOrder"
+               asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                1
+            </a>
+        </li>
+    }
+    @if (Model.PageNumber > Model.IntervalOfPagesToShow + 1 + 1)
+    {
+        <li class="page-item">
+            <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
+               asp-route-pageNumber="@(Model.PageNumber - Model.IntervalOfPagesToShow - 1)"
+               asp-route-itemsPerPage="@Model.ItemsPerPage"
+               asp-route-currentSortOrder="@Model.CurrentSortOrder"
+               asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                ...
+            </a>
+        </li>
+    }
+    @for (int i = Model.PageNumber - Model.IntervalOfPagesToShow; i < Model.PageNumber; i++)
+    {
+        if (i > 0)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
+                   asp-route-pageNumber="@i"
+                   asp-route-itemsPerPage="@Model.ItemsPerPage"
+                   asp-route-currentSortOrder="@Model.CurrentSortOrder"
+                   asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                    @i
+                </a>
+            </li>
+        }
+    }
+    <li class="page-item active" aria-current="page">
+        <span class="page-link">
+            @Model.PageNumber
+            <span class="sr-only">(current)</span>
+        </span>
+    </li>
+    @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + Model.IntervalOfPagesToShow; i++)
+    {
+        if (i <= Model.PagesCount)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
+                   asp-route-pageNumber="@i"
+                   asp-route-itemsPerPage="@Model.ItemsPerPage"
+                   asp-route-currentSortOrder="@Model.CurrentSortOrder"
+                   asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                    @i
+                </a>
+            </li>
+        }
+    }
+    @if (Model.PageNumber < Model.PagesCount - Model.IntervalOfPagesToShow - 1)
+    {
+        <li class="page-item">
+            <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
+               asp-route-pageNumber="@(Model.PageNumber + Model.IntervalOfPagesToShow + 1)"
+               asp-route-itemsPerPage="@Model.ItemsPerPage"
+               asp-route-currentSortOrder="@Model.CurrentSortOrder"
+               asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                ...
+            </a>
+        </li>
+    }
+    @if (Model.PageNumber < Model.PagesCount - Model.IntervalOfPagesToShow)
+    {
+        <li class="page-item">
+            <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
+               asp-route-pageNumber="@Model.PagesCount"
+               asp-route-itemsPerPage="@Model.ItemsPerPage"
+               asp-route-currentSortOrder="@Model.CurrentSortOrder"
+               asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                @Model.PagesCount
+            </a>
+        </li>
+    }
+    @if (Model.PageNumber < Model.PagesCount)
+    {
+        <li class="page-item ">
+            <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
+               asp-route-pageNumber="@Model.NextPageNumber"
+               asp-route-itemsPerPage="@Model.ItemsPerPage"
+               asp-route-currentSortOrder="@Model.CurrentSortOrder"
+               asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </li>
+    }
+</ul>
+
+
+
+<ul class="pagination">
+    <li class="page-item @if (!Model.HasPreviousPage)
+        { <text>disabled</text> }">
         <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
            asp-route-pageNumber="@Model.PreviousPageNumber"
            asp-route-itemsPerPage="@Model.ItemsPerPage"
@@ -9,7 +123,8 @@
             <i class="fas fa-chevron-left"></i>
         </a>
     </li>
-    <li class="page-item @if (!Model.HasPreviousPage) { <text>disabled</text> }">
+    <li class="page-item @if (!Model.HasPreviousPage)
+            { <text>disabled</text> }">
         <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
            asp-route-pageNumber="1"
            asp-route-itemsPerPage="@Model.ItemsPerPage"
@@ -18,7 +133,8 @@
             1
         </a>
     </li>
-    <li class="page-item @if (!Model.HasPreviousInterval) { <text>disabled</text> }">
+    <li class="page-item @if (!Model.HasPreviousInterval)
+            { <text>disabled</text> }">
         <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
            asp-route-pageNumber="@(Model.PageNumber - Model.IntervalOfPagesToShow - 1)"
            asp-route-itemsPerPage="@Model.ItemsPerPage"
@@ -63,8 +179,8 @@
             </li>
         }
     }
-
-    <li class="page-item @if (!Model.HasNextInterval) { <text>disabled</text> }">
+    <li class="page-item @if (!Model.HasNextInterval)
+        { <text>disabled</text> }">
         <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
            asp-route-pageNumber="@(Model.PageNumber + Model.IntervalOfPagesToShow + 1)"
            asp-route-itemsPerPage="@Model.ItemsPerPage"
@@ -73,7 +189,8 @@
             ...
         </a>
     </li>
-    <li class="page-item @if (!Model.HasNextPage) { <text>disabled</text> }">
+    <li class="page-item @if (!Model.HasNextPage)
+        { <text>disabled</text> }">
         <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
            asp-route-pageNumber="@Model.PagesCount"
            asp-route-itemsPerPage="@Model.ItemsPerPage"
@@ -82,7 +199,8 @@
             @Model.PagesCount
         </a>
     </li>
-    <li class="page-item @if (!Model.HasNextPage) { <text>disabled</text> }">
+    <li class="page-item @if (!Model.HasNextPage)
+        { <text>disabled</text> }">
         <a class="page-link" asp-action="@Model.PagingControllerActionCallName"
            asp-route-pageNumber="@Model.NextPageNumber"
            asp-route-itemsPerPage="@Model.ItemsPerPage"

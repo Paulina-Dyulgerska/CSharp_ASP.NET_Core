@@ -17,6 +17,11 @@
                     @this.ViewData["Title"] @Model.Name
                 </h4>
                 <span class="presented-items-info">(total of @Model.ItemsCount conformity records)</span>
+                <div class="btns-container">
+                    <div class="form-field-container">
+                        <a asp-action="ListAll" class="btn btn-back btn-align-end">Return back</a>
+                    </div>
+                </div>
             </article>
             <article class="tools-container">
                 <article class="data-container supplier-details">

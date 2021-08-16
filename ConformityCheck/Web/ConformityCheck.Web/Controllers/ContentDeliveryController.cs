@@ -19,7 +19,6 @@
     using Microsoft.Extensions.Logging;
 
     [ApiController]
-    [Authorize]
     [Route("/api")]
     public class ContentDeliveryController : ControllerBase
     {

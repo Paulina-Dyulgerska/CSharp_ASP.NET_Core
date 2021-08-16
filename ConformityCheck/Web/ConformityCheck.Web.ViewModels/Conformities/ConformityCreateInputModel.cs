@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using ConformityCheck.Common.ValidationAttributes;
+    using ConformityCheck.Services;
     using Microsoft.AspNetCore.Http;
 
     public class ConformityCreateInputModel : ConformityBaseModel
@@ -20,6 +21,19 @@
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            var context = (IContentCheckService)validationContext.GetService(typeof(IContentCheckService));
+            var articleSupplierEntity = context.ArticleSupplierEntityIdCheck(this.ArticleId, this.SupplierId);
+
+            if (!articleSupplierEntity && this.ArticleId != null)
+            {
+                yield return new ValidationResult("The article does not have such supplier.");
+            }
+
+            if ((this.IssueDate > this.ValidityDate) && (this.ValidityDate != null))
+            {
+                yield return new ValidationResult("Issue date could not be after the validity date.");
+            }
+
             if (this.ValidForSingleArticle && this.ArticleId == null)
             {
                 yield return new ValidationResult("Please choose single article or change the conformity coverage.");

@@ -77,10 +77,8 @@
 
         public virtual IEnumerable<ValidationResult> Validate(System.ComponentModel.DataAnnotations.ValidationContext validationContext)
         {
-            var context = (IContentCheckService)validationContext
-                .GetService(typeof(IContentCheckService));
-            var articleSupplierEntity = context
-                .ArticleSupplierEntityIdCheck(this.ArticleId, this.SupplierId);
+            var context = (IContentCheckService)validationContext.GetService(typeof(IContentCheckService));
+            var articleSupplierEntity = context.ArticleSupplierEntityIdCheck(this.ArticleId, this.SupplierId);
 
             if (!articleSupplierEntity && this.ArticleId != null)
             {

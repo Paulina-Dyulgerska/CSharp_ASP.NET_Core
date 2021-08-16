@@ -24,7 +24,8 @@ $('#searchAticleInput').on('input', function () {
                     const articleDetailsLink = "/Articles/Details/" + article.id;
                     let articleLinkElement = document.createElement('a');
                     articleLinkElement.href = articleDetailsLink;
-                    articleLinkElement.text = escapeHtml(article.number) + ' - ' + escapeHtml(article.description)
+                    articleLinkElement.text = article.number + ' - ' + article.description;
+                    //articleLinkElement.text = escapeHtml(article.number) + ' - ' + article.description;
                     articleLinkElement.classList.add('form-control');
                     dropDownList.append(articleLinkElement);
                 }
@@ -63,7 +64,7 @@ $('#searchSupplierInput').on('input', function () {
                     const supplierDetailsLink = "/Suppliers/Details/" + supplier.id;
                     let supplierLinkElement = document.createElement('a');
                     supplierLinkElement.href = supplierDetailsLink;
-                    supplierLinkElement.text = escapeHtml(supplier.number) + ' - ' + escapeHtml(supplier.name)
+                    supplierLinkElement.text = supplier.number + ' - ' + supplier.name;
                     supplierLinkElement.classList.add('form-control');
                     dropDownList.append(supplierLinkElement);
                 }
@@ -98,7 +99,7 @@ $('#searchConformityTypeInput').on('input', function () {
                     const conformityTypeDetailsLink = "/ConformityTypes/Details/" + conformityType.id;
                     let conformityTypeLinkElement = document.createElement('a');
                     conformityTypeLinkElement.href = conformityTypeDetailsLink;
-                    conformityTypeLinkElement.text = escape(conformityType.description);
+                    conformityTypeLinkElement.text = conformityType.description;
                     conformityTypeLinkElement.classList.add('form-control');
                     dropDownList.append(conformityTypeLinkElement);
                 }
@@ -133,7 +134,7 @@ $('#searchConformityInput').on('input', function () {
                         const conformityDetailsLink = "/Conformities/Details/" + conformity.id;
                         let conformityLinkElement = document.createElement('a');
                         conformityLinkElement.href = conformityDetailsLink;
-                        conformityLinkElement.text = escapeHtml(conformity.article.number) + ' - ' + escapeHtml(conformity.supplier.name);
+                        conformityLinkElement.text = conformity.article.number + ' - ' + conformity.supplier.name;
                         conformityLinkElement.classList.add('form-control');
                         dropDownList.append(conformityLinkElement);
                     }
