@@ -45,7 +45,7 @@
 
         public int GetCountBySearchInput(string searchInput)
         {
-            if (searchInput is null)
+            if (string.IsNullOrWhiteSpace(searchInput))
             {
                 return this.GetCount();
             }
@@ -466,7 +466,7 @@
             var article = new Article
             {
                 Number = input.Number.Trim().ToUpper(),
-                Description = this.PascalCaseConverter(input.Description),
+                Description = PascalCaseConverter.Convert(input.Description),
                 UserId = userId,
             };
 
@@ -499,7 +499,7 @@
 
             if (input.Description != null)
             {
-                articleEntity.Description = this.PascalCaseConverter(input.Description);
+                articleEntity.Description = PascalCaseConverter.Convert(input.Description);
                 articleEntity.UserId = userId;
             }
 
@@ -707,18 +707,6 @@
             }
 
             return entities;
-        }
-
-        private string PascalCaseConverter(string stringToFix)
-        {
-            var st = new StringBuilder();
-            st.Append(char.ToUpper(stringToFix[0]));
-            for (int i = 1; i < stringToFix.Length; i++)
-            {
-                st.Append(char.ToLower(stringToFix[i]));
-            }
-
-            return st.ToString().Trim();
         }
     }
 }

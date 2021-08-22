@@ -1,15 +1,15 @@
 ﻿namespace ConformityCheck.Services.Data
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
+    using ConformityCheck.Common;
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data.Models;
-    using ConformityCheck.Services.Mapping;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.DependencyInjection;
 
     public class SuppliersSeedService : ISuppliersSeedService
     {
@@ -18,23 +18,29 @@
         private readonly IRepository<ArticleSupplier> articleSuppliersRepository;
         private readonly IDeletableEntityRepository<ConformityType> conformityTypesRepository;
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
+        private readonly IServiceProvider serviceProvider;
 
         public SuppliersSeedService(
             IDeletableEntityRepository<Article> articlesRepository,
             IDeletableEntityRepository<Supplier> suppliersRepository,
             IRepository<ArticleSupplier> articleSuppliersRepository,
             IDeletableEntityRepository<ConformityType> conformityTypesRepository,
-            IDeletableEntityRepository<Conformity> conformitiesRepository)
+            IDeletableEntityRepository<Conformity> conformitiesRepository,
+            IServiceProvider serviceProvider)
         {
             this.articlesRepository = articlesRepository;
             this.suppliersRepository = suppliersRepository;
             this.articleSuppliersRepository = articleSuppliersRepository;
             this.conformityTypesRepository = conformityTypesRepository;
             this.conformitiesRepository = conformitiesRepository;
+            this.serviceProvider = serviceProvider;
         }
 
         public async Task CreateAsync(SupplierImportDTO supplierImportDTO)
         {
+            var userManager = this.serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var adminUsers = await userManager.GetUsersInRoleAsync(GlobalConstants.AdministratorRoleName);
+
             var supplierEntity = this.suppliersRepository.AllAsNoTracking()
                 .FirstOrDefault(x => x.Number == supplierImportDTO.Number.Trim().ToUpper());
 
@@ -61,27 +67,16 @@
                     Email = supplierImportDTO.Email?.Trim(),
                     PhoneNumber = supplierImportDTO.PhoneNumber?.Trim(),
                     ContactPersonFirstName = supplierImportDTO.ContactPersonFirstName == null ? null :
-                            this.PascalCaseConverter(supplierImportDTO.ContactPersonFirstName),
+                            PascalCaseConverter.Convert(supplierImportDTO.ContactPersonFirstName),
                     ContactPersonLastName = supplierImportDTO.ContactPersonLastName == null ? null :
-                            this.PascalCaseConverter(supplierImportDTO.ContactPersonLastName),
+                            PascalCaseConverter.Convert(supplierImportDTO.ContactPersonLastName),
+                    User = adminUsers.FirstOrDefault(),
                 };
 
                 await this.suppliersRepository.AddAsync(supplierEntity);
 
                 await this.suppliersRepository.SaveChangesAsync();
             }
-        }
-
-        private string PascalCaseConverter(string stringToFix)
-        {
-            var st = new StringBuilder();
-            st.Append(char.ToUpper(stringToFix[0]));
-            for (int i = 1; i < stringToFix.Length; i++)
-            {
-                st.Append(char.ToLower(stringToFix[i]));
-            }
-
-            return st.ToString().Trim();
         }
     }
 }

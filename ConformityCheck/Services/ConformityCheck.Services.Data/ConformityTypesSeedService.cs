@@ -4,22 +4,31 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using ConformityCheck.Common;
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data.Models;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.DependencyInjection;
 
     public class ConformityTypesSeedService : IConformityTypesSeedService
     {
         private readonly IDeletableEntityRepository<ConformityType> conformityTypesRepository;
+        private readonly IServiceProvider serviceProvider;
 
         public ConformityTypesSeedService(
-            IDeletableEntityRepository<ConformityType> conformityTypesRepository)
+            IDeletableEntityRepository<ConformityType> conformityTypesRepository,
+            IServiceProvider serviceProvider)
         {
             this.conformityTypesRepository = conformityTypesRepository;
+            this.serviceProvider = serviceProvider;
         }
 
         public async Task CreateAsync(ConformityTypeDTO conformityTypeDTO)
         {
+            var userManager = this.serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var adminUsers = await userManager.GetUsersInRoleAsync(GlobalConstants.AdministratorRoleName);
+
             // if no description is provided
             if (conformityTypeDTO.Description == null)
             {
@@ -36,6 +45,7 @@
             ConformityType conformityType = new ConformityType
             {
                 Description = conformityTypeDTO.Description.Trim(),
+                User = adminUsers.FirstOrDefault(),
             };
 
             await this.conformityTypesRepository.AddAsync(conformityType);

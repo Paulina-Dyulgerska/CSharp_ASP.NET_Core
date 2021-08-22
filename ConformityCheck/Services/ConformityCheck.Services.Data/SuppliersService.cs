@@ -41,7 +41,7 @@
 
         public int GetCountBySearchInput(string searchInput)
         {
-            if (searchInput is null)
+            if (string.IsNullOrWhiteSpace(searchInput))
             {
                 return this.GetCount();
             }
@@ -619,9 +619,9 @@
                 Email = input.Email?.Trim(),
                 PhoneNumber = input.PhoneNumber?.Trim(),
                 ContactPersonFirstName = input.ContactPersonFirstName == null ? null :
-                             this.PascalCaseConverterWords(input.ContactPersonFirstName),
+                             PascalCaseConverter.Convert(input.ContactPersonFirstName),
                 ContactPersonLastName = input.ContactPersonLastName == null ? null :
-                             this.PascalCaseConverterWords(input.ContactPersonLastName),
+                             PascalCaseConverter.Convert(input.ContactPersonLastName),
                 UserId = userId,
             };
 
@@ -640,9 +640,9 @@
             entity.Email = input.Email?.Trim();
             entity.PhoneNumber = input.PhoneNumber?.Trim();
             entity.ContactPersonFirstName = input.ContactPersonFirstName == null ?
-                null : this.PascalCaseConverterWords(input.ContactPersonFirstName);
+                null : PascalCaseConverter.Convert(input.ContactPersonFirstName);
             entity.ContactPersonLastName = input.ContactPersonLastName == null ?
-                null : this.PascalCaseConverterWords(input.ContactPersonLastName);
+                null : PascalCaseConverter.Convert(input.ContactPersonLastName);
             entity.UserId = userId;
 
             await this.suppliersRepository.SaveChangesAsync();
@@ -676,26 +676,6 @@
             }
 
             return await this.suppliersRepository.SaveChangesAsync();
-        }
-
-        private string PascalCaseConverterWords(string stringToFix)
-        {
-            var st = new StringBuilder();
-            var wordsInStringToFix = stringToFix.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var word in wordsInStringToFix)
-            {
-                st.Append(char.ToUpper(word[0]));
-
-                for (int i = 1; i < word.Length; i++)
-                {
-                    st.Append(char.ToLower(word[i]));
-                }
-
-                st.Append(' ');
-            }
-
-            return st.ToString().Trim();
         }
     }
 }

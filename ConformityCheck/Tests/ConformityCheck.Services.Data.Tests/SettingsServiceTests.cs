@@ -20,16 +20,22 @@
         [Fact]
         public void GetCountShouldReturnCorrectNumber()
         {
+            // Arrange
             var repository = new Mock<IDeletableEntityRepository<Setting>>();
-            repository.Setup(r => r.All()).Returns(new List<Setting>
+            repository.Setup(r => r.AllAsNoTracking()).Returns(new List<Setting>
                                                         {
                                                             new Setting(),
                                                             new Setting(),
                                                             new Setting(),
                                                         }.AsQueryable());
             var service = new SettingsService(repository.Object);
-            Assert.Equal(3, service.GetCount());
-            repository.Verify(x => x.All(), Times.Once);
+
+            // Act
+            var count = service.GetCount();
+
+            // Assert
+            Assert.Equal(3, count);
+            repository.Verify(x => x.AllAsNoTracking(), Times.Once);
         }
 
         [Fact]

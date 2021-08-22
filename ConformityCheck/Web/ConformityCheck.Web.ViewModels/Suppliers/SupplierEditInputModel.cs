@@ -36,12 +36,14 @@
         public string PhoneNumber { get; set; }
 
         [MaxLength(20)]
-        [RegularExpression("^[A-Z]+[a-z]*$", ErrorMessage = "The field Contact Person first name could contain only letters.")]
+        [NameRegExAttribute]
+        //[RegularExpression("^[A-Z]+[a-z]*$", ErrorMessage = "The field Contact Person first name could contain only letters.")]
         [Display(Name= "Contact person first name")]
         public string ContactPersonFirstName { get; set; }
 
         [MaxLength(20)]
-        [RegularExpression("^[A-Z]+[a-z]*$", ErrorMessage = "The field Contact Person last name could contain only letters.")]
+        [NameRegExAttribute]
+        //[RegularExpression("^[A-Z]+[a-z]*$", ErrorMessage = "The field Contact Person last name could contain only letters.")]
         [Display(Name= "Contact person last name")]
         public string ContactPersonLastName { get; set; }
 

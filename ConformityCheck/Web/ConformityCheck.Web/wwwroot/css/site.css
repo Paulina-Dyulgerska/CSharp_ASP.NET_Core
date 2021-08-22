@@ -802,7 +802,7 @@ textarea {
     font-weight: 500;
     letter-spacing: 1.2px;
     /* text-transform: uppercase; */
-    padding: .5rem .75rem;
+    padding: .5rem .75rem .5rem .75rem;
     margin: 10px;
     display: inline-block;
     color: #666770;
@@ -1013,7 +1013,7 @@ button.close {
 .page-link {
     position: relative;
     display: block;
-    padding: 0.5rem 0.75rem;
+    padding: .5rem;
     margin: .2rem;
     line-height: 1.25;
     /*color: #007bff;*/
@@ -1033,7 +1033,8 @@ button.close {
     }
 
 .page-item {
-    width:3rem;
+    width: 3rem;
+    text-align: center;
 }
 
 .page-item.active .page-link {
@@ -1124,7 +1125,7 @@ button.close {
 
 input.form-control,
 select.form-control {
-    padding: .5rem .75rem;
+    padding: .5rem .75rem .5rem .75rem;
     /*align-self: flex-start;*/
     /*    min-width: 350px;
     max-width: 90%;*/
@@ -1165,7 +1166,7 @@ input[type=radio] {
 }
 
 input[type=file] {
-    padding: .5rem .75rem;
+    padding: .5rem .75rem .5rem .75rem;
     cursor: pointer;
     background: white;
 }
@@ -1219,7 +1220,7 @@ input[type=checkbox] {
 }
 
     .dropdown-content a {
-        padding: .5rem .75rem;
+        padding: .5rem;
         overflow: hidden;
     }
 

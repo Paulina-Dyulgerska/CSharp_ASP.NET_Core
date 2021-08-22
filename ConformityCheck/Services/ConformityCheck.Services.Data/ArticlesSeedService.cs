@@ -2,12 +2,14 @@
 {
     using System;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
+    using ConformityCheck.Common;
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data.Models;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.DependencyInjection;
 
     public class ArticlesSeedService : IArticlesSeedService
     {
@@ -16,27 +18,32 @@
         private readonly IRepository<ArticleSupplier> articleSuppliersRepository;
         private readonly IDeletableEntityRepository<ConformityType> conformityTypesRepository;
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
+        private readonly IServiceProvider serviceProvider;
 
         public ArticlesSeedService(
             IDeletableEntityRepository<Article> articlesRepository,
             IDeletableEntityRepository<Supplier> suppliersRepository,
             IRepository<ArticleSupplier> articleSuppliersRepository,
             IDeletableEntityRepository<ConformityType> conformityTypesRepository,
-            IDeletableEntityRepository<Conformity> conformitiesRepository)
+            IDeletableEntityRepository<Conformity> conformitiesRepository,
+            IServiceProvider serviceProvider)
         {
             this.articlesRepository = articlesRepository;
             this.suppliersRepository = suppliersRepository;
             this.articleSuppliersRepository = articleSuppliersRepository;
             this.conformityTypesRepository = conformityTypesRepository;
             this.conformitiesRepository = conformitiesRepository;
+            this.serviceProvider = serviceProvider;
         }
 
         public async Task CreateAsync(ArticleImportDTO articleImportDTO)
         {
+            var userManager = this.serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var adminUsers = await userManager.GetUsersInRoleAsync(GlobalConstants.AdministratorRoleName);
+
             var articleEntity = this.articlesRepository.AllAsNoTracking()
                 .FirstOrDefault(x => x.Number == articleImportDTO.Number.Trim().ToUpper());
 
-            // TODO - async-await
             if (articleEntity != null)
             {
                 throw new ArgumentException($"There is already an article with this number.");
@@ -45,30 +52,29 @@
             var article = new Article
             {
                 Number = articleImportDTO.Number.Trim().ToUpper(),
-                Description = this.PascalCaseConverter(articleImportDTO.Description),
-
-                // TODO: UserId = userEntity.Id -> AdminUser
+                Description = PascalCaseConverter.Convert(articleImportDTO.Description),
+                User = adminUsers.FirstOrDefault(),
             };
 
             article.ArticleConformityTypes.Add(new ArticleConformityType
             {
                 ConformityTypeId = this.conformityTypesRepository
-                                    .AllAsNoTracking()
-                                    .FirstOrDefault(x => x.Description.ToUpper() == "ROHS").Id,
+                                        .AllAsNoTracking()
+                                        .FirstOrDefault(x => x.Description.ToUpper() == "ROHS").Id,
             });
 
             article.ArticleConformityTypes.Add(new ArticleConformityType
             {
                 ConformityTypeId = this.conformityTypesRepository
-                        .AllAsNoTracking()
-                        .FirstOrDefault(x => x.Description.ToUpper() == "DS_Substances").Id,
+                                        .AllAsNoTracking()
+                                        .FirstOrDefault(x => x.Description.ToUpper() == "DS_Substances").Id,
             });
 
             article.ArticleConformityTypes.Add(new ArticleConformityType
             {
                 ConformityTypeId = this.conformityTypesRepository
-            .AllAsNoTracking()
-            .FirstOrDefault(x => x.Description.ToUpper() == "SVHC").Id,
+                                        .AllAsNoTracking()
+                                        .FirstOrDefault(x => x.Description.ToUpper() == "SVHC").Id,
             });
 
             await this.articlesRepository.AddAsync(article);
@@ -113,9 +119,9 @@
                     Email = articleImportDTO.SupplierEmail?.Trim(),
                     PhoneNumber = articleImportDTO.SupplierPhoneNumber?.Trim(),
                     ContactPersonFirstName = articleImportDTO.ContactPersonFirstName == null ? null :
-                            this.PascalCaseConverter(articleImportDTO.ContactPersonFirstName),
+                            PascalCaseConverter.Convert(articleImportDTO.ContactPersonFirstName),
                     ContactPersonLastName = articleImportDTO.ContactPersonLastName == null ? null :
-                            this.PascalCaseConverter(articleImportDTO.ContactPersonLastName),
+                            PascalCaseConverter.Convert(articleImportDTO.ContactPersonLastName),
                 };
 
                 await this.suppliersRepository.AddAsync(supplierEntity);
@@ -124,18 +130,6 @@
             }
 
             return supplierEntity;
-        }
-
-        private string PascalCaseConverter(string stringToFix)
-        {
-            var st = new StringBuilder();
-            st.Append(char.ToUpper(stringToFix[0]));
-            for (int i = 1; i < stringToFix.Length; i++)
-            {
-                st.Append(char.ToLower(stringToFix[i]));
-            }
-
-            return st.ToString().Trim();
         }
     }
 }
