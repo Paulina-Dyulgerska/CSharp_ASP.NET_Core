@@ -60,21 +60,21 @@
             {
                 ConformityTypeId = this.conformityTypesRepository
                                         .AllAsNoTracking()
-                                        .FirstOrDefault(x => x.Description.ToUpper() == "ROHS").Id,
+                                        .FirstOrDefault(x => x.Description.ToUpper() == "RoHS".ToUpper()).Id,
             });
 
             article.ArticleConformityTypes.Add(new ArticleConformityType
             {
                 ConformityTypeId = this.conformityTypesRepository
                                         .AllAsNoTracking()
-                                        .FirstOrDefault(x => x.Description.ToUpper() == "DS_Substances").Id,
+                                        .FirstOrDefault(x => x.Description.ToUpper() == "DS_Substances".ToUpper()).Id,
             });
 
             article.ArticleConformityTypes.Add(new ArticleConformityType
             {
                 ConformityTypeId = this.conformityTypesRepository
                                         .AllAsNoTracking()
-                                        .FirstOrDefault(x => x.Description.ToUpper() == "SVHC").Id,
+                                        .FirstOrDefault(x => x.Description.ToUpper() == "SVHC".ToUpper()).Id,
             });
 
             await this.articlesRepository.AddAsync(article);

@@ -640,7 +640,7 @@
 
                 if (articleConformityType != null)
                 {
-                    // This conformity type is already asigned to this article
+                    // This conformity type is already asigned to the article
                     continue;
                 }
 
