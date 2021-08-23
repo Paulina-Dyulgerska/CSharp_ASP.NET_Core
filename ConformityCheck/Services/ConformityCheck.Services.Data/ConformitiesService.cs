@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Text.Json;
     using System.Threading.Tasks;
+
     using ConformityCheck.Common;
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
@@ -49,19 +50,19 @@
 
         public int GetCountBySearchInput(string searchInput)
         {
-            if (searchInput is null)
+            if (string.IsNullOrWhiteSpace(searchInput))
             {
                 return this.GetCount();
             }
 
             return this.conformitiesRepository
                 .AllAsNoTracking()
-                .To<ConformityExportModel>()
                 .Where(x => x.Article.Number.ToUpper().Contains(searchInput.ToUpper())
                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
                            || x.Supplier.Name.ToUpper().Contains(searchInput.ToUpper())
-                           || x.ConformityType.Description.ToUpper().Contains(searchInput.ToUpper()))
+                           || x.ConformityType.Description.ToUpper().Contains(searchInput.ToUpper())
+                           )
                 .Count();
         }
 

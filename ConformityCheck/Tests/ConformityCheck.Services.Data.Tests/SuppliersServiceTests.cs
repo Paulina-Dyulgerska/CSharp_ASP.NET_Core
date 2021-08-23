@@ -5,10 +5,10 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using ConformityCheck.Common;
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Web.ViewModels.Suppliers;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Caching.Distributed;
     using MockQueryable.Moq;
     using Moq;
@@ -17,9 +17,8 @@
     public class SuppliersServiceTests
     {
         [Fact]
-        public void GetCountShouldReturnCorrectNumber()
+        public void GetCountShouldReturnCorrectNumberOfSuppliers()
         {
-            // Arrange
             var suppliersRepository = new Mock<IDeletableEntityRepository<Supplier>>();
             var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
             var articleSuppliersRepository = new Mock<IRepository<ArticleSupplier>>();
@@ -39,18 +38,15 @@
                 articleSuppliersRepository.Object,
                 distributedCache.Object);
 
-            // Act
             var count = service.GetCount();
 
-            // Assert
             Assert.Equal(3, count);
             suppliersRepository.Verify(x => x.AllAsNoTracking(), Times.Once);
         }
 
         [Fact]
-        public void GetCountBySearchInputShouldReturnCorrectNumber()
+        public void GetCountBySearchInputShouldReturnCorrectNumberOfSuppliersByValidInput()
         {
-            // Arrange
             var suppliersRepository = new Mock<IDeletableEntityRepository<Supplier>>();
             var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
             var articleSuppliersRepository = new Mock<IRepository<ArticleSupplier>>();
@@ -73,16 +69,14 @@
                 articleSuppliersRepository.Object,
                 distributedCache.Object);
 
-            // Act
             var count = service.GetCountBySearchInput("12345");
 
-            // Assert
             Assert.Equal(4, count);
             suppliersRepository.Verify(x => x.AllAsNoTracking(), Times.Once);
         }
 
         [Fact]
-        public void GetCountBySearchInputShouldReturnAllByNullOrWhiteSpaceSearchInput()
+        public void GetCountBySearchInputShouldReturnAllIfSearchInputIsNullOrWhiteSpace()
         {
             var suppliersRepository = new Mock<IDeletableEntityRepository<Supplier>>();
             var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
@@ -119,7 +113,7 @@
         }
 
         [Fact]
-        public async Task EditAsync()
+        public async Task EditAsyncShouldChangeSupplierDataCorrectly()
         {
             var users = new List<ApplicationUser>
             {
@@ -150,9 +144,55 @@
                 {
                     Id = id,
                     Name = "noname",
+                    Email = "test@email.com",
+                    ContactPersonFirstName = "ContactPersonFirstName",
+                    ContactPersonLastName = "ContactPersonLastName",
+                    PhoneNumber = "0359887888888",
                 }, userId);
 
             Assert.Equal("noname".ToUpper(), suppliers.Where(x => x.Id == id).FirstOrDefault().Name);
+            Assert.Equal("test@email.com", suppliers.Where(x => x.Id == id).FirstOrDefault().Email);
+            Assert.Equal(PascalCaseConverter.Convert("ContactPersonFirstName"), suppliers.Where(x => x.Id == id).FirstOrDefault().ContactPersonFirstName);
+            Assert.Equal(PascalCaseConverter.Convert("ContactPersonLastName"), suppliers.Where(x => x.Id == id).FirstOrDefault().ContactPersonLastName);
+            Assert.Equal("0359887888888", suppliers.Where(x => x.Id == id).FirstOrDefault().PhoneNumber);
+            Assert.Equal("1", suppliers.Where(x => x.Id == id).FirstOrDefault().UserId);
+        }
+
+        [Fact]
+        public async Task EditAsyncShouldNotChangeSupplierNumber()
+        {
+            var users = new List<ApplicationUser>
+            {
+                new ApplicationUser { Id = "1" },
+            };
+            var userId = users.FirstOrDefault().Id;
+
+            var suppliersRepository = new Mock<IDeletableEntityRepository<Supplier>>();
+            var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
+            var articleSuppliersRepository = new Mock<IRepository<ArticleSupplier>>();
+            var distributedCache = new Mock<IDistributedCache>();
+            var id = Guid.NewGuid().ToString();
+            var suppliers = new List<Supplier>
+                             {
+                                 new Supplier() { Id = id, Number = "Test12345Number", Name = "Test" },
+                             };
+            suppliersRepository.Setup(r => r.All())
+                .Returns(suppliers.AsQueryable().BuildMock().Object);
+
+            var service = new SuppliersService(
+                suppliersRepository.Object,
+                conformitiesRepository.Object,
+                articleSuppliersRepository.Object,
+                distributedCache.Object);
+
+            await service.EditAsync(
+                new SupplierEditInputModel
+                {
+                    Id = id,
+                    Number = "nonumber",
+                }, userId);
+
+            Assert.Equal("Test12345Number", suppliers.Where(x => x.Id == id).FirstOrDefault().Number);
         }
 
         [Fact]
@@ -176,8 +216,7 @@
                 new Supplier() { Id = Guid.NewGuid().ToString(), Number = "TestNumber2", Name = "TestName2" },
                 new Supplier() { Id = Guid.NewGuid().ToString(), Number = "TestNumber3", Name = "TestName3" },
             };
-            suppliersRepository.Setup(r => r.All())
-                .Returns(suppliers.AsQueryable().BuildMock().Object);
+            suppliersRepository.Setup(r => r.All()).Returns(suppliers.AsQueryable().BuildMock().Object);
             suppliersRepository.Setup(r => r.Delete(It.IsAny<Supplier>()))
                 .Callback((Supplier supplier) => suppliers.Remove(supplier));
 
@@ -189,8 +228,7 @@
                 new ArticleSupplier() { Id = 4, ArticleId = Guid.NewGuid().ToString(), SupplierId = Guid.NewGuid().ToString() },
                 new ArticleSupplier() { Id = 4, ArticleId = Guid.NewGuid().ToString(), SupplierId = Guid.NewGuid().ToString() },
             };
-            articleSuppliersRepository.Setup(r => r.All())
-                .Returns(articleSuppliers.AsQueryable().BuildMock().Object);
+            articleSuppliersRepository.Setup(r => r.All()).Returns(articleSuppliers.AsQueryable().BuildMock().Object);
             articleSuppliersRepository.Setup(r => r.Delete(It.IsAny<ArticleSupplier>()))
                 .Callback((ArticleSupplier articleSupplier) => articleSuppliers.Remove(articleSupplier));
 
@@ -202,8 +240,7 @@
                 new Conformity() { Id = Guid.NewGuid().ToString(), ArticleId = Guid.NewGuid().ToString(), SupplierId = Guid.NewGuid().ToString() },
                 new Conformity() { Id = Guid.NewGuid().ToString(), ArticleId = Guid.NewGuid().ToString(), SupplierId = Guid.NewGuid().ToString() },
             };
-            conformitiesRepository.Setup(r => r.All())
-                .Returns(supplierConformities.AsQueryable().BuildMock().Object);
+            conformitiesRepository.Setup(r => r.All()).Returns(supplierConformities.AsQueryable().BuildMock().Object);
             conformitiesRepository.Setup(r => r.Delete(It.IsAny<Conformity>()))
                 .Callback((Conformity conformity) => supplierConformities.Remove(conformity));
 

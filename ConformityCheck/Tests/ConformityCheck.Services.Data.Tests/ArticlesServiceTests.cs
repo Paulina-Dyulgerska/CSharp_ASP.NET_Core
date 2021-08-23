@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Linq.Expressions;
     using System.Reflection;
-    using System.Threading;
     using System.Threading.Tasks;
+
+    using ConformityCheck.Common;
     using ConformityCheck.Data;
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
@@ -14,13 +14,10 @@
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels;
     using ConformityCheck.Web.ViewModels.Articles;
+    using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Query;
     using Microsoft.Extensions.Caching.Distributed;
-    using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Options;
     using MockQueryable.Moq;
     using Moq;
     using Xunit;
@@ -32,7 +29,7 @@
         public ArticlesServiceTests()
         {
             this.userManager = new Mock<UserManager<ApplicationUser>>(new Mock<IUserStore<ApplicationUser>>().Object, null, null, null, null, null, null, null, null);
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly, Assembly.Load("ConformityCheck.Services.Data.Tests"));
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
         }
 
         public ArticlesService Before()
@@ -166,82 +163,501 @@
             articlesRepository.Verify(x => x.AllAsNoTracking(), Times.Exactly(4));
         }
 
-        //[Fact]
-        //public async Task GetByIdShouldReturnCorrectNumber()
-        //{
-        //    // Arrange
-        //    AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly, Assembly.Load("ConformityCheck.Services.Data.Tests"));
-        //    var articlesRepository = new Mock<IDeletableEntityRepository<Article>>();
-        //    var articleSuppliersRepository = new Mock<IRepository<ArticleSupplier>>();
-        //    var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
-        //    var articleConformityTypeRepository = new Mock<IRepository<ArticleConformityType>>();
-        //    var distributedCache = new Mock<IDistributedCache>();
+        [Fact]
+        public async Task EditAsyncShouldChangeArticleDataCorrectly()
+        {
+            var users = new List<ApplicationUser>
+            {
+                new ApplicationUser { Id = "1" },
+            };
+            var userId = users.FirstOrDefault().Id;
 
+            var articlesRepository = new Mock<IDeletableEntityRepository<Article>>();
+            var articleSuppliersRepository = new Mock<IRepository<ArticleSupplier>>();
+            var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
+            var articleConformityTypeRepository = new Mock<IRepository<ArticleConformityType>>();
+            var distributedCache = new Mock<IDistributedCache>();
 
-        //    var articles = new List<Article>
-        //                     {
-        //                         new Article() { Id = "Test12345Id", Description = "Test" },
-        //                         new Article() { Number = "Test123456Number", Description = "Test" },
-        //                         new Article() { Number = "Test12347Number", Description = "Test" },
-        //                         new Article() { Number = "Test12345Number", Description = "Test12345Description" },
-        //                         new Article() { Number = "Test", Description = "Test12345Description" },
-        //                         new Article() { Number = "Test", Description = "Test12347Description" },
-        //                     }
-        //                     //.AsQueryable()
-        //                     //.AsAsyncEnumerable()
-        //                     ;
-        //    var id = "Test12345Id";
+            var id = Guid.NewGuid().ToString();
+            var articles = new List<Article>
+                             {
+                                 new Article() { Number = "Test12345Number", Description = "Test" },
+                                 new Article() { Id = id, Number = "Test123456Number", Description = "Test" },
+                                 new Article() { Number = "Test12347Number", Description = "Test" },
+                                 new Article() { Number = "Test12345Number", Description = "Test12345Description" },
+                                 new Article() { Number = "Test", Description = "Test12345Description" },
+                                 new Article() { Number = "Test", Description = "Test12347Description" },
+                             };
 
-        //    articlesRepository.Setup(r => r.All())
-        //        .Returns(articles.AsQueryable());
+            articlesRepository.Setup(r => r.All())
+                .Returns(articles.AsQueryable().BuildMock().Object);
 
-        //    var service = new ArticlesService(
-        //        articlesRepository.Object,
-        //        articleSuppliersRepository.Object,
-        //        conformitiesRepository.Object,
-        //        articleConformityTypeRepository.Object,
-        //        distributedCache.Object);
+            var service = new ArticlesService(
+                articlesRepository.Object,
+                articleSuppliersRepository.Object,
+                conformitiesRepository.Object,
+                articleConformityTypeRepository.Object,
+                distributedCache.Object);
 
-        //    // Act
-        //    var article = await service.GetByIdAsync<ArticleDetailsExportModel>(id);
+            await service.EditAsync(
+                new ArticleEditInputModel
+                {
+                    Id = id,
+                    Description = "noname",
+                }, userId);
 
-        //    // Assert
-        //    //Assert.Equal("Test", article);
-        //    articlesRepository.Verify(x => x.AllAsNoTracking(), Times.Once);
-        //}
+            Assert.Equal(PascalCaseConverter.Convert("noname"), articles.Where(x => x.Id == id).FirstOrDefault().Description);
+        }
 
-        //[Fact]
-        //public async Task GetByIdShouldReturnCorrectNumber()
-        //{
-        //    // Arrange
-        //    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-        //        .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
-        //    var db = new ApplicationDbContext(options);
-        //    var articlesRepository = new EfDeletableEntityRepository<Article>(db);
-        //    var articleSuppliersRepository = new EfRepository<ArticleSupplier>(db);
-        //    var conformitiesRepository = new EfDeletableEntityRepository<Conformity>(db);
-        //    var articleConformityTypeRepository = new EfRepository<ArticleConformityType>(db);
-        //    var distributedCache = new Mock<IDistributedCache>();
-        //    var usersRepository = new EfDeletableEntityRepository<ApplicationUser>(db);
+        [Fact]
+        public async Task DeleteAsyncShouldRemoveArticleAndAllItsSuppliersConformitiesAndConformityTypes()
+        {
+            var users = new List<ApplicationUser>
+            {
+                new ApplicationUser { Id = "1" },
+            };
+            var userId = users.FirstOrDefault().Id;
 
-        //    var service = new ArticlesService(
-        //                        articlesRepository,
-        //                        articleSuppliersRepository,
-        //                        conformitiesRepository,
-        //                        articleConformityTypeRepository,
-        //                        distributedCache.Object);
-        //    var article = new ArticleCreateInputModel
-        //    {
+            var articlesRepository = new Mock<IDeletableEntityRepository<Article>>();
+            var articleSuppliersRepository = new Mock<IRepository<ArticleSupplier>>();
+            var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
+            var articleConformityTypeRepository = new Mock<IRepository<ArticleConformityType>>();
+            var distributedCache = new Mock<IDistributedCache>();
+            var articleId = Guid.NewGuid().ToString();
 
-        //         RecaptchaValue = 1,
-        //    }
-        //    // Act
-        //    var article = await service.GetByIdAsync<ArticleDetailsExportModel>(id);
+            var articles = new List<Article>
+                             {
+                                 new Article() { Number = "Test12345Number", Description = "Test" },
+                                 new Article() { Id = articleId, Number = "Test123456Number", Description = "Test" },
+                                 new Article() { Number = "Test12347Number", Description = "Test" },
+                                 new Article() { Number = "Test12345Number", Description = "Test12345Description" },
+                                 new Article() { Number = "Test", Description = "Test12345Description" },
+                                 new Article() { Number = "Test", Description = "Test12347Description" },
+                             };
+            articlesRepository.Setup(r => r.All()).Returns(articles.AsQueryable().BuildMock().Object);
+            articlesRepository.Setup(r => r.Delete(It.IsAny<Article>())).Callback((Article article) => articles.Remove(article));
 
-        //    // Assert
-        //    //Assert.Equal("Test", article);
-        //    articlesRepository.Verify(x => x.AllAsNoTracking(), Times.Once);
-        //}
+            var articleSuppliers = new List<ArticleSupplier>
+            {
+                new ArticleSupplier() { ArticleId = Guid.NewGuid().ToString(), SupplierId = Guid.NewGuid().ToString() },
+                new ArticleSupplier() { ArticleId = articleId, SupplierId = Guid.NewGuid().ToString() },
+                new ArticleSupplier() { ArticleId = articleId, SupplierId = Guid.NewGuid().ToString() },
+                new ArticleSupplier() { ArticleId = articleId, SupplierId = Guid.NewGuid().ToString() },
+                new ArticleSupplier() { ArticleId = Guid.NewGuid().ToString(), SupplierId = Guid.NewGuid().ToString() },
+            };
+            articleSuppliersRepository.Setup(r => r.All()).Returns(articleSuppliers.AsQueryable().BuildMock().Object);
+            articleSuppliersRepository.Setup(r => r.Delete(It.IsAny<ArticleSupplier>()))
+                .Callback((ArticleSupplier articleSupplier) => articleSuppliers.Remove(articleSupplier));
 
+            var articleConformityTypes = new List<ArticleConformityType>
+            {
+                new ArticleConformityType() { ArticleId = articleId, ConformityTypeId = 1 },
+                new ArticleConformityType() { ArticleId = Guid.NewGuid().ToString(), ConformityTypeId = 1 },
+                new ArticleConformityType() { ArticleId = Guid.NewGuid().ToString(), ConformityTypeId = 1 },
+                new ArticleConformityType() { ArticleId = articleId, ConformityTypeId = 3 },
+                new ArticleConformityType() { ArticleId = Guid.NewGuid().ToString(), ConformityTypeId = 1 },
+            };
+            articleConformityTypeRepository.Setup(r => r.All()).Returns(articleConformityTypes.AsQueryable().BuildMock().Object);
+            articleConformityTypeRepository.Setup(r => r.Delete(It.IsAny<ArticleConformityType>()))
+                .Callback((ArticleConformityType articleConformityType) => articleConformityTypes.Remove(articleConformityType));
+
+            var articleConformities = new List<Conformity>
+            {
+                new Conformity() { Id = Guid.NewGuid().ToString(), ArticleId = Guid.NewGuid().ToString() },
+                new Conformity() { Id = Guid.NewGuid().ToString(), ArticleId = articleId },
+                new Conformity() { Id = Guid.NewGuid().ToString(), ArticleId = articleId },
+                new Conformity() { Id = Guid.NewGuid().ToString(), ArticleId = articleId },
+            };
+            conformitiesRepository.Setup(r => r.All()).Returns(articleConformities.AsQueryable().BuildMock().Object);
+            conformitiesRepository.Setup(r => r.Delete(It.IsAny<Conformity>()))
+                .Callback((Conformity conformity) => articleConformities.Remove(conformity));
+
+            var service = new ArticlesService(
+                articlesRepository.Object,
+                articleSuppliersRepository.Object,
+                conformitiesRepository.Object,
+                articleConformityTypeRepository.Object,
+                distributedCache.Object);
+
+            await service.DeleteAsync(articleId, userId);
+
+            Assert.Empty(articles.Where(x => x.Id == articleId));
+            Assert.Equal(5, articles.Count());
+            Assert.Empty(articleSuppliers.Where(x => x.ArticleId == articleId));
+            Assert.Equal(2, articleSuppliers.Count());
+            Assert.Empty(articleConformityTypes.Where(x => x.ArticleId == articleId));
+            Assert.Equal(3, articleConformityTypes.Count());
+            Assert.Empty(articleConformities.Where(x => x.ArticleId == articleId));
+            Assert.Single(articleConformities);
+        }
+
+        [Fact]
+        public async Task AddSuppliersyncShouldAddCorrectly()
+        {
+            var users = new List<ApplicationUser>
+            {
+                new ApplicationUser { Id = "1" },
+            };
+            var userId = users.FirstOrDefault().Id;
+
+            var articlesRepository = new Mock<IDeletableEntityRepository<Article>>();
+            var articleSuppliersRepository = new Mock<IRepository<ArticleSupplier>>();
+            var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
+            var articleConformityTypeRepository = new Mock<IRepository<ArticleConformityType>>();
+            var distributedCache = new Mock<IDistributedCache>();
+            var articleId = Guid.NewGuid().ToString();
+            var supplierId = Guid.NewGuid().ToString();
+
+            var articleSuppliers = new List<ArticleSupplier>
+            {
+                new ArticleSupplier() { ArticleId = Guid.NewGuid().ToString(), SupplierId = Guid.NewGuid().ToString() },
+            };
+            articleSuppliersRepository.Setup(r => r.AllAsNoTracking())
+                .Returns(articleSuppliers.AsQueryable().BuildMock().Object);
+
+            articleSuppliersRepository.Setup(r => r.AddAsync(It.IsAny<ArticleSupplier>()))
+                .Callback((ArticleSupplier articleSupplier) => articleSuppliers.Add(articleSupplier));
+
+            var service = new ArticlesService(
+                articlesRepository.Object,
+                articleSuppliersRepository.Object,
+                conformitiesRepository.Object,
+                articleConformityTypeRepository.Object,
+                distributedCache.Object);
+
+            await service.AddSupplierAsync(new ArticleManageSuppliersInputModel
+            {
+                Id = articleId,
+                SupplierId = supplierId,
+            });
+
+            Assert.Single(articleSuppliers.Where(x => x.ArticleId == articleId));
+            Assert.Equal(2, articleSuppliers.Count());
+            Assert.True(articleSuppliers.Where(x => x.ArticleId == articleId).FirstOrDefault().IsMainSupplier);
+        }
+
+        [Fact]
+        public async Task AddSuppliersyncShouldNotAddAlreadyAddedSupplier()
+        {
+            var users = new List<ApplicationUser>
+            {
+                new ApplicationUser { Id = "1" },
+            };
+            var userId = users.FirstOrDefault().Id;
+
+            var articlesRepository = new Mock<IDeletableEntityRepository<Article>>();
+            var articleSuppliersRepository = new Mock<IRepository<ArticleSupplier>>();
+            var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
+            var articleConformityTypeRepository = new Mock<IRepository<ArticleConformityType>>();
+            var distributedCache = new Mock<IDistributedCache>();
+            var articleId = Guid.NewGuid().ToString();
+            var supplierId = Guid.NewGuid().ToString();
+
+            var articleSuppliers = new List<ArticleSupplier>
+            {
+                new ArticleSupplier() { ArticleId = Guid.NewGuid().ToString(), SupplierId = Guid.NewGuid().ToString() },
+                new ArticleSupplier() { ArticleId = articleId, SupplierId = supplierId, IsMainSupplier = true },
+            };
+            articleSuppliersRepository.Setup(r => r.AllAsNoTracking())
+                .Returns(articleSuppliers.AsQueryable().BuildMock().Object);
+
+            articleSuppliersRepository.Setup(r => r.AddAsync(It.IsAny<ArticleSupplier>()))
+                .Callback((ArticleSupplier articleSupplier) => articleSuppliers.Add(articleSupplier));
+
+            var service = new ArticlesService(
+                articlesRepository.Object,
+                articleSuppliersRepository.Object,
+                conformitiesRepository.Object,
+                articleConformityTypeRepository.Object,
+                distributedCache.Object);
+
+            await service.AddSupplierAsync(new ArticleManageSuppliersInputModel
+            {
+                Id = articleId,
+                SupplierId = supplierId,
+            });
+
+            Assert.Single(articleSuppliers.Where(x => x.ArticleId == articleId));
+            Assert.Single(articleSuppliers.Where(x => x.SupplierId == supplierId));
+            Assert.Equal(2, articleSuppliers.Count());
+            Assert.True(articleSuppliers.Where(x => x.ArticleId == articleId).FirstOrDefault().IsMainSupplier);
+        }
+
+        [Fact]
+        public async Task AddSuppliersyncShouldNotAddMainSupplierIfAlreadyHasSupplierAddedToArticle()
+        {
+            var users = new List<ApplicationUser>
+            {
+                new ApplicationUser { Id = "1" },
+            };
+            var userId = users.FirstOrDefault().Id;
+
+            var articlesRepository = new Mock<IDeletableEntityRepository<Article>>();
+            var articleSuppliersRepository = new Mock<IRepository<ArticleSupplier>>();
+            var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
+            var articleConformityTypeRepository = new Mock<IRepository<ArticleConformityType>>();
+            var distributedCache = new Mock<IDistributedCache>();
+            var articleId = Guid.NewGuid().ToString();
+            var supplierId = Guid.NewGuid().ToString();
+
+            var articleSuppliers = new List<ArticleSupplier>
+            {
+                new ArticleSupplier() { ArticleId = Guid.NewGuid().ToString(), SupplierId = Guid.NewGuid().ToString() },
+                new ArticleSupplier() { ArticleId = articleId, SupplierId = Guid.NewGuid().ToString(), IsMainSupplier = true },
+            };
+            articleSuppliersRepository.Setup(r => r.AllAsNoTracking())
+                .Returns(articleSuppliers.AsQueryable().BuildMock().Object);
+
+            articleSuppliersRepository.Setup(r => r.AddAsync(It.IsAny<ArticleSupplier>()))
+                .Callback((ArticleSupplier articleSupplier) => articleSuppliers.Add(articleSupplier));
+
+            var service = new ArticlesService(
+                articlesRepository.Object,
+                articleSuppliersRepository.Object,
+                conformitiesRepository.Object,
+                articleConformityTypeRepository.Object,
+                distributedCache.Object);
+
+            await service.AddSupplierAsync(new ArticleManageSuppliersInputModel
+            {
+                Id = articleId,
+                SupplierId = supplierId,
+            });
+
+            Assert.Equal(2, articleSuppliers.Where(x => x.ArticleId == articleId).Count());
+            Assert.Equal(3, articleSuppliers.Count());
+            Assert.False(articleSuppliers.Where(x => x.ArticleId == articleId && x.SupplierId == supplierId)
+                                            .FirstOrDefault().IsMainSupplier);
+        }
+
+        [Fact]
+        public async Task ChangeMainSupplierShoutChangeExistingSuppliersCorrectly()
+        {
+            var users = new List<ApplicationUser>
+            {
+                new ApplicationUser { Id = "1" },
+            };
+            var userId = users.FirstOrDefault().Id;
+
+            var articlesRepository = new Mock<IDeletableEntityRepository<Article>>();
+            var articleSuppliersRepository = new Mock<IRepository<ArticleSupplier>>();
+            var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
+            var articleConformityTypeRepository = new Mock<IRepository<ArticleConformityType>>();
+            var distributedCache = new Mock<IDistributedCache>();
+            var articleId = Guid.NewGuid().ToString();
+            var supplier1Id = Guid.NewGuid().ToString();
+            var supplier2Id = Guid.NewGuid().ToString();
+            var supplier3Id = Guid.NewGuid().ToString();
+
+            var articleSuppliers = new List<ArticleSupplier>
+            {
+                new ArticleSupplier() { ArticleId = articleId, SupplierId = supplier1Id, IsMainSupplier = true },
+                new ArticleSupplier() { ArticleId = articleId, SupplierId = supplier2Id },
+                new ArticleSupplier() { ArticleId = articleId, SupplierId = supplier3Id },
+            };
+            articleSuppliersRepository.Setup(r => r.All())
+                .Returns(articleSuppliers.AsQueryable().BuildMock().Object);
+
+            var service = new ArticlesService(
+                articlesRepository.Object,
+                articleSuppliersRepository.Object,
+                conformitiesRepository.Object,
+                articleConformityTypeRepository.Object,
+                distributedCache.Object);
+
+            await service.ChangeMainSupplierAsync(new ArticleManageSuppliersInputModel
+            {
+                Id = articleId,
+                SupplierId = supplier2Id,
+            });
+
+            Assert.Equal(3, articleSuppliers.Where(x => x.ArticleId == articleId).Count());
+            Assert.False(articleSuppliers.Where(x => x.ArticleId == articleId && x.SupplierId == supplier1Id)
+                                            .FirstOrDefault().IsMainSupplier);
+            Assert.False(articleSuppliers.Where(x => x.ArticleId == articleId && x.SupplierId == supplier3Id)
+                                .FirstOrDefault().IsMainSupplier);
+            Assert.True(articleSuppliers.Where(x => x.ArticleId == articleId && x.SupplierId == supplier2Id)
+                                .FirstOrDefault().IsMainSupplier);
+        }
+
+        [Fact]
+        public async Task GetSuppliersByIdAsyncShouldReturnCorrectlyByExistingSuppliers()
+        {
+            var users = new List<ApplicationUser>
+            {
+                new ApplicationUser { Id = "1" },
+            };
+            var userId = users.FirstOrDefault().Id;
+
+            var articlesRepository = new Mock<IDeletableEntityRepository<Article>>();
+            var articleSuppliersRepository = new Mock<IRepository<ArticleSupplier>>();
+            var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
+            var articleConformityTypeRepository = new Mock<IRepository<ArticleConformityType>>();
+            var distributedCache = new Mock<IDistributedCache>();
+            var articleId = Guid.NewGuid().ToString();
+            var supplier1Id = Guid.NewGuid().ToString();
+            var supplier2Id = Guid.NewGuid().ToString();
+            var supplier3Id = Guid.NewGuid().ToString();
+
+            var articleSuppliers = new List<ArticleSupplier>
+            {
+                new ArticleSupplier() { ArticleId = articleId, SupplierId = supplier1Id, Supplier = new Supplier { Name = "TestSupplier" } },
+                new ArticleSupplier() { ArticleId = articleId, SupplierId = supplier2Id, IsMainSupplier = true, Supplier = new Supplier { Name = "TestSupplier" } },
+                new ArticleSupplier() { ArticleId = articleId, SupplierId = supplier3Id, Supplier = new Supplier { Name = "TestSupplier" } },
+                new ArticleSupplier() { ArticleId = Guid.NewGuid().ToString(), SupplierId = supplier3Id, Supplier = new Supplier { Name = "TestSupplier" } },
+                new ArticleSupplier() { ArticleId = Guid.NewGuid().ToString(), SupplierId = supplier3Id, Supplier = new Supplier { Name = "TestSupplier" } },
+                new ArticleSupplier() { ArticleId = Guid.NewGuid().ToString(), SupplierId = supplier3Id, Supplier = new Supplier { Name = "TestSupplier" } },
+            };
+            articleSuppliersRepository.Setup(r => r.AllAsNoTracking())
+                .Returns(articleSuppliers.AsQueryable().BuildMock().Object);
+
+            var service = new ArticlesService(
+                articlesRepository.Object,
+                articleSuppliersRepository.Object,
+                conformitiesRepository.Object,
+                articleConformityTypeRepository.Object,
+                distributedCache.Object);
+
+            var suppliers = await service.GetSuppliersByIdAsync<SupplierExportModel>(articleId);
+
+            Assert.Equal(3, suppliers.Count());
+            Assert.True(suppliers.Where(x => x.Id == supplier2Id).FirstOrDefault().IsMainSupplier);
+            Assert.False(suppliers.Where(x => x.Id == supplier1Id).FirstOrDefault().IsMainSupplier);
+            Assert.False(suppliers.Where(x => x.Id == supplier3Id).FirstOrDefault().IsMainSupplier);
+        }
+
+        [Fact]
+        public async Task GetSuppliersByIdAsyncShouldReturnEmptyListByNoExistingSuppliers()
+        {
+            var users = new List<ApplicationUser>
+            {
+                new ApplicationUser { Id = "1" },
+            };
+            var userId = users.FirstOrDefault().Id;
+
+            var articlesRepository = new Mock<IDeletableEntityRepository<Article>>();
+            var articleSuppliersRepository = new Mock<IRepository<ArticleSupplier>>();
+            var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
+            var articleConformityTypeRepository = new Mock<IRepository<ArticleConformityType>>();
+            var distributedCache = new Mock<IDistributedCache>();
+            var articleId = Guid.NewGuid().ToString();
+            var supplier1Id = Guid.NewGuid().ToString();
+            var supplier2Id = Guid.NewGuid().ToString();
+            var supplier3Id = Guid.NewGuid().ToString();
+
+            var articleSuppliers = new List<ArticleSupplier>
+            {
+                new ArticleSupplier() { ArticleId = articleId, SupplierId = supplier1Id, Supplier = new Supplier { Name = "TestSupplier" } },
+                new ArticleSupplier() { ArticleId = articleId, SupplierId = supplier2Id, IsMainSupplier = true, Supplier = new Supplier { Name = "TestSupplier" } },
+                new ArticleSupplier() { ArticleId = articleId, SupplierId = supplier3Id, Supplier = new Supplier { Name = "TestSupplier" } },
+                new ArticleSupplier() { ArticleId = Guid.NewGuid().ToString(), SupplierId = supplier3Id, Supplier = new Supplier { Name = "TestSupplier" } },
+                new ArticleSupplier() { ArticleId = Guid.NewGuid().ToString(), SupplierId = supplier3Id, Supplier = new Supplier { Name = "TestSupplier" } },
+                new ArticleSupplier() { ArticleId = Guid.NewGuid().ToString(), SupplierId = supplier3Id, Supplier = new Supplier { Name = "TestSupplier" } },
+            };
+            articleSuppliersRepository.Setup(r => r.AllAsNoTracking())
+                .Returns(articleSuppliers.AsQueryable().BuildMock().Object);
+
+            var service = new ArticlesService(
+                articlesRepository.Object,
+                articleSuppliersRepository.Object,
+                conformitiesRepository.Object,
+                articleConformityTypeRepository.Object,
+                distributedCache.Object);
+
+            var suppliers = await service.GetSuppliersByIdAsync<SupplierExportModel>(Guid.NewGuid().ToString());
+
+            Assert.Empty(suppliers);
+        }
+
+        [Fact]
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public async Task GetConformityTypesByIdAndSupplierAsyncReturnCorrectlyByExistingSuppliersAndConformityTypes()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            var articlesRepository = new Mock<IDeletableEntityRepository<Article>>();
+            var articleSuppliersRepository = new Mock<IRepository<ArticleSupplier>>();
+            var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
+            var articleConformityTypeRepository = new Mock<IRepository<ArticleConformityType>>();
+            var distributedCache = new Mock<IDistributedCache>();
+            var articleId = Guid.NewGuid().ToString();
+            var supplierId = Guid.NewGuid().ToString();
+
+            var articleConformityTypes = new List<ArticleConformityType>
+            {
+                new ArticleConformityType() { Id = 1, ArticleId = articleId, ConformityTypeId = 1 },
+                new ArticleConformityType() { Id = 2, ArticleId = Guid.NewGuid().ToString(), ConformityTypeId = 1 },
+                new ArticleConformityType() { Id = 3, ArticleId = Guid.NewGuid().ToString(), ConformityTypeId = 3 },
+                new ArticleConformityType() { Id = 4, ArticleId = articleId, ConformityTypeId = 3 },
+                new ArticleConformityType() { Id = 5, ArticleId = Guid.NewGuid().ToString(), ConformityTypeId = 1 },
+            };
+            articleConformityTypeRepository.Setup(r => r.AllAsNoTracking())
+                .Returns(articleConformityTypes.AsQueryable().BuildMock().Object);
+
+            var articleConformities = new List<Conformity>
+            {
+                new Conformity() { Id = Guid.NewGuid().ToString(), ArticleId = Guid.NewGuid().ToString() },
+                new Conformity() { Id = Guid.NewGuid().ToString(), ArticleId = articleId, SupplierId = supplierId, ConformityTypeId = 1, IsAccepted = true, ValidityDate = DateTime.UtcNow.AddDays(3) },
+                new Conformity() { Id = Guid.NewGuid().ToString(), ArticleId = articleId, SupplierId = supplierId, ConformityTypeId = 3, IsAccepted = true, ValidityDate = DateTime.UtcNow.AddDays(3) },
+                new Conformity() { Id = Guid.NewGuid().ToString(), ArticleId = articleId },
+                new Conformity() { Id = Guid.NewGuid().ToString(), ArticleId = articleId },
+            };
+            conformitiesRepository.Setup(r => r.AllAsNoTracking()).Returns(articleConformities.AsQueryable().BuildMock().Object);
+
+            var service = new ArticlesService(
+                articlesRepository.Object,
+                articleSuppliersRepository.Object,
+                conformitiesRepository.Object,
+                articleConformityTypeRepository.Object,
+                distributedCache.Object);
+
+            // TODO:
+            // var conformityTypes = await service.GetConformityTypesByIdAndSupplierAsync(articleId, supplierId);
+            // Assert.Equal(0, conformityTypes.Count());
+        }
+
+        [Fact]
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public async Task GetByIdShouldReturnCorrectNumber()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            // Arrange
+            var articlesRepository = new Mock<IDeletableEntityRepository<Article>>();
+            var articleSuppliersRepository = new Mock<IRepository<ArticleSupplier>>();
+            var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
+            var articleConformityTypeRepository = new Mock<IRepository<ArticleConformityType>>();
+            var distributedCache = new Mock<IDistributedCache>();
+
+            var articleId = Guid.NewGuid().ToString();
+
+            var articles = new List<Article>
+                             {
+                                 new Article() { Id = articleId, Description = "Test" },
+                                 new Article() { Number = "Test123456Number", Description = "Test" },
+                                 new Article() { Number = "Test12347Number", Description = "Test" },
+                                 new Article() { Number = "Test12345Number", Description = "Test12345Description" },
+                                 new Article() { Number = "Test", Description = "Test12345Description" },
+                                 new Article() { Number = "Test", Description = "Test12347Description" },
+                             }
+
+                             // .AsQueryable()
+                             // .AsAsyncEnumerable()
+                             ;
+            articlesRepository.Setup(r => r.AllAsNoTracking())
+               .Returns(articles.AsQueryable().BuildMock().Object);
+
+            var service = new ArticlesService(
+                articlesRepository.Object,
+                articleSuppliersRepository.Object,
+                conformitiesRepository.Object,
+                articleConformityTypeRepository.Object,
+                distributedCache.Object);
+
+            //// TODO:
+            //// Act
+            // var article = await service.GetByIdAsync<ArticleDetailsExportModel>("Test12345Id");
+            //// Assert
+            // Assert.Equal("Test", article.Description);
+            // articlesRepository.Verify(x => x.AllAsNoTracking(), Times.Once);
+        }
     }
 }

@@ -636,7 +636,7 @@
                 .All()
                 .FirstOrDefaultAsync(x => x.Id == input.Id);
 
-            entity.Name = input.Name.Trim().ToUpper();
+            entity.Name = input.Name?.Trim().ToUpper();
             entity.Email = input.Email?.Trim();
             entity.PhoneNumber = input.PhoneNumber?.Trim();
             entity.ContactPersonFirstName = input.ContactPersonFirstName == null ?

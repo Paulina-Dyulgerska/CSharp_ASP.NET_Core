@@ -34,7 +34,7 @@
 
         public int GetCountBySearchInput(string searchInput)
         {
-            if (searchInput is null)
+            if (string.IsNullOrWhiteSpace(searchInput))
             {
                 return this.GetCount();
             }

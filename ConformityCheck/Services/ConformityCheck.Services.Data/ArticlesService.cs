@@ -581,16 +581,12 @@
 
         public async Task ChangeMainSupplierAsync(ArticleManageSuppliersInputModel input)
         {
-            var articleEntity = await this.articlesRepository
-                .All()
-                .FirstOrDefaultAsync(x => x.Id == input.Id);
-
-            var articleSupplierEntitis = await this.articleSuppliersRepository
+            var articleSupplierEntities = await this.articleSuppliersRepository
                 .All()
                 .Where(x => x.ArticleId == input.Id)
                 .ToListAsync();
 
-            foreach (var entity in articleSupplierEntitis)
+            foreach (var entity in articleSupplierEntities)
             {
                 if (entity.SupplierId == input.SupplierId)
                 {

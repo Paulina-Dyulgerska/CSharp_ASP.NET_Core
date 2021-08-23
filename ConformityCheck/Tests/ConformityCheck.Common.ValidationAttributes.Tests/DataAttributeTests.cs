@@ -1,17 +1,18 @@
-using System;
-using Xunit;
-
 namespace ConformityCheck.Common.ValidationAttributes.Tests
 {
+    using System;
+
+    using Xunit;
+
     public class DataAttributeTests
     {
-        private const string minDate = "01/01/2000";
+        private const string MinDate = "01/01/2000";
 
         [Fact]
         public void IsValidReturnsFalseForDatesAfterCurrentDate()
         {
             // Arange
-            var attribute = new DateAttribute(minDate);
+            var attribute = new DateAttribute(MinDate);
 
             // Act
             var result = attribute.IsValid(DateTime.UtcNow.AddYears(1));
@@ -24,7 +25,7 @@ namespace ConformityCheck.Common.ValidationAttributes.Tests
         public void IsValidReturnsFalseForDatesBeforeMinDate()
         {
             // Arange
-            var attribute = new DateAttribute(minDate);
+            var attribute = new DateAttribute(MinDate);
 
             // Act
             var result = attribute.IsValid("01/01/1950");
@@ -37,7 +38,7 @@ namespace ConformityCheck.Common.ValidationAttributes.Tests
         public void IsValidReturnsFalseForInvalidDateTimeInput()
         {
             // Arange
-            var attribute = new DateAttribute(minDate);
+            var attribute = new DateAttribute(MinDate);
 
             // Act
             var result = attribute.IsValid("01.01.2001");
@@ -50,7 +51,7 @@ namespace ConformityCheck.Common.ValidationAttributes.Tests
         public void IsValidReturnsTrueForPreviousDate()
         {
             // Arange
-            var attribute = new DateAttribute(minDate);
+            var attribute = new DateAttribute(MinDate);
 
             // Act
             var result = attribute.IsValid(DateTime.UtcNow.AddYears(-1));
@@ -63,7 +64,7 @@ namespace ConformityCheck.Common.ValidationAttributes.Tests
         public void IsValidReturnsTrueForCurrentDate()
         {
             // Arange
-            var attribute = new DateAttribute(minDate);
+            var attribute = new DateAttribute(MinDate);
 
             // Act
             var result = attribute.IsValid(DateTime.UtcNow);
@@ -76,13 +77,13 @@ namespace ConformityCheck.Common.ValidationAttributes.Tests
         public void GetsProperMinDate()
         {
             // Arange
-            var attribute = new DateAttribute(minDate);
+            var attribute = new DateAttribute(MinDate);
 
             // Act
             var result = attribute.MinDate;
+
             // Assert
-            Assert.Equal(result, DateTime.Parse(minDate));
+            Assert.Equal(result, DateTime.Parse(MinDate));
         }
     }
-
 }
