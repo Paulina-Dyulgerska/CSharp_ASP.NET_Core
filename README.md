@@ -207,11 +207,19 @@ Error Page:
 
 Emails:
 
+Confirmation email for registration:
+
 <img width="654" alt="ConfirmationEmail" src="https://user-images.githubusercontent.com/54845614/130650556-a8658b96-55b2-48d5-aac1-ac3e9ecaa07a.png">
+
+Thank you email to contacting person from site admin:
 
 <img width="582" alt="ThankYouMessageFromAdmin" src="https://user-images.githubusercontent.com/54845614/130652057-2a8b4156-c38a-4c8f-94e7-2fc66bdee722.png">
 
+Email to site admin with contact message information:
+
 <img width="818" alt="ContactMessageToSiteAdmin" src="https://user-images.githubusercontent.com/54845614/130651218-c0b33d3c-4229-496e-9ba7-d012c5cf45fb.png">
+
+Email to supplier for confirmation request:
 
 <img width="561" alt="EmailToSupplier" src="https://user-images.githubusercontent.com/54845614/130651441-776a5077-df8d-42ec-88ad-af1406c334b6.png">
 
