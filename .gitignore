@@ -12,6 +12,7 @@ TODOs.txt
 UsageOfThisProject.txt
 ConformityCheck/Data/ConformityCheck.Data/Seeding/DataFiles/*
 ConformityCheck/Web/ConformityCheck.Web/wwwroot/files/*
+ConformityCheck/Archive/*
 
 # User-specific files
 *.rsuser
