@@ -242,3 +242,5 @@ o	The logic is that the general view with report returned for all major entity t
 
 <img width="684" alt="EmailToSupplier2" src="https://user-images.githubusercontent.com/54845614/130651453-bdbc2a57-7e41-4227-a4c8-e2822837c4d0.png">
 
+
+<b>Expect product, substances and regulatory lists - they are the next stage of the development..........</b>
