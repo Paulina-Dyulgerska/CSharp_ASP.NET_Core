@@ -201,7 +201,8 @@ o	The logic is that the general view with report returned for all major entity t
 
 <img width="604" alt="Validations" src="https://user-images.githubusercontent.com/54845614/130652103-780a5e09-d213-45d1-9961-ac895e8b6e1f.png">
 
-<img width="840" alt="ShowConformityFile" src="https://user-images.githubusercontent.com/54845614/130651979-8db4be76-065b-462d-955d-2718e0b3e39c.png">
+<img width="839" alt="ShowConformityFile" src="https://user-images.githubusercontent.com/54845614/130657012-38fa0287-6a03-4616-920d-633384f96dd3.png">
+
 
 
 
