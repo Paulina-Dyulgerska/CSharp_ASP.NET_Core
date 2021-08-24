@@ -183,7 +183,8 @@ o	The logic is that the general view with report returned for all major entity t
 
 <b>Conformity Types Pages:</b>
 
-<img width="793" alt="ConformityTypes" src="https://user-images.githubusercontent.com/54845614/130651151-190f9af4-9fe1-4557-8fca-fd3dd9e91d54.png">
+<img width="824" alt="ConformityTypes" src="https://user-images.githubusercontent.com/54845614/130660664-99101299-e8c2-4596-811c-40b70e53caaa.png">
+
 
 
 
