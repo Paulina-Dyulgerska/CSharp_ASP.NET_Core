@@ -186,9 +186,9 @@ Conformity Pages:
 
 <img width="785" alt="JSSuppliers" src="https://user-images.githubusercontent.com/54845614/130651558-f298e785-d124-42ec-9abd-36f2efd6954d.png">
 
-<img width="412" alt="JsSuppliersArticles" src="https://user-images.githubusercontent.com/54845614/130651608-82700361-b6c5-4675-ae71-5030d31f8bd5.png">
-
 <img width="611" alt="JSSuppliersForArticles" src="https://user-images.githubusercontent.com/54845614/130651622-ae39fc98-84f5-4b22-9ae8-77b18404ee63.png">
+
+<img width="412" alt="JsSuppliersArticles" src="https://user-images.githubusercontent.com/54845614/130651608-82700361-b6c5-4675-ae71-5030d31f8bd5.png">
 
 <img width="604" alt="Validations" src="https://user-images.githubusercontent.com/54845614/130652103-780a5e09-d213-45d1-9961-ac895e8b6e1f.png">
 
@@ -209,12 +209,11 @@ Emails:
 
 <img width="654" alt="ConfirmationEmail" src="https://user-images.githubusercontent.com/54845614/130650556-a8658b96-55b2-48d5-aac1-ac3e9ecaa07a.png">
 
+<img width="582" alt="ThankYouMessageFromAdmin" src="https://user-images.githubusercontent.com/54845614/130652057-2a8b4156-c38a-4c8f-94e7-2fc66bdee722.png">
+
 <img width="818" alt="ContactMessageToSiteAdmin" src="https://user-images.githubusercontent.com/54845614/130651218-c0b33d3c-4229-496e-9ba7-d012c5cf45fb.png">
 
 <img width="561" alt="EmailToSupplier" src="https://user-images.githubusercontent.com/54845614/130651441-776a5077-df8d-42ec-88ad-af1406c334b6.png">
 
 <img width="684" alt="EmailToSupplier2" src="https://user-images.githubusercontent.com/54845614/130651453-bdbc2a57-7e41-4227-a4c8-e2822837c4d0.png">
 
-<img width="800" alt="MessageToAdmin" src="https://user-images.githubusercontent.com/54845614/130651777-8e9c7c21-708e-4a4c-b606-d2938b3e2342.png">
-
-<img width="582" alt="ThankYouMessageFromAdmin" src="https://user-images.githubusercontent.com/54845614/130652057-2a8b4156-c38a-4c8f-94e7-2fc66bdee722.png">
