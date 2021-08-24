@@ -246,4 +246,5 @@ o	The logic is that the general view with report returned for all major entity t
 
 <b>Expect products, substances and regulatory lists - they are the next stage of this project development!</b>
 
-<b>We all could цонтрибуте фор аetter World, with confirm articles and products, which saves peoples' health and life, our environment and Earth nature!</b>
+
+<b>We all could contribute for a better World, with confirm articles and products, which saves peoples' health and life, together with our environment and Earth nature!</b>
