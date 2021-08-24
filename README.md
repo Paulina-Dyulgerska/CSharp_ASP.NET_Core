@@ -127,8 +127,6 @@ Articles Pages:
 
 <img width="760" alt="ArticleEdit" src="https://user-images.githubusercontent.com/54845614/130650973-a7dc9b14-b6c3-4d3c-b97b-6687dfb2a922.png">
 
-<img width="762" alt="AddConformity" src="https://user-images.githubusercontent.com/54845614/130650890-074f1cea-3a49-46aa-804f-c6c4e2527618.png">
-
 <img width="586" alt="AddConformityTypes" src="https://user-images.githubusercontent.com/54845614/130650939-875e643f-b7f5-47bc-95e5-932043470833.png">
 
 <img width="619" alt="AddSupplier" src="https://user-images.githubusercontent.com/54845614/130650958-1eec52a3-e400-434b-a448-e1430b0c8259.png">
@@ -136,10 +134,6 @@ Articles Pages:
 <img width="770" alt="ArticleEditConformities" src="https://user-images.githubusercontent.com/54845614/130651018-7e6557f4-2a84-4d03-891a-ab3b91641729.png">
 
 <img width="775" alt="ArticleEditSupplilers" src="https://user-images.githubusercontent.com/54845614/130651056-41388f98-a826-4ab8-8189-59153d4f642e.png">
-
-<img width="826" alt="EditConformity" src="https://user-images.githubusercontent.com/54845614/130651337-1c346fe1-f9bc-4fff-81b9-dd810d9e2817.png">
-
-<img width="596" alt="JSSuppliersForArticlesRequiredConformities" src="https://user-images.githubusercontent.com/54845614/130651645-0cd0903e-242a-4905-ba84-205a6289c2b2.png">
 
 <img width="602" alt="MainSupplierChange" src="https://user-images.githubusercontent.com/54845614/130651720-ed4a3af5-2b6f-43ed-a4e1-181dc14c53dd.png">
 
@@ -154,6 +148,12 @@ Articles Pages:
 <img width="750" alt="Requests" src="https://user-images.githubusercontent.com/54845614/130651889-625c6f63-86f2-4ca2-a44d-388b128350bb.png">
 
 <img width="752" alt="SendRequestForSpecificArticle" src="https://user-images.githubusercontent.com/54845614/130651956-9306f2fe-6090-4a23-b7c4-f61f1be73e97.png">
+
+<img width="762" alt="AddConformity" src="https://user-images.githubusercontent.com/54845614/130650890-074f1cea-3a49-46aa-804f-c6c4e2527618.png">
+
+<img width="596" alt="JSSuppliersForArticlesRequiredConformities" src="https://user-images.githubusercontent.com/54845614/130651645-0cd0903e-242a-4905-ba84-205a6289c2b2.png">
+
+<img width="826" alt="EditConformity" src="https://user-images.githubusercontent.com/54845614/130651337-1c346fe1-f9bc-4fff-81b9-dd810d9e2817.png">
 
 <img width="838" alt="Sorting" src="https://user-images.githubusercontent.com/54845614/130652000-85ffa9bc-2816-4f41-a5eb-e6f60255e8f5.png">
 
