@@ -17,7 +17,7 @@
         [Display(Name = "* Article description:")]
         [RegularExpression(
             "^[a-zA-Z0-9]+[a-zA-Z0-9 _-]*$",
-            ErrorMessage = "The field Description could contain only letters, digits, '-', '_' or ' '.")]
+            ErrorMessage = "The field could contain only letters, digits, '-', '_' or ' '.")]
         public string Description { get; set; }
     }
 }

@@ -17,7 +17,7 @@
 
         [Required]
         [MaxLength(50)]
-        [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9 _-]*$", ErrorMessage = "The field Name could contain only letters, digits, '-', '_' or ' '.")]
+        [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9 _-]*$", ErrorMessage = "The field could contain only letters, digits, '-', '_' or ' '.")]
         [Display(Name = "* Supplier name")]
         public string Name { get; set; }
 
@@ -26,28 +26,28 @@
         [EmailAddress]
         [RegularExpression(
             "^(?:[a-zA-Z0-9][a-zA-Z0-9_.-]+@(?:[a-zA-Z0-9-_]{2,}[.][a-zA-Z0-9-_]{2,}))(?:.[a-zA-Z0-9-_]{2,})?$",
-            ErrorMessage = "The Email field is not a valid e-mail address.")]
+            ErrorMessage = "The field is not a valid e-mail address.")]
         [Display(Name = "* Supplier email")]
         public string Email { get; set; }
 
         [MaxLength(20)]
-        [RegularExpression("[0-9+ -]*", ErrorMessage = "The field Phone Number could contain only digits, '-', '+' or ' '.")]
-        [Display(Name= "Phone number")]
+        [RegularExpression("[0-9+ -]*", ErrorMessage = "The field could contain only digits, '-', '+' or ' '.")]
+        [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
 
         [MaxLength(20)]
         [NameRegExAttribute]
-        //[RegularExpression("^[A-Z]+[a-z]*$", ErrorMessage = "The field Contact Person first name could contain only letters.")]
-        [Display(Name= "Contact person first name")]
+        [RegularExpression("^[a-zA-Z]{2,}$", ErrorMessage = "The field could contain only letters. Number of letter should be at least 2.")]
+        [Display(Name = "Contact person first name")]
         public string ContactPersonFirstName { get; set; }
 
         [MaxLength(20)]
         [NameRegExAttribute]
-        //[RegularExpression("^[A-Z]+[a-z]*$", ErrorMessage = "The field Contact Person last name could contain only letters.")]
-        [Display(Name= "Contact person last name")]
+        [RegularExpression("^[a-zA-Z]{2,}$", ErrorMessage = "The field could contain only letters. Number of letter should be at least 2.")]
+        [Display(Name = "Contact person last name")]
         public string ContactPersonLastName { get; set; }
 
-        [Display(Name= "Creator username")]
+        [Display(Name = "Creator username")]
         [BindNever]
         public string UserEmail { get; set; }
     }

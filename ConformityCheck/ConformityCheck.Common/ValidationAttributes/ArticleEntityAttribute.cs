@@ -6,7 +6,6 @@
 
     public class ArticleEntityAttribute : ValidationAttribute
     {
-
         public ArticleEntityAttribute(bool allowNull = false)
         {
             this.ErrorMessage = $"No such article.";

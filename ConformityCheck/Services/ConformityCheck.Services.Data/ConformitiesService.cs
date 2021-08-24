@@ -61,8 +61,7 @@
                            || x.Article.Description.ToUpper().Contains(searchInput.ToUpper())
                            || x.Supplier.Number.ToUpper().Contains(searchInput.ToUpper())
                            || x.Supplier.Name.ToUpper().Contains(searchInput.ToUpper())
-                           || x.ConformityType.Description.ToUpper().Contains(searchInput.ToUpper())
-                           )
+                           || x.ConformityType.Description.ToUpper().Contains(searchInput.ToUpper()))
                 .Count();
         }
 

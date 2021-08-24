@@ -1,4 +1,4 @@
-namespace ConformityCheck.Common.ValidationAttributes.Tests
+﻿namespace ConformityCheck.Common.ValidationAttributes.Tests
 {
     using System;
 

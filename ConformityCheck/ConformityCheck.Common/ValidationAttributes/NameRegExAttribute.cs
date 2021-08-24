@@ -7,7 +7,7 @@
     {
         public NameRegExAttribute()
         {
-            this.ErrorMessage = "The field Name could contain only letters. Number of letter should be at least 3.";
+            this.ErrorMessage = "The field could contain only letters. Number of letter should be at least 2.";
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -17,7 +17,7 @@
                 return ValidationResult.Success;
             }
 
-            var pattern = "^[a-zA-Z]{3,}$";
+            var pattern = "^[a-zA-Z]{2,}$";
             var match = Regex.IsMatch(value.ToString(), pattern);
 
             if (!match)

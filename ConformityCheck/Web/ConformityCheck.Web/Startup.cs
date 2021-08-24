@@ -39,9 +39,7 @@
         {
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(
-                    this.configuration.GetConnectionString("DefaultConnection")
-                    // o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
-                    ));
+                    this.configuration.GetConnectionString("DefaultConnection"))); // o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                     .AddRoles<ApplicationRole>()
@@ -124,6 +122,7 @@
             services.AddTransient<IConformitiesService, ConformitiesService>();
             services.AddTransient<IContactFormEntriesService, ContactFormEntriesService>();
             services.AddTransient<IContentCheckService, ContentCheckService>();
+
             // services.AddTransient<IEmailSender, NullMessageSender>();
             // services.AddTransient<IEmailSender>(serviceProvider => new SendGridEmailSender(this.configuration["EmailSettings:ApiKey"]));
             services.AddTransient<IEmailSender>(serviceProvider =>
@@ -136,13 +135,12 @@
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
             //// Seed data on application startup
-            //using (var serviceScope = app.ApplicationServices.CreateScope())
-            //{
-            //    var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            //    dbContext.Database.Migrate();
-            //    new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
-            //}
-
+            // using (var serviceScope = app.ApplicationServices.CreateScope())
+            // {
+            //     var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            //     dbContext.Database.Migrate();
+            //     new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            // }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -7,7 +7,7 @@
     {
         public DescriptionRegExAttribute()
         {
-            this.ErrorMessage = "The field Description could contain only letters, digits, '-', '_' or ' '.";
+            this.ErrorMessage = "The field could contain only letters, digits, '-', '_' or ' '.";
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
