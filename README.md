@@ -65,9 +65,10 @@ o	JavaScript
 -	Json, CVS
 -	ASP.NET CORE Areas
 -	ASP.NET CORE Identity System - Scaffold identity
--	Validation of user registration e-mail - sending confirmation e-mail to user on register and on e-mail change
+-	Validation of user registration e-mail - sending confirmation e-mail to user on register and on e-mail change, resend e-mail confirmation
 -	Information for contact messages to admin and to contacted user - sending e-mails to both of them
 -	Forgotten password confirmation with validation token on e-mail
+-	Send requests to suppliers for missing conformities
 -	Partial Views
 -	Cookie consent
 -	Validation attributes + Custom validation attributes
