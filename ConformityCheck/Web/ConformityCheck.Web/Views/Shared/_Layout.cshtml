@@ -17,9 +17,6 @@
     <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
 
     @await this.RenderSectionAsync("Links", required: false)
-
-    @*<link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="~/favicon.ico" type="image/x-icon">*@
 </head>
 <body>
     <header class="header-wrapper">
@@ -111,8 +108,14 @@
             <p class="footer-copyright">
                 &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - All Rights Reserved
             </p>
-
         </section>
+        <article>
+            <p class="center">
+                GitHub Repository:<a href="https://github.com/Paulina-Dyulgerska/CSharp_ASP.NET_Core">
+                    https://github.com/Paulina-Dyulgerska/CSharp_ASP.NET_Core
+                </a>
+            </p>
+        </article>
     </footer>
 
     <!-- Project level plugins -->
@@ -124,7 +127,6 @@
     <!-- Project level custom scripts -->
     <script src="~/js/site.min.js" asp-append-version="true"></script>
     <script src="~/js/alerts.js" asp-append-version="true"></script>
-    @*<script src="~/js/sb-admin-2.min.js" asp-append-version="true"></script>*@
 
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>

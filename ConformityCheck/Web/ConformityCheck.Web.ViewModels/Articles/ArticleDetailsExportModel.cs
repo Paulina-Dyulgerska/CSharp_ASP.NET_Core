@@ -76,16 +76,17 @@
 
         public IEnumerable<string> Substances { get; set; }
 
-        // gyrmi mi instanciqta za nullna Suppliers, ako ne kaja izrishno na AutoMapper-a kak da mapva ot Article kym tozi class!!!!
-        // ne moga da ostavq samo ArticleEditModel da iznese mappvaneto, a trqbwa i tuk da go opisha, inache
-        // mi hvyrlq null za value na suppliers!
+        // the instance created throws exception by null for Suppliers, if i do not tell explicitly to the AutoMapper
+        // how to map from Article to this class!
+        // Cannot just leave just ArticleEditModel to carry out the mapping, but I have to describe the mapping here too
+        // if I do not want thrown exception by null for the Suppliers value!
         public virtual void CreateMappings(IProfileExpression configuration)
         {
-            // TODO - tova vzimane na ConformityTypes i Conformities e izlishno da go
-            // opisvam az tuk, ako ConformityTypeExportModel i ConformityExportModel imat
-            // IMapFrom<ConformityTypes> i syotvetno IMapFrom<Conformities> - AutoMapper-a sam
-            // shte se seti da napravi tozi mappe-vane, ne trqbwa az da gi pisha, ako e izpylneno
-            // towa!
+            // TODO
+            // It is redundant to make ConformityTypes and Conformities here and to describe it here IF
+            // the ConformityTypeExportModel and the ConformityExportModel classes have
+            // IMapFrom<ConformityTypes>, respectfully: IMapFrom<Conformities>. If they have it, then AutoMapper
+            // will do this mapping alone - without me telling this to AutoMapper!
             configuration.CreateMap<Article, ArticleDetailsExportModel>()
                 .ForMember(
                 x => x.Suppliers,

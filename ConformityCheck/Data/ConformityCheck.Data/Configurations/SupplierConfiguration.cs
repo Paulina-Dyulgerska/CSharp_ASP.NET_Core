@@ -8,8 +8,6 @@
     {
         public void Configure(EntityTypeBuilder<Supplier> supplier)
         {
-            // ne moje da se iztrie Supplier, predi
-            // da se iztriqt vsichki Conformities, koito sa s tozi Supplier
             supplier
                 .HasMany(s => s.Conformities)
                 .WithOne(a => a.Supplier)
@@ -18,16 +16,6 @@
             supplier
                 .HasIndex(p => p.Number)
                 .IsUnique();
-
-            // da setna da se nulira zapisa na SupplierID v Article pri del
-            // na Supplier - TODO!
-
-            // mislq, che towa ne mi trqbwa weche, zashtoto gi vyrzah many-to-many
-            // modelBuilder.Entity<Supplier>()
-            //     .HasMany(s => s.Articles)
-            //     .WithOne(a => a.Supplier)
-            //     .OnDelete(DeleteBehavior.Restrict);//ne moje da se iztrie Supplier, predi
-            // da se iztriqt vsichki Articles, koito sa s tozi Supplier!
         }
     }
 }

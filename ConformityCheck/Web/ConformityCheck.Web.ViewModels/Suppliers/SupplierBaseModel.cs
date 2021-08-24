@@ -8,7 +8,7 @@
 
     public class SupplierBaseModel : IMapFrom<Supplier>
     {
-        // TODO - to generate numbers authomatically
+        // TODO - to generate numbers automatically
         [Required]
         [MaxLength(20)]
         [RegularExpression("^[a-zA-Z0-9]+[a-zA-Z0-9-]*$", ErrorMessage = "The field could contain only letters, digits or '-'.")]

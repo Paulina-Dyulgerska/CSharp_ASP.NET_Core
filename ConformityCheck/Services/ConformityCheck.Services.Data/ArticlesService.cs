@@ -457,7 +457,7 @@
             var articleEntity = await this.articlesRepository.AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Number == input.Number.Trim().ToUpper());
 
-            // TODO: make a validation attribute for this or to generate numbers authomaticaly!!!:
+            // TODO: make a validation attribute for this or to generate numbers automatically
             if (articleEntity != null)
             {
                 throw new ArgumentException($"There is already an article with this number.");
@@ -542,9 +542,6 @@
                 this.conformitiesRepository.Delete(articleConformitiesEntity);
             }
 
-            // TODO:
-            // article.Substances.Clear();
-            // article.Products.Clear();
             return await this.articlesRepository.SaveChangesAsync();
         }
 

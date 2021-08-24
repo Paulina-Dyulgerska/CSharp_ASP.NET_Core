@@ -81,7 +81,7 @@
                         @(conformityType.ModifiedOn.HasValue ?
                            conformityType.ModifiedOn.Value.ToString(GlobalConstants.DateTimeFormat) : "-")
                     </td>
-                    <td class="col-l" data-label="User">@conformityType.UserId</td>
+                    <td class="col-l" data-label="User">@conformityType.UserEmail</td>
                     <td class="col-s" data-label="Details">
                         <a asp-action="Details" class="btn btn-details" asp-route-id="@conformityType.Id">
                             <span class="text">Details</span>

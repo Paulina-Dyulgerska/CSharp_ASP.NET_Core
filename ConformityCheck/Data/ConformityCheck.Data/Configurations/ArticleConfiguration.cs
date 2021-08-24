@@ -11,9 +11,6 @@
             article
                 .HasIndex(a => a.Number)
                 .IsUnique();
-
-            // da setna da se nulira zapisa na SupplierID v Article pri del
-            // na Supplier - TODO!
         }
     }
 }

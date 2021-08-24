@@ -39,8 +39,8 @@
 
         public string ArticleDescription { get; set; }
 
-        // TODO - All dates are in UTC on the BE - i tuk i na servera i na DB-a,
-        // a za FE i user - da sa v ToLocalTime(), no vyv Viewtata samo!!
+        // TODO - All dates are in UTC in the BE and DB
+        // for FE - ToStringFOrmat(), but only in the Views; for fields - depending on the users local settings
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "* Issue date:")]

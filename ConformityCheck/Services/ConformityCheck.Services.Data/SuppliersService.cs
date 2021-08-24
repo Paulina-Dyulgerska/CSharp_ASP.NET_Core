@@ -611,7 +611,7 @@
         // }
         public async Task CreateAsync(SupplierCreateInputModel input, string userId)
         {
-            // TODO - to give the numbers authomaticaly!!!
+            // TODO - to give the numbers automatically
             var entity = new Supplier
             {
                 Number = input.Number.Trim().ToUpper(),

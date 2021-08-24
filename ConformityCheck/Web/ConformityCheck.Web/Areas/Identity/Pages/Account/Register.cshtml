@@ -117,14 +117,14 @@
         grecaptcha.ready(function () {
             grecaptcha.execute('@recaptchaSettings.SiteKey', { action: 'article_create' })
                 .then(function (token) {
-                    console.log('Script reCaptcha loaded!');
-                    console.log('token' + token);
+                    //console.log('Script reCaptcha loaded!');
+                    //console.log('token' + token);
                     document.getElementById('RecaptchaValue').value = token;
                 })
                 .catch(err => {
-                    console.log('Error: ');
-                    console.log(err.description);
-                    console.log(err);
+                    //console.log('Error: ');
+                    //console.log(err.description);
+                    //console.log(err);
                 });
         });
     </script>

@@ -8,8 +8,6 @@
     {
         public void Configure(EntityTypeBuilder<Conformity> conformity)
         {
-            // ne moje da se iztrie ConformityType, predi
-            // da se iztriqt vsichki Conformities, koito sa ot tozi type!
         }
     }
 }
