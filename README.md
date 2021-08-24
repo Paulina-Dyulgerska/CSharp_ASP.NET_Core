@@ -19,7 +19,7 @@ When we add the **inevitable fact that regulations and requirements are changing
 <b>This is why Conformity Check system was created for and where it could help!</b>
 
 <b>Conformity Check is deployed online and could be found here:</b>
--	https://conformitycheck.dotnetweb.net
+-	http://conformitycheck.dotnetweb.net
 
 <b>More about the tools that Conformity Check provides and how they are realised</b>
 This website is designed and runs using the main technologies below:
