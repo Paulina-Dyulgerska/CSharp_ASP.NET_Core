@@ -43,6 +43,16 @@ body {
 @media screen and (min-width: 1800px) {
 }
 
+@font-face {
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat/Montserrat-Regular.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("../fonts/Poppins/Poppins-Regular.ttf") format('truetype');
+}
+
 /*Fonts ------------------------------------------------------------------------------------------------------------*/
 html {
     line-height: 30px;
@@ -1037,20 +1047,20 @@ button.close {
     text-align: center;
 }
 
-.page-item.active .page-link {
-    z-index: 3;
-    color: #fff;
-    background-color: #839ec4;
-    border-color: #839ec4;
-}
+    .page-item.active .page-link {
+        z-index: 3;
+        color: #fff;
+        background-color: #839ec4;
+        border-color: #839ec4;
+    }
 
-.page-item.disabled .page-link {
-    color: #c4d3e1;
-    pointer-events: none;
-    cursor: auto;
-    background-color: #fff;
-    border-color: #dee2e6;
-}
+    .page-item.disabled .page-link {
+        color: #c4d3e1;
+        pointer-events: none;
+        cursor: auto;
+        background-color: #fff;
+        border-color: #dee2e6;
+    }
 
 .items-per-page-container {
     /*display: flex;*/

@@ -35,7 +35,7 @@
                     {
                         await articleService.CreateAsync(articleImportDTO);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                     }
                 }

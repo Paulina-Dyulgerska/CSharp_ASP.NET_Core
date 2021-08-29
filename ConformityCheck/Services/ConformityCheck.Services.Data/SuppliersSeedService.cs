@@ -48,7 +48,8 @@
             {
                 var contactPersonNames = supplierImportDTO.Email.Split("@").FirstOrDefault().Split(".").ToList();
                 supplierImportDTO.ContactPersonFirstName = contactPersonNames[0];
-                supplierImportDTO.ContactPersonLastName = contactPersonNames[1];
+                supplierImportDTO.ContactPersonLastName = contactPersonNames.Count > 1 ?
+                    contactPersonNames[1] : string.Empty;
 
                 var supplierNames = supplierImportDTO.Email.Split("@").LastOrDefault().Split(".").ToList();
                 if (supplierNames.Count() > 2 && supplierNames[1] != "com")
