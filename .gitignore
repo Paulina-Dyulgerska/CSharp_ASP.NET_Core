@@ -13,6 +13,7 @@ UsageOfThisProject.txt
 ConformityCheck/Data/ConformityCheck.Data/Seeding/DataFiles/*
 ConformityCheck/Web/ConformityCheck.Web/wwwroot/files/*
 ConformityCheck/Archive/*
+ConformityCheck/Documentation/*
 
 # User-specific files
 *.rsuser
