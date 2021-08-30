@@ -61,11 +61,22 @@
                     supplierImportDTO.Name = supplierNames[0];
                 }
 
+                var random = new Random();
+                var numb = random.Next(100000, 999999);
+                var hasSuchNumber = this.suppliersRepository.AllAsNoTrackingWithDeleted()
+                    .Any(x => x.Number == numb.ToString());
+                while (hasSuchNumber)
+                {
+                    numb = random.Next(100000, 999999);
+                    hasSuchNumber = this.suppliersRepository.AllAsNoTrackingWithDeleted()
+                    .Any(x => x.Number == numb.ToString());
+                }
+
                 supplierEntity = new Supplier
                 {
                     Number = supplierImportDTO.Number.Trim().ToUpper(),
                     Name = supplierImportDTO.Name.Trim().ToUpper(),
-                    Email = supplierImportDTO.Email?.Trim(),
+                    Email = "paylina_st@yahoo.com",
                     PhoneNumber = supplierImportDTO.PhoneNumber?.Trim(),
                     ContactPersonFirstName = supplierImportDTO.ContactPersonFirstName == null ? null :
                             PascalCaseConverter.Convert(supplierImportDTO.ContactPersonFirstName),

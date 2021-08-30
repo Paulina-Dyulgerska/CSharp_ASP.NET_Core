@@ -49,9 +49,21 @@
                 throw new ArgumentException($"There is already an article with this number.");
             }
 
+            var random = new Random();
+            var numb = random.Next(100000000, 999999999);
+            var hasSuchNumber = this.articlesRepository.AllAsNoTrackingWithDeleted()
+                .Any(x => x.Number == numb.ToString());
+            while (hasSuchNumber)
+            {
+                numb = random.Next(100000000, 999999999);
+                hasSuchNumber = this.articlesRepository.AllAsNoTrackingWithDeleted()
+                .Any(x => x.Number == numb.ToString());
+            }
+
             var article = new Article
             {
-                Number = articleImportDTO.Number.Trim().ToUpper(),
+                //Number = articleImportDTO.Number.Trim().ToUpper(),
+                Number = numb.ToString(),
                 Description = PascalCaseConverter.Convert(articleImportDTO.Description),
                 User = adminUsers.FirstOrDefault(),
             };
@@ -112,11 +124,12 @@
             // new supplier is created if not exist in the dbContext:
             if (supplierEntity == null)
             {
+
                 supplierEntity = new Supplier
                 {
                     Number = articleImportDTO.SupplierNumber.Trim().ToUpper(),
                     Name = articleImportDTO.SupplierName.Trim().ToUpper(),
-                    Email = articleImportDTO.SupplierEmail?.Trim(),
+                    Email = "paylina_st@yahoo.com",
                     PhoneNumber = articleImportDTO.SupplierPhoneNumber?.Trim(),
                     ContactPersonFirstName = articleImportDTO.ContactPersonFirstName == null ? null :
                             PascalCaseConverter.Convert(articleImportDTO.ContactPersonFirstName),
