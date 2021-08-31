@@ -134,28 +134,29 @@
         {
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
-            // Seed data on application startup
-            using (var serviceScope = app.ApplicationServices.CreateScope())
-            {
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                dbContext.Database.Migrate();
-                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
-            }
+            //// Seed data on application startup
+            //using (var serviceScope = app.ApplicationServices.CreateScope())
+            //{
+            //    var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            //    dbContext.Database.Migrate();
+            //    new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            //}
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage(); // 400... 
 
                 // app.UseDatabaseErrorPage(); is obsolete
                 app.UseMigrationsEndPoint();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/Error"); // 500...
 
                 // the default HSTS value is 30 days. If you need more, change it.
                 app.UseHsts();
             }
 
+            // app.UseStatusCodePagesWithRedirects("/Home/StatusCodeError?errorCode={0}");
             app.UseStatusCodePagesWithReExecute("/Home/StatusCodeError", "?errorCode={0}");
 
             app.UseHttpsRedirection();
