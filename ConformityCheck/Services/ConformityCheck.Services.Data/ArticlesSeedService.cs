@@ -62,7 +62,7 @@
 
             var article = new Article
             {
-                //Number = articleImportDTO.Number.Trim().ToUpper(),
+                // Number = articleImportDTO.Number.Trim().ToUpper(),
                 Number = numb.ToString(),
                 Description = PascalCaseConverter.Convert(articleImportDTO.Description),
                 User = adminUsers.FirstOrDefault(),
@@ -124,7 +124,6 @@
             // new supplier is created if not exist in the dbContext:
             if (supplierEntity == null)
             {
-
                 supplierEntity = new Supplier
                 {
                     Number = articleImportDTO.SupplierNumber.Trim().ToUpper(),

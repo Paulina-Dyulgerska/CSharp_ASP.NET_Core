@@ -19,7 +19,7 @@
 
         Task<int> SaveChangesAsync();
 
-        //int SaveChanges();
+        // int SaveChanges();
         IQueryable<TEntity> ExecuteCustomQuery(string query, params object[] parameters);
     }
 }

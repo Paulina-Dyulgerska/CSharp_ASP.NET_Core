@@ -42,7 +42,7 @@
         }
 
         // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        public async Task<IActionResult> ListAll(PagingViewModel input)
+        public async Task<IActionResult> Index(PagingViewModel input)
         {
             if (input.PageNumber <= 0)
             {
@@ -50,11 +50,11 @@
                 return this.NotFound();
             }
 
-            var model = new ArticlesListAllModel
+            var model = new ArticlesIndexModel
             {
                 ItemsPerPage = input.ItemsPerPage,
                 PageNumber = input.PageNumber,
-                PagingControllerActionCallName = nameof(this.ListAll),
+                PagingControllerActionCallName = nameof(this.Index),
                 CurrentSortOrder = input.CurrentSortOrder,
                 CurrentSearchInput = input.CurrentSearchInput,
                 CurrentSortDirection = input.CurrentSortDirection == GlobalConstants.CurrentSortDirectionDesc ?
@@ -128,7 +128,7 @@
                 return this.View();
             }
 
-            return this.RedirectToAction(nameof(this.ListAll));
+            return this.RedirectToAction(nameof(this.Index));
         }
 
         [Authorize]
@@ -138,7 +138,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(input.Id);
@@ -153,7 +153,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(input.Id);
@@ -211,7 +211,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(input.Id);
@@ -259,7 +259,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(input.Id);
@@ -306,7 +306,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             var model = await this.articlesService.GetByIdAsync<ArticleManageSuppliersExportModel>(input.Id);
@@ -353,7 +353,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesExportModel>(input.Id);
@@ -400,7 +400,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             var model = await this.articlesService.GetByIdAsync<ArticleManageConformityTypesExportModel>(input.Id);
@@ -447,7 +447,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             var model = await this.articlesService.GetByIdAsync<ArticleDetailsExportModel>(input.Id);
@@ -462,7 +462,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             try
@@ -481,7 +481,7 @@
                 // if error accure here, the Home/Error page will be displayed
             }
 
-            return this.RedirectToAction(nameof(this.ListAll));
+            return this.RedirectToAction(nameof(this.Index));
         }
     }
 }

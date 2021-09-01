@@ -42,7 +42,7 @@
         }
 
         // NEVER FORGET async-await + Task<IActionResult>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        public async Task<IActionResult> ListAll(PagingViewModel input)
+        public async Task<IActionResult> Index(PagingViewModel input)
         {
             if (input.PageNumber <= 0)
             {
@@ -51,11 +51,11 @@
             }
 
             // var model = await this.suppliersService.GetAllAsNoTrackingOrderedAsync<SupplierExportModel>();
-            var model = new SuppliersListAllModel
+            var model = new SuppliersIndexModel
             {
                 ItemsPerPage = input.ItemsPerPage,
                 PageNumber = input.PageNumber,
-                PagingControllerActionCallName = nameof(this.ListAll),
+                PagingControllerActionCallName = nameof(this.Index),
                 CurrentSortOrder = input.CurrentSortOrder,
                 CurrentSearchInput = input.CurrentSearchInput,
                 CurrentSortDirection = input.CurrentSortDirection == GlobalConstants.CurrentSortDirectionDesc ?
@@ -131,7 +131,7 @@
                 return this.View();
             }
 
-            return this.RedirectToAction(nameof(this.ListAll));
+            return this.RedirectToAction(nameof(this.Index));
         }
 
         [Authorize]
@@ -141,7 +141,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             var model = await this.suppliersService.GetByIdAsync<SupplierEditInputModel>(input.Id);
@@ -212,7 +212,7 @@
                 this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Supplier details loading failed: {ex}");
 
                 // return user to the List all view instead of Home/Error page
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
         }
 
@@ -223,7 +223,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             try
@@ -242,7 +242,7 @@
                 // if error accure here, the Home/Error page will be displayed
             }
 
-            return this.RedirectToAction(nameof(this.ListAll));
+            return this.RedirectToAction(nameof(this.Index));
         }
     }
 }

@@ -60,7 +60,7 @@
             this.conformityFilesDirectory = $"{this.environment.WebRootPath}/files";
         }
 
-        public async Task<IActionResult> ListAll(PagingViewModel input)
+        public async Task<IActionResult> Index(PagingViewModel input)
         {
             if (input.PageNumber <= 0)
             {
@@ -68,11 +68,11 @@
                 return this.NotFound();
             }
 
-            var model = new ConformitiesListAllModel
+            var model = new ConformitiesIndexModel
             {
                 ItemsPerPage = input.ItemsPerPage,
                 PageNumber = input.PageNumber,
-                PagingControllerActionCallName = nameof(this.ListAll),
+                PagingControllerActionCallName = nameof(this.Index),
                 CurrentSortOrder = input.CurrentSortOrder,
                 CurrentSearchInput = input.CurrentSearchInput,
                 CurrentSortDirection = input.CurrentSortDirection == GlobalConstants.CurrentSortDirectionDesc ?
@@ -152,7 +152,7 @@
                 return this.View();
             }
 
-            return this.RedirectToAction(nameof(this.ListAll));
+            return this.RedirectToAction(nameof(this.Index));
         }
 
         [Authorize]
@@ -162,7 +162,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll), ArticlesCallerViewName);
+                return this.RedirectToAction(nameof(this.Index), ArticlesCallerViewName);
             }
 
             // if error accure here, the Home/Error page will be displayed
@@ -213,7 +213,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll), input.CallerViewName);
+                return this.RedirectToAction(nameof(this.Index), input.CallerViewName);
             }
 
             var model = await this.conformitiesService.GetForCreateAsync(input);
@@ -267,7 +267,7 @@
 
             if (input.CallerViewName == ConformitiesCallerViewName)
             {
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
@@ -280,7 +280,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             var model = await this.conformitiesService.GetByIdAsync<ConformityExportModel>(input.Id);
@@ -295,7 +295,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             var model = await this.conformitiesService.GetByIdAsync<ConformityEditInputModel>(input.Id);
@@ -341,7 +341,7 @@
 
             if (input.CallerViewName == ConformitiesCallerViewName)
             {
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
@@ -357,7 +357,7 @@
                     this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] += error.ErrorMessage + Environment.NewLine;
                 }
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             try
@@ -385,7 +385,7 @@
 
             if (input.CallerViewName == ConformitiesCallerViewName)
             {
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });

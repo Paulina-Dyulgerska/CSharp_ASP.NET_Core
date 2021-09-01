@@ -4,8 +4,8 @@ namespace ConformityCheck.Data.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using ConformityCheck.Data.Common.Models;
 
+    using ConformityCheck.Data.Common.Models;
     using Microsoft.AspNetCore.Identity;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity

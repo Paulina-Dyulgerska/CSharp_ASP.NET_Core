@@ -42,7 +42,7 @@
             this.logger = logger;
         }
 
-        public async Task<IActionResult> ListAll(PagingViewModel input)
+        public async Task<IActionResult> Index(PagingViewModel input)
         {
             if (input.PageNumber <= 0)
             {
@@ -51,11 +51,11 @@
             }
 
             // var model = await this.conformityTypesService.GetAllAsNoTrackingOrderedAsync<ConformityTypeExportModel>();
-            var model = new ConformityTypesListAllModel
+            var model = new ConformityTypesIndexModel
             {
                 ItemsPerPage = input.ItemsPerPage,
                 PageNumber = input.PageNumber,
-                PagingControllerActionCallName = nameof(this.ListAll),
+                PagingControllerActionCallName = nameof(this.Index),
                 CurrentSortOrder = input.CurrentSortOrder,
                 CurrentSearchInput = input.CurrentSearchInput,
                 CurrentSortDirection = input.CurrentSortDirection == GlobalConstants.CurrentSortDirectionDesc ?
@@ -131,7 +131,7 @@
                 return this.View();
             }
 
-            return this.RedirectToAction(nameof(this.ListAll));
+            return this.RedirectToAction(nameof(this.Index));
         }
 
         [Authorize]
@@ -141,7 +141,7 @@
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             var model = await this.conformityTypesService.GetByIdAsync<ConformityTypeEditInputModel>(input.Id);
@@ -190,7 +190,7 @@
             }
 
             // TODO: return this.RedirectToAction(nameof(this.Details), new { input.Id });
-            return this.RedirectToAction(nameof(this.ListAll));
+            return this.RedirectToAction(nameof(this.Index));
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -203,7 +203,7 @@
                     this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] += error.ErrorMessage + Environment.NewLine;
                 }
 
-                return this.RedirectToAction(nameof(this.ListAll));
+                return this.RedirectToAction(nameof(this.Index));
             }
 
             try
@@ -222,7 +222,7 @@
                 // if error accure here, the Home/Error page will be displayed
             }
 
-            return this.RedirectToAction(nameof(this.ListAll));
+            return this.RedirectToAction(nameof(this.Index));
         }
     }
 }
