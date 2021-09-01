@@ -20,7 +20,7 @@ When we add the **inevitable fact that regulations and requirements in all the c
 <b>This is why Conformity Check system was created and where it could vastly help!</b>
 
 <b>Conformity Check is deployed online and could be found here:</b>
--	http://conformitycheck.dotnetweb.net
+-	https://conformitycheck.dotnetweb.net
 
 
 <b>More about the tools that Conformity Check provides and how they are realised</b>
