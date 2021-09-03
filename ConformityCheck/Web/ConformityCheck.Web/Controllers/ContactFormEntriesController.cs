@@ -1,6 +1,7 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
     using System;
+    using System.Diagnostics;
     using System.Threading.Tasks;
 
     using ConformityCheck.Common;
@@ -73,7 +74,7 @@
             }
             catch (Exception ex)
             {
-                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Contact message creation failed: {ex}.");
+                this.logger.LogError($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Contact message creation failed: {ex}.");
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
             }
 
@@ -93,7 +94,7 @@
             catch (Exception ex)
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
-                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Error sending contact message to site admin: {ex}.");
+                this.logger.LogError($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Error sending contact message to site admin: {ex}.");
             }
 
             try
@@ -112,7 +113,7 @@
             catch (Exception ex)
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
-                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Error sending contact message to user: {ex}.");
+                this.logger.LogError($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Error sending contact message to user: {ex}.");
             }
 
             this.TempData[RedirectedFromContactForm] = true;

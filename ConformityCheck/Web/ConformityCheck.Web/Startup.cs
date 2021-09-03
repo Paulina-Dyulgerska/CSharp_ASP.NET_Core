@@ -13,7 +13,9 @@
     using ConformityCheck.Services.Data;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Services.Messaging;
+    using ConformityCheck.Web.Filters;
     using ConformityCheck.Web.Infrastructure.Settings;
+    using ConformityCheck.Web.Middlewares.ExceptionHandler;
     using ConformityCheck.Web.ViewModels;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -91,6 +93,7 @@
             services.AddControllersWithViews(options =>
                                             {
                                                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                                                options.Filters.Add(new ExceptionFilter());
                                             })
                     .AddRazorRuntimeCompilation();
             services.AddRazorPages();
@@ -150,6 +153,7 @@
             }
             else
             {
+                // app.UseApiExceptionHandler(new LoggerFactory());
                 app.UseExceptionHandler("/Home/Error"); // 500...
 
                 // the default HSTS value is 30 days. If you need more, change it.

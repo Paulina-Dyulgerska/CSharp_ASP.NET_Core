@@ -1,6 +1,7 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
     using System;
+    using System.Diagnostics;
     using System.Threading.Tasks;
 
     using ConformityCheck.Common;
@@ -87,7 +88,7 @@
             catch (Exception ex)
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
-                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity request sending failed: {ex}");
+                this.logger.LogError($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Conformity request sending failed: {ex}");
 
                 // if error accure here, the Home/Error page will be displayed
             }

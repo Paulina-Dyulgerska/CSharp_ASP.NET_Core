@@ -1,6 +1,7 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
     using System;
+    using System.Diagnostics;
     using System.Threading.Tasks;
 
     using ConformityCheck.Common;
@@ -90,7 +91,7 @@
             catch (Exception ex)
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
-                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Suppliers loading failed: {ex}");
+                this.logger.LogError($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Suppliers loading failed: {ex}");
 
                 return this.Redirect("/");
             }
@@ -125,7 +126,7 @@
             catch (Exception ex)
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
-                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Supplier creation failed: {ex}");
+                this.logger.LogError($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Supplier creation failed: {ex}");
 
                 // return user to the Create view instead of Home/Error page
                 return this.View();
@@ -170,7 +171,7 @@
             catch (Exception ex)
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
-                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Supplier modification failed: {ex}");
+                this.logger.LogError($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Supplier modification failed: {ex}");
 
                 // return user to the Create view instead of Home/Error page
                 return this.View();
@@ -209,7 +210,7 @@
             catch (Exception ex)
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
-                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Supplier details loading failed: {ex}");
+                this.logger.LogError($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Supplier details loading failed: {ex}");
 
                 // return user to the List all view instead of Home/Error page
                 return this.RedirectToAction(nameof(this.Index));
@@ -237,7 +238,7 @@
             catch (Exception ex)
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
-                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Supplier deletion failed: {ex}");
+                this.logger.LogError($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Supplier deletion failed: {ex}");
 
                 // if error accure here, the Home/Error page will be displayed
             }

@@ -1,0 +1,119 @@
+﻿@model SuppliersIndexModel
+
+<section class="table-container">
+    <article class="table-header"></article>
+    <table class="table dataTable">
+        <thead>
+            <tr>
+                @*<th class="col-2">
+                        Supplier Nr.
+                        <button onclick="sortList()">Sort</button>
+                    </th>*@
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.NumberSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Supplier Nr.</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-l">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.NameSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Name</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                @*<th class="col-l">Contact person</th>*@
+                @*<th class="col-l">E-mail</th>*@
+                @*<th class="col-m">Phone number</th>*@
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.ArticlesCountSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Articles count</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-l">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.UserEmailSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">User</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">Details</th>
+                <th class="col-s">Edit</th>
+                <th class="col-s">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var supplier in this.Model.Suppliers)
+            {
+                <tr class="" data-id="@supplier.Id">
+                    <td id="search" class="col-s" data-label="Supplier Nr.">@supplier.Number</td>
+                    <td id="search" class="col-l" data-label="Name">@supplier.Name</td>
+                    @*<td class="col-3">@supplier.ContactPersonName</td>*@
+                    @*<td class="col-1">@supplier.Email</td>*@
+                    @*<td class="col-1">@supplier.PhoneNumber</td>*@
+                    @*<td class="col-1">@supplier.ArticlesCount</td>*@
+                    <td class="col-s" data-label="Articles count">@supplier.ArticleSuppliersCount</td>
+                    <td class="col-l" data-label="User">@supplier.UserEmail</td>
+                    <td class="col-s" data-label="Details">
+                        <a asp-action="Details" class="btn btn-details" asp-route-id="@supplier.Id">
+                            <span class="text">Details</span>
+                        </a>
+                    </td>
+                    <td class="col-s" data-label="Edit">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="Edit" class="btn btn-edit" asp-route-id="@supplier.Id">
+                                <span class="text">Edit</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login"
+                               asp-route-returnUrl="/Suppliers/Edit/@supplier.Id">
+                                <span class="text">Login</span>
+                            </a>
+                        }
+                    </td>
+                    <td class="col-s" data-label="Delete">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="Delete" class="btn btn-delete" asp-route-id="@supplier.Id">
+                                <span class="text">Delete</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login"
+                               asp-route-returnUrl="/Suppliers/Index">
+                                <span class="text">Login</span>
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>

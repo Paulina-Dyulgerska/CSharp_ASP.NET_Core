@@ -1,0 +1,148 @@
+﻿@model ArticlesIndexModel
+<section class="table-container">
+    <article class="table-header">
+        <span>MS = Main supplier</span><br />
+        <span>Conf. MS = Confirmed by main supplier</span><br />
+        <span>Conf. AS = Confirmed by all suppliers</span><br />
+    </article>
+    <table class="table dataTable">
+        <thead>
+            <tr>
+                @*<th class="col-2" id="sortableColumn">
+                        Article Nr.
+                        <button onclick="sortList()">Sort</button>
+                    </th>*@
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.NumberSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Article Nr.</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-l">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.DescriptionSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Description</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-xs">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.MainSupplierNumberSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">MS Nr.</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.MainSupplierNameSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">MS Name</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.AllSuppliersAllConfirmedSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Conf. AS</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.MainSupplierAllConfirmedSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Conf. MS</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">Details</th>
+                <th class="col-s">Edit</th>
+                <th class="col-s">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var article in this.Model.Articles)
+            {
+                <tr class="" data-id="@article.Id" @if (article.IsConfirmed) { <text> style="background-color: #dcfddc;" </text> }>
+                    <td id="search" class="col-s" data-label="@nameof(article.Number)">@article.Number</td>
+                    <td id="search" class="col-l" data-label="@nameof(article.Description)">@article.Description</td>
+                    <td class="col-xs" data-label="MS Nr.">
+                        @(article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Number != null?
+                             article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Number : "-")
+                    </td>
+                    <td class="col-s" data-label="MS Name">
+                        @(article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Name != null ?
+                        article.Suppliers.FirstOrDefault(s => s.IsMainSupplier == true)?.Name : "-")
+                    </td>
+                    <td class="col-s" data-label="Conf AS">@(article.IsConfirmed ? "Yes" : "No")</td>
+                    <td class="col-s isConfirmed" data-label="Conf MS">@(article.IsConfirmedByMainSupplier ? "Yes" : "No")</td>
+                    <td class="col-s" data-label="Details">
+                        <a asp-action="Details" class="btn btn-details" asp-route-id="@article.Id">
+                            <span class="text">Details</span>
+                        </a>
+                    </td>
+                    <td class="col-s" data-label="Edit">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="Edit" class="btn btn-edit" asp-route-id="@article.Id">
+                                <span class="text">Edit</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login" 
+                               asp-route-returnUrl="/Articles/Edit/@article.Id">
+                                <span class="text">Login</span>
+                            </a>
+                        }
+                    </td>
+
+                    <td class="col-s" data-label="Delete">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="Delete" class="btn btn-delete" asp-route-id="@article.Id">
+                                <span class="text">Delete</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login" 
+                               asp-route-returnUrl="/Articles/Index">
+                                <span class="text">Login</span>
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>

@@ -1,6 +1,7 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
     using System;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -63,7 +64,7 @@
             {
                 this.logger.LogError(
                     1978,
-                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+                    $"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Api Error: {ex}");
 
                 throw;
             }
@@ -90,7 +91,7 @@
             {
                 this.logger.LogError(
                     1978,
-                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+                    $"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Api Error: {ex}");
 
                 throw;
             }
@@ -117,7 +118,7 @@
             {
                 this.logger.LogError(
                     1978,
-                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+                    $"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Api Error: {ex}");
 
                 throw;
             }
@@ -144,7 +145,7 @@
             {
                 this.logger.LogError(
                     1978,
-                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+                    $"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Api Error: {ex}");
 
                 throw;
             }
@@ -165,7 +166,7 @@
             {
                 this.logger.LogError(
                     1978,
-                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+                    $"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Api Error: {ex}");
 
                 throw;
             }
@@ -186,7 +187,7 @@
             {
                 this.logger.LogError(
                     1978,
-                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+                    $"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Api Error: {ex}");
 
                 throw;
             }
@@ -207,7 +208,7 @@
             {
                 this.logger.LogError(
                     1978,
-                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+                    $"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Api Error: {ex}");
 
                 throw;
             }
@@ -228,7 +229,7 @@
             {
                 this.logger.LogError(
                     1978,
-                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+                    $"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Api Error: {ex}");
 
                 throw;
             }
@@ -257,7 +258,7 @@
             {
                 this.logger.LogError(
                     1978,
-                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+                    $"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Api Error: {ex}");
 
                 throw;
             }
@@ -298,7 +299,7 @@
             {
                 this.logger.LogError(
                     1978,
-                    $"RequestID: {this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+                    $"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Api Error: {ex}");
 
                 throw;
             }

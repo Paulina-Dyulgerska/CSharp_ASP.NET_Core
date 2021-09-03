@@ -46,6 +46,7 @@
         {
             this.logger.LogInformation("User opens Privacy page");
 
+            // throw new System.Exception("Hi from Home controller Privacy page");
             return this.View();
         }
 
@@ -57,6 +58,9 @@
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            this.logger
+                .LogError($"Something went wrong with Request ID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}");
+
             return this.View(
                 new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
         }

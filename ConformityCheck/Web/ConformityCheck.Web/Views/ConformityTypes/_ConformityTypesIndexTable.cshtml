@@ -1,0 +1,124 @@
+﻿@model ConformityTypesIndexModel
+
+<section class="table-container">
+    <article class="table-header"></article>
+    <table class="table dataTable">
+        <thead>
+            <tr>
+                <th class="col-xs">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.IdSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Conf. Type Nr.</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-m">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.DescriptionSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Description</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.CreatedOnSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Created</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-m">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.ModifiedOnSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Modified</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-l">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.UserEmailSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">User</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">Details</th>
+                <th class="col-s">Edit</th>
+                <th class="col-s">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var conformityType in this.Model.ConformityTypes)
+            {
+                <tr class="" data-id="@conformityType.Id">
+                    <td id="search" class="col-xs" data-label="Conf. Type Nr.">@conformityType.Id</td>
+                    <td id="search" class="col-m" data-label="Description">@conformityType.Description</td>
+                    <td class="col-s" data-label="Created">@conformityType.CreatedOn.ToString(GlobalConstants.DateTimeFormat)</td>
+                    <td class="col-m" data-label="Modified">
+                        @(conformityType.ModifiedOn.HasValue ?
+                           conformityType.ModifiedOn.Value.ToString(GlobalConstants.DateTimeFormat) : "-")
+                    </td>
+                    <td class="col-l" data-label="User">@conformityType.UserEmail</td>
+                    <td class="col-s" data-label="Details">
+                        <a asp-action="Details" class="btn btn-details" asp-route-id="@conformityType.Id">
+                            <span class="text">Details</span>
+                        </a>
+                    </td>
+                    <td class="col-s" data-label="Edit">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="Edit" class="btn btn-edit" asp-route-id="@conformityType.Id">
+                                <span class="text">Edit</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login"
+                               asp-route-returnUrl="/ConformityTypes/Edit/@conformityType.Id">
+                                <span class="text">Login</span>
+                            </a>
+                        }
+                    </td>
+                    <td class="col-s" data-label="Delete">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="Delete" class="btn btn-delete" asp-route-id="@conformityType.Id">
+                                <span class="text">Delete</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login"
+                               asp-route-returnUrl="/ConformityTypes/Index">
+                                <span class="text">Login</span>
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>

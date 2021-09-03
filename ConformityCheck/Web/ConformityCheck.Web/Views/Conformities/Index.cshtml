@@ -1,0 +1,78 @@
+﻿@model ConformitiesIndexModel
+
+@{
+    this.ViewData["Title"] = "Conformities";
+}
+
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+                <span class="presented-items-info">(total of @Model.ItemsCount conformities)</span>
+            </article>
+            <article class="tools-container">
+                <article class="search-container">
+                    <form method="get" asp-action="Index" class="flex-row">
+                        <article class="input-group">
+                            <input type="search" class="form-control" size="40"
+                                   asp-for="CurrentSearchInput"
+                                   id="searchConformityInput" list="selectSearchConformityInput"
+                                   placeholder="Search for article, supplier or conformity type"
+                                   value="@Model.CurrentSearchInput"
+                                   autocomplete="off">
+                            <datalist id="selectSearchConformityInput" class="form-control dropdown-content">
+                            </datalist>
+                        </article>
+                        <article class="btns-container">
+                            <button type="submit" class="btn btn-search">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </article>
+                    </form>
+                </article>
+                <article class="input-group">
+                    <article class="input-group-prepend">
+                        <span class="input-group-text">
+                            Items per page
+                        </span>
+                    </article>
+                    <article class="input-group-append">
+                        <partial name="_ItemsPerPagePartial" model="Model" />
+                    </article>
+                </article>
+            </article>
+        </section>
+
+        <section class="display-data-body">
+            <article class="pagination-container">
+                <partial name="_PagingPartial" model="@Model" />
+            </article>
+            <partial name="_ConformitiesIndexTable.cshtml" model="@Model" />
+        </section>
+
+        <section class="display-data-footer ">
+            <article class="pagination-container">
+                <partial name="_PagingPartial" model="@Model" />
+            </article>
+        </section>
+    </section>
+</section>
+
+@section SubMenu{
+    <partial name="_SubMenuGeneral" />
+}
+
+@section Links{
+    @*<link href="~/lib/datatables/dist/css/datatables.min.css" rel="stylesheet" asp-append-version="true" />
+        @*<link href="~/lib/datatables/DataTables-1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet" asp-append-version="true" />*@
+}
+
+@section Scripts{
+    <script src="~/js/tables.js" asp-append-version="true"></script>
+    <script src="~/js/searchEntities.js" asp-append-version="true"></script>
+    @*<script src="~/lib/datatables/dist/js/datatables.min.js"></script>*@
+}

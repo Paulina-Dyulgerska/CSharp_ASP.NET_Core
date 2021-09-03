@@ -1,6 +1,7 @@
 ﻿namespace ConformityCheck.Web.Controllers
 {
     using System;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -107,7 +108,7 @@
             catch (Exception ex)
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
-                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Conformities loading failed: {ex}");
+                this.logger.LogError($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Conformities loading failed: {ex}");
 
                 return this.Redirect("/");
             }
@@ -146,7 +147,7 @@
             catch (Exception ex)
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
-                this.logger.LogError($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity creation failed: {ex}");
+                this.logger.LogError($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Conformity creation failed: {ex}");
 
                 // return user to the Create view instead of Home/Error page
                 return this.View();
@@ -196,7 +197,7 @@
             catch (Exception ex)
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
-                this.logger.LogInformation($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity creation failed: {ex}");
+                this.logger.LogInformation($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Conformity creation failed: {ex}");
 
                 var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesExportModel>(id);
 
@@ -252,7 +253,7 @@
             catch (Exception ex)
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
-                this.logger.LogInformation($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity creation failed: {ex}");
+                this.logger.LogInformation($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Conformity creation failed: {ex}");
 
                 var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesExportModel>(input.ArticleId);
 
@@ -326,7 +327,7 @@
             catch (Exception ex)
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
-                this.logger.LogInformation($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity modification failed: {ex}");
+                this.logger.LogInformation($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Conformity modification failed: {ex}");
 
                 var model = await this.conformitiesService.GetByIdAsync<ConformityEditInputModel>(input.Id);
 
@@ -372,7 +373,7 @@
             catch (Exception ex)
             {
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
-                this.logger.LogInformation($"RequestID: {this.HttpContext.TraceIdentifier}; Conformity deletion failed: {ex}");
+                this.logger.LogInformation($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Conformity deletion failed: {ex}");
 
                 // if error accure here, the Home/Error page will be displayed
             }

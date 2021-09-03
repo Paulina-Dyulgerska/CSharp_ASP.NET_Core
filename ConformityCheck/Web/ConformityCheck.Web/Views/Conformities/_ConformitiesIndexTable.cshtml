@@ -1,0 +1,190 @@
+﻿@model ConformitiesIndexModel
+
+<section class="table-container">
+    <article class="table-header"></article>
+    <table class="table dataTable">
+        <thead>
+            <tr>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.ArticleNumberSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Art. Nr.</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.ArticleDescriptionSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Art. Desc.</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-xs">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.SupplierNumberSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Sup. Nr.</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.SupplierNameSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Sup. Name</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-xs">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.ConformityTypeDescriptionSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Conf. Type</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-xs">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.IsAcceptedSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Assepted</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-xs">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.IsValidSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Valid</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.CreatedOnSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Created</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                @*<th class="col-s">
+                        <a asp-action="@Model.PagingControllerActionCallName"
+                           asp-route-itemsPerPage="@Model.ItemsPerPage"
+                           asp-route-currentSortOrder="@Model.ModifiedOnSortParam"
+                           asp-route-currentSearchInput="@Model.CurrentSearchInput">
+                            <span class="text">Modified</span>
+                            <span class="icon">
+                                <i class="fas fa-arrows-alt-v"></i>
+                            </span>
+                        </a>
+                    </th>*@
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.UserEmailSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">User</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">Details</th>
+                <th class="col-s">Edit</th>
+                <th class="col-s">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var conformity in this.Model.Conformities)
+            {
+            <tr class="" data-id="@conformity.Id">
+                <td id="search" class="col-s" data-label="Art. Nr.">@conformity.Article.Number</td>
+                <td id="search" class="col-s" data-label="Art. Desc.">@conformity.Article.Description</td>
+                <td id="search" class="col-xs" data-label="Sup. Nr.">@conformity.Supplier.Number</td>
+                <td id="search" class="col-s" data-label="Sup. Name">@conformity.Supplier.Name</td>
+                <td id="search" class="col-xs" data-label="Conf. Type">@conformity.ConformityType.Description</td>
+                <td class="col-xs" data-label="Assepted">@(conformity.IsAccepted ? "Yes" : "No")</td>
+                <td class="col-xs" data-label="Valid">@(conformity.IsValid ? "Yes" : "No")</td>
+                <td class="col-s" data-label="Created">@conformity.CreatedOn.ToString(GlobalConstants.DateTimeFormat)</td>
+                @*<td class="col-s" data-label="Modified">
+            @(conformity.ModifiedOn.HasValue ?
+                   conformity.ModifiedOn.Value.ToString(GlobalConstants.DateTimeFormat) : "-")
+        </td>*@
+                <td class="col-s" data-label="User">@conformity.UserEmail</td>
+                <td class="col-s" data-label="Details">
+                    <a asp-action="Details" class="btn btn-details" asp-route-id="@conformity.Id">
+                        <span class="text">Details</span>
+                    </a>
+                </td>
+                <td class="col-s" data-label="Edit">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Edit" class="btn btn-edit" asp-route-id="@conformity.Id"
+                           asp-route-callerViewName="Conformities">
+                            <span class="text">Edit</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login"
+                           asp-route-returnUrl="/Conformities/Edit/@conformity.Id">
+                            <span class="text">Login</span>
+                        </a>
+                    }
+                </td>
+
+                <td class="col-s" data-label="Delete">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Delete" class="btn btn-delete" asp-route-id="@conformity.Id">
+                            <span class="text">Delete</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-login" asp-area="Identity" asp-page="/Account/Login"
+                           asp-route-returnUrl="/Conformities/Index">
+                            <span class="text">Login</span>
+                        </a>
+                    }
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</section>
