@@ -71,11 +71,11 @@
             mockUserManager.Setup(u => u.GetUsersInRoleAsync(GlobalConstants.AdministratorRoleName))
                 .Returns(Task.FromResult(adminUsers));
 
-            // real service collection to add scoped the mocked UserManager
+            // real service collection neede to be able to add scoped the mocked UserManager
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddScoped<UserManager<ApplicationUser>>(provider => mockUserManager.Object);
 
-            // service provider to provider the service collection with one service in it - the mocked UserManager
+            // service provider to provide the service collection with one service in it - this is the mocked UserManager
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
             var conformityTypes = new List<ConformityType>
@@ -111,7 +111,9 @@
 
             // Assert
             Assert.Equal(1, articlesRepository.All().Count());
-            Assert.True(articleConformityTypeRepository.All().Any(x => x.Article.Number == "entityToCreateNumber".ToUpper() && x.ConformityTypeId == 1));
+            Assert.True(articleConformityTypeRepository.All()
+                .Any(x => x.Article.Description.ToUpper() == "entityToCreateDescription".ToUpper() 
+                        && x.ConformityTypeId == 1));
         }
     }
 }
