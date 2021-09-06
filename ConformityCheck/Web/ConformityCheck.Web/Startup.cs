@@ -3,6 +3,7 @@
     using System;
     using System.Reflection;
 
+    using Azure.Storage.Blobs;
     using ConformityCheck.Data;
     using ConformityCheck.Data.Common;
     using ConformityCheck.Data.Common.Repositories;
@@ -104,6 +105,7 @@
             });
 
             services.AddSingleton(this.configuration);
+            services.AddSingleton(new BlobServiceClient(this.configuration.GetConnectionString("BlobConnection")));
 
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
@@ -153,7 +155,7 @@
             }
             else
             {
-                // app.UseApiExceptionHandler(new LoggerFactory());
+                app.UseApiExceptionHandler(new LoggerFactory());
                 app.UseExceptionHandler("/Home/Error"); // 500...
 
                 // the default HSTS value is 30 days. If you need more, change it.

@@ -255,9 +255,7 @@
                 this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
                 this.logger.LogInformation($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Conformity creation failed: {ex}");
 
-                var model = await this.articlesService.GetByIdAsync<ArticleManageConformitiesExportModel>(input.ArticleId);
-
-                return this.View(model);
+                return this.RedirectToAction(nameof(ArticlesController.Details), ArticlesCallerViewName, new { id = input.ArticleId });
             }
 
             // TODO return this.RedirectToAction("Details", CallerViewName, new { id = input.CallerId });

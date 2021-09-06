@@ -7,6 +7,7 @@
     using System.Text.Json;
     using System.Threading.Tasks;
 
+    using Azure.Storage.Blobs;
     using ConformityCheck.Common;
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
@@ -24,6 +25,7 @@
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
         private readonly IRepository<ArticleConformityType> articleConformityTypeRepository;
         private readonly IDistributedCache distributedCache;
+        private readonly BlobServiceClient blobServiceClient;
 
         public ConformitiesService(
             IDeletableEntityRepository<Article> articlesRepository,
@@ -32,7 +34,8 @@
             IDeletableEntityRepository<ConformityType> conformityTypesRepository,
             IDeletableEntityRepository<Conformity> conformitiesRepository,
             IRepository<ArticleConformityType> articleConformityTypeRepository,
-            IDistributedCache distributedCache)
+            IDistributedCache distributedCache,
+            BlobServiceClient blobServiceClient)
         {
             this.articlesRepository = articlesRepository;
             this.suppliersRepository = suppliersRepository;
@@ -41,6 +44,7 @@
             this.conformitiesRepository = conformitiesRepository;
             this.articleConformityTypeRepository = articleConformityTypeRepository;
             this.distributedCache = distributedCache;
+            this.blobServiceClient = blobServiceClient;
         }
 
         public int GetCount()
@@ -700,12 +704,27 @@
 
             await this.conformitiesRepository.AddAsync(conformityEntity);
 
+            // upload to local wwwroot/conformities dir:
             Directory.CreateDirectory($"{conformityFilePath}/conformities/");
             var extension = Path.GetExtension(input.InputFile.FileName).ToLower().TrimStart('.');
             conformityEntity.FileExtension = extension;
             var physicalPath = $"{conformityFilePath}/conformities/{conformityEntity.Id}.{extension}";
             using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
             await input.InputFile.CopyToAsync(fileStream);
+
+            // upload to Azure Blob:
+            var container = this.blobServiceClient.GetBlobContainerClient(GlobalConstants.AzureStorageBlobContainerName);
+            var blobClient = container.GetBlobClient($"{conformityEntity.Id}.{extension}");
+            byte[] destinationFile;
+            using (var memoryStream = new MemoryStream())
+            {
+                await input.InputFile.CopyToAsync(memoryStream);
+
+                destinationFile = memoryStream.ToArray();
+                memoryStream.Position = 0;
+                await blobClient.UploadAsync(memoryStream);
+                conformityEntity.RemoteFileUrl = blobClient.Uri.AbsoluteUri;
+            }
 
             await this.conformitiesRepository.SaveChangesAsync();
         }

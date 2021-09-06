@@ -14,6 +14,8 @@
 
         public const string DateTimeFormat = "dd/MM/yyyy";
 
+        public const string AzureStorageBlobContainerName = "conformities";
+
         public const string TempDataMessagePropertyName = "Message";
         public const string TempDataErrorMessagePropertyName = "ErrorMessage";
 

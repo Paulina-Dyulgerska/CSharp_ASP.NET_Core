@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Azure.Storage.Blobs;
+    using ConformityCheck.Common;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels.Administration.Users;
@@ -30,6 +32,7 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<ApplicationRole> roleManager;
         private readonly ILogger<ContentDeliveryController> logger;
+        private readonly BlobServiceClient blobServiceClient;
 
         public ContentDeliveryController(
             IArticlesService articlesService,
@@ -38,7 +41,8 @@
             IConformitiesService conformitiesService,
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
-            ILogger<ContentDeliveryController> logger)
+            ILogger<ContentDeliveryController> logger,
+            BlobServiceClient blobServiceClient)
         {
             this.articlesService = articlesService;
             this.suppliersService = suppliersService;
@@ -47,16 +51,17 @@
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.logger = logger;
+            this.blobServiceClient = blobServiceClient;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllArticles()
         {
             try
             {
                 var model = await this.articlesService.GetAllAsNoTrackingAsync<ArticleExportModel>();
 
-                this.logger.LogInformation($"Api {nameof(this.GetAll)} success.");
+                this.logger.LogInformation($"Api {nameof(this.GetAllArticles)} success.");
 
                 return this.Ok(model);
             }
@@ -237,11 +242,10 @@
 
         [Authorize]
         [HttpGet(nameof(ShowModalDocument))]
-        public IActionResult ShowModalDocument(string conformityFileUrl)
+        public async Task<IActionResult> ShowModalDocument(string conformityFileUrl)
         {
             try
             {
-                string filePath = "~" + conformityFileUrl;
                 var contentDisposition = new System.Net.Mime.ContentDisposition
                 {
                     FileName = conformityFileUrl.Split('/').LastOrDefault(),
@@ -250,9 +254,31 @@
 
                 this.Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
 
-                this.logger.LogInformation($"Api {nameof(this.ShowModalDocument)} success.");
+                var fileSavedInRemoteStorageContainer = conformityFileUrl.StartsWith("http");
 
-                return this.File(filePath, System.Net.Mime.MediaTypeNames.Application.Pdf);
+                if (!fileSavedInRemoteStorageContainer)
+                {
+                    string filePath = "~" + conformityFileUrl;
+
+                    this.logger.LogInformation($"API {nameof(this.ShowModalDocument)} from local storage success.");
+
+                    return this.File(filePath, System.Net.Mime.MediaTypeNames.Application.Pdf);
+                }
+                else
+                {
+                    var container = this.blobServiceClient
+                                        .GetBlobContainerClient(GlobalConstants.AzureStorageBlobContainerName);
+                    var conformityFileBlob = container.GetBlobClient(contentDisposition.FileName);
+                    var conformityFile = await conformityFileBlob.DownloadContentAsync();
+
+                    this.logger.LogInformation($"API {nameof(this.ShowModalDocument)} from remote storage success.");
+
+                    // return file as shown in new tab from Blob:
+                    return this.File(conformityFile.Value.Content.ToArray(), System.Net.Mime.MediaTypeNames.Application.Pdf);
+
+                    // return file as downloaded from Blob:
+                    // return this.File(conformityFile.Value.Content.ToArray(), conformityFile.Value.Details.ContentType);
+                }
             }
             catch (Exception ex)
             {

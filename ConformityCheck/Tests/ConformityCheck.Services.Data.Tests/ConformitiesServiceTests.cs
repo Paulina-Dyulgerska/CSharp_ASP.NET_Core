@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Reflection;
 
+    using Azure.Storage.Blobs;
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
@@ -35,6 +36,7 @@
             var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
             var articleConformityTypeRepository = new Mock<IRepository<ArticleConformityType>>();
             var distributedCache = new Mock<IDistributedCache>();
+            var blobServiceClient = new Mock<BlobServiceClient>();
 
             conformitiesRepository.Setup(r => r.AllAsNoTracking())
                 .Returns(new List<Conformity>
@@ -51,7 +53,8 @@
                 conformityTypesRepository.Object,
                 conformitiesRepository.Object,
                 articleConformityTypeRepository.Object,
-                distributedCache.Object);
+                distributedCache.Object,
+                blobServiceClient.Object);
 
             // Act
             var count = service.GetCount();
@@ -71,6 +74,7 @@
             var conformitiesRepository = new Mock<IDeletableEntityRepository<Conformity>>();
             var articleConformityTypeRepository = new Mock<IRepository<ArticleConformityType>>();
             var distributedCache = new Mock<IDistributedCache>();
+            var blobServiceClient = new Mock<BlobServiceClient>();
 
             var conformities = new List<Conformity>
                              {
@@ -110,7 +114,8 @@
                 conformityTypesRepository.Object,
                 conformitiesRepository.Object,
                 articleConformityTypeRepository.Object,
-                distributedCache.Object);
+                distributedCache.Object,
+                blobServiceClient.Object);
 
             var count = service.GetCountBySearchInput("1");
             Assert.Equal(2, count);
