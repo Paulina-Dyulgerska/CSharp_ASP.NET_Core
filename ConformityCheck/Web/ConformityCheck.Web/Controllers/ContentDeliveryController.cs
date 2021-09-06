@@ -6,7 +6,6 @@
     using System.Threading.Tasks;
 
     using Azure.Storage.Blobs;
-    using ConformityCheck.Common;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Web.ViewModels.Administration.Users;
@@ -258,26 +257,23 @@
 
                 if (!fileSavedInRemoteStorageContainer)
                 {
-                    string filePath = "~" + conformityFileUrl;
+                    var fileData = this.conformitiesService.GetConformityFileFromLocalStorage(conformityFileUrl);
 
                     this.logger.LogInformation($"API {nameof(this.ShowModalDocument)} from local storage success.");
 
-                    return this.File(filePath, System.Net.Mime.MediaTypeNames.Application.Pdf);
+                    return this.File(fileData.FilePath, System.Net.Mime.MediaTypeNames.Application.Pdf);
                 }
                 else
                 {
-                    var container = this.blobServiceClient
-                                        .GetBlobContainerClient(GlobalConstants.AzureStorageBlobContainerName);
-                    var conformityFileBlob = container.GetBlobClient(contentDisposition.FileName);
-                    var conformityFile = await conformityFileBlob.DownloadContentAsync();
+                    var fileData = await this.conformitiesService.GetConformityFileFromBlobStorage(conformityFileUrl);
 
                     this.logger.LogInformation($"API {nameof(this.ShowModalDocument)} from remote storage success.");
 
                     // return file as shown in new tab from Blob:
-                    return this.File(conformityFile.Value.Content.ToArray(), System.Net.Mime.MediaTypeNames.Application.Pdf);
+                    return this.File(fileData.FileBytes, System.Net.Mime.MediaTypeNames.Application.Pdf);
 
                     // return file as downloaded from Blob:
-                    // return this.File(conformityFile.Value.Content.ToArray(), conformityFile.Value.Details.ContentType);
+                    // return this.File(fileData.FileBytes, fileData.FileContentType);
                 }
             }
             catch (Exception ex)

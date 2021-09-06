@@ -655,6 +655,35 @@
             await this.conformitiesRepository.SaveChangesAsync();
         }
 
+        public ConformityFileExportModel GetConformityFileFromLocalStorage(string conformityFileUrl)
+        {
+            string filePath = "~" + conformityFileUrl;
+
+            var conformityFile = new ConformityFileExportModel
+            {
+                FilePath = filePath,
+            };
+
+            return conformityFile;
+        }
+
+        public async Task<ConformityFileExportModel> GetConformityFileFromBlobStorage(string conformityFileUrl)
+        {
+            var container = this.blobServiceClient.GetBlobContainerClient(GlobalConstants
+                                                                                .AzureStorageBlobContainerName);
+            var conformityFileBlob = container.GetBlobClient(conformityFileUrl.Split('/').LastOrDefault());
+            var downloadedConformityFile = await conformityFileBlob.DownloadContentAsync();
+
+            var conformityFile = new ConformityFileExportModel
+            {
+                FilePath = conformityFileBlob.Uri.AbsoluteUri,
+                FileBytes = downloadedConformityFile.Value.Content.ToArray(),
+                FileContentType = downloadedConformityFile.Value.Details.ContentType,
+            };
+
+            return conformityFile;
+        }
+
         private async Task AddConformityToAnArticleAsync(
            ConformityCreateInputModel input,
            string userId,
@@ -712,19 +741,28 @@
             using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
             await input.InputFile.CopyToAsync(fileStream);
 
-            // upload to Azure Blob:
+            //// upload to Azure Blob variant 1:
+            //// await this.blobServiceClient.CreateBlobContainerAsync(GlobalConstants.AzureStorageBlobContainerName);
+            // var container = this.blobServiceClient.GetBlobContainerClient(GlobalConstants.AzureStorageBlobContainerName);
+            // var blobClient = container.GetBlobClient($"{conformityEntity.Id}.{extension}");
+            // byte[] destinationFile;
+            // using (var memoryStream = new MemoryStream())
+            // {
+            //     await input.InputFile.CopyToAsync(memoryStream);
+            //     destinationFile = memoryStream.ToArray();
+            //     memoryStream.Position = 0;
+            //     await blobClient.UploadAsync(memoryStream);
+            //     conformityEntity.RemoteFileUrl = blobClient.Uri.AbsoluteUri;
+            // }
+
+            // upload to Azure Blob variant 2:
             var container = this.blobServiceClient.GetBlobContainerClient(GlobalConstants.AzureStorageBlobContainerName);
             var blobClient = container.GetBlobClient($"{conformityEntity.Id}.{extension}");
-            byte[] destinationFile;
-            using (var memoryStream = new MemoryStream())
-            {
-                await input.InputFile.CopyToAsync(memoryStream);
 
-                destinationFile = memoryStream.ToArray();
-                memoryStream.Position = 0;
-                await blobClient.UploadAsync(memoryStream);
-                conformityEntity.RemoteFileUrl = blobClient.Uri.AbsoluteUri;
-            }
+            // fileStream pointer must be returned at its 0 byte, because it is at the last byte at the moment:
+            fileStream.Position = 0;
+            await blobClient.UploadAsync(fileStream);
+            conformityEntity.RemoteFileUrl = blobClient.Uri.AbsoluteUri;
 
             await this.conformitiesRepository.SaveChangesAsync();
         }
