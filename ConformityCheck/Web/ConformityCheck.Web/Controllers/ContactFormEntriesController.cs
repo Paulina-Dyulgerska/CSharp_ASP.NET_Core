@@ -68,7 +68,7 @@
                 var ip = this.HttpContext.Connection.RemoteIpAddress.ToString();
                 input.Ip = ip;
 
-                await this.contactFormEntriesService.CreateAsync(input, user.Id);
+                await this.contactFormEntriesService.CreateAsync(input, user?.Id);
 
                 this.logger.LogInformation($"Contact message from {input.Email} created.");
             }
@@ -106,7 +106,7 @@
                     input.Email,
                     input.Name,
                     "Thank you for your message",
-                    $"Dear {input.Name},\r\n Thank you for your interest to our site and the message sent!\r\n We will contact you as soon as we review your request.\r\n\r\nKind Regards,\r\nConformity Check Team");
+                    $"Dear {input.Name},\r\n Thank you for your interest on our site and the message sent!\r\n We will contact you as soon as we review your request.\r\n\r\nKind Regards,\r\nConformity Check Team");
 
                 this.logger.LogInformation($"Send contact message from site admin to {input.Email}.");
             }

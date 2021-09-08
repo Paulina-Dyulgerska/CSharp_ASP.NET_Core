@@ -3,11 +3,13 @@
     using System;
     using System.Diagnostics;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
 
     using Azure.Storage.Blobs;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
+    using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Administration.Users;
     using ConformityCheck.Web.ViewModels.Articles;
     using ConformityCheck.Web.ViewModels.Conformities;
@@ -291,15 +293,21 @@
         {
             try
             {
+                // with AutoMapper - not nessessary since only 1 time is used. If more than 1 times
+                // needed, put the AutoMapperConfig in Startup.Configure() method and delete the Select():
+                // AutoMapperConfig.RegisterMappings(typeof(ApplicationUser).GetTypeInfo().Assembly);
+                // var users = await this.userManager.Users
+                //                                    .To<UserExportModel>()
+                //                                    .ToListAsync();
                 var users = await this.userManager.Users
-               .Select(x => new UserExportModel
-               {
-                   Id = x.Id,
-                   UserName = x.UserName,
-                   Email = x.Email,
-                   Roles = x.Roles.Select(r => r.RoleId).ToArray(),
-               })
-               .ToListAsync();
+                                                   .Select(x => new UserExportModel
+                                                   {
+                                                       Id = x.Id,
+                                                       UserName = x.UserName,
+                                                       Email = x.Email,
+                                                       Roles = x.Roles.Select(r => r.RoleId).ToArray(),
+                                                   })
+                                                   .ToListAsync();
 
                 foreach (var user in users)
                 {

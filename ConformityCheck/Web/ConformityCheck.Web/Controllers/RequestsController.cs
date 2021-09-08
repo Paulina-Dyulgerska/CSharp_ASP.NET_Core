@@ -67,9 +67,9 @@
             {
                 var user = await this.userManager.GetUserAsync(this.User);
 
-                var article = await this.articlesService.GetByIdAsync<ArticleBaseModel>(input.ArticleId);
-                var supplier = await this.suppliersService.GetByIdAsync<SupplierBaseModel>(input.SupplierId);
-                var conformityType = await this.conformityTypesService.GetByIdAsync<ConformityTypeBaseModel>(input.ConformityTypeId);
+                var article = await this.articlesService.GetByIdAsync<ArticleBaseExportModel>(input.ArticleId);
+                var supplier = await this.suppliersService.GetByIdAsync<SupplierBaseExportModel>(input.SupplierId);
+                var conformityType = await this.conformityTypesService.GetByIdAsync<ConformityTypeBaseExportModel>(input.ConformityTypeId);
 
                 // send email to supplier
                 await this.emailSender.SendEmailAsync(

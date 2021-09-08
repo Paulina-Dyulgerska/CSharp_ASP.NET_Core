@@ -6,7 +6,7 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
 
-    public class SupplierBaseModel : IMapFrom<Supplier>
+    public abstract class SupplierBaseModel : IMapFrom<Supplier>
     {
         // TODO - to generate numbers automatically
         [Required]

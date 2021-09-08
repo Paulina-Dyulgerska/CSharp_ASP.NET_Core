@@ -112,7 +112,7 @@
             // Assert
             Assert.Equal(1, articlesRepository.All().Count());
             Assert.True(articleConformityTypeRepository.All()
-                .Any(x => x.Article.Description.ToUpper() == "entityToCreateDescription".ToUpper() 
+                .Any(x => x.Article.Description.ToUpper() == "entityToCreateDescription".ToUpper()
                         && x.ConformityTypeId == 1));
         }
     }
