@@ -52,6 +52,7 @@ This website is designed and runs using the main technologies below:
 -	SendGrid API
 -	Google ReCaptcha v. 3 – for login, register and contact forms
 -	Facebook authentication
+-	Azure Storage - Blob Service used for storing conformity files
 
 <b>Additional:</b>
 -	Nikolay Kostov’s ASP.NET Core Template - https://github.com/NikolayIT/ASP.NET-Core-Template
