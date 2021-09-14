@@ -19,6 +19,9 @@ When we add the **inevitable fact that regulations and requirements in all the c
 
 <b>This is why Conformity Check system was created and where it could vastly help!</b>
 
+<b>I hope you will like it and at the end - you will want to contact me! </b>
+
+
 <b>Conformity Check is deployed online and could be found here:</b>
 -	https://conformitycheck.dotnetweb.net
 
@@ -52,6 +55,7 @@ This website is designed and runs using the main technologies below:
 -	SendGrid API
 -	Google ReCaptcha v. 3 – for login, register and contact forms
 -	Facebook authentication
+-	Azure Storage - Blob Service used for storing conformity files
 
 <b>Additional:</b>
 -	Nikolay Kostov’s ASP.NET Core Template - https://github.com/NikolayIT/ASP.NET-Core-Template
@@ -248,3 +252,8 @@ o	The logic is that the general view with report returned for all major entity t
 
 
 <b>We all could contribute to a better World, with confirm articles and products, which saves peoples' health and life, together with our environment and Earth's nature!</b>
+
+<b>I hope you like it and now you want to contact me. </b>
+
+<b>Thank you for your time and interest! </b>
+
