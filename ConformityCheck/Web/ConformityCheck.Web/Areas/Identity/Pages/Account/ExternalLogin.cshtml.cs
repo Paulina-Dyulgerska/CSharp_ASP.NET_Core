@@ -140,8 +140,8 @@
                             protocol: this.Request.Scheme);
 
                         await this.emailSender.SendEmailAsync(
-                            GlobalConstants.SystemName,
                             GlobalConstants.SystemEmail,
+                            GlobalConstants.SystemName,
                             this.Input.Email,
                             this.Input.Email,
                             "Confirm your email",
