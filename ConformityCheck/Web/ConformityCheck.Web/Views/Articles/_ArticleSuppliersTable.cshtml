@@ -20,7 +20,7 @@
 
                     <td class="col-l" data-label="Supplier name">
                         @supplier.Name                
-                        <a asp-controller="Suppliers" asp-action="Details" class="btn btn-details" asp-route-id="@supplier.Id"></a>
+                        <a asp-controller="Suppliers" asp-action="Details" class="btn btn-table-link" asp-route-id="@supplier.Id"></a>
                     </td>
                     <td class="col-l" data-label="Supplier Nr.">@supplier.Number</td>
                     <td class="col-l" data-label="Main supplier">@(supplier.IsMainSupplier ? "Yes" : "No")</td>

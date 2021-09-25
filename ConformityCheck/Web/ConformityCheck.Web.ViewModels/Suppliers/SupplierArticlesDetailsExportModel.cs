@@ -87,7 +87,6 @@
         {
             configuration.CreateMap<Supplier, SupplierArticlesDetailsExportModel>()
                 .ForMember(x => x.Articles, opt => opt.MapFrom(s => s.ArticleSuppliers
-                                                         .OrderByDescending(s => s.Article.Number)
                                                          .SelectMany(a => a.Article.ArticleConformityTypes)))
                 .ForMember(x => x.ContactPersonName, opt =>
                               opt.MapFrom(s => $"{s.ContactPersonFirstName} {s.ContactPersonLastName}"))

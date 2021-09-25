@@ -74,9 +74,10 @@
 
                 supplierEntity = new Supplier
                 {
+                    // Email = supplierImportDTO.Email.Trim(),
+                    Email = "paylina_st@yahoo.com",
                     Number = supplierImportDTO.Number.Trim().ToUpper(),
                     Name = supplierImportDTO.Name.Trim().ToUpper(),
-                    Email = "paylina_st@yahoo.com",
                     PhoneNumber = supplierImportDTO.PhoneNumber?.Trim(),
                     ContactPersonFirstName = supplierImportDTO.ContactPersonFirstName == null ? null :
                             PascalCaseConverter.Convert(supplierImportDTO.ContactPersonFirstName),

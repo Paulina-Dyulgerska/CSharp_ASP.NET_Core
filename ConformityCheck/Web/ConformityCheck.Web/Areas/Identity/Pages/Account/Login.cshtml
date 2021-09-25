@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                             <div class="form-field-container large-margin-vertical">
-                                <button type="submit" class="btn">Log in</button>
+                                <button type="submit" class="btn btn-submit">Log in</button>
                             </div>
 
                         </form>
@@ -75,7 +75,7 @@
                                         <p>
                                             @foreach (var provider in Model.ExternalLogins)
                                             {
-                                                <button type="submit" class="btn" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                                <button type="submit" class="btn btn-submit" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
                                             }
                                         </p>
                                     </div>

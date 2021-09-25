@@ -32,7 +32,7 @@
                             @conformityType.Description
                             @if (conformityBySupplier?.AcceptanceDate != null)
                             {
-                                <a class="btn btn-details"
+                                <a class="btn btn-table-link"
                                    asp-controller="Conformities"
                                    asp-action="Edit"
                                    asp-route-Id="@(conformityBySupplier.Id)"
@@ -43,7 +43,7 @@
                             }
                             else
                             {
-                                <a class="btn btn-details"
+                                <a class="btn btn-table-link"
                                    asp-controller="Conformities"
                                    asp-action="AddToArticleSupplierConformityType"
                                    asp-route-articleId="@Model.Id"
