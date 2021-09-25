@@ -114,6 +114,8 @@ o	The logic is that the general view with report returned for all major entity t
 
 <img width="526" alt="Register" src="https://user-images.githubusercontent.com/54845614/134786188-6dadd252-c9e0-4462-88a8-e149ede42ecd.png">
 
+<img width="763" alt="FacebookRegister" src="https://user-images.githubusercontent.com/54845614/134786875-8bd1d67f-16b6-4253-89b1-a4aab78d9463.png">
+
 
 
 
@@ -170,6 +172,7 @@ o	The logic is that the general view with report returned for all major entity t
 
 
 
+
 <b>Suppliers Pages:</b>
 
 <img width="574" alt="SuppliersAll" src="https://user-images.githubusercontent.com/54845614/134786440-de2e51ae-b8c8-4bdb-8c61-85c260e278ef.png">
@@ -177,6 +180,8 @@ o	The logic is that the general view with report returned for all major entity t
 <img width="572" alt="Sorting" src="https://user-images.githubusercontent.com/54845614/134786454-b4a36d48-92c7-45a7-975a-a4ea37383484.png">
 
 <img width="586" alt="SupplierDetails" src="https://user-images.githubusercontent.com/54845614/134786442-4a4e6170-6378-42bc-9199-d8a6234244da.png">
+
+<img width="581" alt="EditSupplier" src="https://user-images.githubusercontent.com/54845614/134786920-c3984703-adb3-41e5-9b9b-e5e4ad9d0abd.png">
 
 
 
@@ -199,10 +204,18 @@ o	The logic is that the general view with report returned for all major entity t
 
 <img width="762" alt="EditConformity" src="https://user-images.githubusercontent.com/54845614/134786684-e9475eb7-dc0d-4b99-af97-46e605f04726.png">
 
+<img width="774" alt="ShowConformity" src="https://user-images.githubusercontent.com/54845614/134786856-2b15bb4d-73a2-40f6-ab9d-8c16906ee2e5.png">
 
 <img width="586" alt="Validation" src="https://user-images.githubusercontent.com/54845614/134786641-89c575e1-c6cc-4b1a-9443-5b55b31a18c4.png">
 
 
+
+<b>Paging:<b>
+  
+  <img width="754" alt="Paging" src="https://user-images.githubusercontent.com/54845614/134786949-66d0bda7-3aa4-4be2-946b-45b6b0f6ecf4.png">
+
+  
+  
 <b>Contact Us Pages:</b>
 
 <img width="825" alt="ContactUs" src="https://user-images.githubusercontent.com/54845614/134786476-b8b3343e-b3e2-45ad-a66f-ca8d0aa2b6f6.png">
@@ -243,7 +256,17 @@ o	The logic is that the general view with report returned for all major entity t
 <img width="561" alt="EmailToSupplier" src="https://user-images.githubusercontent.com/54845614/130651441-776a5077-df8d-42ec-88ad-af1406c334b6.png">
 
 <img width="684" alt="EmailToSupplier2" src="https://user-images.githubusercontent.com/54845614/130651453-bdbc2a57-7e41-4227-a4c8-e2822837c4d0.png">
+  
+  
+<b>Responsive:</b>
+  
+<img width="221" alt="Responsive0" src="https://user-images.githubusercontent.com/54845614/134787003-ca53cf50-ad60-4c1b-ad3e-8d0204a012db.png">
+  
+<img width="128" alt="Responsive2" src="https://user-images.githubusercontent.com/54845614/134786975-19829625-8364-403d-8f63-72d5927f4cd0.png">
 
+<img width="132" alt="Responsive" src="https://user-images.githubusercontent.com/54845614/134786976-ecf6d7a5-c3cd-41fc-9de5-babd795f3646.png">
+  
+  
 
 <b>Expect products, substances and regulatory lists - they are the next stage of this project development!</b>
 
