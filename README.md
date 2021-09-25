@@ -160,14 +160,6 @@ o	The logic is that the general view with report returned for all major entity t
 
 <img width="584" alt="RequestedConformity" src="https://user-images.githubusercontent.com/54845614/134786322-36ff6c45-1998-43d4-8335-ccfe9d7f310a.png">
 
-<img width="762" alt="AddConformity" src="https://user-images.githubusercontent.com/54845614/130650890-074f1cea-3a49-46aa-804f-c6c4e2527618.png">
-
-<img width="596" alt="JSSuppliersForArticlesRequiredConformities" src="https://user-images.githubusercontent.com/54845614/130651645-0cd0903e-242a-4905-ba84-205a6289c2b2.png">
-
-<img width="826" alt="EditConformity" src="https://user-images.githubusercontent.com/54845614/130651337-1c346fe1-f9bc-4fff-81b9-dd810d9e2817.png">
-
-<img width="838" alt="Sorting" src="https://user-images.githubusercontent.com/54845614/130652000-85ffa9bc-2816-4f41-a5eb-e6f60255e8f5.png">
-
 <img width="579" alt="AddConformityToArtcile" src="https://user-images.githubusercontent.com/54845614/134786371-6df61dd7-2433-45da-bc92-1febf8102b10.png">
 
 <img width="572" alt="AddConformityToArticle2" src="https://user-images.githubusercontent.com/54845614/134786384-06cf2619-77d3-4d33-9c05-0419df3fcec8.png">
@@ -205,7 +197,8 @@ o	The logic is that the general view with report returned for all major entity t
 
 <img width="398" alt="CreateConformity1" src="https://user-images.githubusercontent.com/54845614/134786509-640d5e65-a7b2-4ba3-a785-cec66e992f30.png">
 
-<img width="604" alt="Validations" src="https://user-images.githubusercontent.com/54845614/130652103-780a5e09-d213-45d1-9961-ac895e8b6e1f.png">
+<img width="762" alt="EditConformity" src="https://user-images.githubusercontent.com/54845614/134786684-e9475eb7-dc0d-4b99-af97-46e605f04726.png">
+
 
 <img width="586" alt="Validation" src="https://user-images.githubusercontent.com/54845614/134786641-89c575e1-c6cc-4b1a-9443-5b55b31a18c4.png">
 
