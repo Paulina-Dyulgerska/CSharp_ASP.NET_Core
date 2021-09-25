@@ -146,6 +146,8 @@ o	The logic is that the general view with report returned for all major entity t
 
 <img width="575" alt="ArticlesAll" src="https://user-images.githubusercontent.com/54845614/134786242-49d02e7a-35c2-4ab9-bebf-713cfe94f8f0.png">
 
+<img width="760" alt="SearchResults" src="https://user-images.githubusercontent.com/54845614/134787045-581b4382-75cb-434b-aa43-9572487a6d2d.png">
+
 <img width="766" alt="ArticleDetails" src="https://user-images.githubusercontent.com/54845614/134786253-0b73b724-c306-43a6-ae1e-7d002cfb64c0.png">
 
 <img width="582" alt="EditArticle" src="https://user-images.githubusercontent.com/54845614/134786265-ebb456f8-5cce-4256-92a3-a164ef005715.png">
@@ -195,6 +197,8 @@ o	The logic is that the general view with report returned for all major entity t
 <b>Conformity Pages:</b>
 
 <img width="413" alt="ConformitiesAll" src="https://user-images.githubusercontent.com/54845614/134786495-41d5342c-c986-4a45-9f4a-998fc6cdbe2d.png">
+
+<img width="751" alt="SearchFields" src="https://user-images.githubusercontent.com/54845614/134787030-5eff6369-833a-4847-a169-b32d6bc4eab0.png">
 
 <img width="582" alt="ConformityDetails" src="https://user-images.githubusercontent.com/54845614/134786498-65e83f39-222a-447d-b9f0-8f274fb8f960.png">
 
