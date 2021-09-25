@@ -205,19 +205,9 @@ o	The logic is that the general view with report returned for all major entity t
 
 <img width="398" alt="CreateConformity1" src="https://user-images.githubusercontent.com/54845614/134786509-640d5e65-a7b2-4ba3-a785-cec66e992f30.png">
 
-
-
-<img width="785" alt="JSSuppliers" src="https://user-images.githubusercontent.com/54845614/130651558-f298e785-d124-42ec-9abd-36f2efd6954d.png">
-
-<img width="611" alt="JSSuppliersForArticles" src="https://user-images.githubusercontent.com/54845614/130651622-ae39fc98-84f5-4b22-9ae8-77b18404ee63.png">
-
-<img width="412" alt="JsSuppliersArticles" src="https://user-images.githubusercontent.com/54845614/130651608-82700361-b6c5-4675-ae71-5030d31f8bd5.png">
-
 <img width="604" alt="Validations" src="https://user-images.githubusercontent.com/54845614/130652103-780a5e09-d213-45d1-9961-ac895e8b6e1f.png">
 
-
-
-
+<img width="586" alt="Validation" src="https://user-images.githubusercontent.com/54845614/134786641-89c575e1-c6cc-4b1a-9443-5b55b31a18c4.png">
 
 
 <b>Contact Us Pages:</b>
@@ -228,8 +218,7 @@ o	The logic is that the general view with report returned for all major entity t
 
 <b>Error Page:</b>
 
-<img width="796" alt="Error" src="https://user-images.githubusercontent.com/54845614/130651480-4cec55fd-3836-499e-b546-9ca568f560e1.png">
-
+<img width="767" alt="Error404" src="https://user-images.githubusercontent.com/54845614/134786650-23e04484-e324-4e06-bdac-26bdd96e4670.png">
 
 
 <b>Emails:</b>
