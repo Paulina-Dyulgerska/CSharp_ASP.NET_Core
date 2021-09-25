@@ -106,7 +106,7 @@ o	The logic is that the general view with report returned for all major entity t
 
 <img width="401" alt="Home" src="https://user-images.githubusercontent.com/54845614/134786178-f4cbf93d-e0c6-4231-8573-959244f33a48.png">
 
-<img width="856" alt="HomeQuickLinks" src="https://user-images.githubusercontent.com/54845614/130650278-d4f02d48-9d2a-4329-b1e3-a0749f2d07b6.png">
+<img width="761" alt="SearchResultsHomePage" src="https://user-images.githubusercontent.com/54845614/134786421-074d4bd8-a741-4547-8274-127441a0cb52.png">
 
 
 
@@ -174,38 +174,38 @@ o	The logic is that the general view with report returned for all major entity t
 
 <img width="768" alt="AddConformityToArticle3" src="https://user-images.githubusercontent.com/54845614/134786387-50352e7c-facb-44c9-a150-babf4ce82cb6.png">
 
-
+<img width="585" alt="Sorting1" src="https://user-images.githubusercontent.com/54845614/134786448-aedc41d5-7470-4977-b6d6-9f02b4c0923c.png">
 
 
 
 <b>Suppliers Pages:</b>
 
-<img width="843" alt="Suppliers" src="https://user-images.githubusercontent.com/54845614/130652019-d53ec978-29ba-42f1-afcc-9a03733d5867.png">
+<img width="574" alt="SuppliersAll" src="https://user-images.githubusercontent.com/54845614/134786440-de2e51ae-b8c8-4bdb-8c61-85c260e278ef.png">
 
-<img width="753" alt="SuppliersAll" src="https://user-images.githubusercontent.com/54845614/130652045-580e8e0e-507d-4851-9fe1-75ee6138efa0.png">
+<img width="572" alt="Sorting" src="https://user-images.githubusercontent.com/54845614/134786454-b4a36d48-92c7-45a7-975a-a4ea37383484.png">
 
-<img width="792" alt="QuickSearches" src="https://user-images.githubusercontent.com/54845614/130650485-fd612850-61fa-41ba-b9a9-1e884bbe873e.png">
+<img width="586" alt="SupplierDetails" src="https://user-images.githubusercontent.com/54845614/134786442-4a4e6170-6378-42bc-9199-d8a6234244da.png">
 
-<img width="791" alt="DetailsForSuppliers" src="https://user-images.githubusercontent.com/54845614/130651297-22774c3c-b083-4149-a2d2-fbc38be1b98e.png">
-
-<img width="812" alt="EditSupplier" src="https://user-images.githubusercontent.com/54845614/130651350-66615b93-a024-4d27-8b6d-17a63b8b5c22.png">
-
-<img width="774" alt="SearchResults" src="https://user-images.githubusercontent.com/54845614/130651921-722bd686-6a54-47ad-a97f-5f88310339e4.png">
 
 
 
 <b>Conformity Types Pages:</b>
 
-<img width="824" alt="ConformityTypes" src="https://user-images.githubusercontent.com/54845614/130660664-99101299-e8c2-4596-811c-40b70e53caaa.png">
-
+<img width="571" alt="ConformityTypesAll" src="https://user-images.githubusercontent.com/54845614/134786431-e6b58862-61ff-44ee-9711-1f641b8693b7.png">
 
 
 
 <b>Conformity Pages:</b>
 
-<img width="833" alt="Conformities" src="https://user-images.githubusercontent.com/54845614/130660902-76b81da7-5835-48aa-beb3-fe12670c1b21.png">
+<img width="413" alt="ConformitiesAll" src="https://user-images.githubusercontent.com/54845614/134786495-41d5342c-c986-4a45-9f4a-998fc6cdbe2d.png">
 
-<img width="518" alt="CreateConformity" src="https://user-images.githubusercontent.com/54845614/130651265-4c6fbce3-51a8-4384-95cb-73d05b378da4.png">
+<img width="582" alt="ConformityDetails" src="https://user-images.githubusercontent.com/54845614/134786498-65e83f39-222a-447d-b9f0-8f274fb8f960.png">
+
+<img width="404" alt="CreateConformity" src="https://user-images.githubusercontent.com/54845614/134786506-eefb94ca-e067-4ffd-8b87-d55a6a665e6a.png">
+
+<img width="398" alt="CreateConformity1" src="https://user-images.githubusercontent.com/54845614/134786509-640d5e65-a7b2-4ba3-a785-cec66e992f30.png">
+
+
 
 <img width="785" alt="JSSuppliers" src="https://user-images.githubusercontent.com/54845614/130651558-f298e785-d124-42ec-9abd-36f2efd6954d.png">
 
@@ -215,14 +215,14 @@ o	The logic is that the general view with report returned for all major entity t
 
 <img width="604" alt="Validations" src="https://user-images.githubusercontent.com/54845614/130652103-780a5e09-d213-45d1-9961-ac895e8b6e1f.png">
 
-<img width="839" alt="ShowConformityFile" src="https://user-images.githubusercontent.com/54845614/130657012-38fa0287-6a03-4616-920d-633384f96dd3.png">
+
 
 
 
 
 <b>Contact Us Pages:</b>
 
-<img width="825" alt="ContactUs" src="https://user-images.githubusercontent.com/54845614/130651228-cf2051df-f362-4cb5-a9c8-ab21a73a25f4.png">
+<img width="825" alt="ContactUs" src="https://user-images.githubusercontent.com/54845614/134786476-b8b3343e-b3e2-45ad-a66f-ca8d0aa2b6f6.png">
 
 
 
