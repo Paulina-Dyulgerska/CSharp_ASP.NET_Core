@@ -104,123 +104,137 @@ o	The logic is that the general view with report returned for all major entity t
 
 <b>Home Page:</b>
 
-<img width="852" alt="Home" src="https://user-images.githubusercontent.com/54845614/130650266-4fbcb538-cf18-44cf-8ea3-fe248603a9fb.png">
-<img width="856" alt="HomeQuickLinks" src="https://user-images.githubusercontent.com/54845614/130650278-d4f02d48-9d2a-4329-b1e3-a0749f2d07b6.png">
+<img width="401" alt="Home" src="https://user-images.githubusercontent.com/54845614/134786178-f4cbf93d-e0c6-4231-8573-959244f33a48.png">
+
+<img width="761" alt="SearchResultsHomePage" src="https://user-images.githubusercontent.com/54845614/134786421-074d4bd8-a741-4547-8274-127441a0cb52.png">
 
 
 
 <b>Register Page:</b>
 
-<img width="841" alt="Register" src="https://user-images.githubusercontent.com/54845614/130650374-e9c24469-6df6-4cdf-a062-44a7e66750c8.png">
+<img width="526" alt="Register" src="https://user-images.githubusercontent.com/54845614/134786188-6dadd252-c9e0-4462-88a8-e149ede42ecd.png">
+
+<img width="763" alt="FacebookRegister" src="https://user-images.githubusercontent.com/54845614/134786875-8bd1d67f-16b6-4253-89b1-a4aab78d9463.png">
+
 
 
 
 <b>Login Page:</b>
 
-<img width="855" alt="Login" src="https://user-images.githubusercontent.com/54845614/130650411-e4aeace7-37ea-4d8e-9730-418878ee6be5.png">
+<img width="887" alt="Login" src="https://user-images.githubusercontent.com/54845614/134786192-3c52d54d-efe4-43da-8367-d834e5bd9765.png">
+
 
 
 
 <b>User Pages:</b>
 
-<img width="784" alt="User" src="https://user-images.githubusercontent.com/54845614/130652079-54d65811-7c18-4db3-9d2a-e9d37b44c210.png">
-<img width="781" alt="ForgotPassword" src="https://user-images.githubusercontent.com/54845614/130650652-c03a2f89-61d2-4270-a011-5a94e44fc8ec.png">
-<img width="888" alt="EmailChanged" src="https://user-images.githubusercontent.com/54845614/130651410-b023f664-bb94-4964-a1c9-972acf648cbc.png">
+<img width="760" alt="UserMenu" src="https://user-images.githubusercontent.com/54845614/134786197-7de3b058-1970-434f-a295-61693c34c76e.png">
+
+<img width="776" alt="ChangeEmail" src="https://user-images.githubusercontent.com/54845614/134786202-4f8faafb-14cb-4d7d-8226-24fe43dba59e.png">
+
+<img width="765" alt="ChangePassword" src="https://user-images.githubusercontent.com/54845614/134786203-b158a338-6a99-4da1-b82d-ec3a5e955556.png">
+
+<img width="762" alt="ExternalLogins" src="https://user-images.githubusercontent.com/54845614/134786220-7ad853cd-c745-4fc0-a6ad-8cc046f0cb34.png">
+
+<img width="765" alt="PersonalData" src="https://user-images.githubusercontent.com/54845614/134786340-95ab8df0-bc5d-4727-a638-ada7828e1e5a.png">
 
 
 
 <b>Articles Pages:</b>
 
-<img width="846" alt="Articles" src="https://user-images.githubusercontent.com/54845614/130651085-17f23a48-52ba-433b-b2f0-d629e4854e4e.png">
+<img width="578" alt="ArticlesLogoutUser" src="https://user-images.githubusercontent.com/54845614/134786248-78e2c96f-ffc0-4650-afbf-a1a1bf41975b.png">
 
-<img width="760" alt="LoginUserArticles" src="https://user-images.githubusercontent.com/54845614/130651703-fe47b7ee-afd3-441a-a7ce-6c395369e432.png">
+<img width="575" alt="ArticlesAll" src="https://user-images.githubusercontent.com/54845614/134786242-49d02e7a-35c2-4ab9-bebf-713cfe94f8f0.png">
 
-<img width="760" alt="ArticleEdit" src="https://user-images.githubusercontent.com/54845614/130650973-a7dc9b14-b6c3-4d3c-b97b-6687dfb2a922.png">
+<img width="760" alt="SearchResults" src="https://user-images.githubusercontent.com/54845614/134787045-581b4382-75cb-434b-aa43-9572487a6d2d.png">
 
-<img width="586" alt="AddConformityTypes" src="https://user-images.githubusercontent.com/54845614/130650939-875e643f-b7f5-47bc-95e5-932043470833.png">
+<img width="766" alt="ArticleDetails" src="https://user-images.githubusercontent.com/54845614/134786253-0b73b724-c306-43a6-ae1e-7d002cfb64c0.png">
 
-<img width="619" alt="AddSupplier" src="https://user-images.githubusercontent.com/54845614/130650958-1eec52a3-e400-434b-a448-e1430b0c8259.png">
+<img width="582" alt="EditArticle" src="https://user-images.githubusercontent.com/54845614/134786265-ebb456f8-5cce-4256-92a3-a164ef005715.png">
 
-<img width="770" alt="ArticleEditConformities" src="https://user-images.githubusercontent.com/54845614/130651018-7e6557f4-2a84-4d03-891a-ab3b91641729.png">
+<img width="760" alt="AddConformityTypeToArticle" src="https://user-images.githubusercontent.com/54845614/134786273-f88c5c54-8ce5-4aab-b4f5-35f5f7c7587a.png">
 
-<img width="775" alt="ArticleEditSupplilers" src="https://user-images.githubusercontent.com/54845614/130651056-41388f98-a826-4ab8-8189-59153d4f642e.png">
+<img width="768" alt="ChangeMainSupplier" src="https://user-images.githubusercontent.com/54845614/134786280-6f99ac59-474b-4a25-b51a-23a3dfb4f315.png">
 
-<img width="602" alt="MainSupplierChange" src="https://user-images.githubusercontent.com/54845614/130651720-ed4a3af5-2b6f-43ed-a4e1-181dc14c53dd.png">
+<img width="740" alt="ArticleConformitiesTable" src="https://user-images.githubusercontent.com/54845614/134786293-dc299d60-10a2-4124-a3c4-c7c44cd8871a.png">
 
-<img width="575" alt="RemoveConformitySendRequest" src="https://user-images.githubusercontent.com/54845614/130651844-0da8d10a-b488-476f-a133-9efa8783e1de.png">
+<img width="579" alt="AddConformityToArtcile" src="https://user-images.githubusercontent.com/54845614/134786305-a113682f-91de-4ccc-85f1-5e0c5adc64ca.png">
 
-<img width="588" alt="RemoveConformityType" src="https://user-images.githubusercontent.com/54845614/130651853-190b2c3a-3a73-4ca2-a683-d4c67e19c591.png">
+<img width="572" alt="AddConformityToArticle2" src="https://user-images.githubusercontent.com/54845614/134786306-7988f104-6385-46e0-9d93-60fbb1131868.png">
 
-<img width="569" alt="RemoveSupplier" src="https://user-images.githubusercontent.com/54845614/130651865-5c8d478e-9249-4545-8602-070e0c01c8a1.png">
+<img width="584" alt="RequestedConformity" src="https://user-images.githubusercontent.com/54845614/134786322-36ff6c45-1998-43d4-8335-ccfe9d7f310a.png">
 
-<img width="742" alt="RequestedArticle" src="https://user-images.githubusercontent.com/54845614/130651868-6d761d6b-1caa-41bd-a4ba-348409720f1f.png">
+<img width="579" alt="AddConformityToArtcile" src="https://user-images.githubusercontent.com/54845614/134786371-6df61dd7-2433-45da-bc92-1febf8102b10.png">
 
-<img width="750" alt="Requests" src="https://user-images.githubusercontent.com/54845614/130651889-625c6f63-86f2-4ca2-a44d-388b128350bb.png">
+<img width="572" alt="AddConformityToArticle2" src="https://user-images.githubusercontent.com/54845614/134786384-06cf2619-77d3-4d33-9c05-0419df3fcec8.png">
 
-<img width="752" alt="SendRequestForSpecificArticle" src="https://user-images.githubusercontent.com/54845614/130651956-9306f2fe-6090-4a23-b7c4-f61f1be73e97.png">
+<img width="768" alt="AddConformityToArticle3" src="https://user-images.githubusercontent.com/54845614/134786387-50352e7c-facb-44c9-a150-babf4ce82cb6.png">
 
-<img width="762" alt="AddConformity" src="https://user-images.githubusercontent.com/54845614/130650890-074f1cea-3a49-46aa-804f-c6c4e2527618.png">
+<img width="585" alt="Sorting1" src="https://user-images.githubusercontent.com/54845614/134786448-aedc41d5-7470-4977-b6d6-9f02b4c0923c.png">
 
-<img width="596" alt="JSSuppliersForArticlesRequiredConformities" src="https://user-images.githubusercontent.com/54845614/130651645-0cd0903e-242a-4905-ba84-205a6289c2b2.png">
-
-<img width="826" alt="EditConformity" src="https://user-images.githubusercontent.com/54845614/130651337-1c346fe1-f9bc-4fff-81b9-dd810d9e2817.png">
-
-<img width="838" alt="Sorting" src="https://user-images.githubusercontent.com/54845614/130652000-85ffa9bc-2816-4f41-a5eb-e6f60255e8f5.png">
 
 
 
 <b>Suppliers Pages:</b>
 
-<img width="843" alt="Suppliers" src="https://user-images.githubusercontent.com/54845614/130652019-d53ec978-29ba-42f1-afcc-9a03733d5867.png">
+<img width="574" alt="SuppliersAll" src="https://user-images.githubusercontent.com/54845614/134786440-de2e51ae-b8c8-4bdb-8c61-85c260e278ef.png">
 
-<img width="753" alt="SuppliersAll" src="https://user-images.githubusercontent.com/54845614/130652045-580e8e0e-507d-4851-9fe1-75ee6138efa0.png">
+<img width="572" alt="Sorting" src="https://user-images.githubusercontent.com/54845614/134786454-b4a36d48-92c7-45a7-975a-a4ea37383484.png">
 
-<img width="792" alt="QuickSearches" src="https://user-images.githubusercontent.com/54845614/130650485-fd612850-61fa-41ba-b9a9-1e884bbe873e.png">
+<img width="586" alt="SupplierDetails" src="https://user-images.githubusercontent.com/54845614/134786442-4a4e6170-6378-42bc-9199-d8a6234244da.png">
 
-<img width="791" alt="DetailsForSuppliers" src="https://user-images.githubusercontent.com/54845614/130651297-22774c3c-b083-4149-a2d2-fbc38be1b98e.png">
+<img width="581" alt="EditSupplier" src="https://user-images.githubusercontent.com/54845614/134786920-c3984703-adb3-41e5-9b9b-e5e4ad9d0abd.png">
 
-<img width="812" alt="EditSupplier" src="https://user-images.githubusercontent.com/54845614/130651350-66615b93-a024-4d27-8b6d-17a63b8b5c22.png">
-
-<img width="774" alt="SearchResults" src="https://user-images.githubusercontent.com/54845614/130651921-722bd686-6a54-47ad-a97f-5f88310339e4.png">
 
 
 
 <b>Conformity Types Pages:</b>
 
-<img width="824" alt="ConformityTypes" src="https://user-images.githubusercontent.com/54845614/130660664-99101299-e8c2-4596-811c-40b70e53caaa.png">
-
+<img width="571" alt="ConformityTypesAll" src="https://user-images.githubusercontent.com/54845614/134786431-e6b58862-61ff-44ee-9711-1f641b8693b7.png">
 
 
 
 <b>Conformity Pages:</b>
 
-<img width="833" alt="Conformities" src="https://user-images.githubusercontent.com/54845614/130660902-76b81da7-5835-48aa-beb3-fe12670c1b21.png">
+<img width="413" alt="ConformitiesAll" src="https://user-images.githubusercontent.com/54845614/134786495-41d5342c-c986-4a45-9f4a-998fc6cdbe2d.png">
 
-<img width="518" alt="CreateConformity" src="https://user-images.githubusercontent.com/54845614/130651265-4c6fbce3-51a8-4384-95cb-73d05b378da4.png">
+<img width="751" alt="SearchFields" src="https://user-images.githubusercontent.com/54845614/134787030-5eff6369-833a-4847-a169-b32d6bc4eab0.png">
 
-<img width="785" alt="JSSuppliers" src="https://user-images.githubusercontent.com/54845614/130651558-f298e785-d124-42ec-9abd-36f2efd6954d.png">
+<img width="582" alt="ConformityDetails" src="https://user-images.githubusercontent.com/54845614/134786498-65e83f39-222a-447d-b9f0-8f274fb8f960.png">
 
-<img width="611" alt="JSSuppliersForArticles" src="https://user-images.githubusercontent.com/54845614/130651622-ae39fc98-84f5-4b22-9ae8-77b18404ee63.png">
+<img width="404" alt="CreateConformity" src="https://user-images.githubusercontent.com/54845614/134786506-eefb94ca-e067-4ffd-8b87-d55a6a665e6a.png">
 
-<img width="412" alt="JsSuppliersArticles" src="https://user-images.githubusercontent.com/54845614/130651608-82700361-b6c5-4675-ae71-5030d31f8bd5.png">
+<img width="398" alt="CreateConformity1" src="https://user-images.githubusercontent.com/54845614/134786509-640d5e65-a7b2-4ba3-a785-cec66e992f30.png">
 
-<img width="604" alt="Validations" src="https://user-images.githubusercontent.com/54845614/130652103-780a5e09-d213-45d1-9961-ac895e8b6e1f.png">
+<img width="762" alt="EditConformity" src="https://user-images.githubusercontent.com/54845614/134786684-e9475eb7-dc0d-4b99-af97-46e605f04726.png">
 
-<img width="839" alt="ShowConformityFile" src="https://user-images.githubusercontent.com/54845614/130657012-38fa0287-6a03-4616-920d-633384f96dd3.png">
+<img width="774" alt="ShowConformity" src="https://user-images.githubusercontent.com/54845614/134786856-2b15bb4d-73a2-40f6-ab9d-8c16906ee2e5.png">
+
+<img width="586" alt="Validation" src="https://user-images.githubusercontent.com/54845614/134786641-89c575e1-c6cc-4b1a-9443-5b55b31a18c4.png">
 
 
 
+<b>Paging:<b>
+  
+  <img width="754" alt="Paging" src="https://user-images.githubusercontent.com/54845614/134786949-66d0bda7-3aa4-4be2-946b-45b6b0f6ecf4.png">
 
+  
+  
 <b>Contact Us Pages:</b>
 
-<img width="825" alt="ContactUs" src="https://user-images.githubusercontent.com/54845614/130651228-cf2051df-f362-4cb5-a9c8-ab21a73a25f4.png">
+<img width="825" alt="ContactUs" src="https://user-images.githubusercontent.com/54845614/134786476-b8b3343e-b3e2-45ad-a66f-ca8d0aa2b6f6.png">
+
+
+
+<b>Thank You Page:</b>
+
+<img width="769" alt="ThankYou" src="https://user-images.githubusercontent.com/54845614/134786840-9426fbe8-2071-44af-91f2-d5d75e404a2f.png">
 
 
 
 <b>Error Page:</b>
 
-<img width="796" alt="Error" src="https://user-images.githubusercontent.com/54845614/130651480-4cec55fd-3836-499e-b546-9ca568f560e1.png">
-
+<img width="767" alt="Error404" src="https://user-images.githubusercontent.com/54845614/134786650-23e04484-e324-4e06-bdac-26bdd96e4670.png">
 
 
 <b>Emails:</b>
@@ -246,7 +260,17 @@ o	The logic is that the general view with report returned for all major entity t
 <img width="561" alt="EmailToSupplier" src="https://user-images.githubusercontent.com/54845614/130651441-776a5077-df8d-42ec-88ad-af1406c334b6.png">
 
 <img width="684" alt="EmailToSupplier2" src="https://user-images.githubusercontent.com/54845614/130651453-bdbc2a57-7e41-4227-a4c8-e2822837c4d0.png">
+  
+  
+<b>Responsive:</b>
+  
+<img width="221" alt="Responsive0" src="https://user-images.githubusercontent.com/54845614/134787003-ca53cf50-ad60-4c1b-ad3e-8d0204a012db.png">
+  
+<img width="128" alt="Responsive2" src="https://user-images.githubusercontent.com/54845614/134786975-19829625-8364-403d-8f63-72d5927f4cd0.png">
 
+<img width="132" alt="Responsive" src="https://user-images.githubusercontent.com/54845614/134786976-ecf6d7a5-c3cd-41fc-9de5-babd795f3646.png">
+  
+  
 
 <b>Expect products, substances and regulatory lists - they are the next stage of this project development!</b>
 
