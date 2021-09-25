@@ -209,6 +209,12 @@ o	The logic is that the general view with report returned for all major entity t
 
 
 
+<b>Thank You Page:</b>
+
+<img width="769" alt="ThankYou" src="https://user-images.githubusercontent.com/54845614/134786840-9426fbe8-2071-44af-91f2-d5d75e404a2f.png">
+
+
+
 <b>Error Page:</b>
 
 <img width="767" alt="Error404" src="https://user-images.githubusercontent.com/54845614/134786650-23e04484-e324-4e06-bdac-26bdd96e4670.png">
