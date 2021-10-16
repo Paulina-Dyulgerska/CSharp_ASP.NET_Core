@@ -2,5 +2,6 @@
 {
     public class ArticleBaseExportModel : ArticleBaseModel
     {
+        public string Id { get; set; }
     }
 }

@@ -10,23 +10,28 @@
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
+    using ConformityCheck.Web.ViewModels.Articles;
+    using ConformityCheck.Web.ViewModels.Conformities;
     using ConformityCheck.Web.ViewModels.Suppliers;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Caching.Distributed;
 
     public class SuppliersService : ISuppliersService
     {
+        private readonly IDeletableEntityRepository<Article> articlesRepository;
         private readonly IDeletableEntityRepository<Supplier> suppliersRepository;
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
         private readonly IRepository<ArticleSupplier> articleSuppliersRepository;
         private readonly IDistributedCache distributedCache;
 
         public SuppliersService(
+            IDeletableEntityRepository<Article> articlesRepository,
             IDeletableEntityRepository<Supplier> suppliersRepository,
             IDeletableEntityRepository<Conformity> conformitiesRepository,
             IRepository<ArticleSupplier> articleSupplierRepository,
             IDistributedCache distributedCache)
         {
+            this.articlesRepository = articlesRepository;
             this.suppliersRepository = suppliersRepository;
             this.conformitiesRepository = conformitiesRepository;
             this.articleSuppliersRepository = articleSupplierRepository;
@@ -343,107 +348,287 @@
            int page,
            int itemsPerPage)
         {
-            var supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
+            var supplier = new SupplierArticlesDetailsExportModel();
 
             switch (sortOrder)
             {
                 case GlobalConstants.NumberSortParamDesc:
-                    supplier.Articles = supplier.Articles
-                        .OrderByDescending(a => a.ArticleNumber)
-                        .ThenBy(a => a.ConformityTypeDescription)
-                        .Skip((page - 1) * itemsPerPage)
-                        .Take(itemsPerPage);
+                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
+                    supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                                            .Where(x => x.SupplierId == id)
+                                            .SelectMany(x => x.Article.ArticleConformityTypes)
+                                            .Include(x => x.Article.Conformities)
+                                            .OrderByDescending(a => a.Article.Number)
+                                            .Skip((page - 1) * itemsPerPage)
+                                            .Take(itemsPerPage)
+                                            .To<ArticleConformityTypeConformitiesExportModel>()
+                                            .ToListAsync();
                     return supplier;
 
                 case GlobalConstants.DescriptionSortParam:
-                    supplier.Articles = supplier.Articles
-                        .OrderBy(a => a.ArticleDescription)
-                        .ThenBy(a => a.ArticleNumber)
-                        .Skip((page - 1) * itemsPerPage)
-                        .Take(itemsPerPage);
+                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
+                    supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                                            .Where(x => x.SupplierId == id)
+                                            .SelectMany(x => x.Article.ArticleConformityTypes)
+                                            .Include(x => x.Article.Conformities)
+                                            .Include(x => x.ConformityType)
+                                            .OrderBy(x => x.Article.Description)
+                                            .ThenBy(a => a.Article.Number)
+                                            .Skip((page - 1) * itemsPerPage)
+                                            .Take(itemsPerPage)
+                                            .To<ArticleConformityTypeConformitiesExportModel>()
+                                            .ToListAsync();
                     return supplier;
 
                 case GlobalConstants.DescriptionSortParamDesc:
-                    supplier.Articles = supplier.Articles
-                        .OrderByDescending(a => a.ArticleDescription)
-                        .ThenBy(a => a.ArticleNumber)
-                        .Skip((page - 1) * itemsPerPage)
-                        .Take(itemsPerPage);
+                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
+                    supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                                            .Where(x => x.SupplierId == id)
+                                            .SelectMany(x => x.Article.ArticleConformityTypes)
+                                            .Include(x => x.Article.Conformities)
+                                            .Include(x => x.ConformityType)
+                                            .OrderByDescending(x => x.Article.Description)
+                                            .ThenBy(a => a.Article.Number)
+                                            .Skip((page - 1) * itemsPerPage)
+                                            .Take(itemsPerPage)
+                                            .To<ArticleConformityTypeConformitiesExportModel>()
+                                            .ToListAsync();
                     return supplier;
 
                 case GlobalConstants.ConformityTypeSortParam:
-                    supplier.Articles = supplier.Articles
-                        .OrderBy(a => a.ConformityTypeDescription)
-                        .ThenBy(a => a.ArticleNumber)
-                        .Skip((page - 1) * itemsPerPage)
-                        .Take(itemsPerPage);
+                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
+                    supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                                            .Where(x => x.SupplierId == id)
+                                            .SelectMany(x => x.Article.ArticleConformityTypes)
+                                            .Include(x => x.Article.Conformities)
+                                            .Include(x => x.ConformityType)
+                                            .OrderBy(x => x.ConformityType.Description)
+                                            .ThenBy(a => a.Article.Number)
+                                            .Skip((page - 1) * itemsPerPage)
+                                            .Take(itemsPerPage)
+                                            .To<ArticleConformityTypeConformitiesExportModel>()
+                                            .ToListAsync();
                     return supplier;
 
                 case GlobalConstants.ConformityTypeSortParamDesc:
-                    supplier.Articles = supplier.Articles
-                        .OrderByDescending(a => a.ConformityTypeDescription)
-                        .ThenBy(a => a.ArticleNumber)
-                        .Skip((page - 1) * itemsPerPage)
-                        .Take(itemsPerPage);
+                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
+                    supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                                            .Where(x => x.SupplierId == id)
+                                            .SelectMany(x => x.Article.ArticleConformityTypes)
+                                            .Include(x => x.Article.Conformities)
+                                            .Include(x => x.ConformityType)
+                                            .OrderByDescending(x => x.ConformityType.Description)
+                                            .ThenBy(a => a.Article.Number)
+                                            .Skip((page - 1) * itemsPerPage)
+                                            .Take(itemsPerPage)
+                                            .To<ArticleConformityTypeConformitiesExportModel>()
+                                            .ToListAsync();
                     return supplier;
 
                 case GlobalConstants.HasConformitySortParam:
-                    supplier.Articles = supplier.Articles
-                        .OrderBy(a => a.ArticleConformity?.Id)
-                        .ThenBy(a => a.ArticleNumber)
-                        .Skip((page - 1) * itemsPerPage)
-                        .Take(itemsPerPage);
+                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
+                    Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateHasConformitySortParam = (x, item) =>
+                    {
+                        return x.ConformityTypeId == item.ConformityType.Id;
+                    };
+                    supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateHasConformitySortParam, page, itemsPerPage);
                     return supplier;
 
                 case GlobalConstants.HasConformitySortParamDesc:
-                    supplier.Articles = supplier.Articles
-                        .OrderByDescending(a => a.ArticleConformity?.Id)
-                        .ThenBy(a => a.ArticleNumber)
-                        .Skip((page - 1) * itemsPerPage)
-                        .Take(itemsPerPage);
+                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
+                    Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateHasConformitySortParamDesc = (x, item) =>
+                    {
+                        return x.ConformityTypeId == item.ConformityType.Id;
+                    };
+                    supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateHasConformitySortParamDesc, page, itemsPerPage, reverse: true);
                     return supplier;
 
                 case GlobalConstants.AcceptedConformitySortParam:
-                    supplier.Articles = supplier.Articles
-                        .OrderBy(a => a.ArticleConformity?.IsAccepted)
-                        .ThenBy(a => a.ArticleNumber)
-                        .Skip((page - 1) * itemsPerPage)
-                        .Take(itemsPerPage);
+                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
+                    Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateAcceptedConformitySortParam = (x, item) =>
+                    {
+                        return x.ConformityTypeId == item.ConformityType.Id && x.IsAccepted;
+                    };
+                    supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateAcceptedConformitySortParam, page, itemsPerPage);
                     return supplier;
 
                 case GlobalConstants.AcceptedConformitySortParamDesc:
-                    supplier.Articles = supplier.Articles
-                        .OrderByDescending(a => a.ArticleConformity?.IsAccepted)
-                        .ThenBy(a => a.ArticleNumber)
-                        .Skip((page - 1) * itemsPerPage)
-                        .Take(itemsPerPage);
+                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
+                    Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateAcceptedConformitySortParamDesc = (x, item) =>
+                    {
+                        return x.ConformityTypeId == item.ConformityType.Id && x.IsAccepted;
+                    };
+                    supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateAcceptedConformitySortParamDesc, page, itemsPerPage, reverse: true);
                     return supplier;
 
                 case GlobalConstants.ValidConformitySortParam:
-                    supplier.Articles = supplier.Articles
-                        .OrderBy(a => a.ArticleConformity?.IsValid)
-                        .ThenBy(a => a.ArticleNumber)
-                        .Skip((page - 1) * itemsPerPage)
-                        .Take(itemsPerPage);
+                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
+                    Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateValidConformitySortParam = (x, item) =>
+                    {
+                        return x.ConformityTypeId == item.ConformityType.Id && x.IsAccepted && x.ValidityDate >= DateTime.UtcNow;
+                    };
+                    supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateValidConformitySortParam, page, itemsPerPage);
                     return supplier;
 
                 case GlobalConstants.ValidConformitySortParamDesc:
-                    supplier.Articles = supplier.Articles
-                        .OrderByDescending(a => a.ArticleConformity?.IsValid)
-                        .ThenBy(a => a.ArticleNumber)
-                        .Skip((page - 1) * itemsPerPage)
-                        .Take(itemsPerPage);
+                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
+                    Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateValidConformitySortParamDesc = (x, item) =>
+                    {
+                        return x.ConformityTypeId == item.ConformityType.Id && x.IsAccepted && x.ValidityDate >= DateTime.UtcNow;
+                    };
+
+                    supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateValidConformitySortParamDesc, page, itemsPerPage, reverse: true);
                     return supplier;
 
-                // case "number":
+                // case "NumberSortParam":
                 default:
-                    supplier.Articles = supplier.Articles
-                        .OrderBy(a => a.ArticleNumber)
-                        .ThenBy(a => a.ConformityTypeDescription)
-                        .Skip((page - 1) * itemsPerPage)
-                        .Take(itemsPerPage);
+                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
+                    supplier.Articles = this.articleSuppliersRepository.AllAsNoTracking()
+                           .Where(x => x.SupplierId == id)
+                           .SelectMany(x => x.Article.ArticleConformityTypes)
+                           .Include(x => x.Article.Conformities)
+                           .OrderBy(a => a.Article.Number)
+                           .Skip((page - 1) * itemsPerPage)
+                           .Take(itemsPerPage)
+                           .To<ArticleConformityTypeConformitiesExportModel>()
+                           .ToList();
                     return supplier;
+
+                    // variant 1 - slower than current:
+                    // var supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
+                    // switch (sortOrder)
+                    // {
+                    //     case GlobalConstants.NumberSortParamDesc:
+                    //         supplier.Articles = supplier.Articles
+                    //             .OrderByDescending(a => a.ArticleNumber)
+                    //             .ThenBy(a => a.ConformityTypeDescription)
+                    //             .Skip((page - 1) * itemsPerPage)
+                    //             .Take(itemsPerPage);
+                    //         return supplier;
+                    //     case GlobalConstants.DescriptionSortParam:
+                    //         supplier.Articles = supplier.Articles
+                    //             .OrderBy(a => a.ArticleDescription)
+                    //             .ThenBy(a => a.ArticleNumber)
+                    //             .Skip((page - 1) * itemsPerPage)
+                    //             .Take(itemsPerPage);
+                    //         return supplier;
+                    //     case GlobalConstants.DescriptionSortParamDesc:
+                    //         supplier.Articles = supplier.Articles
+                    //             .OrderByDescending(a => a.ArticleDescription)
+                    //             .ThenBy(a => a.ArticleNumber)
+                    //             .Skip((page - 1) * itemsPerPage)
+                    //             .Take(itemsPerPage);
+                    //         return supplier;
+                    //     case GlobalConstants.ConformityTypeSortParam:
+                    //         supplier.Articles = supplier.Articles
+                    //             .OrderBy(a => a.ConformityTypeDescription)
+                    //             .ThenBy(a => a.ArticleNumber)
+                    //             .Skip((page - 1) * itemsPerPage)
+                    //             .Take(itemsPerPage);
+                    //         return supplier;
+                    //     case GlobalConstants.ConformityTypeSortParamDesc:
+                    //         supplier.Articles = supplier.Articles
+                    //             .OrderByDescending(a => a.ConformityTypeDescription)
+                    //             .ThenBy(a => a.ArticleNumber)
+                    //             .Skip((page - 1) * itemsPerPage)
+                    //             .Take(itemsPerPage);
+                    //         return supplier;
+                    //     case GlobalConstants.HasConformitySortParam:
+                    //         supplier.Articles = supplier.Articles
+                    //             .OrderBy(a => a.ArticleConformity?.Id)
+                    //             .ThenBy(a => a.ArticleNumber)
+                    //             .Skip((page - 1) * itemsPerPage)
+                    //             .Take(itemsPerPage);
+                    //         return supplier;
+                    //     case GlobalConstants.HasConformitySortParamDesc:
+                    //         supplier.Articles = supplier.Articles
+                    //             .OrderByDescending(a => a.ArticleConformity?.Id)
+                    //             .ThenBy(a => a.ArticleNumber)
+                    //             .Skip((page - 1) * itemsPerPage)
+                    //             .Take(itemsPerPage);
+                    //         return supplier;
+                    //     case GlobalConstants.AcceptedConformitySortParam:
+                    //         supplier.Articles = supplier.Articles
+                    //             .OrderBy(a => a.ArticleConformity?.IsAccepted)
+                    //             .ThenBy(a => a.ArticleNumber)
+                    //             .Skip((page - 1) * itemsPerPage)
+                    //             .Take(itemsPerPage);
+                    //         return supplier;
+                    //     case GlobalConstants.AcceptedConformitySortParamDesc:
+                    //         supplier.Articles = supplier.Articles
+                    //             .OrderByDescending(a => a.ArticleConformity?.IsAccepted)
+                    //             .ThenBy(a => a.ArticleNumber)
+                    //             .Skip((page - 1) * itemsPerPage)
+                    //             .Take(itemsPerPage);
+                    //         return supplier;
+                    //     case GlobalConstants.ValidConformitySortParam:
+                    //         supplier.Articles = supplier.Articles
+                    //             .OrderBy(a => a.ArticleConformity?.IsValid)
+                    //             .ThenBy(a => a.ArticleNumber)
+                    //             .Skip((page - 1) * itemsPerPage)
+                    //             .Take(itemsPerPage);
+                    //         return supplier;
+                    //     case GlobalConstants.ValidConformitySortParamDesc:
+                    //         supplier.Articles = supplier.Articles
+                    //             .OrderByDescending(a => a.ArticleConformity?.IsValid)
+                    //             .ThenBy(a => a.ArticleNumber)
+                    //             .Skip((page - 1) * itemsPerPage)
+                    //             .Take(itemsPerPage);
+                    //         return supplier;
+                    //     // case "number":
+                    //     default:
+                    //         supplier.Articles = supplier.Articles
+                    //             .OrderBy(a => a.ArticleNumber)
+                    //             .ThenBy(a => a.ConformityTypeDescription)
+                    //             .Skip((page - 1) * itemsPerPage)
+                    //             .Take(itemsPerPage);
+                    //         return supplier;
             }
+        }
+
+        private async Task<IEnumerable<ArticleConformityTypeConformitiesExportModel>> ExtractArticlesBySupplierIdAndPredicate(
+            string id,
+            Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicate,
+            int page,
+            int itemsPerPage,
+            bool reverse = false)
+        {
+            var entities = await this.articleSuppliersRepository.AllAsNoTracking()
+                                      .Where(x => x.SupplierId == id)
+                                      .SelectMany(x => x.Article.ArticleConformityTypes)
+                                      .Include(x => x.Article.Conformities)
+                                      .To<ArticleConformityTypeConformitiesExportModel>()
+                                      .ToListAsync();
+
+            var first = new SortedDictionary<string, ArticleConformityTypeConformitiesExportModel>();
+            var second = new SortedDictionary<string, ArticleConformityTypeConformitiesExportModel>();
+
+            foreach (var item in entities)
+            {
+                var key = item.Article.Number + item.ConformityType.Description;
+                if (item.Conformities.Any(x => predicate(x, item)))
+                {
+                    first.Add(key, item);
+                }
+                else
+                {
+                    second.Add(key, item);
+                }
+            }
+
+            var result = new List<ArticleConformityTypeConformitiesExportModel>();
+            if (reverse)
+            {
+                result.AddRange(second.Values);
+                result.AddRange(first.Values);
+            }
+            else
+            {
+                result.AddRange(first.Values);
+                result.AddRange(second.Values);
+            }
+
+            return result.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
         }
 
         // public async Task<IEnumerable<ArticleConformityExportModel>>

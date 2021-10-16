@@ -2,5 +2,6 @@
 {
     public class ConformityBaseExportModel : ConformityBaseModel
     {
+        public string Id { get; set; }
     }
 }

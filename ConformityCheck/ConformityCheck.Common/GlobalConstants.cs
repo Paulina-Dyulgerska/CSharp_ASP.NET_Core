@@ -236,5 +236,73 @@ FROM
       ,F.[Description]
       ,F.[UserId]
 	  ,F.ConformityTypeCount";
+
+        //        public const string GetSupplierWithArticlesAndConformitiesQuery = @"
+        //SELECT Suppliers.Id AS Id
+        //      ,Suppliers.Number AS Number
+        //      ,Suppliers.Name AS Name
+        //      ,Suppliers.Email AS Email
+        //      ,Suppliers.PhoneNumber AS PhoneNumber
+        //      ,CONCAT (ContactPersonFirstName, ' ', ContactPersonLastName) AS ContactPersonFullName 
+        //      ,AspNetUsers.Email AS UserEmail
+        //	  ,Articles.Id AS ArticleId
+        //	  ,Articles.Number AS ArticleNumber
+        //	  ,Articles.Description AS ArticleDescription
+        //	  ,Conformities.Id AS ConformityId
+        //	  ,Conformities.IsAccepted AS ConformityIsAccepted
+        //	  ,CASE
+        //			WHEN (Conformities.IsAccepted = 1 AND GETDATE() <= ValidityDate AND Conformities.IsDeleted <> 1) THEN 1
+        //			ELSE NULL
+        //			END AS ConformityIsValid
+        //	  ,Conformities.ValidityDate AS ConformityValidityDate
+        //	  ,Conformities.RequestDate AS ConformityRequestDate
+        //  FROM [Suppliers]
+        //  JOIN ArticleSuppliers ON Suppliers.Id = ArticleSuppliers.SupplierId AND Suppliers.IsDeleted <> 1
+        //  JOIN Articles ON Articles.Id = ArticleSuppliers.ArticleId AND Articles.IsDeleted <> 1
+        //  JOIN ArticleConformityTypes ON ArticleConformityTypes.ArticleId = ArticleSuppliers.ArticleId 
+        //  LEFT JOIN Conformities ON (Conformities.ArticleId = ArticleConformityTypes.ArticleId 
+        //						AND Conformities.SupplierId = ArticleSuppliers.SupplierId
+        //						AND Conformities.ConformityTypeId = ArticleConformityTypes.ConformityTypeId
+        //						AND Conformities.IsDeleted <> 1)
+        //  JOIN AspNetUsers ON AspNetUsers.Id = Suppliers.UserId
+        //  WHERE Suppliers.Id = {supplierId}
+        //  ORDER BY {sortingColumn} {sortingOrder}
+        //	OFFSET {pageNumber} ROWS
+        //	FETCH NEXT {itemsPerPage} ROWS ONLY";
+        //    }
+
+        public const string GetSupplierWithArticlesAndConformitiesQuery = @"
+SELECT Suppliers.Id AS Id
+      ,Suppliers.Number AS Number
+      ,Suppliers.Name AS Name
+      ,Suppliers.Email AS Email
+      ,Suppliers.PhoneNumber AS PhoneNumber
+      ,Suppliers.IsDeleted AS IsDeleted
+      ,CONCAT (ContactPersonFirstName, ' ', ContactPersonLastName) AS ContactPersonFullName 
+      ,AspNetUsers.Email AS UserEmail
+	  ,Articles.Id AS ArticleId
+	  ,Articles.Number AS ArticleNumber
+	  ,Articles.Description AS ArticleDescription
+	  ,Conformities.Id AS ConformityId
+	  ,Conformities.IsAccepted AS ConformityIsAccepted
+	  ,CASE
+			WHEN (Conformities.IsAccepted = 1 AND GETDATE() <= ValidityDate AND Conformities.IsDeleted <> 1) THEN 1
+			ELSE NULL
+			END AS ConformityIsValid
+	  ,Conformities.ValidityDate AS ConformityValidityDate
+	  ,Conformities.RequestDate AS ConformityRequestDate
+  FROM [Suppliers]
+  JOIN ArticleSuppliers ON Suppliers.Id = ArticleSuppliers.SupplierId AND Suppliers.IsDeleted <> 1
+  JOIN Articles ON Articles.Id = ArticleSuppliers.ArticleId AND Articles.IsDeleted <> 1
+  JOIN ArticleConformityTypes ON ArticleConformityTypes.ArticleId = ArticleSuppliers.ArticleId 
+  LEFT JOIN Conformities ON (Conformities.ArticleId = ArticleConformityTypes.ArticleId 
+						AND Conformities.SupplierId = ArticleSuppliers.SupplierId
+						AND Conformities.ConformityTypeId = ArticleConformityTypes.ConformityTypeId
+						AND Conformities.IsDeleted <> 1)
+  JOIN AspNetUsers ON AspNetUsers.Id = Suppliers.UserId
+  WHERE Suppliers.Id = '1edc19bf-5ee9-444a-b188-8238e0f679a1'
+  ORDER BY ArticleNumber DESC
+	OFFSET 0 ROWS
+	FETCH NEXT 12 ROWS ONLY";
     }
 }

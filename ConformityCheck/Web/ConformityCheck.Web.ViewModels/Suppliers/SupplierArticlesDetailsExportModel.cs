@@ -10,12 +10,11 @@
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Mapping;
     using ConformityCheck.Web.ViewModels.Articles;
-    using ConformityCheck.Web.ViewModels.Conformities;
 
     public class SupplierArticlesDetailsExportModel : PagingViewModel, IMapFrom<Supplier>, IHaveCustomMappings
     {
-        private IEnumerable<ConformityExportModel> conformities;
-
+        // variant 1 - slower than current:
+        // private IEnumerable<ConformityExportModel> conformities;
         public string Id { get; set; }
 
         public string Number { get; set; }
@@ -50,44 +49,43 @@
 
         [Display(Name = "Articles:")]
         [JsonInclude]
-        public IEnumerable<ArticleConformityExportModel> Articles { get; set; }
+        public IEnumerable<ArticleConformityTypeConformitiesExportModel> Articles { get; set; }
 
-        [JsonInclude]
-        public IEnumerable<ConformityExportModel> Conformities
-        {
-            get
-            {
-                return this.conformities;
-            }
-
-            private set
-            {
-                this.conformities = value;
-
-                foreach (var article in this.Articles)
-                {
-                    article.ArticleConformity = this.conformities
-                        .AsQueryable()
-                        .Where(c => c.Article.Id == article.ArticleId &&
-                                    c.ConformityType.Id == article.ConformityTypeId)
-
-                        // .Select(c => new ConformityValidityExportModel
-                        // {
-                        //     Id = c.Id,
-                        //     IsAccepted = c.IsAccepted,
-                        //     ValidityDate = c.ValidityDate,
-                        // })
-                        .To<ConformityValidityExportModel>()
-                        .FirstOrDefault();
-                }
-            }
-        }
-
+        // variant 1 - slower than current:
+        // [JsonInclude]
+        // public IEnumerable<ConformityExportModel> Conformities
+        // {
+        //    get
+        //    {
+        //        return this.conformities;
+        //    }
+        //    private set
+        //    {
+        //        this.conformities = value;
+        //        foreach (var article in this.Articles)
+        //        {
+        //            this.conformities
+        //                .AsQueryable()
+        //                .Where(c => c.Article.Id == article.ArticleId &&
+        //                            c.ConformityType.Id == article.ConformityTypeId)
+        //                // .Select(c => new ConformityValidityExportModel
+        //                // {
+        //                //     Id = c.Id,
+        //                //     IsAccepted = c.IsAccepted,
+        //                //     ValidityDate = c.ValidityDate,
+        //                // })
+        //                .To<ConformityValidityExportModel>()
+        //                .FirstOrDefault();
+        //        }
+        //    }
+        // }
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Supplier, SupplierArticlesDetailsExportModel>()
-                .ForMember(x => x.Articles, opt => opt.MapFrom(s => s.ArticleSuppliers
-                                                         .SelectMany(a => a.Article.ArticleConformityTypes)))
+
+                // variant 1 - slower than current:
+                // .ForMember(x => x.Articles, opt => opt.MapFrom(s => s.ArticleSuppliers
+                //                                          .SelectMany(a => a.Article.ArticleConformityTypes)))
                 .ForMember(x => x.ContactPersonName, opt =>
                               opt.MapFrom(s => $"{s.ContactPersonFirstName} {s.ContactPersonLastName}"))
                 .ForMember(x => x.ItemsCount, opt => opt.MapFrom(s => s.ArticleSuppliers

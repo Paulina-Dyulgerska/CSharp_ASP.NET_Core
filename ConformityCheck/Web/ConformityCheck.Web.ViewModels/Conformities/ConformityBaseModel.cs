@@ -56,6 +56,8 @@
         [Display(Name = "Validity date:")]
         public DateTime? ValidityDate { get; set; }
 
+        public DateTime? RequestDate { get; set; }
+
         public string Comments { get; set; }
 
         public string CallerViewName { get; set; }

@@ -1,6 +1,10 @@
 ﻿namespace ConformityCheck.Web.ViewModels.ConformityTypes
 {
-    public class ConformityTypeBaseExportModel : ConformityTypeBaseModel
+    using ConformityCheck.Data.Models;
+    using ConformityCheck.Services.Mapping;
+
+    public class ConformityTypeBaseExportModel : ConformityTypeBaseModel, IMapFrom<ConformityType>
     {
+        public int Id { get; set; }
     }
 }
