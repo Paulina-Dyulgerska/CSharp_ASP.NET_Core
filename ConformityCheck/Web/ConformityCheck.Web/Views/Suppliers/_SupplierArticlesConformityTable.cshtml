@@ -82,35 +82,35 @@
         </thead>
         @foreach (var article in this.Model.Articles)
         {
-            var conformity = article.Conformities.FirstOrDefault(x => x.ConformityTypeId == article.ConformityType.Id);
+            //var conformity = article.Conformities.FirstOrDefault(x => x.ConformityTypeId == article.ConformityTypeId);
             //&& x.ArticleId == item.Article.Id
             //&& x.SupplierId == Model.Id);
             <tr>
                 <td class="col-s" data-label="Article Nr.">
-                    @article.Article.Number
-                    <a asp-controller="Articles" asp-action="Details" class="btn btn-table-link" asp-route-id="@article.Article.Id"></a>
+                    @article.ArticleNumber
+                    <a asp-controller="Articles" asp-action="Details" class="btn btn-table-link" asp-route-id="@article.ArticleId"></a>
                 </td>
-                <td class="col-m" data-label="Description">@article.Article.Description</td>
-                <td class="col-s" data-label="Conf. type">@article.ConformityType.Description</td>
-                @if (conformity?.IssueDate != null)
+                <td class="col-m" data-label="Description">@article.ArticleDescription</td>
+                <td class="col-s" data-label="Conf. type">@article.ConformityTypeDescription</td>
+                @if (article.ConformityIssueDate != null)
                 {
                     <td class="col-s" data-label="Has conf.">Yes</td>
-                    <td class="col-s" data-label="Accepted">@(conformity.IsAccepted ? "Yes" : "No")</td>
-                    <td class="col-xs" data-label="Valid">@((conformity.IsAccepted && conformity.ValidityDate >= DateTime.UtcNow) ? "Yes" : "No")</td>
+                    <td class="col-s" data-label="Accepted">@(article.ConformityIsAccepted == true ? "Yes" : "No")</td>
+                    <td class="col-xs" data-label="Valid">@(article.ConformityIsValid ? "Yes" : "No")</td>
                     <td class="col-s" data-label="Add / Edit">
                         <a asp-controller="Conformities" asp-action="Edit" class="btn btn-edit"
-                           asp-route-Id="@conformity.Id"
-                           asp-route-articleId="@article.Article.Id"
+                           asp-route-Id="@article.ConformityId"
+                           asp-route-articleId="@article.ArticleId"
                            asp-route-supplierId="@Model.Id"
-                           asp-route-conformityTypeId="@article.ConformityType.Id"
+                           asp-route-conformityTypeId="@article.ConformityTypeId"
                            asp-route-callerViewName="Suppliers">
                             Edit
                         </a>
                     </td>
                     <td class="col-s" data-label="Delete">
                         <a asp-controller="Conformities" asp-action="Delete" class="btn btn-delete"
-                           asp-route-Id="@article.ConformityType.Id"
-                           asp-route-articleId="@article.Article.Id"
+                           asp-route-Id="@article.ConformityId"
+                           asp-route-articleId="@article.ArticleId"
                            asp-route-supplierId="@Model.Id"
                            asp-route-callerViewName="Suppliers">
                             Delete
@@ -124,9 +124,9 @@
                     <td class="col-xs" data-label="Valid">No</td>
                     <td class="col-s" data-label="Add / Edit">
                         <a asp-controller="Conformities" asp-action="AddToArticleSupplierConformityType" class="btn btn-add"
-                           asp-route-articleId="@article.Article.Id"
+                           asp-route-articleId="@article.ArticleId"
                            asp-route-supplierId="@Model.Id"
-                           asp-route-conformityTypeId="@article.ConformityType.Id"
+                           asp-route-conformityTypeId="@article.ConformityTypeId"
                            asp-route-callerViewName="Suppliers">
                             Add
                         </a>
@@ -135,16 +135,16 @@
                 }
                 <td class="col-s" data-label="Send request">
                     <a asp-controller="Requests" asp-action="SendRequest" class="btn btn-request"
-                       asp-route-articleId="@article.Article.Id"
+                       asp-route-articleId="@article.ArticleId"
                        asp-route-supplierId="@Model.Id"
-                       asp-route-conformityTypeId="@article.ConformityType.Id"
+                       asp-route-conformityTypeId="@article.ConformityTypeId"
                        asp-route-callerViewName="Suppliers">
                         Request
                     </a>
                 </td>
                 <td class="col-s" data-label="Request date">
-                    @(conformity?.RequestDate != null ?
-                           conformity.RequestDate.Value.ToString(GlobalConstants.DateTimeFormat) : "-")
+                    @(article.ConformityRequestDate != null ?
+                           article.ConformityRequestDate.Value.ToString(GlobalConstants.DateTimeFormat) : "-")
                 </td>
 
             </tr>

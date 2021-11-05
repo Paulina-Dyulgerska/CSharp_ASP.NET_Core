@@ -5,6 +5,5 @@
 
     public class ConformityTypeBaseExportModel : ConformityTypeBaseModel, IMapFrom<ConformityType>
     {
-        public int Id { get; set; }
     }
 }

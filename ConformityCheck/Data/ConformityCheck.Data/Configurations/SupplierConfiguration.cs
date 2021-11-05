@@ -8,6 +8,7 @@
     {
         public void Configure(EntityTypeBuilder<Supplier> supplier)
         {
+            // cannot delete Supplier if there are Conformities for this Supplier uploaded!
             supplier
                 .HasMany(s => s.Conformities)
                 .WithOne(a => a.Supplier)

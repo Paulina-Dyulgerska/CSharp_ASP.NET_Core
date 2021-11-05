@@ -8,6 +8,12 @@
     {
         public void Configure(EntityTypeBuilder<Article> article)
         {
+            // cannot delete Article if there are Conformities for this Article uploaded!
+            article
+                .HasMany(a => a.Conformities)
+                .WithOne(c => c.Article)
+                .OnDelete(DeleteBehavior.Restrict);
+
             article
                 .HasIndex(a => a.Number)
                 .IsUnique();

@@ -348,150 +348,275 @@
            int page,
            int itemsPerPage)
         {
-            var supplier = new SupplierArticlesDetailsExportModel();
+            var supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
 
             switch (sortOrder)
             {
                 case GlobalConstants.NumberSortParamDesc:
-                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
                     supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
-                                            .Where(x => x.SupplierId == id)
-                                            .SelectMany(x => x.Article.ArticleConformityTypes)
-                                            .Include(x => x.Article.Conformities)
-                                            .OrderByDescending(a => a.Article.Number)
-                                            .Skip((page - 1) * itemsPerPage)
-                                            .Take(itemsPerPage)
-                                            .To<ArticleConformityTypeConformitiesExportModel>()
-                                            .ToListAsync();
+                                                .Where(x => x.SupplierId == id)
+                                                .OrderByDescending(a => a.Article.Number)
+                                                .SelectMany(x => x.Article.ArticleConformityTypes)
+                                                .Skip((page - 1) * itemsPerPage)
+                                                .Take(itemsPerPage)
+                                                .To<ArticleConformityTypeConformitiesExportModel>()
+                                                .ToListAsync();
+
+                    //// equal in speed performance with the above query, but the above one is graceful
+                    // supplier.Articles = this.articleSuppliersRepository.AllAsNoTracking()
+                    //                          .Where(x => x.SupplierId == id)
+                    //                          .OrderByDescending(a => a.Article.Number)
+                    //                          .SelectMany(x => x.Article.ArticleConformityTypes)
+                    //                          .Include(x => x.Article.Conformities)
+                    //                          .Skip((page - 1) * itemsPerPage)
+                    //                          .Take(itemsPerPage)
+                    //                          .To<ArticleConformityTypeConformitiesExportModel>()
+                    //                          .ToList();
                     return supplier;
 
                 case GlobalConstants.DescriptionSortParam:
-                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
                     supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
-                                            .Where(x => x.SupplierId == id)
-                                            .SelectMany(x => x.Article.ArticleConformityTypes)
-                                            .Include(x => x.Article.Conformities)
-                                            .Include(x => x.ConformityType)
-                                            .OrderBy(x => x.Article.Description)
-                                            .ThenBy(a => a.Article.Number)
-                                            .Skip((page - 1) * itemsPerPage)
-                                            .Take(itemsPerPage)
-                                            .To<ArticleConformityTypeConformitiesExportModel>()
-                                            .ToListAsync();
+                                                .Where(x => x.SupplierId == id)
+                                                .OrderByDescending(x => x.Article.Description)
+                                                .SelectMany(x => x.Article.ArticleConformityTypes)
+                                                .Skip((page - 1) * itemsPerPage)
+                                                .Take(itemsPerPage)
+                                                .To<ArticleConformityTypeConformitiesExportModel>()
+                                                .ToListAsync();
+
+                    //// equal in speed performance with the above query, but the above one is graceful
+                    // supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                    //                          .Where(x => x.SupplierId == id)
+                    //                          .SelectMany(x => x.Article.ArticleConformityTypes)
+                    //                          .Include(x => x.Article.Conformities)
+                    //                          .Include(x => x.ConformityType)
+                    //                          .OrderByDescending(x => x.Article.Description)
+                    //                          .ThenBy(a => a.Article.Number)
+                    //                          .Skip((page - 1) * itemsPerPage)
+                    //                          .Take(itemsPerPage)
+                    //                          .To<ArticleConformityTypeConformitiesExportModel>()
+                    //                          .ToListAsync();
                     return supplier;
 
                 case GlobalConstants.DescriptionSortParamDesc:
-                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
                     supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
-                                            .Where(x => x.SupplierId == id)
-                                            .SelectMany(x => x.Article.ArticleConformityTypes)
-                                            .Include(x => x.Article.Conformities)
-                                            .Include(x => x.ConformityType)
-                                            .OrderByDescending(x => x.Article.Description)
-                                            .ThenBy(a => a.Article.Number)
-                                            .Skip((page - 1) * itemsPerPage)
-                                            .Take(itemsPerPage)
-                                            .To<ArticleConformityTypeConformitiesExportModel>()
-                                            .ToListAsync();
+                                                .Where(x => x.SupplierId == id)
+                                                .OrderBy(x => x.Article.Description)
+                                                .SelectMany(x => x.Article.ArticleConformityTypes)
+                                                .Skip((page - 1) * itemsPerPage)
+                                                .Take(itemsPerPage)
+                                                .To<ArticleConformityTypeConformitiesExportModel>()
+                                                .ToListAsync();
+
+                    //// equal in speed performance with the above query, but the above one is graceful
+                    // supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                    //                          .Where(x => x.SupplierId == id)
+                    //                          .SelectMany(x => x.Article.ArticleConformityTypes)
+                    //                          .Include(x => x.Article.Conformities)
+                    //                          .Include(x => x.ConformityType)
+                    //                          .OrderBy(x => x.Article.Description)
+                    //                          .ThenBy(a => a.Article.Number)
+                    //                          .Skip((page - 1) * itemsPerPage)
+                    //                          .Take(itemsPerPage)
+                    //                          .To<ArticleConformityTypeConformitiesExportModel>()
+                    //                          .ToListAsync();
                     return supplier;
 
                 case GlobalConstants.ConformityTypeSortParam:
-                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
                     supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
-                                            .Where(x => x.SupplierId == id)
-                                            .SelectMany(x => x.Article.ArticleConformityTypes)
-                                            .Include(x => x.Article.Conformities)
-                                            .Include(x => x.ConformityType)
-                                            .OrderBy(x => x.ConformityType.Description)
-                                            .ThenBy(a => a.Article.Number)
-                                            .Skip((page - 1) * itemsPerPage)
-                                            .Take(itemsPerPage)
-                                            .To<ArticleConformityTypeConformitiesExportModel>()
-                                            .ToListAsync();
+                                                .Where(x => x.SupplierId == id)
+                                                .SelectMany(x => x.Article.ArticleConformityTypes)
+                                                .To<ArticleConformityTypeConformitiesExportModel>()
+                                                .OrderByDescending(x => x.ConformityTypeDescription)
+                                                .Skip((page - 1) * itemsPerPage)
+                                                .Take(itemsPerPage)
+                                                .ToListAsync();
+
+                    //// equal in speed performance with the above query, but the above one is graceful
+                    // supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                    //                            .Where(x => x.SupplierId == id)
+                    //                            .SelectMany(x => x.Article.ArticleConformityTypes)
+                    //                            .Include(x => x.Article.Conformities)
+                    //                            .Include(x => x.ConformityType)
+                    //                            .OrderByDescending(x => x.ConformityType.Description)
+                    //                            .ThenBy(a => a.Article.Number)
+                    //                            .Skip((page - 1) * itemsPerPage)
+                    //                            .Take(itemsPerPage)
+                    //                            .To<ArticleConformityTypeConformitiesExportModel>()
+                    //                            .ToListAsync();
                     return supplier;
 
                 case GlobalConstants.ConformityTypeSortParamDesc:
-                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
                     supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
-                                            .Where(x => x.SupplierId == id)
-                                            .SelectMany(x => x.Article.ArticleConformityTypes)
-                                            .Include(x => x.Article.Conformities)
-                                            .Include(x => x.ConformityType)
-                                            .OrderByDescending(x => x.ConformityType.Description)
-                                            .ThenBy(a => a.Article.Number)
-                                            .Skip((page - 1) * itemsPerPage)
-                                            .Take(itemsPerPage)
-                                            .To<ArticleConformityTypeConformitiesExportModel>()
-                                            .ToListAsync();
+                        .Where(x => x.SupplierId == id)
+                        .SelectMany(x => x.Article.ArticleConformityTypes)
+                        .To<ArticleConformityTypeConformitiesExportModel>()
+                        .OrderBy(x => x.ConformityTypeDescription)
+                        .Skip((page - 1) * itemsPerPage)
+                        .Take(itemsPerPage)
+                        .ToListAsync();
+
+                    //// equal in speed performance with the above query, but the above one is graceful
+                    // supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                    //   .Where(x => x.SupplierId == id)
+                    //   .SelectMany(x => x.Article.ArticleConformityTypes)
+                    //   .Include(x => x.Article.Conformities)
+                    //   .Include(x => x.ConformityType)
+                    //   .OrderBy(x => x.ConformityType.Description)
+                    //   .ThenBy(a => a.Article.Number)
+                    //   .Skip((page - 1) * itemsPerPage)
+                    //   .Take(itemsPerPage)
+                    //   .To<ArticleConformityTypeConformitiesExportModel>()
+                    //   .ToListAsync();
                     return supplier;
 
                 case GlobalConstants.HasConformitySortParam:
-                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
-                    Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateHasConformitySortParam = (x, item) =>
-                    {
-                        return x.ConformityTypeId == item.ConformityType.Id;
-                    };
-                    supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateHasConformitySortParam, page, itemsPerPage);
+                    // Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateHasConformitySortParam = (x, article) =>
+                    // {
+                    //     return x.ConformityTypeId == article.ConformityTypeId;
+                    // };
+                    // supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateHasConformitySortParam, page, itemsPerPage);
+                    supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                        .Where(x => x.SupplierId == id)
+                        .SelectMany(x => x.Article.ArticleConformityTypes)
+                        .To<ArticleConformityTypeConformitiesExportModel>()
+                        .OrderBy(x => x.ConformityId)
+                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                        .ToListAsync();
                     return supplier;
 
                 case GlobalConstants.HasConformitySortParamDesc:
-                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
-                    Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateHasConformitySortParamDesc = (x, item) =>
-                    {
-                        return x.ConformityTypeId == item.ConformityType.Id;
-                    };
-                    supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateHasConformitySortParamDesc, page, itemsPerPage, reverse: true);
+                    // Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateHasConformitySortParamDesc = (x, article) =>
+                    // {
+                    //     return x.ConformityTypeId == article.ConformityTypeId;
+                    // };
+                    // supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateHasConformitySortParamDesc, page, itemsPerPage, reverse: true);
+                    // return supplier;
+                    supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                        .Where(x => x.SupplierId == id)
+                        .SelectMany(x => x.Article.ArticleConformityTypes)
+                        .To<ArticleConformityTypeConformitiesExportModel>()
+                        .OrderByDescending(x => x.ConformityId)
+                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                        .ToListAsync();
                     return supplier;
 
                 case GlobalConstants.AcceptedConformitySortParam:
-                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
-                    Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateAcceptedConformitySortParam = (x, item) =>
-                    {
-                        return x.ConformityTypeId == item.ConformityType.Id && x.IsAccepted;
-                    };
-                    supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateAcceptedConformitySortParam, page, itemsPerPage);
+                    // Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateAcceptedConformitySortParam = (x, article) =>
+                    // {
+                    //     return x.ConformityTypeId == article.ConformityTypeId && x.IsAccepted;
+                    // };
+                    // supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateAcceptedConformitySortParam, page, itemsPerPage);
+                    supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                        .Where(x => x.SupplierId == id)
+                        .SelectMany(x => x.Article.ArticleConformityTypes)
+                        .To<ArticleConformityTypeConformitiesExportModel>()
+                        .OrderBy(x => x.ConformityIsAccepted)
+                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                        .ToListAsync();
                     return supplier;
 
                 case GlobalConstants.AcceptedConformitySortParamDesc:
-                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
-                    Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateAcceptedConformitySortParamDesc = (x, item) =>
-                    {
-                        return x.ConformityTypeId == item.ConformityType.Id && x.IsAccepted;
-                    };
-                    supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateAcceptedConformitySortParamDesc, page, itemsPerPage, reverse: true);
+                    // Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateAcceptedConformitySortParamDesc = (x, article) =>
+                    // {
+                    //     return x.ConformityTypeId == article.ConformityTypeId && x.IsAccepted;
+                    // };
+                    // supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateAcceptedConformitySortParamDesc, page, itemsPerPage, reverse: true);
+                    supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                        .Where(x => x.SupplierId == id)
+                        .SelectMany(x => x.Article.ArticleConformityTypes)
+                        .To<ArticleConformityTypeConformitiesExportModel>()
+                        .OrderByDescending(x => x.ConformityIsAccepted)
+                        .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                        .ToListAsync();
                     return supplier;
 
                 case GlobalConstants.ValidConformitySortParam:
-                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
-                    Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateValidConformitySortParam = (x, item) =>
-                    {
-                        return x.ConformityTypeId == item.ConformityType.Id && x.IsAccepted && x.ValidityDate >= DateTime.UtcNow;
-                    };
-                    supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateValidConformitySortParam, page, itemsPerPage);
+                    //// variant 1: the query with the help method
+                    // Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateValidConformitySortParam = (x, article) =>
+                    // {
+                    //     return x.ConformityTypeId == article.ConformityTypeId && x.IsAccepted && x.ValidityDate >= DateTime.UtcNow;
+                    // };
+                    // supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateValidConformitySortParam, page, itemsPerPage, reverse: true);
+
+                    //// variant 2
+                    //// this is graceful but cannot be translated from EF, therefore we use the above query with a help method:
+                    // supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                    //   .Where(x => x.SupplierId == id)
+                    //   .SelectMany(x => x.Article.ArticleConformityTypes)
+                    //   .To<ArticleConformityTypeConformitiesExportModel>()
+                    //   .OrderByDescending(x => x.ConformityIsValid)
+                    //   .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                    //   .ToListAsync();
+
+                    // variant 3
+                    // this is the fastest way - take all articles and order then here, because EF cannot do this
+                    // fast and sometimes throws Exception for too long query time
+                    var articlesValidConformitySortParam = await this.articleSuppliersRepository.AllAsNoTracking()
+                        .Where(x => x.SupplierId == id)
+                        .SelectMany(x => x.Article.ArticleConformityTypes)
+                        .To<ArticleConformityTypeConformitiesExportModel>()
+                        .ToListAsync();
+                    supplier.Articles = articlesValidConformitySortParam
+                        .OrderBy(x => x.ConformityIsValid)
+                        .Skip((page - 1) * itemsPerPage)
+                        .Take(itemsPerPage);
                     return supplier;
 
                 case GlobalConstants.ValidConformitySortParamDesc:
-                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
-                    Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateValidConformitySortParamDesc = (x, item) =>
-                    {
-                        return x.ConformityTypeId == item.ConformityType.Id && x.IsAccepted && x.ValidityDate >= DateTime.UtcNow;
-                    };
+                    //// variant 1 - the query with the help method
+                    // Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicateValidConformitySortParamDesc = (x, article) =>
+                    // {
+                    //     return x.ConformityTypeId == article.ConformityTypeId && x.IsAccepted && x.ValidityDate >= DateTime.UtcNow;
+                    // };
+                    // supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateValidConformitySortParamDesc, page, itemsPerPage);
 
-                    supplier.Articles = await this.ExtractArticlesBySupplierIdAndPredicate(id, predicateValidConformitySortParamDesc, page, itemsPerPage, reverse: true);
+                    //// variant 2
+                    //// this is graceful but cannot be translated from EF, therefore we use the above query with a help method:
+                    // supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                    //    .Where(x => x.SupplierId == id)
+                    //    .SelectMany(x => x.Article.ArticleConformityTypes)
+                    //    .To<ArticleConformityTypeConformitiesExportModel>()
+                    //    .OrderBy(x => x.ConformityIsValid)
+                    //    .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                    //    .ToListAsync();
+
+                    // variant 3
+                    // this is the fastest way - take all articles and order then here, because EF cannot do this
+                    // fast and sometimes throws Exception for too long query time
+                    var articlesValidConformitySortParamDesc = await this.articleSuppliersRepository.AllAsNoTracking()
+                        .Where(x => x.SupplierId == id)
+                        .SelectMany(x => x.Article.ArticleConformityTypes)
+                        .To<ArticleConformityTypeConformitiesExportModel>()
+                        .ToListAsync();
+                    supplier.Articles = articlesValidConformitySortParamDesc
+                        .OrderByDescending(x => x.ConformityIsValid)
+                        .Skip((page - 1) * itemsPerPage)
+                        .Take(itemsPerPage);
+
                     return supplier;
 
                 // case "NumberSortParam":
                 default:
-                    supplier = await this.GetByIdAsync<SupplierArticlesDetailsExportModel>(id);
-                    supplier.Articles = this.articleSuppliersRepository.AllAsNoTracking()
-                           .Where(x => x.SupplierId == id)
-                           .SelectMany(x => x.Article.ArticleConformityTypes)
-                           .Include(x => x.Article.Conformities)
-                           .OrderBy(a => a.Article.Number)
-                           .Skip((page - 1) * itemsPerPage)
-                           .Take(itemsPerPage)
-                           .To<ArticleConformityTypeConformitiesExportModel>()
-                           .ToList();
+                    supplier.Articles = await this.articleSuppliersRepository.AllAsNoTracking()
+                            .Where(x => x.SupplierId == id)
+                            .OrderBy(a => a.Article.Number)
+                            .SelectMany(x => x.Article.ArticleConformityTypes)
+                            .Skip((page - 1) * itemsPerPage)
+                            .Take(itemsPerPage)
+                            .To<ArticleConformityTypeConformitiesExportModel>()
+                            .ToListAsync();
+
+                    //// equal in speed performance with the above query, but the above one is graceful
+                    // supplier.Articles = this.articleSuppliersRepository.AllAsNoTracking()
+                    //        .Where(x => x.SupplierId == id)
+                    //        .OrderBy(a => a.Article.Number)
+                    //        .SelectMany(x => x.Article.ArticleConformityTypes)
+                    //        .Include(x => x.Article.Conformities)
+                    //        .Skip((page - 1) * itemsPerPage)
+                    //        .Take(itemsPerPage)
+                    //        .To<ArticleConformityTypeConformitiesExportModel>()
+                    //        .ToList();
                     return supplier;
 
                     // variant 1 - slower than current:
@@ -586,6 +711,7 @@
             }
         }
 
+        // not needed since variant 3 is used! This is needed only for variant 1:
         private async Task<IEnumerable<ArticleConformityTypeConformitiesExportModel>> ExtractArticlesBySupplierIdAndPredicate(
             string id,
             Func<ConformityBaseExportModel, ArticleConformityTypeConformitiesExportModel, bool> predicate,
@@ -593,7 +719,7 @@
             int itemsPerPage,
             bool reverse = false)
         {
-            var entities = await this.articleSuppliersRepository.AllAsNoTracking()
+            var articles = await this.articleSuppliersRepository.AllAsNoTracking()
                                       .Where(x => x.SupplierId == id)
                                       .SelectMany(x => x.Article.ArticleConformityTypes)
                                       .Include(x => x.Article.Conformities)
@@ -603,16 +729,26 @@
             var first = new SortedDictionary<string, ArticleConformityTypeConformitiesExportModel>();
             var second = new SortedDictionary<string, ArticleConformityTypeConformitiesExportModel>();
 
-            foreach (var item in entities)
+            // I can create instead of first and second, just one sorted dictionary with key true or false
+            // and present the data with its help!!!
+            // var third = new SortedDictionary<bool, List<ArticleConformityTypeConformitiesExportModel>>();
+            foreach (var article in articles)
             {
-                var key = item.Article.Number + item.ConformityType.Description;
-                if (item.Conformities.Any(x => predicate(x, item)))
+                var key = article.ArticleNumber + article.ConformityTypeDescription;
+
+                if (article.Conformities == null)
                 {
-                    first.Add(key, item);
+                    second.Add(key, article);
+                    continue;
+                }
+
+                if (article.Conformities.Any(x => predicate(x, article)))
+                {
+                    first.Add(key, article);
                 }
                 else
                 {
-                    second.Add(key, item);
+                    second.Add(key, article);
                 }
             }
 
