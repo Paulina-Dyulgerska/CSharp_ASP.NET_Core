@@ -18,20 +18,17 @@
 
     public class SuppliersService : ISuppliersService
     {
-        private readonly IDeletableEntityRepository<Article> articlesRepository;
         private readonly IDeletableEntityRepository<Supplier> suppliersRepository;
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
         private readonly IRepository<ArticleSupplier> articleSuppliersRepository;
         private readonly IDistributedCache distributedCache;
 
         public SuppliersService(
-            IDeletableEntityRepository<Article> articlesRepository,
             IDeletableEntityRepository<Supplier> suppliersRepository,
             IDeletableEntityRepository<Conformity> conformitiesRepository,
             IRepository<ArticleSupplier> articleSupplierRepository,
             IDistributedCache distributedCache)
         {
-            this.articlesRepository = articlesRepository;
             this.suppliersRepository = suppliersRepository;
             this.conformitiesRepository = conformitiesRepository;
             this.articleSuppliersRepository = articleSupplierRepository;

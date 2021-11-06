@@ -67,8 +67,6 @@
         public const string ModifiedOnSortParamDesc = "modifiedOnDesc";
         public const string ArticlesCountSortParam = "articleCount";
         public const string ArticlesCountSortParamDesc = "articleCountDesc";
-        public const string UserEmailSortParam = "userEmail";
-        public const string UserEmailSortParamDesc = "userEmailDesc";
         public const string ArticleNumberSortParam = "articleNumber";
         public const string ArticleNumberSortParamDesc = "articleNumberDesc";
         public const string ArticleDescriptionSortParam = "articleDescription";
@@ -91,6 +89,16 @@
         public const string MainSupplierAllConfirmedSortParamDesc = "mainSupplierAllConfirmedDesc";
         public const string AllSuppliersAllConfirmedSortParam = "allSuppliersAllConfirmed";
         public const string AllSuppliersAllConfirmedSortParamDesc = "allSuppliersAllConfirmedDesc";
+        public const string UserNameSortParam = "userName";
+        public const string UserNameSortParamDesc = "userNameDesc";
+        public const string UserEmailSortParam = "userEmail";
+        public const string UserEmailSortParamDesc = "userEmailDesc";
+        public const string UserFullNameSortParam = "userFullName";
+        public const string UserFullNameSortParamDesc = "userFullNameDesc";
+        public const string UserEmailConfirmedSortParam = "userEmailConfirmed";
+        public const string UserEmailConfirmedSortParamDesc = "userEmailConfirmedDesc";
+        public const string UserRolesSortParam = "userRoles";
+        public const string UserRolesSortParamDesc = "userRolesDesc";
 
         public const string CurrentSortDirectionAsc = "sortAsc";
         public const string CurrentSortDirectionDesc = "sortDesc";

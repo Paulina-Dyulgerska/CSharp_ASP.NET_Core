@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
 
     using Azure.Storage.Blobs;
+    using ConformityCheck.Common;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
     using ConformityCheck.Services.Mapping;
@@ -288,6 +289,7 @@
             }
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         [HttpGet(nameof(GetAllUsers))]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -297,8 +299,8 @@
                 // needed, put the AutoMapperConfig in Startup.Configure() method and delete the Select():
                 // AutoMapperConfig.RegisterMappings(typeof(ApplicationUser).GetTypeInfo().Assembly);
                 // var users = await this.userManager.Users
-                //                                    .To<UserExportModel>()
-                //                                    .ToListAsync();
+                //                                   .To<UserExportModel>()
+                //                                   .ToListAsync();
                 var users = await this.userManager.Users
                                                    .Select(x => new UserExportModel
                                                    {

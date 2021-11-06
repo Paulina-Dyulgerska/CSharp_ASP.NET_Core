@@ -18,9 +18,11 @@
     using ConformityCheck.Web.Infrastructure.Settings;
     using ConformityCheck.Web.Middlewares.ExceptionHandler;
     using ConformityCheck.Web.ViewModels;
+    using ConformityCheck.Web.ViewModels.Administration.Users;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -116,6 +118,7 @@
             services.AddTransient<IArticlesSeedService, ArticlesSeedService>();
             services.AddTransient<ISuppliersSeedService, SuppliersSeedService>();
             services.AddTransient<IConformityTypesSeedService, ConformityTypesSeedService>();
+            services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IArticlesService, ArticlesService>();
             services.AddTransient<IConformityTypesService, ConformityTypesService>();
             services.AddTransient<IGetCountsService, GetCountsService>();
@@ -138,6 +141,7 @@
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+            //AutoMapperConfig.RegisterMappings(typeof(ApplicationUser).GetTypeInfo().Assembly);
 
             ////Seed data on application startup
             // using (var serviceScope = app.ApplicationServices.CreateScope())

@@ -1,0 +1,103 @@
+﻿@model UsersIndexModel
+
+<section class="table-container">
+    <article class="table-header"></article>
+    <table class="table dataTable">
+        <thead>
+            <tr>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.UserNameSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Username</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.UserEmailSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Email</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.UserFullNameSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Full name</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">Phone number</th>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.UserRolesSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Roles</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">
+                    <a asp-action="@Model.PagingControllerActionCallName"
+                       asp-route-itemsPerPage="@Model.ItemsPerPage"
+                       asp-route-currentSortOrder="@Model.UserEmailConfirmedSortParam"
+                       asp-route-currentSearchInput="@Model.CurrentSearchInput"
+                       asp-route-currentSortDirection="@Model.CurrentSortDirection">
+                        <span class="text">Email confirmed</span>
+                        <span class="icon @Model.CurrentSortDirection">
+                            @*<i class="fas fa-arrows-alt-v"></i>*@
+                        </span>
+                    </a>
+                </th>
+                <th class="col-s">Details</th>
+                <th class="col-s">Edit</th>
+                <th class="col-s">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in this.Model.Users)
+            {
+            <tr class="" data-id="@user.Id">
+                <td class="col-s" data-label="Username">@user.UserName</td>
+                <td class="col-s" data-label="Email">@user.Email</td>
+                <td class="col-s" data-label="Full name">@user.FullName</td>
+                <td class="col-s" data-label="Phone number">@user.PhoneNumber</td>
+                <td class="col-s" data-label="Roles">@string.Join(", ", user.Roles.Select(r => r.Name))</td>
+                <td class="col-s" data-label="Email confirmed">@(user.EmailConfirmed ? "Yes" : "No")</td>
+                <td class="col-s" data-label="Details">
+                    <a asp-action="Details" class="btn btn-details" asp-route-id="@user.Id">
+                        <span class="text">Details</span>
+                    </a>
+                </td>
+                <td class="col-s" data-label="Edit">
+                    <a asp-action="Edit" class="btn btn-edit" asp-route-id="@user.Id">
+                        <span class="text">Edit</span>
+                    </a>
+                </td>
+                <td class="col-s" data-label="Delete">
+                    <a asp-action="Delete" class="btn btn-delete" asp-route-id="@user.Id">
+                        <span class="text">Delete</span>
+                    </a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</section>
