@@ -139,13 +139,13 @@
         {
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
-            //Seed data on application startup
-             using (var serviceScope = app.ApplicationServices.CreateScope())
-            {
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                dbContext.Database.Migrate();
-                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
-            }
+            ////Seed data on application startup
+            // using (var serviceScope = app.ApplicationServices.CreateScope())
+            // {
+            //     var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            //     dbContext.Database.Migrate();
+            //     new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            // }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage(); // 400...
