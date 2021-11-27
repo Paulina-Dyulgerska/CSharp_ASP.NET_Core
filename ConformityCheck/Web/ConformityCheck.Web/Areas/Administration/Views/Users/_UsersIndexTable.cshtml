@@ -5,7 +5,7 @@
     <table class="table dataTable">
         <thead>
             <tr>
-                <th class="col-s">
+                <th class="col-m">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.UserNameSortParam"
@@ -17,7 +17,7 @@
                         </span>
                     </a>
                 </th>
-                <th class="col-s">
+                <th class="col-m">
                     <a asp-action="@Model.PagingControllerActionCallName"
                        asp-route-itemsPerPage="@Model.ItemsPerPage"
                        asp-route-currentSortOrder="@Model.UserEmailSortParam"
@@ -75,8 +75,8 @@
             @foreach (var user in this.Model.Users)
             {
             <tr class="" data-id="@user.Id">
-                <td class="col-s" data-label="Username">@user.UserName</td>
-                <td class="col-s" data-label="Email">@user.Email</td>
+                <td class="col-m" data-label="Username">@user.UserName</td>
+                <td class="col-m" data-label="Email">@user.Email</td>
                 <td class="col-s" data-label="Full name">@user.FullName</td>
                 <td class="col-s" data-label="Phone number">@user.PhoneNumber</td>
                 <td class="col-s" data-label="Roles">@string.Join(", ", user.Roles.Select(r => r.Name))</td>

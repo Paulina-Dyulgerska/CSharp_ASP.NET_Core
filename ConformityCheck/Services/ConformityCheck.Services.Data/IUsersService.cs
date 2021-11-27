@@ -18,13 +18,15 @@
             int page,
             int itemsPerPage);
 
+        IEnumerable<UserViewModel> GetAllBySearchInput(string searchInput);
+
         IEnumerable<UserViewModel> GetAllBySearchInputOrderedAsPages(
             string searchInput,
             string sortOrder,
             int page,
             int itemsPerPage);
 
-        Task GetByIdAsync(string id);
+        UserViewModel GetById(string id);
 
         Task CreateAsync(UserCreateInputModel input, string userId);
 

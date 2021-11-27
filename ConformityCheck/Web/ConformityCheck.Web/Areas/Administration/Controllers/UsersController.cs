@@ -28,7 +28,7 @@
             this.logger = logger;
         }
 
-        public async Task<IActionResult> Index(PagingViewModel input)
+        public IActionResult Index(PagingViewModel input)
         {
             if (input.PageNumber <= 0)
             {
@@ -77,6 +77,20 @@
 
                 return this.Redirect("/");
             }
+
+            return this.View(model);
+        }
+
+        public IActionResult Details(UserIdInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.InvalidEntityId;
+
+                return this.RedirectToAction(nameof(this.Index));
+            }
+
+            var model = this.usersService.GetById(input.Id);
 
             return this.View(model);
         }

@@ -150,3 +150,46 @@ $('#searchConformityInput').on('input', function () {
         dropDownList.hide();
     }
 });
+
+// search users: safer than the function directly writing in the select's html:
+$('#searchUserInput').on('input', function () {
+    let dropDownList = $('#selectSearchUserInput');
+    dropDownList.hide();
+    //let recaptchaValue = $('#RecaptchaValue').val();
+    if (!isNullOrWhitespace($(this).val()) && $(this).val().length > 2) {
+        $.ajax({
+            //method: 'POST',
+            method: 'GET',
+            url: '/api/GetUserByUsernameOrEmailOrRole',
+            contentType: 'application/json',
+            dataType: 'json',
+            //data: JSON.stringify({ 'input': $(this).val(), 'recaptchaValue': recaptchaValue }),
+            data: { 'input': $(this).val() },
+            success: function (json) {
+                dropDownList.empty();
+                dropDownList.show();
+                for (i = 0; i < json.length; i++) {
+                    const user = json[i];
+                    const userDetailsLink = "/Administration/Users/Details/" + user.id;
+                    let userLinkElement = document.createElement('a');
+                    userLinkElement.href = userDetailsLink;
+                    userLinkElement.text = user.email;
+                    //userLinkElement.text = escapeHtml(user.email);
+                    userLinkElement.classList.add('form-control');
+                    dropDownList.append(userLinkElement);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Error by loading articles');
+                console.log(xhr.statusText);
+                console.log(xhr.responseText);
+                console.log(xhr);
+                console.log(thrownError);
+                //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+    else {
+        dropDownList.hide();
+    }
+});

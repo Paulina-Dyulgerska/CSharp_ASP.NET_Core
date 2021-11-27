@@ -31,6 +31,7 @@
         private readonly ISuppliersService suppliersService;
         private readonly IConformityTypesService conformityTypesService;
         private readonly IConformitiesService conformitiesService;
+        private readonly IUsersService usersService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<ApplicationRole> roleManager;
         private readonly ILogger<ContentDeliveryController> logger;
@@ -41,6 +42,7 @@
             ISuppliersService suppliersService,
             IConformityTypesService conformityTypesService,
             IConformitiesService conformitiesService,
+            IUsersService usersService,
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             ILogger<ContentDeliveryController> logger,
@@ -50,6 +52,7 @@
             this.suppliersService = suppliersService;
             this.conformityTypesService = conformityTypesService;
             this.conformitiesService = conformitiesService;
+            this.usersService = usersService;
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.logger = logger;
@@ -229,6 +232,28 @@
                 var model = await this.conformitiesService.GetAllBySearchInputAsync<ConformityExportModel>(input);
 
                 this.logger.LogInformation($"Api {nameof(this.GetConformitiesByArticleOrSupplierOrConformityType)} success.");
+
+                return this.Ok(model);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(
+                    1978,
+                    $"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Api Error: {ex}");
+
+                throw;
+            }
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [HttpGet(nameof(GetUserByUsernameOrEmailOrRole))]
+        public IActionResult GetUserByUsernameOrEmailOrRole(string input)
+        {
+            try
+            {
+                var model = this.usersService.GetAllBySearchInput(input);
+
+                this.logger.LogInformation($"Api {nameof(this.GetUserByUsernameOrEmailOrRole)} success.");
 
                 return this.Ok(model);
             }

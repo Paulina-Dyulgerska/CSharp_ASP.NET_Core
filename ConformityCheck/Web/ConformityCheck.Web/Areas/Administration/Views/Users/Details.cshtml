@@ -1,0 +1,69 @@
+﻿@model UserViewModel
+@{
+    this.ViewData["Title"] = "Details for user";
+}
+
+@section SubMenu{
+    @*<partial name="_SubMenuGeneral" model="Model" />*@
+}
+
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+            </article>
+        </section>
+
+        <section class="display-data-body">
+            <article class="data-container article-details">
+                <ul>
+                    <li>
+                        Username:
+                        <strong>@Model.UserName</strong>
+                    </li>
+                    <li>
+                        User's email:
+                        <strong>@Model.Email</strong>
+                    </li>
+                    <li>
+                        Is user email confirmed:
+                        <strong>@(Model.EmailConfirmed ? "Yes" : "No")</strong>
+                    </li>
+                    <li>
+                        User full name:
+                        <strong>@Model.FullName</strong>
+                    </li>
+                    <li>
+                        User phone number:
+                        <strong>@Model.PhoneNumber</strong>
+                    </li>
+                    <li>
+                        Date of user's creation':
+                        <strong>@Model.CreatedOn</strong>
+                    </li>
+                    <li>
+                        User roles:
+                        <strong>@string.Join(", ", Model.Roles.Select(r=>r.Name).ToList())</strong>
+                    </li>
+                </ul>
+                <article class="large-margin-horizontal large-margin-vertical center">
+                    <a asp-action="Edit" class="btn btn-edit" asp-route-id="@Model.Id">
+                        <span class="text">Edit user data</span>
+                    </a>
+                </article>
+            </article>
+            <div class="btns-container">
+                <div class="form-field-container">
+                    <a asp-action="Index" class="btn btn-back btn-align-end">Return back</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="display-data-footer ">
+        </section>
+    </section>
+</section>

@@ -53,6 +53,17 @@
             return users;
         }
 
+        public IEnumerable<UserViewModel> GetAllBySearchInput(string searchInput)
+        {
+            var entities = this.GetAll()
+                           .Where(x => x.UserName.ToLower().Contains(searchInput.ToLower())
+                                        || x.Email.ToLower().Contains(searchInput.ToLower())
+                                        || x.Roles.Any(x => x.Name.ToLower().Contains(searchInput.ToLower())))
+                           .ToList();
+
+            return entities;
+        }
+
         public IEnumerable<UserViewModel> GetAllBySearchInputOrderedAsPages(
             string searchInput,
             string sortOrder,
@@ -293,9 +304,15 @@
             }
         }
 
-        public Task GetByIdAsync(string id)
+        public UserViewModel GetById(string id)
         {
-            throw new NotImplementedException();
+            var entities = this.userManager.Users
+                .Where(x => x.Id == id)
+                .To<UserViewModel>()
+                .ToList();
+            this.GetRoleNames(entities);
+
+            return entities.FirstOrDefault();
         }
 
         public Task CreateAsync(UserCreateInputModel input, string userId)

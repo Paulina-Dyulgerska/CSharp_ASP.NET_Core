@@ -1,7 +1,7 @@
 ﻿@model UsersIndexModel
 
 @{
-    this.ViewData["Title"] = "Admin Users";
+    this.ViewData["Title"] = "Admin -> Users";
 }
 
 @section SubMenu{
@@ -24,10 +24,10 @@
                         <article class="input-group">
                             <input type="search" class="form-control" size="40"
                                    asp-for="CurrentSearchInput"
-                                   id="searchAticleInput" list="selectSearchArticleInput"
-                                   placeholder="Search for article number or description" value="@Model.CurrentSearchInput"
-                                   autocomplete="off">
-                            <datalist id="selectSearchArticleInput" class="form-control dropdown-content">
+                                   id="searchUserInput" list="selectSearchUserInput"
+                                   placeholder="Search for username, email or role" value="@Model.CurrentSearchInput"
+                                   autocomplete="off" />
+                            <datalist id="selectSearchUserInput" class="form-control dropdown-content">
                             </datalist>
                         </article>
                         <article class="btns-container">
@@ -69,5 +69,6 @@
 }
 
 @section Scripts{
-
+    <script src="~/js/tables.js" asp-append-version="true"></script>
+    <script src="~/js/searchEntities.js" asp-append-version="true"></script>
 }
