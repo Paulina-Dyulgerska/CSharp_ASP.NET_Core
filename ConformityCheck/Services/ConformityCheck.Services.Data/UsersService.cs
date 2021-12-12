@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -315,12 +314,34 @@
             return entities.FirstOrDefault();
         }
 
-        public Task CreateAsync(UserCreateInputModel input, string userId)
+        public async Task CreateAsync(UserCreateInputModel input)
         {
-            throw new NotImplementedException();
+            var user = new ApplicationUser
+            {
+                UserName = input.UserName,
+                Email = input.Email,
+                EmailConfirmed = input.EmailConfirmed,
+            };
+            var resultUserAdd = await this.userManager.CreateAsync(user, input.Password);
+
+            if (!resultUserAdd.Succeeded)
+            {
+                throw new Exception(string.Join(Environment.NewLine, resultUserAdd.Errors.Select(e => e.Description)));
+            }
+
+            foreach (var roleId in input.Roles)
+            {
+                var role = await this.roleManager.FindByIdAsync(roleId);
+                var resultUserToRoleAdd = await this.userManager.AddToRoleAsync(user, role.Name);
+
+                if (!resultUserToRoleAdd.Succeeded)
+                {
+                    throw new Exception(string.Join(Environment.NewLine, resultUserAdd.Errors.Select(e => e.Description)));
+                }
+            }
         }
 
-        public Task EditAsync(UserEditInputModel input, string userId)
+        public Task EditAsync(UserEditInputModel input)
         {
             throw new NotImplementedException();
         }
@@ -330,7 +351,7 @@
             throw new NotImplementedException();
         }
 
-        public Task<int> DeleteAsync(string id, string userId)
+        public Task<int> DeleteAsync(string id)
         {
             throw new NotImplementedException();
         }

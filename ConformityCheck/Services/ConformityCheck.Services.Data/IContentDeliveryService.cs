@@ -21,6 +21,8 @@
 
         Task<IEnumerable<T>> GetLastCreatedProductsAsync<T>();
 
+        Task<IEnumerable<T>> GetAllRolesAsync<T>();
+
         Task<IEnumerable<T>> GetAllSubstancesAsync<T>();
 
         Task<IEnumerable<T>> GetLastCreatedSubstancesAsync<T>();

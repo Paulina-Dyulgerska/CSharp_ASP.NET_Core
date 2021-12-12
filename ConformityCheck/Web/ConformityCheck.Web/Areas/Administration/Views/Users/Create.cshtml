@@ -1,0 +1,154 @@
+﻿@using Microsoft.Extensions.Configuration
+@using ConformityCheck.Web.Infrastructure.Settings
+
+@inject IConfiguration Configuration
+@inject IGetCountsService GetCountsService
+
+@model UserCreateInputModel
+@{
+    this.ViewData["Title"] = "Create new user";
+
+    var counts = await this.GetCountsService.GetCounts();
+}
+
+@section SubMenu{
+    @*<partial name="_SubMenuGeneral" model="Model" />*@
+}
+
+<section class="display-data-wrapper">
+    <section class="display-data-container">
+
+        <section class="display-data-header">
+            <article class="title-container">
+                <h4 class="title">
+                    @this.ViewData["Title"]
+                </h4>
+            </article>
+        </section>
+
+        <section class="display-data-body">
+            <article class="form-data-container">
+                <form method="post" class="input-group">
+                    @*enctype is multipart/form-data if uploading a file, do not forget to change it*@
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input type="hidden" id="RecaptchaValue" name="RecaptchaValue" />
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="UserName"></label>
+                        <input type="text" asp-for="UserName" class="form-control" placeholder="Username /valid email address/" autofocus />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="Email"></label>
+                        <input type="email" asp-for="Email" class="form-control" placeholder="User email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="Password"></label>
+                        <input type="password" asp-for="Password" class="form-control" placeholder="Password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="ConfirmedPassword"></label>
+                        <input type="password" asp-for="ConfirmedPassword" class="form-control" placeholder="Repeat password" />
+                        <span asp-validation-for="ConfirmedPassword" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="FirstName"></label>
+                        <input type="text" asp-for="FirstName" class="form-control" placeholder="First name" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="LastName"></label>
+                        <input type="text" asp-for="LastName" class="form-control" placeholder="Last name" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="PhoneNumber"></label>
+                        <input type="tel" asp-for="PhoneNumber" class="form-control" placeholder="Phone number" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="EmailConfirmed"></label>
+                        <input type="checkbox" asp-for="EmailConfirmed" />
+                        <span asp-validation-for="EmailConfirmed" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field-container large-margin-vertical">
+                        <label asp-for="Roles">User roles (you could choose more than one)</label>
+                        <cache expires-after="TimeSpan.FromSeconds(120)">
+                            <select size="@(counts.Roles)" asp-for="Roles" class="form-control" placeholder="Roles">
+                                <vc:roles></vc:roles>
+                            </select>
+                        </cache>
+                        <span asp-validation-for="Roles" class="text-danger"></span>
+                    </div>
+
+                    <div class="btns-container">
+                        <div class="form-field-container">
+                            <a asp-action="Index" class="btn btn-back btn-align-end">Return back</a>
+                        </div>
+                        <div class="form-field-container">
+                            <input type="reset" class="btn btn-clear btn-align-end" value="Clear form" />
+                        </div>
+                        <div class="form-field-container">
+                            <input type="submit" class="btn btn-align-end" value="Create" />
+                        </div>
+                    </div>
+                </form>
+            </article>
+        </section>
+
+        <section class="display-data-footer ">
+        </section>
+    </section>
+</section>
+
+@{
+    IConfiguration recaptchaSettingsSection = this.Configuration.GetSection(ReCaptchaSettings.ReCaptcha);
+    var recaptchaSettings = recaptchaSettingsSection.Get<ReCaptchaSettings>();
+}
+
+@section Scripts{
+    <script src="https://www.google.com/recaptcha/api.js?render=@recaptchaSettings.SiteKey"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@recaptchaSettings.SiteKey', { action: 'article_create' })
+                .then(function (token) {
+                    //console.log('Script reCaptcha loaded!');
+                    //console.log('token' + token);
+                    document.getElementById('RecaptchaValue').value = token;
+                })
+                .catch(err => {
+                    //console.log('Error: ');
+                    //console.log(err.description);
+                    //console.log(err);
+                });
+        });
+    </script>
+
+    @*<script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptchaV3Settings:SiteKey"]"></script>
+        <script>
+            grecaptcha.ready(function () {
+                grecaptcha.execute('@this.Configuration["GoogleReCaptchaV3Settings:SiteKey"]', { action: 'article_create' })
+                    .then(function (token) {
+                        console.log('Script reCaptcha loaded!');
+                        console.log('token' + token);
+                        document.getElementById('RecaptchaValue').value = token;
+                    })
+                    .catch(err => {
+                        console.log('Error: ');
+                        console.log(err.description);
+                        console.log(err);
+                    });
+            });
+        </script>*@
+}

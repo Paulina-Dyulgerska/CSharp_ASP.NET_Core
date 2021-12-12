@@ -15,5 +15,9 @@
         public int ConformityTypes { get; set; }
 
         public int RegulationLists { get; set; }
+
+        public int Roles { get; set; }
+
+        public int Users { get; set; }
     }
 }

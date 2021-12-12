@@ -1,4 +1,6 @@
-﻿namespace ConformityCheck.Web.ViewModels.Home
+﻿using ConformityCheck.Services.Mapping;
+
+namespace ConformityCheck.Web.ViewModels.Home
 {
     public class IndexViewModel
     {
@@ -15,6 +17,10 @@
         public int ConformityTypes { get; set; }
 
         public int RegulationLists { get; set; }
+
+        public int Roles { get; set; }
+
+        public int Users { get; set; }
 
         public string CurrentSearchInput { get; set; }
     }

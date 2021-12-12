@@ -152,7 +152,7 @@
             //    typeof(ApplicationUser).GetTypeInfo().Assembly); //if I need model from this assembly
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
-            ////Seed data on application startup
+            //// Seed data on application startup
             // using (var serviceScope = app.ApplicationServices.CreateScope())
             // {
             //     var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();

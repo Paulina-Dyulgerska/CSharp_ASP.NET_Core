@@ -7,6 +7,8 @@
         public const string SystemEmail = "admin@dotnetweb.net";
 
         public const string AdministratorRoleName = "Administrator";
+        public const string SupervisorRoleName = "Supervisor";
+        public const string DataOperatorRoleName = "DataOperator";
 
         public const string JsonContentType = "application/json";
 
@@ -42,6 +44,9 @@
         public const string ConformityCreatedSuccessfullyMessage = "Conformity is successfully created.";
         public const string ConformityEditedSuccessfullyMessage = "Conformity is successfully edited.";
         public const string ConformityDeletedSuccessfullyMessage = "Conformity is successfully deleted.";
+
+        public const string UserCreatedSuccessfullyMessage = "User is successfully created.";
+        public const string UserEditedSuccessfullyMessage = "User is successfully edited.";
 
         public const string RequestSentSuccessfullyMessage = "Request is successfully send.";
 

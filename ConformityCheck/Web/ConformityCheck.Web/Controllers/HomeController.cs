@@ -35,6 +35,8 @@
                 RegulationLists = counts.RegulationLists,
                 Substances = counts.Substances,
                 Suppliers = counts.Suppliers,
+                Roles = counts.Roles,
+                Users = counts.Users,
             };
 
             this.logger.LogInformation("User opens Home page");

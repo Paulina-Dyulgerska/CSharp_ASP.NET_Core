@@ -1,0 +1,7 @@
+﻿@using ConformityCheck.Web.ViewModels.Administration.Roles.ViewComponents
+@model IEnumerable<RolesViewComponentModel>
+
+@foreach (var item in Model)
+{
+    <option class="form-control" value="@item.Id">@item.Name</option>
+}

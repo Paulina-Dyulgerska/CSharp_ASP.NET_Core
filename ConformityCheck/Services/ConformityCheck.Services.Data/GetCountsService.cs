@@ -8,7 +8,9 @@
     using ConformityCheck.Data.Common.Repositories;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data.Models;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Caching.Distributed;
+    using Microsoft.Extensions.DependencyInjection;
 
     public class GetCountsService : IGetCountsService
     {
@@ -21,6 +23,9 @@
         private readonly IDeletableEntityRepository<Conformity> conformitiesRepository;
         private readonly IDeletableEntityRepository<Product> productsRepository;
         private readonly IDistributedCache distributedCache;
+        private readonly IServiceProvider serviceProvider;
+        private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public GetCountsService(
             IDeletableEntityRepository<Article> articlesRepository,
@@ -30,7 +35,8 @@
             IDeletableEntityRepository<ConformityType> conformityTypesRepository,
             IDeletableEntityRepository<Substance> substancesRepository,
             IDeletableEntityRepository<RegulationList> regulationListsRepository,
-            IDistributedCache distributedCache)
+            IDistributedCache distributedCache,
+            IServiceProvider serviceProvider)
         {
             this.articlesRepository = articlesRepository;
             this.suppliersRepository = suppliersRepository;
@@ -40,6 +46,9 @@
             this.conformitiesRepository = conformitiesRepository;
             this.productsRepository = productsRepository;
             this.distributedCache = distributedCache;
+            this.serviceProvider = serviceProvider;
+            this.roleManager = this.serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+            this.userManager = this.serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         }
 
         public async Task<CountsDto> GetCounts()
@@ -59,6 +68,8 @@
                     ConformityTypes = this.conformityTypesRepository.AllAsNoTracking().Count(),
                     Substances = this.substancesRepository.AllAsNoTracking().Count(),
                     RegulationLists = this.regulationListsRepository.AllAsNoTracking().Count(),
+                    Roles = this.roleManager.Roles.Count(),
+                    Users = this.userManager.Users.Count(),
                 };
 
                 await this.distributedCache.SetStringAsync(

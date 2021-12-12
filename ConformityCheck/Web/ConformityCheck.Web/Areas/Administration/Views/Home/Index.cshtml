@@ -2,6 +2,23 @@
     this.ViewData["Title"] = "Admin";
 }
 
+@section Submenu{
+    <nav>
+        <ul class="btns-container nav-list">
+            <li>
+                <a asp-area="Administration" asp-controller="Dashboard" asp-action="Index" class="btn btn-cta">
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a asp-area="Administration" asp-controller="Users" asp-action="Index" class="btn btn-cta">
+                    Users
+                </a>
+            </li>
+        </ul>
+    </nav>
+}
+
 <section class="display-data-wrapper">
     <section class="display-data-container">
         <section class="display-data-header">
@@ -12,20 +29,6 @@
             </article>
         </section>
         <section class="large-margin-vertical">
-            <nav>
-                <ul class="btns-container nav-list">
-                    <li>
-                        <a asp-area="Administration" asp-controller="Dashboard" asp-action="Index" class="btn btn-cta">
-                            Dashboard
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-area="Administration" asp-controller="Users" asp-action="Index" class="btn btn-cta">
-                            Users
-                        </a>
-                    </li>
-                </ul>
-            </nav>
         </section>
         <section class="display-data-body">
         </section>

@@ -2,8 +2,8 @@
 {
     using System;
     using System.Diagnostics;
-    using System.Linq;
     using System.Threading.Tasks;
+
     using ConformityCheck.Common;
     using ConformityCheck.Data.Models;
     using ConformityCheck.Services.Data;
@@ -19,13 +19,16 @@
     {
         private readonly IUsersService usersService;
         private readonly ILogger<UsersController> logger;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public UsersController(
             IUsersService usersService,
-            ILogger<UsersController> logger)
+            ILogger<UsersController> logger,
+            UserManager<ApplicationUser> userManager)
         {
             this.usersService = usersService;
             this.logger = logger;
+            this.userManager = userManager;
         }
 
         public IActionResult Index(PagingViewModel input)
@@ -79,6 +82,40 @@
             }
 
             return this.View(model);
+        }
+
+        public IActionResult Create()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(UserCreateInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            try
+            {
+                var user = await this.userManager.GetUserAsync(this.User);
+
+                await this.usersService.CreateAsync(input);
+
+                this.TempData[GlobalConstants.TempDataMessagePropertyName] = GlobalConstants.ArticleCreatedSuccessfullyMessage;
+                this.logger.LogInformation($"User: {input.UserName} was created by user: {user.Id}");
+            }
+            catch (Exception ex)
+            {
+                this.TempData[GlobalConstants.TempDataErrorMessagePropertyName] = GlobalConstants.OperationFailed;
+                this.logger.LogError($"RequestID: {Activity.Current?.Id ?? this.HttpContext.TraceIdentifier}; Article creation failed: {ex}");
+
+                // return user to the Create view instead of Home/Error page
+                return this.View();
+            }
+
+            return this.RedirectToAction(nameof(this.Index));
         }
 
         public IActionResult Details(UserIdInputModel input)

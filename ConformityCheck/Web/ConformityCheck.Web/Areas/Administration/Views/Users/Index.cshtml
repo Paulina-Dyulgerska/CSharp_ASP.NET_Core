@@ -6,6 +6,21 @@
 
 @section SubMenu{
     @*<partial name="" />*@
+
+    <nav>
+        <ul class="btns-container nav-list">
+            <li>
+                <a asp-area="Administration" asp-controller="Users" asp-action="Create" class="btn btn-cta">
+                    Create user
+                </a>
+            </li>
+            <li>
+                <a asp-area="Administration" asp-controller="Roles" asp-action="Create" class="btn btn-cta">
+                    Create role
+                </a>
+            </li>
+        </ul>
+    </nav>
 }
 
 <section class="display-data-wrapper">

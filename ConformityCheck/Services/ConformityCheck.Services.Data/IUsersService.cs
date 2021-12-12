@@ -28,12 +28,12 @@
 
         UserViewModel GetById(string id);
 
-        Task CreateAsync(UserCreateInputModel input, string userId);
+        Task CreateAsync(UserCreateInputModel input);
 
-        Task EditAsync(UserEditInputModel input, string userId);
+        Task EditAsync(UserEditInputModel input);
 
         Task ManageRolesAsync(UserManageRolesInputModel input);
 
-        Task<int> DeleteAsync(string id, string userId);
+        Task<int> DeleteAsync(string id);
     }
 }
