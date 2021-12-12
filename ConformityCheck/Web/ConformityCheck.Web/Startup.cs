@@ -54,6 +54,8 @@
             {
                 var loggingSection = this.configuration.GetSection("Logging");
                 loggingBuilder.AddFile(loggingSection);
+
+                // loggingBuilder.AddConsole();
             });
 
             services.Configure<ReCaptchaSettings>(this.configuration.GetSection(ReCaptchaSettings.ReCaptcha));
@@ -93,12 +95,13 @@
                         });
             services.AddSession();
 
-            services.AddControllersWithViews(options =>
-                                            {
-                                                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-                                                options.Filters.Add(new ExceptionFilter());
-                                            })
-                    .AddRazorRuntimeCompilation();
+            services
+                .AddControllersWithViews(options =>
+                            {
+                                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                                options.Filters.Add(new ExceptionFilter());
+                            })
+                .AddRazorRuntimeCompilation();
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter(); // for app.UseMigrationsEndPoint()
             services.AddAntiforgery(options =>
@@ -140,8 +143,14 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // will register all classes that have IMapFrom<T>, IMapTo<T>, IHaveCustomMapping
+            // must be the first thing done here, reflection will collect all models with the above
+            // interfaces and will register the mappings in my AutoMapper instance:
+            // AutoMapperConfig.RegisterMappings(typeof(ApplicationUser).GetTypeInfo().Assembly);
+            // AutoMapperConfig.RegisterMappings(
+            //    typeof(ErrorViewModel).GetTypeInfo().Assembly,
+            //    typeof(ApplicationUser).GetTypeInfo().Assembly); //if I need model from this assembly
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
-            //AutoMapperConfig.RegisterMappings(typeof(ApplicationUser).GetTypeInfo().Assembly);
 
             ////Seed data on application startup
             // using (var serviceScope = app.ApplicationServices.CreateScope())

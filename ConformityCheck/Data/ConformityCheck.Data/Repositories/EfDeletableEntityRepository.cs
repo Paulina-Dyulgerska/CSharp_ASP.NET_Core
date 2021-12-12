@@ -17,8 +17,14 @@
         {
         }
 
+        // public override IQueryable<TEntity> All() => base.All(); // just this is enough!!!!
+        // the ApplicationDbContext has already a query filter for returning only not deleted entities,
+        // therefore this is not needed and created double checking in the DB for deleted status of an entity!
         public override IQueryable<TEntity> All() => base.All().Where(x => !x.IsDeleted);
 
+        // public override IQueryable<TEntity> AllAsNoTracking() => base.AllAsNoTracking(); // just this is enough!!!!
+        // the ApplicationDbContext has already a query filter for returning only not deleted entities,
+        // therefore this is not needed and created double checking in the DB for deleted status of an entity!
         public override IQueryable<TEntity> AllAsNoTracking() => base.AllAsNoTracking().Where(x => !x.IsDeleted);
 
         public IQueryable<TEntity> AllWithDeleted() => base.All().IgnoreQueryFilters();
