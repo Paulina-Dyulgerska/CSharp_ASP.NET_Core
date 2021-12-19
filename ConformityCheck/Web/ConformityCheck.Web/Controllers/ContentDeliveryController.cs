@@ -327,7 +327,7 @@
                 //                                   .To<UserExportModel>()
                 //                                   .ToListAsync();
                 var users = await this.userManager.Users
-                                                   .Select(x => new UserExportModel
+                                                   .Select(x => new UserListAllViewModel
                                                    {
                                                        Id = x.Id,
                                                        UserName = x.UserName,

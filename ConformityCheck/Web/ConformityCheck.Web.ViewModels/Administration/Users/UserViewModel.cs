@@ -16,7 +16,13 @@
 
         public string Email { get; set; }
 
-        public string FullName { get; set; }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string FullName =>
+            (string.IsNullOrEmpty(this.FirstName) && string.IsNullOrEmpty(this.LastName)) ?
+                    null : $"{this.FirstName} {this.LastName}";
 
         public string PhoneNumber { get; set; }
 
@@ -32,13 +38,7 @@
                 .ForMember(x => x.Roles, opt => opt.MapFrom(u => u.Roles.Select(r => new UserRoleExportModel
                 {
                     Id = r.RoleId,
-                })))
-                .ForMember(
-                x => x.FullName,
-                opt => opt.MapFrom(
-                    u => (string.IsNullOrEmpty(u.FirstName) && string.IsNullOrEmpty(u.LastName)) ?
-                            null : (u.FirstName + ' ' + u.LastName).Trim()))
-                ;
+                })));
         }
     }
 }

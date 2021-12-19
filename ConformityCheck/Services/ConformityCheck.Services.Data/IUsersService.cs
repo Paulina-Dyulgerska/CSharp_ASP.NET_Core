@@ -26,7 +26,7 @@
             int page,
             int itemsPerPage);
 
-        UserViewModel GetById(string id);
+        Task<UserViewModel> GetById(string id);
 
         Task CreateAsync(UserCreateInputModel input);
 

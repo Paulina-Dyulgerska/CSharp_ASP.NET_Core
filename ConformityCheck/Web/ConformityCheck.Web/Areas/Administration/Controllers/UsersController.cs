@@ -118,6 +118,13 @@
             return this.RedirectToAction(nameof(this.Index));
         }
 
+        public IActionResult Edit(string id)
+        {
+            var user = this.usersService.GetById(id);
+
+            return this.View(user);
+        }
+
         public IActionResult Details(UserIdInputModel input)
         {
             if (!this.ModelState.IsValid)

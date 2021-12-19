@@ -1,6 +1,14 @@
-﻿@model UserViewModel
+﻿@using Microsoft.Extensions.Configuration
+@using ConformityCheck.Web.Infrastructure.Settings
+
+@inject IConfiguration Configuration
+@inject IGetCountsService GetCountsService
+
+@model UserViewModel
 @{
-    this.ViewData["Title"] = "Edit user data";
+    this.ViewData["Title"] = "Edit user";
+
+    var counts = await this.GetCountsService.GetCounts();
 }
 
 @section SubMenu{
@@ -20,14 +28,14 @@
 
         <section class="display-data-body">
             <article class="form-data-container">
-                <article class="data-container user-edit">
+                <article class="data-container">
                     <ul>
                         <li>
                             Username:
                             <strong>@Model.UserName</strong>
                         </li>
                         <li>
-                            User's email:
+                            Email:
                             <strong>@Model.Email</strong>
                         </li>
                         <li>
@@ -52,42 +60,43 @@
                         </li>
                     </ul>
                 </article>
-
                 <form method="post" class="input-group">
                     @*enctype is multipart/form-data if uploading a file, do not forget to change it*@
 
                     <div asp-validation-summary="All" class="text-danger"></div>
 
-                    <input asp-for="Id" hidden value="@Model.Id" />
-
                     <div class="form-field-container large-margin-vertical">
-                        <label asp-for="FullName"></label>
-                        <input asp-for="FullName" class="form-control" value="@Model.FullName" />
-                        <span asp-validation-for="FullName" class="text-danger"></span>
+                        <label asp-for="FirstName"></label>
+                        <input type="text" asp-for="FirstName" class="form-control" placeholder="First name" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
 
                     <div class="form-field-container large-margin-vertical">
-                        <label asp-for="Email"></label>
-                        <input asp-for="Email" class="form-control" value="@Model.Email" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <label asp-for="LastName"></label>
+                        <input type="text" asp-for="LastName" class="form-control" placeholder="Last name" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
 
                     <div class="form-field-container large-margin-vertical">
                         <label asp-for="PhoneNumber"></label>
-                        <input asp-for="PhoneNumber" class="form-control" value="@Model.PhoneNumber" />
+                        <input type="tel" asp-for="PhoneNumber" class="form-control" placeholder="Phone number" />
                         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                     </div>
 
                     <div class="form-field-container large-margin-vertical">
                         <label asp-for="EmailConfirmed"></label>
-                        <input asp-for="EmailConfirmed" class="form-control" value="@Model.EmailConfirmed" />
+                        <input type="checkbox" asp-for="EmailConfirmed" />
                         <span asp-validation-for="EmailConfirmed" class="text-danger"></span>
                     </div>
 
                     <div class="form-field-container large-margin-vertical">
-                        <label asp-for="UserName"></label>
-                        <input asp-for="UserName" class="form-control" value="@Model.UserName" />
-                        <span asp-validation-for="UserName" class="text-danger"></span>
+                        <label asp-for="Roles">User roles (you could choose more than one)</label>
+                        <cache expires-after="TimeSpan.FromSeconds(120)">
+                            <select size="@(counts.Roles)" asp-for="Roles" class="form-control" placeholder="Roles">
+                                <vc:roles></vc:roles>
+                            </select>
+                        </cache>
+                        <span asp-validation-for="Roles" class="text-danger"></span>
                     </div>
 
                     <div class="btns-container">
@@ -95,7 +104,10 @@
                             <a asp-action="Index" class="btn btn-back btn-align-end">Return back</a>
                         </div>
                         <div class="form-field-container">
-                            <input type="submit" class="btn btn-align-end" value="Save changes" />
+                            <input type="reset" class="btn btn-clear btn-align-end" value="Clear form" />
+                        </div>
+                        <div class="form-field-container">
+                            <input type="submit" class="btn btn-align-end" value="Create" />
                         </div>
                     </div>
                 </form>

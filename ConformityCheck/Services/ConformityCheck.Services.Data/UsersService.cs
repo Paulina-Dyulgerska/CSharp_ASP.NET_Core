@@ -303,12 +303,12 @@
             }
         }
 
-        public UserViewModel GetById(string id)
+        public async Task<UserViewModel> GetById(string id)
         {
-            var entities = this.userManager.Users
-                .Where(x => x.Id == id)
-                .To<UserViewModel>()
-                .ToList();
+            var appllicationUser = await this.userManager.FindByIdAsync(id);
+            var user = appllicationUser.To<UserViewModel>();
+            var entities = new UserViewModel[1] { user };
+
             this.GetRoleNames(entities);
 
             return entities.FirstOrDefault();
